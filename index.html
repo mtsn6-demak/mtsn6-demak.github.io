@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-Learning MTsN Demak - Ahmad Zulfikar, S.Pd.</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f0fdf4; /* Light Green background */
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%2316a34a' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.1);
+        }
+        .subject-btn {
+            transition: all 0.3s ease;
+        }
+        .subject-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        .hidden-menu {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease-out, opacity 0.3s ease;
+            opacity: 0;
+        }
+        .visible-menu {
+            max-height: 500px; /* Arbitrary large height */
+            opacity: 1;
+            margin-top: 1rem;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col items-center">
+
+    <!-- Navbar / Header -->
+    <header class="w-full bg-green-700 text-white shadow-lg sticky top-0 z-50">
+        <div class="max-w-4xl mx-auto px-4 py-4 flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+                <!-- Placeholder Logo School -->
+                <div class="w-10 h-10 bg-white rounded-full flex items-center justify-center text-green-700 font-bold text-lg border-2 border-green-200">
+                    <i class="fa-solid fa-school"></i>
+                </div>
+                <div>
+                    <h1 class="font-bold text-lg leading-tight">MTsN Demak</h1>
+                    <p class="text-xs text-green-100">Portal Belajar Online</p>
+                </div>
+            </div>
+            <div class="hidden md:block text-sm font-medium">
+                Tahun Ajaran 2025/2026
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-grow w-full max-w-2xl px-4 py-8 flex flex-col items-center">
+
+        <!-- Teacher Profile Card -->
+        <div class="glass-card w-full rounded-2xl p-6 mb-8 text-center border-t-4 border-green-500 animate-fade-in-down">
+            <div class="w-24 h-24 mx-auto bg-gray-200 rounded-full mb-4 overflow-hidden border-4 border-green-100 shadow-sm relative">
+                <!-- Using FontAwesome User Icon as placeholder avatar -->
+                <div class="w-full h-full flex items-center justify-center bg-green-50 text-green-600 text-4xl">
+                    <i class="fa-solid fa-user-tie"></i>
+                </div>
+            </div>
+            <h2 class="text-2xl font-bold text-gray-800">Bapak Ahmad Zulfikar, S.Pd.</h2>
+            <p class="text-gray-500 mt-1">Guru Pengampu Mata Pelajaran</p>
+            <div class="mt-4 flex justify-center space-x-2">
+                <span class="px-3 py-1 bg-green-100 text-green-700 rounded-full text-xs font-semibold">Fiqih</span>
+                <span class="px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-xs font-semibold">IPA</span>
+            </div>
+        </div>
+
+        <!-- Instructional Text -->
+        <div class="text-center mb-6">
+            <h3 class="text-xl font-semibold text-gray-700">Pilih Mata Pelajaran</h3>
+            <p class="text-gray-500 text-sm">Klik tombol di bawah untuk melihat materi</p>
+        </div>
+
+        <!-- Subject Buttons Container -->
+        <div class="w-full space-y-4">
+
+            <!-- Fiqih Section -->
+            <div class="w-full">
+                <button onclick="toggleMenu('fiqih-menu', 'icon-fiqih')" class="subject-btn w-full bg-gradient-to-r from-emerald-500 to-green-600 text-white p-5 rounded-xl flex items-center justify-between cursor-pointer group">
+                    <div class="flex items-center space-x-4">
+                        <div class="bg-white/20 p-3 rounded-lg">
+                            <i class="fa-solid fa-mosque text-2xl"></i>
+                        </div>
+                        <div class="text-left">
+                            <h4 class="font-bold text-lg">Mata Pelajaran Fiqih</h4>
+                            <p class="text-green-100 text-xs">Materi Ibadah & Syariah</p>
+                        </div>
+                    </div>
+                    <i id="icon-fiqih" class="fa-solid fa-chevron-right transition-transform duration-300"></i>
+                </button>
+
+                <!-- Fiqih Sub Menu -->
+                <div id="fiqih-menu" class="hidden-menu bg-white rounded-xl shadow-inner border border-green-100 overflow-hidden mx-2">
+                    <div class="p-3 grid gap-3">
+                        <a href="https://mtsn6-demak.github.io/fiqih-shalat-jumat/" class="flex items-center p-4 rounded-lg bg-green-50 hover:bg-green-100 transition-colors border-l-4 border-green-500 group">
+                            <div class="mr-4 text-green-600 group-hover:scale-110 transition-transform">
+                                <i class="fa-solid fa-users-rays"></i>
+                            </div>
+                            <div>
+                                <h5 class="font-bold text-gray-800">Shalat Jumat</h5>
+                                <p class="text-xs text-gray-500">Pelajari tata cara dan syarat shalat jumat</p>
+                            </div>
+                            <div class="ml-auto text-green-400">
+                                <i class="fa-solid fa-arrow-right"></i>
+                            </div>
+                        </a>
+                        
+                        <a href="https://mtsn6-demak.github.io/fiqih-khutbah" class="flex items-center p-4 rounded-lg bg-green-50 hover:bg-green-100 transition-colors border-l-4 border-green-600 group">
+                            <div class="mr-4 text-green-600 group-hover:scale-110 transition-transform">
+                                <i class="fa-solid fa-microphone-lines"></i>
+                            </div>
+                            <div>
+                                <h5 class="font-bold text-gray-800">Khutbah Jumat</h5>
+                                <p class="text-xs text-gray-500">Rukun dan syarat khutbah</p>
+                            </div>
+                            <div class="ml-auto text-green-400">
+                                <i class="fa-solid fa-arrow-right"></i>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- IPA Section -->
+            <div class="w-full">
+                <button onclick="toggleMenu('ipa-menu', 'icon-ipa')" class="subject-btn w-full bg-gradient-to-r from-blue-500 to-indigo-600 text-white p-5 rounded-xl flex items-center justify-between cursor-pointer group">
+                    <div class="flex items-center space-x-4">
+                        <div class="bg-white/20 p-3 rounded-lg">
+                            <i class="fa-solid fa-flask text-2xl"></i>
+                        </div>
+                        <div class="text-left">
+                            <h4 class="font-bold text-lg">Mata Pelajaran IPA</h4>
+                            <p class="text-blue-100 text-xs">Fisika & Biologi Alam</p>
+                        </div>
+                    </div>
+                    <i id="icon-ipa" class="fa-solid fa-chevron-right transition-transform duration-300"></i>
+                </button>
+
+                <!-- IPA Sub Menu -->
+                <div id="ipa-menu" class="hidden-menu bg-white rounded-xl shadow-inner border border-blue-100 overflow-hidden mx-2">
+                    <div class="p-3 grid gap-3">
+                        <a href="https://mtsn6-demak.github.io/IPA-getaran" class="flex items-center p-4 rounded-lg bg-blue-50 hover:bg-blue-100 transition-colors border-l-4 border-blue-500 group">
+                            <div class="mr-4 text-blue-600 group-hover:scale-110 transition-transform">
+                                <i class="fa-solid fa-wave-square"></i>
+                            </div>
+                            <div>
+                                <h5 class="font-bold text-gray-800">Getaran</h5>
+                                <p class="text-xs text-gray-500">Konsep dasar getaran dan bandul</p>
+                            </div>
+                            <div class="ml-auto text-blue-400">
+                                <i class="fa-solid fa-arrow-right"></i>
+                            </div>
+                        </a>
+                        
+                        <a href="https://mtsn6-demak.github.io/IPA-gelombang" class="flex items-center p-4 rounded-lg bg-blue-50 hover:bg-blue-100 transition-colors border-l-4 border-blue-600 group">
+                            <div class="mr-4 text-blue-600 group-hover:scale-110 transition-transform">
+                                <i class="fa-solid fa-water"></i>
+                            </div>
+                            <div>
+                                <h5 class="font-bold text-gray-800">Gelombang</h5>
+                                <p class="text-xs text-gray-500">Gelombang transversal & longitudinal</p>
+                            </div>
+                            <div class="ml-auto text-blue-400">
+                                <i class="fa-solid fa-arrow-right"></i>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="w-full bg-gray-800 text-gray-400 py-6 text-center text-xs mt-auto">
+        <div class="max-w-2xl mx-auto px-4">
+            <p class="mb-2">&copy; 2025 MTsN Demak. All Rights Reserved.</p>
+            <p>Dikembangkan untuk Pembelajaran Daring.</p>
+        </div>
+    </footer>
+
+    <!-- Logic Script -->
+    <script>
+        function toggleMenu(menuId, iconId) {
+            const menu = document.getElementById(menuId);
+            const icon = document.getElementById(iconId);
+            
+            // Close other menus if open (Optional logic for accordion effect)
+            const allMenus = document.querySelectorAll('.hidden-menu');
+            const allIcons = document.querySelectorAll('.fa-chevron-right');
+            
+            // Check if current menu is already open
+            const isAlreadyOpen = menu.classList.contains('visible-menu');
+
+            // Reset all menus
+            allMenus.forEach(m => {
+                m.classList.remove('visible-menu');
+            });
+            allIcons.forEach(i => {
+                i.style.transform = 'rotate(0deg)';
+            });
+
+            // If it wasn't open, open it now
+            if (!isAlreadyOpen) {
+                menu.classList.add('visible-menu');
+                icon.style.transform = 'rotate(90deg)';
+            }
+        }
+    </script>
+</body>
+</html>
