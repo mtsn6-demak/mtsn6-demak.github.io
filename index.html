@@ -33,17 +33,6 @@
             transform: translateY(-5px);
             box-shadow: 0 10px 20px rgba(0,0,0,0.1);
         }
-        .hidden-menu {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.5s ease-out, opacity 0.3s ease;
-            opacity: 0;
-        }
-        .visible-menu {
-            max-height: 500px; /* Arbitrary large height */
-            opacity: 1;
-            margin-top: 1rem;
-        }
     </style>
 </head>
 <body class="min-h-screen flex flex-col items-center">
@@ -88,124 +77,76 @@
 
         <!-- Instructional Text -->
         <div class="text-center mb-6">
-            <h3 class="text-xl font-semibold text-gray-700">Pilih Menu Belajar</h3>
-            <p class="text-gray-500 text-sm">Klik tombol di bawah untuk akses materi atau nilai</p>
+            <h3 class="text-xl font-semibold text-gray-700">Menu Utama</h3>
+            <p class="text-gray-500 text-sm">Pilih menu di bawah untuk memulai aktivitas belajar</p>
         </div>
 
         <!-- Subject Buttons Container -->
         <div class="w-full space-y-4">
 
             <!-- Fiqih Section -->
-            <div class="w-full">
-                <button onclick="toggleMenu('fiqih-menu', 'icon-fiqih')" class="subject-btn w-full bg-gradient-to-r from-emerald-500 to-green-600 text-white p-5 rounded-xl flex items-center justify-between cursor-pointer group">
-                    <div class="flex items-center space-x-4">
-                        <div class="bg-white/20 p-3 rounded-lg">
-                            <i class="fa-solid fa-mosque text-2xl"></i>
-                        </div>
-                        <div class="text-left">
-                            <h4 class="font-bold text-lg">Mata Pelajaran Fiqih</h4>
-                            <p class="text-green-100 text-xs">Materi Ibadah & Syariah</p>
-                        </div>
+            <a href="https://mtsn6-demak.github.io/fiqih" class="subject-btn w-full bg-gradient-to-r from-emerald-500 to-green-600 text-white p-5 rounded-xl flex items-center justify-between cursor-pointer group hover:no-underline">
+                <div class="flex items-center space-x-4">
+                    <div class="bg-white/20 p-3 rounded-lg">
+                        <i class="fa-solid fa-mosque text-2xl"></i>
                     </div>
-                    <i id="icon-fiqih" class="fa-solid fa-chevron-right transition-transform duration-300"></i>
-                </button>
-
-                <!-- Fiqih Sub Menu -->
-                <div id="fiqih-menu" class="hidden-menu bg-white rounded-xl shadow-inner border border-green-100 overflow-hidden mx-2">
-                    <div class="p-3 grid gap-3">
-                        <a href="https://mtsn6-demak.github.io/fiqih-shalat-jumat/" class="flex items-center p-4 rounded-lg bg-green-50 hover:bg-green-100 transition-colors border-l-4 border-green-500 group">
-                            <div class="mr-4 text-green-600 group-hover:scale-110 transition-transform">
-                                <i class="fa-solid fa-users-rays"></i>
-                            </div>
-                            <div>
-                                <h5 class="font-bold text-gray-800">Shalat Jumat</h5>
-                                <p class="text-xs text-gray-500">Pelajari tata cara dan syarat shalat jumat</p>
-                            </div>
-                            <div class="ml-auto text-green-400">
-                                <i class="fa-solid fa-arrow-right"></i>
-                            </div>
-                        </a>
-                        
-                        <a href="https://mtsn6-demak.github.io/fiqih-khutbah" class="flex items-center p-4 rounded-lg bg-green-50 hover:bg-green-100 transition-colors border-l-4 border-green-600 group">
-                            <div class="mr-4 text-green-600 group-hover:scale-110 transition-transform">
-                                <i class="fa-solid fa-microphone-lines"></i>
-                            </div>
-                            <div>
-                                <h5 class="font-bold text-gray-800">Khutbah Jumat</h5>
-                                <p class="text-xs text-gray-500">Rukun dan syarat khutbah</p>
-                            </div>
-                            <div class="ml-auto text-green-400">
-                                <i class="fa-solid fa-arrow-right"></i>
-                            </div>
-                        </a>
+                    <div class="text-left">
+                        <h4 class="font-bold text-lg">Mata Pelajaran Fiqih</h4>
+                        <p class="text-green-100 text-xs">Materi Ibadah & Syariah</p>
                     </div>
                 </div>
-            </div>
+                <div class="bg-white/20 rounded-full w-8 h-8 flex items-center justify-center group-hover:bg-white/30 transition-colors">
+                    <i class="fa-solid fa-arrow-right text-sm"></i>
+                </div>
+            </a>
 
             <!-- IPA Section -->
-            <div class="w-full">
-                <button onclick="toggleMenu('ipa-menu', 'icon-ipa')" class="subject-btn w-full bg-gradient-to-r from-blue-500 to-indigo-600 text-white p-5 rounded-xl flex items-center justify-between cursor-pointer group">
-                    <div class="flex items-center space-x-4">
-                        <div class="bg-white/20 p-3 rounded-lg">
-                            <i class="fa-solid fa-flask text-2xl"></i>
-                        </div>
-                        <div class="text-left">
-                            <h4 class="font-bold text-lg">Mata Pelajaran IPA</h4>
-                            <p class="text-blue-100 text-xs">Fisika & Biologi Alam</p>
-                        </div>
+            <a href="https://mtsn6-demak.github.io/IPA" class="subject-btn w-full bg-gradient-to-r from-blue-500 to-indigo-600 text-white p-5 rounded-xl flex items-center justify-between cursor-pointer group hover:no-underline">
+                <div class="flex items-center space-x-4">
+                    <div class="bg-white/20 p-3 rounded-lg">
+                        <i class="fa-solid fa-flask text-2xl"></i>
                     </div>
-                    <i id="icon-ipa" class="fa-solid fa-chevron-right transition-transform duration-300"></i>
-                </button>
-
-                <!-- IPA Sub Menu -->
-                <div id="ipa-menu" class="hidden-menu bg-white rounded-xl shadow-inner border border-blue-100 overflow-hidden mx-2">
-                    <div class="p-3 grid gap-3">
-                        <a href="https://mtsn6-demak.github.io/IPA-getaran" class="flex items-center p-4 rounded-lg bg-blue-50 hover:bg-blue-100 transition-colors border-l-4 border-blue-500 group">
-                            <div class="mr-4 text-blue-600 group-hover:scale-110 transition-transform">
-                                <i class="fa-solid fa-wave-square"></i>
-                            </div>
-                            <div>
-                                <h5 class="font-bold text-gray-800">Getaran</h5>
-                                <p class="text-xs text-gray-500">Konsep dasar getaran dan bandul</p>
-                            </div>
-                            <div class="ml-auto text-blue-400">
-                                <i class="fa-solid fa-arrow-right"></i>
-                            </div>
-                        </a>
-                        
-                        <a href="https://mtsn6-demak.github.io/IPA-gelombang" class="flex items-center p-4 rounded-lg bg-blue-50 hover:bg-blue-100 transition-colors border-l-4 border-blue-600 group">
-                            <div class="mr-4 text-blue-600 group-hover:scale-110 transition-transform">
-                                <i class="fa-solid fa-water"></i>
-                            </div>
-                            <div>
-                                <h5 class="font-bold text-gray-800">Gelombang</h5>
-                                <p class="text-xs text-gray-500">Gelombang transversal & longitudinal</p>
-                            </div>
-                            <div class="ml-auto text-blue-400">
-                                <i class="fa-solid fa-arrow-right"></i>
-                            </div>
-                        </a>
+                    <div class="text-left">
+                        <h4 class="font-bold text-lg">Mata Pelajaran IPA</h4>
+                        <p class="text-blue-100 text-xs">Fisika & Biologi Alam</p>
                     </div>
                 </div>
-            </div>
+                <div class="bg-white/20 rounded-full w-8 h-8 flex items-center justify-center group-hover:bg-white/30 transition-colors">
+                    <i class="fa-solid fa-arrow-right text-sm"></i>
+                </div>
+            </a>
+
+            <!-- Uji Kompetensi Section (NEW) -->
+            <a href="https://mtsn6-demak.github.io/formatif" class="subject-btn w-full bg-gradient-to-r from-purple-500 to-indigo-500 text-white p-5 rounded-xl flex items-center justify-between cursor-pointer group hover:no-underline">
+                <div class="flex items-center space-x-4">
+                    <div class="bg-white/20 p-3 rounded-lg">
+                        <i class="fa-solid fa-pen-to-square text-2xl"></i>
+                    </div>
+                    <div class="text-left">
+                        <h4 class="font-bold text-lg">Uji Kompetensi</h4>
+                        <p class="text-purple-100 text-xs">Tes Formatif & Latihan Soal</p>
+                    </div>
+                </div>
+                <div class="bg-white/20 rounded-full w-8 h-8 flex items-center justify-center group-hover:bg-white/30 transition-colors">
+                    <i class="fa-solid fa-arrow-right text-sm"></i>
+                </div>
+            </a>
 
             <!-- Nilai Siswa Section -->
-            <div class="w-full">
-                <a href="https://mtsn6-demak.github.io/nilai-siswa" class="subject-btn w-full bg-gradient-to-r from-orange-500 to-red-500 text-white p-5 rounded-xl flex items-center justify-between cursor-pointer group hover:no-underline">
-                    <div class="flex items-center space-x-4">
-                        <div class="bg-white/20 p-3 rounded-lg">
-                            <i class="fa-solid fa-clipboard-check text-2xl"></i>
-                        </div>
-                        <div class="text-left">
-                            <h4 class="font-bold text-lg">Cek Nilai Siswa</h4>
-                            <p class="text-orange-100 text-xs">Lihat hasil belajar & evaluasi</p>
-                        </div>
+            <a href="https://mtsn6-demak.github.io/nilai-siswa" class="subject-btn w-full bg-gradient-to-r from-orange-500 to-red-500 text-white p-5 rounded-xl flex items-center justify-between cursor-pointer group hover:no-underline">
+                <div class="flex items-center space-x-4">
+                    <div class="bg-white/20 p-3 rounded-lg">
+                        <i class="fa-solid fa-clipboard-check text-2xl"></i>
                     </div>
-                    <div class="bg-white/20 rounded-full w-8 h-8 flex items-center justify-center group-hover:bg-white/30 transition-colors">
-                        <i class="fa-solid fa-arrow-up-right-from-square text-sm"></i>
+                    <div class="text-left">
+                        <h4 class="font-bold text-lg">Cek Nilai Siswa</h4>
+                        <p class="text-orange-100 text-xs">Lihat hasil belajar & evaluasi</p>
                     </div>
-                </a>
-            </div>
+                </div>
+                <div class="bg-white/20 rounded-full w-8 h-8 flex items-center justify-center group-hover:bg-white/30 transition-colors">
+                    <i class="fa-solid fa-arrow-up-right-from-square text-sm"></i>
+                </div>
+            </a>
 
         </div>
 
@@ -219,33 +160,5 @@
         </div>
     </footer>
 
-    <!-- Logic Script -->
-    <script>
-        function toggleMenu(menuId, iconId) {
-            const menu = document.getElementById(menuId);
-            const icon = document.getElementById(iconId);
-            
-            // Close other menus if open (Optional logic for accordion effect)
-            const allMenus = document.querySelectorAll('.hidden-menu');
-            const allIcons = document.querySelectorAll('.fa-chevron-right');
-            
-            // Check if current menu is already open
-            const isAlreadyOpen = menu.classList.contains('visible-menu');
-
-            // Reset all menus
-            allMenus.forEach(m => {
-                m.classList.remove('visible-menu');
-            });
-            allIcons.forEach(i => {
-                i.style.transform = 'rotate(0deg)';
-            });
-
-            // If it wasn't open, open it now
-            if (!isAlreadyOpen) {
-                menu.classList.add('visible-menu');
-                icon.style.transform = 'rotate(90deg)';
-            }
-        }
-    </script>
 </body>
 </html>
