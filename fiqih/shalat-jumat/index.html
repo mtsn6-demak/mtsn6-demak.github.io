@@ -1,0 +1,730 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fikih Ibadah: Shalat Jumat</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400;500;600&family=Patrick+Hand&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+    
+    <style>
+        body {
+            font-family: 'Fredoka', sans-serif;
+            background-color: #f0fdf4; /* Green 50 */
+            color: #14532d; /* Green 900 */
+        }
+        h1, h2, h3 {
+            font-family: 'Fredoka', cursive;
+            letter-spacing: 0.5px;
+        }
+        p, li, label, input, select {
+            font-family: 'Patrick Hand', cursive;
+            font-size: 1.1rem;
+        }
+        .arabic-text {
+            font-family: 'Amiri', serif;
+            direction: rtl;
+        }
+        .card-hover:hover {
+            transform: translateY(-5px) rotate(1deg);
+        }
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f0fdf4; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #22c55e; 
+            border-radius: 10px;
+            border: 2px solid #f0fdf4;
+        }
+        
+        /* --- Quiz & Option Styling --- */
+        .option-label {
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 2px solid #dcfce7; /* green-100 */
+            position: relative;
+            overflow: hidden;
+        }
+        .option-label:hover {
+            border-color: #4ade80; /* green-400 */
+            background-color: #f0fdf4; /* green-50 */
+        }
+        /* State Checked */
+        .option-input:checked + .option-content {
+            background-color: #dcfce7; /* green-100 */
+            border-color: #16a34a; /* green-600 */
+            color: #14532d; /* green-900 */
+            box-shadow: 0 4px 6px -1px rgba(22, 163, 74, 0.1), 0 2px 4px -1px rgba(22, 163, 74, 0.06);
+        }
+        .option-circle {
+            transition: all 0.3s ease;
+            border: 2px solid #86efac;
+        }
+        .option-input:checked + .option-content .option-circle {
+            background-color: #16a34a;
+            border-color: #16a34a;
+            color: white;
+            transform: scale(1.1);
+        }
+        .option-input:checked + .option-content {
+            border-width: 2px;
+        }
+
+        /* --- Custom Modal Styling --- */
+        .modal-backdrop {
+            background-color: rgba(20, 83, 45, 0.6); /* Green-900 opacity */
+            backdrop-filter: blur(4px);
+            animation: fadeIn 0.2s ease-out;
+        }
+        .modal-content {
+            animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes popIn { from { transform: scale(0.9) translateY(10px); opacity: 0; } to { transform: scale(1) translateY(0); opacity: 1; } }
+    </style>
+</head>
+<body class="selection:bg-green-200 selection:text-green-900">
+
+    <!-- Navigation -->
+    <nav class="bg-emerald-600 text-white shadow-lg sticky top-0 z-50 border-b-4 border-emerald-700">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <div class="flex items-center space-x-2 animate-bounce-slow">
+                <i class="fa-solid fa-mosque text-2xl text-yellow-300"></i>
+                <span class="text-2xl font-semibold tracking-wide">FikihCeria</span>
+            </div>
+            <div class="hidden md:flex space-x-6 text-lg">
+                <a href="#materi" class="hover:text-yellow-200 transition hover:scale-110 transform inline-block">Materi</a>
+                <a href="#simulasi" class="hover:text-yellow-200 transition hover:scale-110 transform inline-block">Niat</a>
+                <a href="#kalkulator" class="hover:text-yellow-200 transition hover:scale-110 transform inline-block">Cek Wajib</a>
+                <a href="#latihan" class="hover:text-yellow-200 transition hover:scale-110 transform inline-block">Latihan</a>
+            </div>
+            <button id="mobile-menu-btn" class="md:hidden focus:outline-none bg-emerald-700 p-2 rounded-lg text-white">
+                <i class="fa-solid fa-bars text-xl"></i>
+            </button>
+        </div>
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-emerald-600 pb-4 px-4 text-center">
+            <a href="#materi" class="block py-2 hover:bg-emerald-700 rounded-lg">Materi</a>
+            <a href="#simulasi" class="block py-2 hover:bg-emerald-700 rounded-lg">Niat</a>
+            <a href="#kalkulator" class="block py-2 hover:bg-emerald-700 rounded-lg">Cek Wajib</a>
+            <a href="#latihan" class="block py-2 hover:bg-emerald-700 rounded-lg">Latihan</a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="bg-gradient-to-b from-emerald-500 to-green-100 pt-20 pb-32 px-4 text-center relative overflow-hidden">
+        <div class="absolute top-10 left-10 w-20 h-20 bg-yellow-300 rounded-full opacity-50 mix-blend-multiply filter blur-xl animate-pulse"></div>
+        <div class="absolute top-20 right-20 w-32 h-32 bg-teal-300 rounded-full opacity-50 mix-blend-multiply filter blur-xl animate-pulse" style="animation-delay: 1s"></div>
+
+        <div class="container mx-auto max-w-4xl relative z-10">
+            <span class="bg-white text-emerald-600 px-4 py-1 rounded-full text-sm font-bold shadow-sm mb-4 inline-block transform -rotate-2">
+                🌙 Mari Meraih Berkah
+            </span>
+            <h1 class="text-5xl md:text-7xl font-bold mb-6 text-white drop-shadow-md">
+                Shalat Jumat
+            </h1>
+            <p class="text-xl md:text-2xl mb-8 text-green-900 max-w-2xl mx-auto font-medium">
+                "Wahai orang-orang yang beriman! Apabila telah diseru untuk melaksanakan salat pada hari Jumat, maka segeralah kamu mengingat Allah..." (QS. Al-Jumu'ah: 9)
+            </p>
+            <a href="#simulasi" class="bg-yellow-400 text-yellow-900 border-b-4 border-yellow-600 active:border-b-0 active:translate-y-1 px-8 py-4 rounded-full font-bold text-xl shadow-xl hover:bg-yellow-500 transition inline-flex items-center gap-3">
+                <i class="fa-solid fa-book-open"></i> Pelajari Niat
+            </a>
+        </div>
+    </header>
+
+    <!-- Materi Section -->
+    <section id="materi" class="py-10 container mx-auto px-4 -mt-20 relative z-20">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <!-- Card 1 -->
+            <div class="bg-white p-8 rounded-3xl shadow-lg border-4 border-emerald-200 card-hover transition duration-300 transform">
+                <div class="bg-emerald-100 w-16 h-16 rounded-full flex items-center justify-center mb-4 text-emerald-600 mx-auto shadow-inner">
+                    <i class="fa-solid fa-book-quran text-3xl"></i>
+                </div>
+                <h3 class="text-2xl font-bold mb-3 text-center text-emerald-700">Pengertian & Hukum</h3>
+                <p class="text-center text-gray-600 leading-relaxed mb-4">
+                    Shalat dua rakaat yang dilakukan secara berjamaah pada waktu dzuhur di hari Jumat, didahului oleh dua khutbah.
+                </p>
+                <div class="bg-emerald-50 p-2 rounded text-center text-sm">
+                    <strong>Hukum:</strong> Fardhu 'Ain bagi laki-laki muslim yang memenuhi syarat.
+                </div>
+            </div>
+
+            <!-- Card 2 -->
+            <div class="bg-white p-8 rounded-3xl shadow-lg border-4 border-teal-200 card-hover transition duration-300 transform">
+                <div class="bg-teal-100 w-16 h-16 rounded-full flex items-center justify-center mb-4 text-teal-600 mx-auto shadow-inner">
+                    <i class="fa-solid fa-list-check text-3xl"></i>
+                </div>
+                <h3 class="text-2xl font-bold mb-3 text-center text-teal-700">Syarat Wajib & Sah</h3>
+                <div class="text-gray-600 text-left text-sm space-y-4">
+                    <div>
+                        <strong class="text-teal-600 block mb-1">1. Syarat Wajib:</strong>
+                        <ol class="list-decimal pl-5 space-y-1">
+                            <li>Beragama Islam</li>
+                            <li>Baligh </li>
+                            <li>Berakal Sehat</li>
+                            <li>Laki-laki</li>
+                            <li>Sehat Jasmani</li>
+                            <li>Mukim</li>
+                            <li>Tidak ada halangan yang memberatkan untuk shalat jumat</li>
+                        </ol>
+                    </div>
+                    <div>
+                        <strong class="text-teal-600 block mb-1">2. Syarat Sah:</strong>
+                        <ol class="list-decimal pl-5 space-y-1">
+                            <li>Di tempat yang menetap (masjid)</li>
+                            <li>Berjamaah (min. 40 orang)</li>
+                            <li>Dilakukan di waktu Dzuhur</li>
+                            <li>Didahului dua khutbah</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 3 -->
+            <div class="bg-white p-8 rounded-3xl shadow-lg border-4 border-yellow-200 card-hover transition duration-300 transform">
+                <div class="bg-yellow-100 w-16 h-16 rounded-full flex items-center justify-center mb-4 text-yellow-600 mx-auto shadow-inner">
+                    <i class="fa-solid fa-star text-3xl"></i>
+                </div>
+                <h3 class="text-2xl font-bold mb-3 text-center text-yellow-700">Sunnah Jumat</h3>
+                <div class="text-gray-600 text-left text-sm">
+                    <ol class="list-decimal pl-5 space-y-2">
+                        <li>Mandi</li>
+                        <li>Memotong kuku</li>
+                        <li>Memakai pakaian putih bersih</li>
+                        <li>Memakai wangi-wangian</li>
+                        <li>Bersegera datang ke masjid dan berdo'a</li>
+                        <li>Shalat Tahiyatul Masjid</li>
+                        <li>Memperbanyak doa,shalawat dan dzikir lainnya hingga khutbah dimulai</li>
+                        <li>Diam menyimak khutbah</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Simulasi Section (Niat) -->
+    <section id="simulasi" class="bg-green-50 py-16 relative">
+        <div class="absolute top-0 left-0 w-full h-20 bg-gradient-to-b from-green-100 to-green-50"></div>
+        <div class="container mx-auto px-4 relative z-10">
+            <div class="text-center mb-10">
+                <span class="inline-block bg-white text-emerald-600 px-6 py-2 rounded-full shadow-md font-bold tracking-wider text-sm uppercase mb-3 border border-emerald-100">
+                    <i class="fa-solid fa-hands-praying mr-2"></i>Praktik Ibadah
+                </span>
+                <h2 class="text-4xl font-bold text-gray-800 mt-2">Hafalan Niat Shalat Jumat 🕌</h2>
+            </div>
+            
+            <div class="flex flex-col lg:flex-row gap-8 items-center max-w-5xl mx-auto">
+                <!-- Display Area -->
+                <div class="w-full lg:w-2/3 bg-white rounded-[2rem] shadow-xl overflow-hidden relative border-8 border-emerald-200 min-h-[400px] flex items-center justify-center p-8 text-center bg-[url('https://www.transparenttextures.com/patterns/arabesque.png')]">
+                    <div>
+                        <p class="text-emerald-500 font-bold mb-4 uppercase tracking-widest text-sm">Niat Sebagai Makmum</p>
+                        <h2 class="arabic-text text-3xl md:text-3xl leading-relaxed text-gray-800 mb-6 font-bold">
+                            أُصَلِّي فَرْضَ الْجُمُعَةِ رَكْعَتَيْنِ مُسْتَقْبِلَ الْقِبْلَةِ أَدَاءً مَأْمُومًا لِلهِ تَعَالَى
+                        </h2>
+                        <p class="text-lg text-emerald-700 italic mb-2 font-medium">"Ushalli fardhal jumu'ati rak'ataini mustaqbilal qiblati adaa-an ma'muman lillaahi ta'aala."</p>
+                        <hr class="w-20 mx-auto border-emerald-200 my-4">
+                        <p class="text-gray-600">"Aku berniat shalat fardhu Jumat dua rakaat menghadap kiblat sebagai makmum karena Allah Ta'ala."</p>
+                    </div>
+                </div>
+
+                <!-- Controls -->
+                <div class="w-full lg:w-1/3 bg-white p-8 rounded-[2rem] shadow-xl border-b-8 border-teal-200">
+                    <h3 class="text-2xl font-bold mb-6 flex items-center text-teal-600">
+                        <i class="fa-solid fa-sliders mr-3"></i> Panduan
+                    </h3>
+                    <div class="space-y-4">
+                        <div class="bg-teal-50 p-4 rounded-xl border border-teal-100">
+                            <h4 class="font-bold text-teal-800 mb-2"><i class="fa-solid fa-1 mr-2"></i>Waktu Pelaksanaan</h4>
+                            <p class="text-sm text-teal-700">Dilakukan di waktu Dzuhur pada hari Jumat.</p>
+                        </div>
+                        <div class="bg-teal-50 p-4 rounded-xl border border-teal-100">
+                            <h4 class="font-bold text-teal-800 mb-2"><i class="fa-solid fa-2 mr-2"></i>Jumlah Rakaat</h4>
+                            <p class="text-sm text-teal-700">2 Rakaat secara berjamaah (jahar/suara keras).</p>
+                        </div>
+                        <div class="bg-teal-50 p-4 rounded-xl border border-teal-100">
+                            <h4 class="font-bold text-teal-800 mb-2"><i class="fa-solid fa-3 mr-2"></i>Urutan</h4>
+                            <p class="text-sm text-teal-700">Khutbah Pertama &rarr; Duduk &rarr; Khutbah Kedua &rarr; Shalat.</p>
+                        </div>
+                    </div>
+                    <div class="mt-6 text-center text-sm text-gray-400">
+                        *Jangan lupa niat di dalam hati saat Takbiratul Ihram.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Kalkulator Section (Checker) -->
+    <section id="kalkulator" class="py-16 container mx-auto px-4 bg-white rounded-t-[3rem] shadow-[0_-10px_40px_rgba(0,0,0,0.05)]">
+        <div class="max-w-4xl mx-auto">
+            <div class="text-center mb-10">
+                <div class="inline-block p-4 bg-emerald-100 rounded-full text-emerald-600 mb-4 text-3xl animate-bounce">
+                    <i class="fa-solid fa-clipboard-check"></i>
+                </div>
+                <h2 class="text-4xl font-bold text-emerald-600">Cek Kewajiban Jumat</h2>
+                <p class="text-gray-500 mt-2">Apakah kamu sudah wajib melaksanakan Shalat Jumat?</p>
+            </div>
+            
+            <div class="bg-emerald-50 rounded-3xl shadow-lg border-2 border-emerald-100 p-8">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
+                    <div class="space-y-6">
+                        <div class="bg-white p-6 rounded-xl border border-emerald-100 shadow-sm space-y-4">
+                            <div>
+                                <label class="block text-gray-600 font-bold mb-1">Jenis Kelamin</label>
+                                <select id="input-gender" class="w-full p-3 border-2 border-emerald-100 rounded-lg outline-none focus:border-emerald-400">
+                                    <option value="L">Laki-laki</option>
+                                    <option value="P">Perempuan</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-gray-600 font-bold mb-1">Status Usia</label>
+                                <select id="input-age" class="w-full p-3 border-2 border-emerald-100 rounded-lg outline-none focus:border-emerald-400">
+                                    <option value="Baligh">Sudah Baligh (Remaja,Dewasa)</option>
+                                    <option value="Anak">Belum Baligh (Anak-anak)</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-gray-600 font-bold mb-1">Status Tempat</label>
+                                <select id="input-status" class="w-full p-3 border-2 border-emerald-100 rounded-lg outline-none focus:border-emerald-400">
+                                    <option value="Mukim">Mukim (Menetap)</option>
+                                    <option value="Musafir">Musafir (Perjalanan Jauh)</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-gray-600 font-bold mb-1">Kondisi Fisik</label>
+                                <select id="input-health" class="w-full p-3 border-2 border-emerald-100 rounded-lg outline-none focus:border-emerald-400">
+                                    <option value="Sehat">Sehat</option>
+                                    <option value="Sakit">Sakit Parah / Udzur</option>
+                                    <option value="Gila">Hilang Akal (Gila/Pingsan)</option>
+                                </select>
+                            </div>
+                        </div>
+                        <button onclick="checkObligation()" class="w-full bg-emerald-500 hover:bg-emerald-600 text-white text-xl font-bold py-3 rounded-xl shadow-lg border-b-4 border-emerald-700 active:border-b-0 active:translate-y-1 transition">
+                            Cek Hukumnya 🚀
+                        </button>
+                    </div>
+                    
+                    <div class="bg-white rounded-3xl p-8 border-4 border-dashed border-emerald-200 text-center relative overflow-hidden flex flex-col items-center justify-center min-h-[300px]">
+                        <div class="absolute right-0 top-0 bg-yellow-300 text-yellow-800 px-6 py-2 rounded-bl-3xl font-bold shadow-sm z-10">Hasilnya</div>
+                        <span class="text-gray-400 font-bold uppercase tracking-widest text-sm mb-4 block">Hukum Bagi Kamu:</span>
+                        
+                        <div id="check-result" class="text-5xl font-black text-emerald-600 mb-4 transition-all">---</div>
+                        <div id="check-reason" class="bg-emerald-50 px-4 py-3 rounded-lg text-emerald-800 font-medium border border-emerald-100 text-sm leading-relaxed">
+                            Silakan lengkapi data di samping untuk melihat hukumnya.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Quiz Section -->
+    <section id="latihan" class="py-16 bg-gradient-to-t from-emerald-100 to-white">
+        <div class="container mx-auto px-4 max-w-4xl">
+            <div class="text-center mb-10">
+                <span class="inline-block bg-emerald-500 text-white px-6 py-2 rounded-full shadow-md font-bold tracking-wider text-sm uppercase mb-3">
+                    <i class="fa-solid fa-pen-to-square mr-2"></i>Tantangan
+                </span>
+                <h2 class="text-4xl font-bold text-emerald-700 mt-2">Latihan Soal</h2>
+                <p class="text-gray-600 mt-2">Seberapa paham kamu tentang Shalat Jumat?</p>
+            </div>
+
+            <!-- Login Container -->
+            <div id="quiz-login" class="bg-white rounded-3xl shadow-xl p-8 border-4 border-emerald-200 max-w-lg mx-auto relative">
+                <div id="auth-status" class="absolute top-4 right-4 text-xs font-bold text-gray-400">
+                    <i class="fa-solid fa-circle text-gray-300 mr-1"></i> Menghubungkan...
+                </div>
+                
+                <div class="text-center mb-6">
+                    <i class="fa-solid fa-user-graduate text-5xl text-emerald-400 mb-4"></i>
+                    <h3 class="text-2xl font-bold text-gray-700">Identitas Siswa</h3>
+                    <p class="text-sm text-gray-500">Isi nama dulu sebelum mulai ya!</p>
+                </div>
+                <div class="space-y-4">
+                    <div>
+                        <label class="block text-gray-600 font-bold mb-1">Nama Lengkap</label>
+                        <input type="text" id="student-name" class="w-full p-3 border-2 border-emerald-100 rounded-xl outline-none focus:border-emerald-500 bg-emerald-50" placeholder="Contoh: Ahmad Santoso">
+                    </div>
+                    <div>
+                        <label class="block text-gray-600 font-bold mb-1">Kelas</label>
+                        <input type="text" id="student-class" class="w-full p-3 border-2 border-emerald-100 rounded-xl outline-none focus:border-emerald-500 bg-emerald-50" placeholder="Contoh: 7A">
+                    </div>
+                    <button id="start-btn" onclick="startQuiz()" disabled class="w-full bg-gray-400 text-white font-bold py-3 rounded-xl shadow-lg cursor-not-allowed transition mt-4">
+                        Tunggu Sebentar...
+                    </button>
+                    <p id="auth-error-msg" class="text-red-500 text-xs text-center hidden">Gagal terhubung ke database. Coba refresh halaman.</p>
+                </div>
+            </div>
+
+            <!-- Quiz Container -->
+            <div id="quiz-container" class="hidden space-y-6">
+                <div class="bg-emerald-100 p-4 rounded-xl flex justify-between items-center border border-emerald-200">
+                    <div class="font-bold text-emerald-700">
+                        <i class="fa-solid fa-user mr-2"></i> <span id="display-name">---</span> (<span id="display-class">---</span>)
+                    </div>
+                    <div class="bg-white px-4 py-1 rounded-full text-emerald-600 text-sm font-bold shadow-sm">
+                        Total: 15 Soal
+                    </div>
+                </div>
+
+                <form id="quiz-form" class="space-y-6">
+                    <!-- Questions will be injected here by JS -->
+                </form>
+
+                <div class="text-center pt-6">
+                    <button type="button" id="submit-btn" onclick="preSubmitCheck()" class="bg-green-500 hover:bg-green-600 text-white text-xl font-bold px-10 py-4 rounded-full shadow-lg border-b-4 border-green-700 active:border-b-0 active:translate-y-1 transition transform hover:scale-105">
+                        <i class="fa-solid fa-paper-plane mr-2"></i> Kirim Jawaban
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Custom Modal -->
+    <div id="custom-modal" class="hidden fixed inset-0 z-[100] flex items-center justify-center modal-backdrop px-4">
+        <div class="bg-white rounded-3xl shadow-2xl p-8 max-w-md w-full modal-content border-t-8 border-emerald-500 relative flex flex-col items-center">
+            <div class="absolute -top-12 bg-white rounded-full p-2 shadow-lg">
+                 <div id="modal-icon-container" class="w-20 h-20 rounded-full flex items-center justify-center text-4xl border-4 border-emerald-50">
+                     <i class="fa-solid fa-bell text-emerald-500"></i>
+                 </div>
+            </div>
+            <div class="mt-10 text-center w-full">
+                <h3 id="modal-title" class="text-2xl font-bold text-gray-800 mb-2 font-['Fredoka']">Judul Modal</h3>
+                <div id="modal-body" class="text-gray-600 mb-8 leading-relaxed text-lg font-['Patrick_Hand']">
+                    Pesan akan muncul di sini.
+                </div>
+                <div id="modal-actions" class="flex flex-col sm:flex-row gap-3 justify-center w-full">
+                    <!-- Buttons injected via JS -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-emerald-600 text-white py-8 mt-10">
+        <div class="container mx-auto px-4 text-center">
+            <p class="font-bold text-xl mb-2 font-['Fredoka']">FikihCeria</p>
+            <p class="text-emerald-100 opacity-90 font-['Patrick_Hand']">Belajar Fikih jadi lebih mudah dan menyenangkan!</p>
+            <p class="text-xs text-emerald-200 mt-6">&copy; 2026 EduFikih Kids. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyAkX8qAS-O_5m_qaGr8Aa9XME-lVyBMibw",
+            authDomain: "belajaronline-b5512.firebaseapp.com",
+            projectId: "belajaronline-b5512",
+            storageBucket: "belajaronline-b5512.firebasestorage.app",
+            messagingSenderId: "896107581081",
+            appId: "1:896107581081:web:629056c097c90fdf583208",
+            measurementId: "G-7MKNGF9PCX"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+        const auth = getAuth(app);
+        
+        const appId = 'belajaronline-b5512';
+        const COLLECTION_NAME = 'scores';
+
+        // --- Auth & State Management ---
+        const startBtn = document.getElementById('start-btn');
+        const authStatus = document.getElementById('auth-status');
+        const authErrorMsg = document.getElementById('auth-error-msg');
+
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                console.log("User terautentikasi:", user.uid);
+                startBtn.disabled = false;
+                startBtn.classList.remove('bg-gray-400', 'cursor-not-allowed');
+                startBtn.classList.add('bg-emerald-500', 'hover:bg-emerald-600', 'border-b-4', 'border-emerald-700');
+                startBtn.innerHTML = 'Mulai Kerjakan Soal <i class="fa-solid fa-arrow-right ml-2"></i>';
+                authStatus.innerHTML = '<i class="fa-solid fa-circle text-green-400 mr-1"></i> Siap';
+                authStatus.classList.replace('text-gray-400', 'text-green-600');
+                authErrorMsg.classList.add('hidden');
+            } else {
+                signInAnonymously(auth).catch((error) => {
+                    authStatus.innerHTML = '<i class="fa-solid fa-circle text-red-400 mr-1"></i> Gagal';
+                    authErrorMsg.classList.remove('hidden');
+                    authErrorMsg.textContent = "Error Login: " + error.message;
+                });
+            }
+        });
+
+        // --- Helper Functions for Modal ---
+        const modal = document.getElementById('custom-modal');
+        const modalTitle = document.getElementById('modal-title');
+        const modalBody = document.getElementById('modal-body');
+        const modalActions = document.getElementById('modal-actions');
+        const modalIconContainer = document.getElementById('modal-icon-container');
+
+        function showModal(config) {
+            modalTitle.textContent = config.title;
+            modalBody.innerHTML = config.message;
+            let iconClass = 'fa-bell';
+            let iconColor = 'text-emerald-500';
+            let borderColor = 'border-emerald-50';
+            
+            if (config.type === 'warning') { iconClass = 'fa-triangle-exclamation'; iconColor = 'text-amber-500'; borderColor = 'border-amber-50'; }
+            if (config.type === 'success') { iconClass = 'fa-trophy'; iconColor = 'text-green-500'; borderColor = 'border-green-50'; }
+            if (config.type === 'error') { iconClass = 'fa-circle-xmark'; iconColor = 'text-red-500'; borderColor = 'border-red-50'; }
+            if (config.type === 'loading') { iconClass = 'fa-spinner fa-spin'; iconColor = 'text-blue-500'; borderColor = 'border-blue-50'; }
+
+            modalIconContainer.className = `w-20 h-20 rounded-full flex items-center justify-center text-4xl border-4 ${borderColor} bg-white shadow-inner`;
+            modalIconContainer.innerHTML = `<i class="fa-solid ${iconClass} ${iconColor}"></i>`;
+            modalActions.innerHTML = '';
+            if (config.buttons) {
+                config.buttons.forEach(btn => {
+                    const buttonEl = document.createElement('button');
+                    buttonEl.className = `w-full py-3 rounded-xl font-bold transition shadow-sm border-b-4 active:border-b-0 active:translate-y-1 ${btn.class || 'bg-gray-200 text-gray-700 border-gray-300 hover:bg-gray-300'}`;
+                    buttonEl.textContent = btn.text;
+                    buttonEl.onclick = () => { if (btn.close !== false) hideModal(); if (btn.onClick) btn.onClick(); };
+                    modalActions.appendChild(buttonEl);
+                });
+            } else if (config.type !== 'loading') {
+                const closeBtn = document.createElement('button');
+                closeBtn.className = "w-full bg-emerald-500 text-white py-3 rounded-xl font-bold hover:bg-emerald-600 border-b-4 border-emerald-700 active:border-b-0 active:translate-y-1 transition";
+                closeBtn.textContent = "Tutup";
+                closeBtn.onclick = hideModal;
+                modalActions.appendChild(closeBtn);
+            }
+            modal.classList.remove('hidden');
+        }
+        function hideModal() { modal.classList.add('hidden'); }
+
+        // --- Mobile Menu Logic ---
+        const btn = document.getElementById('mobile-menu-btn');
+        const menu = document.getElementById('mobile-menu');
+        btn.addEventListener('click', () => { menu.classList.toggle('hidden'); });
+
+        // --- Calculator Logic (Check Obligation) ---
+        window.checkObligation = function() {
+            const gender = document.getElementById('input-gender').value;
+            const age = document.getElementById('input-age').value;
+            const status = document.getElementById('input-status').value;
+            const health = document.getElementById('input-health').value;
+            
+            const resultEl = document.getElementById('check-result');
+            const reasonEl = document.getElementById('check-reason');
+
+            // Reset Animation
+            resultEl.classList.remove('animate-bounce');
+            void resultEl.offsetWidth; // trigger reflow
+
+            // Logika Fikih
+            if (health === 'Gila') {
+                resultEl.textContent = "TIDAK WAJIB";
+                resultEl.className = "text-5xl font-black text-gray-400 mb-4 transition-all";
+                reasonEl.innerHTML = "<i class='fa-solid fa-brain mr-2'></i>Syarat wajib shalat adalah berakal. Orang yang hilang akal tidak terbebani hukum (taklif).";
+            } else if (gender === 'P') {
+                resultEl.textContent = "TIDAK WAJIB";
+                resultEl.className = "text-5xl font-black text-pink-500 mb-4 transition-all";
+                reasonEl.innerHTML = "<i class='fa-solid fa-person-dress mr-2'></i>Perempuan tidak diwajibkan Shalat Jumat, namun <b>wajib</b> melaksanakan Shalat Dzuhur di rumah.";
+            } else if (age === 'Anak') {
+                resultEl.textContent = "TIDAK WAJIB";
+                resultEl.className = "text-5xl font-black text-blue-400 mb-4 transition-all";
+                reasonEl.innerHTML = "<i class='fa-solid fa-child-reaching mr-2'></i>Anak yang belum baligh tidak wajib. Namun, sangat dianjurkan ikut untuk pembelajaran/latihan.";
+            } else if (health === 'Sakit') {
+                resultEl.textContent = "TIDAK WAJIB";
+                resultEl.className = "text-5xl font-black text-amber-500 mb-4 transition-all";
+                reasonEl.innerHTML = "<i class='fa-solid fa-bed-pulse mr-2'></i>Sakit parah termasuk udzur syar'i yang menggugurkan kewajiban Jumat. Wajib diganti Shalat Dzuhur.";
+            } else if (status === 'Musafir') {
+                resultEl.textContent = "TIDAK WAJIB";
+                resultEl.className = "text-5xl font-black text-amber-500 mb-4 transition-all";
+                reasonEl.innerHTML = "<i class='fa-solid fa-plane-departure mr-2'></i>Musafir (perjalanan jauh sebelum subuh) mendapat keringanan (rukhsah). Wajib diganti Shalat Dzuhur.";
+            } else {
+                resultEl.textContent = "WAJIB AIN!";
+                resultEl.className = "text-5xl font-black text-emerald-600 mb-4 transition-all animate-bounce";
+                reasonEl.innerHTML = "<i class='fa-solid fa-circle-check mr-2'></i>Anda Laki-laki, Baligh, Berakal, Sehat, dan Mukim. <br><b>Haram</b> meninggalkannya tanpa udzur.";
+            }
+        }
+
+        // --- QUIZ LOGIC (Shalat Jumat) ---
+        const questionData = [
+            { q: "Apa hukum melaksanakan Shalat Jumat bagi laki-laki muslim yang memenuhi syarat?", options: ["Sunnah Muakkad", "Fardhu 'Ain", "Fardhu Kifayah", "Mubah"], a: 1 },
+            { q: "Surah Al-Qur'an yang memerintahkan pelaksanaan Shalat Jumat adalah...", options: ["QS. Al-Baqarah: 183", "QS. Al-Jumu'ah: 9", "QS. An-Nisa: 43", "QS. Al-Maidah: 6"], a: 1 },
+            { q: "Berapa jumlah rakaat Shalat Jumat?", options: ["2 Rakaat", "3 Rakaat", "4 Rakaat", "1 Rakaat"], a: 0 },
+            { q: "Berikut ini yang BUKAN termasuk syarat wajib Shalat Jumat adalah...", options: ["Laki-laki", "Baligh", "Kaya", "Berakal"], a: 2 },
+            { q: "Salah satu syarat sah Shalat Jumat adalah didahului oleh...", options: ["Makan siang", "Dua Khutbah", "Dua Rakaat Sunnah", "Adzan Subuh"], a: 1 },
+            { q: "Bagi perempuan, hukum melaksanakan Shalat Jumat adalah...", options: ["Wajib", "Haram", "Tidak Wajib", "Makruh"], a: 2 },
+            { q: "Jika seseorang berhalangan hadir Shalat Jumat karena sakit parah, kewajibannya diganti dengan...", options: ["Shalat Dzuhur", "Membayar Fidyah", "Shalat Ashar", "Puasa"], a: 0 },
+            { q: "Sikap yang benar saat khatib sedang berkhutbah adalah...", options: ["Berbicara dengan teman", "Tidur", "Diam dan mendengarkan", "Bermain HP"], a: 2 },
+            { q: "Shalat sunnah yang dianjurkan dilakukan saat baru masuk masjid disebut...", options: ["Shalat Dhuha", "Shalat Tahajud", "Shalat Tahiyatul Masjid", "Shalat Witir"], a: 2 },
+            { q: "Berapa jumlah minimal jamaah Shalat Jumat menurut Mazhab Syafi'i?", options: ["3 orang", "12 orang", "40 orang", "100 orang"], a: 2 },
+            { q: "Warna pakaian yang disunnahkan dipakai saat Shalat Jumat adalah...", options: ["Hitam", "Merah", "Putih", "Kuning"], a: 2 },
+            { q: "Apa yang disunnahkan dilakukan sebelum berangkat Shalat Jumat?", options: ["Mandi keramas", "Makan yang banyak", "Tidur siang", "Berlari"], a: 0 },
+            { q: "Orang yang sedang dalam perjalanan jauh disebut...", options: ["Mukim", "Musafir", "Muadzin", "Mualaf"], a: 1 },
+            { q: "Waktu pelaksanaan Shalat Jumat adalah pada waktu...", options: ["Ashar", "Maghrib", "Dzuhur", "Dhuha"], a: 2 },
+            { q: "Jika terlambat dan imam sudah rukuk di rakaat kedua, maka makmum harus...", options: ["Menambah 1 rakaat lagi", "Menyempurnakan menjadi 4 rakaat (Dzuhur)", "Langsung salam", "Pulang"], a: 1 }
+        ];
+
+        let studentData = { name: "", class: "" };
+
+        window.startQuiz = function() {
+            const name = document.getElementById('student-name').value.trim();
+            const cls = document.getElementById('student-class').value.trim();
+
+            if (!name || !cls) {
+                showModal({ title: "Ops!", message: "Mohon isi Nama dan Kelas dulu ya sebelum mulai.", type: 'warning' });
+                return;
+            }
+
+            studentData.name = name;
+            studentData.class = cls;
+
+            document.getElementById('display-name').textContent = name;
+            document.getElementById('display-class').textContent = cls;
+
+            document.getElementById('quiz-login').classList.add('hidden');
+            document.getElementById('quiz-container').classList.remove('hidden');
+
+            renderQuestions();
+        }
+
+        function renderQuestions() {
+            const form = document.getElementById('quiz-form');
+            form.innerHTML = ""; 
+
+            questionData.forEach((item, index) => {
+                const qDiv = document.createElement('div');
+                qDiv.className = "bg-white p-6 rounded-2xl shadow border border-emerald-100 relative overflow-hidden";
+                
+                let optionsHtml = "";
+                item.options.forEach((opt, optIndex) => {
+                    optionsHtml += `
+                        <label class="option-label group flex items-center p-3 rounded-xl cursor-pointer bg-white mb-2 relative">
+                            <input type="radio" name="q${index}" value="${optIndex}" class="option-input hidden peer">
+                            <div class="option-content w-full h-full flex items-center p-2 rounded-lg transition-all duration-300">
+                                <span class="option-circle w-8 h-8 flex-shrink-0 flex items-center justify-center bg-emerald-50 rounded-full mr-3 text-sm font-bold text-emerald-500 border-2 border-emerald-200">
+                                    ${String.fromCharCode(65+optIndex)}
+                                </span>
+                                <span class="font-medium text-emerald-900 text-lg peer-checked:text-emerald-800">${opt}</span>
+                            </div>
+                        </label>
+                    `;
+                });
+
+                qDiv.innerHTML = `
+                    <div class="absolute top-0 left-0 w-1 h-full bg-emerald-400"></div>
+                    <p class="font-bold text-xl mb-4 text-emerald-800 font-['Fredoka']">
+                        <span class="bg-emerald-100 text-emerald-600 px-2 py-1 rounded-md mr-2 text-sm">No. ${index + 1}</span>
+                        ${item.q}
+                    </p>
+                    <div class="space-y-1">${optionsHtml}</div>
+                `;
+                form.appendChild(qDiv);
+            });
+        }
+
+        window.preSubmitCheck = function() {
+            let answered = 0;
+            questionData.forEach((item, index) => {
+                if (document.querySelector(`input[name="q${index}"]:checked`)) answered++;
+            });
+
+            if (answered < questionData.length) {
+                showModal({
+                    title: "Belum Selesai!",
+                    message: `Kamu baru menjawab <b class="text-red-500">${answered}</b> dari <b>15</b> soal.<br>Yakin mau dikirim sekarang?`,
+                    type: 'warning',
+                    buttons: [
+                        { text: "Lengkapi Dulu", class: "bg-gray-200 text-gray-700 hover:bg-gray-300 border-gray-300" },
+                        { text: "Kirim Saja", class: "bg-amber-500 text-white hover:bg-amber-600 border-amber-600", onClick: () => submitQuizLogic() }
+                    ]
+                });
+            } else {
+                submitQuizLogic();
+            }
+        }
+
+        async function submitQuizLogic() {
+            let correct = 0;
+            questionData.forEach((item, index) => {
+                const selected = document.querySelector(`input[name="q${index}"]:checked`);
+                if (selected && parseInt(selected.value) === item.a) correct++;
+            });
+
+            const score = Math.round((correct / questionData.length) * 100);
+            
+            showModal({
+                title: "Mengirim Jawaban...",
+                message: "Tunggu sebentar, sedang menyimpan nilaimu ke database.",
+                type: 'loading',
+                buttons: [] 
+            });
+            
+            try {
+                if (!auth.currentUser) await signInAnonymously(auth);
+
+                await addDoc(collection(db, 'artifacts', appId, 'public', 'data', COLLECTION_NAME), {
+                    name: studentData.name,
+                    kelas: studentData.class,
+                    score: score,
+                    type: 'Latihan Shalat Jumat', // Updated Type
+                    date: new Date().toLocaleDateString('id-ID'),
+                    timestamp: Date.now()
+                });
+                
+                showModal({
+                    title: "Alhamdulillah! Selesai!",
+                    message: `
+                        <div class="flex flex-col items-center">
+                            <span class="text-sm text-gray-500 uppercase font-bold tracking-widest mb-1">Skor Kamu</span>
+                            <span class="text-6xl font-black text-emerald-600 mb-2 drop-shadow-sm">${score}</span>
+                            <span class="text-gray-500 bg-gray-100 px-3 py-1 rounded-full text-sm">Nilai sudah tersimpan</span>
+                        </div>
+                    `,
+                    type: 'success',
+                    buttons: [
+                        { text: "Lihat Rekap Nilai", class: "bg-green-500 text-white hover:bg-green-600 border-green-600", onClick: () => {
+                            window.location.href = "https://mtsn6-demak.github.io/nilai-siswa/";
+                        }}
+                    ]
+                });
+                
+                document.getElementById('quiz-form').classList.add('pointer-events-none', 'opacity-50');
+                const submitBtn = document.getElementById('submit-btn');
+                submitBtn.disabled = true;
+                submitBtn.innerHTML = '<i class="fa-solid fa-check mr-2"></i> Terkirim';
+                submitBtn.classList.replace('bg-green-500', 'bg-gray-500');
+
+            } catch (e) {
+                console.error("Error adding document: ", e);
+                let errorMsg = "Terjadi kesalahan saat menyimpan.";
+                
+                if (e.message.includes("Missing or insufficient permissions")) {
+                     errorMsg = "GAGAL SIMPAN (Izin Ditolak). Hubungi Guru untuk cek Database Rules.";
+                } else {
+                     errorMsg = "Error: " + e.message;
+                }
+
+                showModal({
+                    title: "Gagal Mengirim",
+                    message: errorMsg + "<br><br>Ingin coba kirim ke web rekap nilai secara manual?",
+                    type: 'error',
+                    buttons: [
+                        { text: "Batal", class: "bg-gray-200 text-gray-700 hover:bg-gray-300" },
+                        { text: "Lanjut Manual", class: "bg-red-500 text-white hover:bg-red-600 border-red-600", onClick: () => {
+                            window.location.href = "https://mtsn6-demak.github.io/nilai-siswa/";
+                        }}
+                    ]
+                });
+            }
+        }
+    </script>
+</body>
+</html>
