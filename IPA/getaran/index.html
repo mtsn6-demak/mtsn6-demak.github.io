@@ -1,0 +1,901 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dunia Getaran: Bandul Ceria</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts: Fredoka untuk tampilan lucu -->
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400;500;600&family=Patrick+Hand&display=swap" rel="stylesheet">
+    
+    <style>
+        body {
+            font-family: 'Fredoka', sans-serif;
+            background-color: #f0f9ff; /* Sky 50 */
+            color: #334155; /* Slate 700 */
+        }
+        h1, h2, h3 {
+            font-family: 'Fredoka', cursive;
+            letter-spacing: 0.5px;
+        }
+        p, li, label, input, select {
+            font-family: 'Patrick Hand', cursive;
+            font-size: 1.1rem;
+        }
+        .card-hover:hover {
+            transform: translateY(-5px) rotate(1deg);
+        }
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f0f9ff; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #38bdf8; 
+            border-radius: 10px;
+            border: 2px solid #f0f9ff;
+        }
+        
+        /* --- Quiz & Option Styling Enhanced --- */
+        .option-label {
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 2px solid #e2e8f0; /* slate-200 */
+            position: relative;
+            overflow: hidden;
+        }
+        .option-label:hover {
+            border-color: #a78bfa; /* violet-400 */
+            background-color: #f5f3ff; /* violet-50 */
+        }
+        /* State Checked */
+        .option-input:checked + .option-content {
+            background-color: #ede9fe; /* violet-100 */
+            border-color: #7c3aed; /* violet-600 */
+            color: #4c1d95; /* violet-900 */
+            box-shadow: 0 4px 6px -1px rgba(124, 58, 237, 0.1), 0 2px 4px -1px rgba(124, 58, 237, 0.06);
+        }
+        /* Lingkaran Indikator (A/B/C/D) */
+        .option-circle {
+            transition: all 0.3s ease;
+            border: 2px solid #cbd5e1;
+        }
+        .option-input:checked + .option-content .option-circle {
+            background-color: #7c3aed;
+            border-color: #7c3aed;
+            color: white;
+            transform: scale(1.1);
+        }
+        /* Parent Label Border Change on Check */
+        .option-input:checked + .option-content {
+            border-width: 2px;
+        }
+
+        /* --- Custom Modal Styling --- */
+        .modal-backdrop {
+            background-color: rgba(15, 23, 42, 0.6); /* Slate-900 with opacity */
+            backdrop-filter: blur(4px);
+            animation: fadeIn 0.2s ease-out;
+        }
+        .modal-content {
+            animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes popIn { from { transform: scale(0.9) translateY(10px); opacity: 0; } to { transform: scale(1) translateY(0); opacity: 1; } }
+    </style>
+</head>
+<body class="selection:bg-sky-200 selection:text-sky-900">
+
+    <!-- Navigation -->
+    <nav class="bg-sky-500 text-white shadow-lg sticky top-0 z-50 border-b-4 border-sky-600">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <div class="flex items-center space-x-2 animate-bounce-slow">
+                <i class="fa-solid fa-stopwatch text-2xl text-yellow-300"></i>
+                <span class="text-2xl font-semibold tracking-wide">FisikaCeria</span>
+            </div>
+            <div class="hidden md:flex space-x-6 text-lg">
+                <a href="#materi" class="hover:text-yellow-200 transition hover:scale-110 transform inline-block">Belajar</a>
+                <a href="#simulasi" class="hover:text-yellow-200 transition hover:scale-110 transform inline-block">Simulasi</a>
+                <a href="#kalkulator" class="hover:text-yellow-200 transition hover:scale-110 transform inline-block">Kalkulator</a>
+                <a href="#latihan" class="hover:text-yellow-200 transition hover:scale-110 transform inline-block">Latihan Soal</a>
+            </div>
+            <button id="mobile-menu-btn" class="md:hidden focus:outline-none bg-sky-600 p-2 rounded-lg text-white">
+                <i class="fa-solid fa-bars text-xl"></i>
+            </button>
+        </div>
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-sky-600 pb-4 px-4 text-center">
+            <a href="#materi" class="block py-2 hover:bg-sky-700 rounded-lg">Belajar</a>
+            <a href="#simulasi" class="block py-2 hover:bg-sky-700 rounded-lg">Simulasi</a>
+            <a href="#kalkulator" class="block py-2 hover:bg-sky-700 rounded-lg">Kalkulator</a>
+            <a href="#latihan" class="block py-2 hover:bg-sky-700 rounded-lg">Latihan Soal</a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="bg-gradient-to-b from-sky-400 to-indigo-100 pt-20 pb-32 px-4 text-center relative overflow-hidden">
+        <div class="absolute top-10 left-10 w-20 h-20 bg-yellow-300 rounded-full opacity-50 mix-blend-multiply filter blur-xl animate-pulse"></div>
+        <div class="absolute top-20 right-20 w-32 h-32 bg-indigo-300 rounded-full opacity-50 mix-blend-multiply filter blur-xl animate-pulse" style="animation-delay: 1s"></div>
+
+        <div class="container mx-auto max-w-4xl relative z-10">
+            <span class="bg-white text-sky-600 px-4 py-1 rounded-full text-sm font-bold shadow-sm mb-4 inline-block transform -rotate-2">
+                🌟 Serunya Belajar Getaran
+            </span>
+            <h1 class="text-5xl md:text-7xl font-bold mb-6 text-white drop-shadow-md">
+                Ayo Main Ayunan!
+            </h1>
+            <p class="text-xl md:text-2xl mb-8 text-sky-900 max-w-2xl mx-auto font-medium">
+                Pernah main ayunan di taman? Itu adalah contoh getaran loh! 
+                Yuk kita pelajari bagaimana bandul bergerak bolak-balik.
+            </p>
+            <a href="#simulasi" class="bg-indigo-500 text-white border-b-4 border-indigo-700 active:border-b-0 active:translate-y-1 px-8 py-4 rounded-full font-bold text-xl shadow-xl hover:bg-indigo-600 transition inline-flex items-center gap-3">
+                <i class="fa-solid fa-gamepad"></i> Coba Simulasinya
+            </a>
+        </div>
+    </header>
+
+    <!-- Materi Section -->
+    <section id="materi" class="py-10 container mx-auto px-4 -mt-20 relative z-20">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div class="bg-white p-8 rounded-3xl shadow-lg border-4 border-orange-200 card-hover transition duration-300 transform">
+                <div class="bg-orange-100 w-16 h-16 rounded-full flex items-center justify-center mb-4 text-orange-600 mx-auto shadow-inner">
+                    <i class="fa-solid fa-stopwatch text-3xl"></i>
+                </div>
+                <h3 class="text-2xl font-bold mb-3 text-center text-orange-600">Apa itu Getaran?</h3>
+                <p class="text-center text-gray-600 leading-relaxed">
+                    Bayangkan kamu naik ayunan. Gerakan dari depan ke belakang lalu kembali lagi, itu namanya <b>satu getaran</b>! Kuncinya adalah gerak <i>bolak-balik</i>.
+                </p>
+            </div>
+
+            <div class="bg-white p-8 rounded-3xl shadow-lg border-4 border-sky-200 card-hover transition duration-300 transform">
+                <div class="bg-sky-100 w-16 h-16 rounded-full flex items-center justify-center mb-4 text-sky-600 mx-auto shadow-inner">
+                    <i class="fa-solid fa-ruler-combined text-3xl"></i>
+                </div>
+                <h3 class="text-2xl font-bold mb-3 text-center text-sky-600">Istilah Penting</h3>
+                <ul class="text-gray-600 space-y-3 text-left pl-2">
+                    <li class="flex items-start"><i class="fa-solid fa-circle text-[8px] mt-2 mr-2 text-sky-400"></i> <span><b>Amplitudo:</b> Simpangan terjauh (seberapa tinggi kamu mengayun).</span></li>
+                    <li class="flex items-start"><i class="fa-solid fa-circle text-[8px] mt-2 mr-2 text-sky-400"></i> <span><b>Periode (T):</b> Waktu buat 1x bolak-balik.</span></li>
+                    <li class="flex items-start"><i class="fa-solid fa-circle text-[8px] mt-2 mr-2 text-sky-400"></i> <span><b>Frekuensi (f):</b> Berapa kali bolak-balik dalam 1 detik.</span></li>
+                </ul>
+            </div>
+
+            <div class="bg-white p-8 rounded-3xl shadow-lg border-4 border-teal-200 card-hover transition duration-300 transform">
+                <div class="bg-teal-100 w-16 h-16 rounded-full flex items-center justify-center mb-4 text-teal-600 mx-auto shadow-inner">
+                    <i class="fa-solid fa-calculator text-3xl"></i>
+                </div>
+                <h3 class="text-2xl font-bold mb-3 text-center text-teal-600">Rumus Ajaib</h3>
+                <div class="bg-teal-50 p-4 rounded-2xl text-center space-y-3 border-2 border-teal-100 border-dashed">
+                    <p class="text-2xl font-bold text-teal-700">T = 1 / f</p>
+                    <p class="text-2xl font-bold text-teal-700">f = 1 / T</p>
+                    <p class="text-sm text-teal-600 mt-2 italic">Mereka itu kebalikan loh!</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Simulasi Section -->
+    <section id="simulasi" class="bg-indigo-50 py-16 relative">
+        <div class="absolute top-0 left-0 w-full h-20 bg-gradient-to-b from-indigo-100 to-indigo-50"></div>
+        <div class="container mx-auto px-4 relative z-10">
+            <div class="text-center mb-10">
+                <span class="inline-block bg-white text-indigo-600 px-6 py-2 rounded-full shadow-md font-bold tracking-wider text-sm uppercase mb-3 border border-indigo-100">
+                    <i class="fa-solid fa-flask mr-2"></i>Laboratorium Virtual
+                </span>
+                <h2 class="text-4xl font-bold text-gray-800 mt-2">Mainkan Bandulnya! 🎈</h2>
+            </div>
+            <div class="flex flex-col lg:flex-row gap-8 items-center max-w-5xl mx-auto">
+                <div class="w-full lg:w-2/3 bg-white rounded-[2rem] shadow-xl overflow-hidden relative border-8 border-indigo-200">
+                    <canvas id="pendulumCanvas" class="w-full h-[450px] bg-sky-50 cursor-pointer"></canvas>
+                    <i class="fa-solid fa-cloud text-white text-6xl absolute top-10 left-10 opacity-80 drop-shadow-sm"></i>
+                    <i class="fa-solid fa-cloud text-white text-4xl absolute top-24 left-32 opacity-60 drop-shadow-sm"></i>
+                    <i class="fa-solid fa-cloud text-white text-5xl absolute top-8 right-20 opacity-70 drop-shadow-sm"></i>
+                    <div class="absolute bottom-4 left-4 bg-white/80 backdrop-blur px-4 py-2 rounded-xl shadow text-sm border-2 border-indigo-100">
+                        <p class="font-bold text-indigo-600">Posisi Sudut:</p>
+                        <p class="font-mono text-lg text-gray-700"><span id="angle-display">0</span>&deg;</p>
+                    </div>
+                </div>
+                <div class="w-full lg:w-1/3 bg-white p-8 rounded-[2rem] shadow-xl border-b-8 border-sky-200">
+                    <h3 class="text-2xl font-bold mb-6 flex items-center text-sky-600">
+                        <i class="fa-solid fa-sliders mr-3"></i> Pengaturan
+                    </h3>
+                    <div class="mb-8">
+                        <label class="flex justify-between mb-3 font-bold text-gray-600">
+                            <span>Simpangan (Sudut)</span>
+                            <span class="bg-sky-100 text-sky-600 px-3 py-1 rounded-full text-sm" id="amp-val">30&deg;</span>
+                        </label>
+                        <input type="range" id="amp-slider" min="5" max="60" value="30" class="w-full h-4 bg-gray-200 rounded-full appearance-none cursor-pointer accent-sky-500 hover:accent-sky-400 transition">
+                    </div>
+                    <div class="mb-8">
+                        <label class="flex justify-between mb-3 font-bold text-gray-600">
+                            <span>Kecepatan (Frekuensi)</span>
+                            <span class="bg-indigo-100 text-indigo-600 px-3 py-1 rounded-full text-sm" id="freq-val">1.0 Hz</span>
+                        </label>
+                        <input type="range" id="freq-slider" min="0.5" max="3.0" step="0.1" value="1.0" class="w-full h-4 bg-gray-200 rounded-full appearance-none cursor-pointer accent-indigo-500 hover:accent-indigo-400 transition">
+                    </div>
+                    <div class="grid grid-cols-2 gap-4 mt-6">
+                        <button id="pause-btn" class="bg-yellow-400 hover:bg-yellow-500 text-white py-3 rounded-xl font-bold shadow-md border-b-4 border-yellow-600 active:border-b-0 active:translate-y-1 transition flex justify-center items-center gap-2">
+                            <i class="fa-solid fa-pause"></i> <span>Stop Dulu</span>
+                        </button>
+                        <button id="reset-btn" class="bg-gray-400 hover:bg-gray-500 text-white py-3 rounded-xl font-bold shadow-md border-b-4 border-gray-600 active:border-b-0 active:translate-y-1 transition flex justify-center items-center gap-2">
+                            <i class="fa-solid fa-arrows-rotate"></i> <span>Ulang</span>
+                        </button>
+                    </div>
+                    <div class="mt-6 text-center text-sm text-gray-400">
+                        *Coba geser slidernya dan lihat bedanya!
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Kalkulator Section -->
+    <section id="kalkulator" class="py-16 container mx-auto px-4 bg-white rounded-t-[3rem] shadow-[0_-10px_40px_rgba(0,0,0,0.05)]">
+        <div class="max-w-4xl mx-auto">
+            <div class="text-center mb-10">
+                <div class="inline-block p-4 bg-blue-100 rounded-full text-blue-600 mb-4 text-3xl animate-bounce">
+                    <i class="fa-solid fa-robot"></i>
+                </div>
+                <h2 class="text-4xl font-bold text-blue-600">Mesin Hitung Getaran</h2>
+                <p class="text-gray-500 mt-2">Gak perlu pusing hitung manual, biar robot yang hitung!</p>
+            </div>
+            
+            <div class="bg-blue-50 rounded-3xl shadow-lg border-2 border-blue-100 p-8">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
+                    <div class="space-y-6">
+                        <div class="bg-white p-4 rounded-xl border border-blue-100 shadow-sm">
+                            <label class="block text-lg font-bold text-blue-700 mb-2">Mau cari apa?</label>
+                            <select id="calc-mode" class="w-full p-3 bg-blue-50 border-none rounded-lg text-blue-800 font-bold focus:ring-2 focus:ring-blue-300 outline-none cursor-pointer">
+                                <option value="find-f">Cari Frekuensi (f)</option>
+                                <option value="find-t">Cari Periode (T)</option>
+                                <option value="manual">Hitung dari Jumlah Getaran</option>
+                            </select>
+                        </div>
+                        <div id="calc-input-container" class="space-y-4"></div>
+                        <button onclick="calculate()" class="w-full bg-blue-500 hover:bg-blue-600 text-white text-xl font-bold py-3 rounded-xl shadow-lg border-b-4 border-blue-700 active:border-b-0 active:translate-y-1 transition">
+                            Hitung Sekarang! 🚀
+                        </button>
+                    </div>
+                    <div class="bg-white rounded-3xl p-8 border-4 border-dashed border-blue-200 text-center relative overflow-hidden">
+                        <div class="absolute right-0 top-0 bg-yellow-300 text-yellow-800 px-6 py-2 rounded-bl-3xl font-bold shadow-sm z-10">Hasilnya!</div>
+                        <span class="text-gray-400 font-bold uppercase tracking-widest text-sm mt-4 block">Jawabannya Adalah</span>
+                        <div class="my-4">
+                            <span id="calc-result" class="text-6xl font-black text-blue-600">---</span>
+                        </div>
+                        <div id="calc-unit" class="text-2xl font-bold text-gray-400 bg-gray-100 inline-block px-4 py-1 rounded-lg">satuan</div>
+                        <div id="calc-formula-display" class="mt-6 bg-blue-50 p-3 rounded-lg text-blue-500 font-mono text-sm border border-blue-100">
+                            Rumus yang dipakai muncul di sini
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Quiz Section (New) -->
+    <section id="latihan" class="py-16 bg-gradient-to-t from-violet-100 to-white">
+        <div class="container mx-auto px-4 max-w-4xl">
+            <div class="text-center mb-10">
+                <span class="inline-block bg-violet-500 text-white px-6 py-2 rounded-full shadow-md font-bold tracking-wider text-sm uppercase mb-3">
+                    <i class="fa-solid fa-pen-to-square mr-2"></i>Tantangan
+                </span>
+                <h2 class="text-4xl font-bold text-violet-700 mt-2">Latihan Soal</h2>
+                <p class="text-gray-600 mt-2">Uji pemahamanmu tentang getaran!</p>
+            </div>
+
+            <!-- Login Container -->
+            <div id="quiz-login" class="bg-white rounded-3xl shadow-xl p-8 border-4 border-violet-200 max-w-lg mx-auto relative">
+                <!-- Status Indicator -->
+                <div id="auth-status" class="absolute top-4 right-4 text-xs font-bold text-gray-400">
+                    <i class="fa-solid fa-circle text-gray-300 mr-1"></i> Menghubungkan...
+                </div>
+                
+                <div class="text-center mb-6">
+                    <i class="fa-solid fa-user-graduate text-5xl text-violet-400 mb-4"></i>
+                    <h3 class="text-2xl font-bold text-gray-700">Identitas Siswa</h3>
+                    <p class="text-sm text-gray-500">Isi nama dulu sebelum mulai ya!</p>
+                </div>
+                <div class="space-y-4">
+                    <div>
+                        <label class="block text-gray-600 font-bold mb-1">Nama Lengkap</label>
+                        <input type="text" id="student-name" class="w-full p-3 border-2 border-violet-100 rounded-xl outline-none focus:border-violet-500 bg-violet-50" placeholder="Contoh: Budi Santoso">
+                    </div>
+                    <div>
+                        <label class="block text-gray-600 font-bold mb-1">Kelas</label>
+                        <input type="text" id="student-class" class="w-full p-3 border-2 border-violet-100 rounded-xl outline-none focus:border-violet-500 bg-violet-50" placeholder="Contoh: 8A">
+                    </div>
+                    <button id="start-btn" onclick="startQuiz()" disabled class="w-full bg-gray-400 text-white font-bold py-3 rounded-xl shadow-lg cursor-not-allowed transition mt-4">
+                        Tunggu Sebentar...
+                    </button>
+                    <p id="auth-error-msg" class="text-red-500 text-xs text-center hidden">Gagal terhubung ke database. Coba refresh halaman.</p>
+                </div>
+            </div>
+
+            <!-- Quiz Container (Hidden Initially) -->
+            <div id="quiz-container" class="hidden space-y-6">
+                <div class="bg-violet-100 p-4 rounded-xl flex justify-between items-center border border-violet-200">
+                    <div class="font-bold text-violet-700">
+                        <i class="fa-solid fa-user mr-2"></i> <span id="display-name">---</span> (<span id="display-class">---</span>)
+                    </div>
+                    <div class="bg-white px-4 py-1 rounded-full text-violet-600 text-sm font-bold shadow-sm">
+                        Total: 15 Soal
+                    </div>
+                </div>
+
+                <form id="quiz-form" class="space-y-6">
+                    <!-- Questions will be injected here by JS -->
+                </form>
+
+                <div class="text-center pt-6">
+                    <button type="button" id="submit-btn" onclick="preSubmitCheck()" class="bg-green-500 hover:bg-green-600 text-white text-xl font-bold px-10 py-4 rounded-full shadow-lg border-b-4 border-green-700 active:border-b-0 active:translate-y-1 transition transform hover:scale-105">
+                        <i class="fa-solid fa-paper-plane mr-2"></i> Kirim Jawaban
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Custom Modal Structure -->
+    <div id="custom-modal" class="hidden fixed inset-0 z-[100] flex items-center justify-center modal-backdrop px-4">
+        <div class="bg-white rounded-3xl shadow-2xl p-8 max-w-md w-full modal-content border-t-8 border-violet-500 relative flex flex-col items-center">
+            <!-- Icon Bubble -->
+            <div class="absolute -top-12 bg-white rounded-full p-2 shadow-lg">
+                 <div id="modal-icon-container" class="w-20 h-20 rounded-full flex items-center justify-center text-4xl border-4 border-violet-50">
+                     <!-- Icon injected here -->
+                     <i class="fa-solid fa-bell text-violet-500"></i>
+                 </div>
+            </div>
+            
+            <div class="mt-10 text-center w-full">
+                <h3 id="modal-title" class="text-2xl font-bold text-gray-800 mb-2 font-['Fredoka']">Judul Modal</h3>
+                <div id="modal-body" class="text-gray-600 mb-8 leading-relaxed text-lg font-['Patrick_Hand']">
+                    Pesan akan muncul di sini.
+                </div>
+                
+                <!-- Action Buttons -->
+                <div id="modal-actions" class="flex flex-col sm:flex-row gap-3 justify-center w-full">
+                    <button class="w-full bg-gray-200 text-gray-700 py-2 rounded-xl font-bold hover:bg-gray-300 transition">Batal</button>
+                    <button class="w-full bg-violet-500 text-white py-2 rounded-xl font-bold hover:bg-violet-600 transition">Lanjut</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-sky-600 text-white py-8 mt-10">
+        <div class="container mx-auto px-4 text-center">
+            <p class="font-bold text-xl mb-2 font-['Fredoka']">FisikaCeria</p>
+            <p class="text-sky-100 opacity-90 font-['Patrick_Hand']">Belajar Fisika jadi lebih gampang dan menyenangkan!</p>
+            <div class="mt-4 flex justify-center space-x-4">
+                <i class="fa-brands fa-instagram hover:text-yellow-300 cursor-pointer text-xl transition"></i>
+                <i class="fa-brands fa-tiktok hover:text-yellow-300 cursor-pointer text-xl transition"></i>
+                <i class="fa-brands fa-youtube hover:text-yellow-300 cursor-pointer text-xl transition"></i>
+            </div>
+            <p class="text-xs text-sky-200 mt-6">&copy; 2026 EduFisika Kids. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyAkX8qAS-O_5m_qaGr8Aa9XME-lVyBMibw",
+            authDomain: "belajaronline-b5512.firebaseapp.com",
+            projectId: "belajaronline-b5512",
+            storageBucket: "belajaronline-b5512.firebasestorage.app",
+            messagingSenderId: "896107581081",
+            appId: "1:896107581081:web:629056c097c90fdf583208",
+            measurementId: "G-7MKNGF9PCX"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+        const auth = getAuth(app);
+        
+        const appId = 'belajaronline-b5512';
+        const COLLECTION_NAME = 'scores';
+
+        // --- Auth & State Management ---
+        const startBtn = document.getElementById('start-btn');
+        const authStatus = document.getElementById('auth-status');
+        const authErrorMsg = document.getElementById('auth-error-msg');
+
+        // Monitor Auth State
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                console.log("User terautentikasi:", user.uid);
+                startBtn.disabled = false;
+                startBtn.classList.remove('bg-gray-400', 'cursor-not-allowed');
+                startBtn.classList.add('bg-violet-500', 'hover:bg-violet-600', 'border-b-4', 'border-violet-700');
+                startBtn.innerHTML = 'Mulai Kerjakan Soal <i class="fa-solid fa-arrow-right ml-2"></i>';
+                
+                authStatus.innerHTML = '<i class="fa-solid fa-circle text-green-400 mr-1"></i> Siap';
+                authStatus.classList.replace('text-gray-400', 'text-green-600');
+                authErrorMsg.classList.add('hidden');
+            } else {
+                console.log("User belum login, mencoba login anonim...");
+                signInAnonymously(auth).catch((error) => {
+                    console.error("Login anonim gagal:", error);
+                    authStatus.innerHTML = '<i class="fa-solid fa-circle text-red-400 mr-1"></i> Gagal';
+                    authErrorMsg.classList.remove('hidden');
+                    authErrorMsg.textContent = "Error Login: " + error.message;
+                });
+            }
+        });
+
+        // --- Helper Functions for Modal ---
+        const modal = document.getElementById('custom-modal');
+        const modalTitle = document.getElementById('modal-title');
+        const modalBody = document.getElementById('modal-body');
+        const modalActions = document.getElementById('modal-actions');
+        const modalIconContainer = document.getElementById('modal-icon-container');
+
+        function showModal(config) {
+            modalTitle.textContent = config.title;
+            modalBody.innerHTML = config.message; // Allow HTML
+            
+            // Icon Logic
+            let iconClass = 'fa-bell';
+            let iconColor = 'text-violet-500';
+            let borderColor = 'border-violet-50';
+            
+            if (config.type === 'warning') { iconClass = 'fa-triangle-exclamation'; iconColor = 'text-amber-500'; borderColor = 'border-amber-50'; }
+            if (config.type === 'success') { iconClass = 'fa-trophy'; iconColor = 'text-green-500'; borderColor = 'border-green-50'; }
+            if (config.type === 'error') { iconClass = 'fa-circle-xmark'; iconColor = 'text-red-500'; borderColor = 'border-red-50'; }
+            if (config.type === 'loading') { iconClass = 'fa-spinner fa-spin'; iconColor = 'text-blue-500'; borderColor = 'border-blue-50'; }
+
+            modalIconContainer.className = `w-20 h-20 rounded-full flex items-center justify-center text-4xl border-4 ${borderColor} bg-white shadow-inner`;
+            modalIconContainer.innerHTML = `<i class="fa-solid ${iconClass} ${iconColor}"></i>`;
+
+            // Button Logic
+            modalActions.innerHTML = '';
+            if (config.buttons) {
+                config.buttons.forEach(btn => {
+                    const buttonEl = document.createElement('button');
+                    buttonEl.className = `w-full py-3 rounded-xl font-bold transition shadow-sm border-b-4 active:border-b-0 active:translate-y-1 ${btn.class || 'bg-gray-200 text-gray-700 border-gray-300 hover:bg-gray-300'}`;
+                    buttonEl.textContent = btn.text;
+                    buttonEl.onclick = () => {
+                        if (btn.close !== false) hideModal();
+                        if (btn.onClick) btn.onClick();
+                    };
+                    modalActions.appendChild(buttonEl);
+                });
+            } else if (config.type !== 'loading') {
+                // Default close button
+                const closeBtn = document.createElement('button');
+                closeBtn.className = "w-full bg-violet-500 text-white py-3 rounded-xl font-bold hover:bg-violet-600 border-b-4 border-violet-700 active:border-b-0 active:translate-y-1 transition";
+                closeBtn.textContent = "Tutup";
+                closeBtn.onclick = hideModal;
+                modalActions.appendChild(closeBtn);
+            }
+
+            modal.classList.remove('hidden');
+        }
+
+        function hideModal() {
+            modal.classList.add('hidden');
+        }
+
+        // --- Mobile Menu Logic ---
+        const btn = document.getElementById('mobile-menu-btn');
+        const menu = document.getElementById('mobile-menu');
+        btn.addEventListener('click', () => { menu.classList.toggle('hidden'); });
+
+        // --- Pendulum Simulation Logic ---
+        const canvas = document.getElementById('pendulumCanvas');
+        const ctx = canvas.getContext('2d');
+        let isPaused = false;
+        const state = { angleMax: 30 * (Math.PI / 180), frequency: 1.0, length: 250, originX: 0, originY: 0 };
+        const ampSlider = document.getElementById('amp-slider');
+        const freqSlider = document.getElementById('freq-slider');
+        const ampValDisplay = document.getElementById('amp-val');
+        const freqValDisplay = document.getElementById('freq-val');
+        const angleDisplay = document.getElementById('angle-display');
+
+        function resizeCanvas() {
+            canvas.width = canvas.parentElement.offsetWidth;
+            canvas.height = canvas.parentElement.offsetHeight;
+            state.originX = canvas.width / 2;
+            state.originY = 50;
+            if(canvas.width < 500) { state.length = 180; } else { state.length = 250; }
+        }
+        window.addEventListener('resize', resizeCanvas);
+        window.resizeCanvas = resizeCanvas;
+        resizeCanvas();
+
+        function animate() {
+            if (!isPaused) {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                ctx.beginPath();
+                ctx.moveTo(0, canvas.height - 20);
+                ctx.lineTo(canvas.width, canvas.height - 20);
+                ctx.strokeStyle = '#bae6fd';
+                ctx.lineWidth = 4;
+                ctx.stroke();
+
+                const t = Date.now() / 1000;
+                const currentAngle = state.angleMax * Math.cos(2 * Math.PI * state.frequency * t);
+                const bobX = state.originX + state.length * Math.sin(currentAngle);
+                const bobY = state.originY + state.length * Math.cos(currentAngle);
+
+                ctx.fillStyle = '#94a3b8';
+                ctx.fillRect(state.originX - 40, state.originY - 10, 80, 10);
+                
+                ctx.beginPath();
+                ctx.moveTo(state.originX, state.originY);
+                ctx.lineTo(state.originX, state.originY + state.length + 50);
+                ctx.strokeStyle = '#cbd5e1';
+                ctx.setLineDash([5, 5]);
+                ctx.lineWidth = 2;
+                ctx.stroke();
+                ctx.setLineDash([]);
+
+                ctx.beginPath();
+                ctx.moveTo(state.originX, state.originY);
+                ctx.lineTo(bobX, bobY);
+                ctx.strokeStyle = '#475569';
+                ctx.lineWidth = 3;
+                ctx.stroke();
+
+                ctx.beginPath();
+                ctx.ellipse(bobX, bobY + 25 + (Math.abs(currentAngle)*10), 15, 5, 0, 0, Math.PI * 2);
+                ctx.fillStyle = 'rgba(0,0,0,0.1)';
+                ctx.fill();
+
+                ctx.beginPath();
+                ctx.arc(bobX, bobY, 25, 0, Math.PI * 2);
+                const gradient = ctx.createRadialGradient(bobX - 8, bobY - 8, 2, bobX, bobY, 25);
+                gradient.addColorStop(0, '#38bdf8');
+                gradient.addColorStop(1, '#0284c7');
+                ctx.fillStyle = gradient;
+                ctx.fill();
+                ctx.lineWidth = 2;
+                ctx.strokeStyle = '#fff';
+                ctx.stroke();
+
+                ctx.beginPath();
+                ctx.arc(bobX - 10, bobY - 10, 6, 0, Math.PI * 2);
+                ctx.fillStyle = 'rgba(255, 255, 255, 0.4)';
+                ctx.fill();
+
+                ctx.beginPath();
+                ctx.arc(state.originX, state.originY, 5, 0, Math.PI * 2);
+                ctx.fillStyle = '#64748b';
+                ctx.fill();
+
+                const degrees = (currentAngle * (180 / Math.PI)).toFixed(1);
+                angleDisplay.textContent = degrees;
+            }
+            requestAnimationFrame(animate);
+        }
+
+        ampSlider.addEventListener('input', (e) => {
+            const val = parseInt(e.target.value);
+            state.angleMax = val * (Math.PI / 180);
+            ampValDisplay.textContent = val + "°";
+        });
+        freqSlider.addEventListener('input', (e) => {
+            const val = parseFloat(e.target.value);
+            state.frequency = val;
+            freqValDisplay.textContent = val + " Hz";
+        });
+        document.getElementById('pause-btn').addEventListener('click', function() {
+            isPaused = !isPaused;
+            const icon = this.querySelector('i');
+            const span = this.querySelector('span');
+            if (isPaused) {
+                icon.className = 'fa-solid fa-play';
+                span.textContent = 'Lanjut Main';
+                this.classList.replace('bg-yellow-400', 'bg-green-400');
+                this.classList.replace('hover:bg-yellow-500', 'hover:bg-green-500');
+                this.classList.replace('border-yellow-600', 'border-green-600');
+            } else {
+                icon.className = 'fa-solid fa-pause';
+                span.textContent = 'Stop Dulu';
+                this.classList.replace('bg-green-400', 'bg-yellow-400');
+                this.classList.replace('hover:bg-green-500', 'hover:bg-yellow-500');
+                this.classList.replace('border-green-600', 'border-yellow-600');
+            }
+        });
+        document.getElementById('reset-btn').addEventListener('click', () => {
+            state.angleMax = 30 * (Math.PI / 180);
+            state.frequency = 1.0;
+            ampSlider.value = 30;
+            freqSlider.value = 1.0;
+            ampValDisplay.textContent = "30°";
+            freqValDisplay.textContent = "1.0 Hz";
+            isPaused = false;
+            const pauseBtn = document.getElementById('pause-btn');
+            const icon = pauseBtn.querySelector('i');
+            const span = pauseBtn.querySelector('span');
+            icon.className = 'fa-solid fa-pause';
+            span.textContent = 'Stop Dulu';
+            pauseBtn.classList.remove('bg-green-400', 'hover:bg-green-500', 'border-green-600');
+            pauseBtn.classList.add('bg-yellow-400', 'hover:bg-yellow-500', 'border-yellow-600');
+        });
+        animate();
+
+        // --- Calculator Logic ---
+        const calcMode = document.getElementById('calc-mode');
+        const calcInputContainer = document.getElementById('calc-input-container');
+        const calcResultDisplay = document.getElementById('calc-result');
+        const calcUnitDisplay = document.getElementById('calc-unit');
+        const calcFormulaDisplay = document.getElementById('calc-formula-display');
+
+        const calcInputs = {
+            'find-f': `
+                <label class="block text-gray-600 font-bold mb-1">Masukkan Periode (T):</label>
+                <div class="flex items-center shadow-sm">
+                    <input type="number" id="input-val-1" step="0.01" class="w-full p-3 border-2 border-blue-100 rounded-l-xl outline-none focus:border-blue-400 font-bold text-blue-600" placeholder="Contoh: 0.5">
+                    <span class="bg-blue-100 p-3 border-2 border-l-0 border-blue-100 rounded-r-xl text-blue-600 font-bold">sekon</span>
+                </div>
+            `,
+            'find-t': `
+                <label class="block text-gray-600 font-bold mb-1">Masukkan Frekuensi (f):</label>
+                <div class="flex items-center shadow-sm">
+                    <input type="number" id="input-val-1" step="0.01" class="w-full p-3 border-2 border-blue-100 rounded-l-xl outline-none focus:border-blue-400 font-bold text-blue-600" placeholder="Contoh: 50">
+                    <span class="bg-blue-100 p-3 border-2 border-l-0 border-blue-100 rounded-r-xl text-blue-600 font-bold">Hz</span>
+                </div>
+            `,
+            'manual': `
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-sm text-gray-600 font-bold mb-1">Jumlah Getaran (n):</label>
+                        <input type="number" id="input-n" class="w-full p-3 border-2 border-blue-100 rounded-xl outline-none focus:border-blue-400 font-bold text-blue-600" placeholder="10">
+                    </div>
+                    <div>
+                        <label class="block text-sm text-gray-600 font-bold mb-1">Waktu (t):</label>
+                        <input type="number" id="input-t" class="w-full p-3 border-2 border-blue-100 rounded-xl outline-none focus:border-blue-400 font-bold text-blue-600" placeholder="5">
+                    </div>
+                </div>
+                <div class="flex gap-4 mt-2 bg-white p-2 rounded-lg border border-blue-100">
+                     <label class="flex items-center text-sm font-bold text-blue-600 cursor-pointer"><input type="radio" name="manual-target" value="f" checked class="mr-2 accent-blue-500 w-4 h-4"> Cari Frekuensi (f)</label>
+                     <label class="flex items-center text-sm font-bold text-blue-600 cursor-pointer"><input type="radio" name="manual-target" value="T" class="mr-2 accent-blue-500 w-4 h-4"> Cari Periode (T)</label>
+                </div>
+            `
+        };
+        function updateCalcInputs() {
+            calcInputContainer.innerHTML = calcInputs[calcMode.value];
+            calcResultDisplay.textContent = "---";
+            calcUnitDisplay.textContent = "satuan";
+            calcFormulaDisplay.textContent = "Rumus: -";
+        }
+        calcMode.addEventListener('change', updateCalcInputs);
+        updateCalcInputs();
+
+        window.calculate = function() {
+            const mode = calcMode.value;
+            let result = 0;
+            let unit = "";
+            let formula = "";
+            try {
+                if (mode === 'find-f') {
+                    const T = parseFloat(document.getElementById('input-val-1').value);
+                    if (!T || T === 0) throw new Error("Ups, T tidak boleh 0!");
+                    result = 1 / T;
+                    unit = "Hertz (Hz)";
+                    formula = `f = 1 / ${T}`;
+                } 
+                else if (mode === 'find-t') {
+                    const f = parseFloat(document.getElementById('input-val-1').value);
+                    if (!f || f === 0) throw new Error("Ups, f tidak boleh 0!");
+                    result = 1 / f;
+                    unit = "Sekon (s)";
+                    formula = `T = 1 / ${f}`;
+                }
+                else if (mode === 'manual') {
+                    const n = parseFloat(document.getElementById('input-n').value);
+                    const t = parseFloat(document.getElementById('input-t').value);
+                    const target = document.querySelector('input[name="manual-target"]:checked').value;
+                    if (!n || !t) throw new Error("Isi n dan t dulu ya!");
+                    if (target === 'f') {
+                        result = n / t;
+                        unit = "Hertz (Hz)";
+                        formula = `f = ${n} / ${t}`;
+                    } else {
+                        result = t / n;
+                        unit = "Sekon (s)";
+                        formula = `T = ${t} / ${n}`;
+                    }
+                }
+                calcResultDisplay.textContent = result.toFixed(2);
+                calcUnitDisplay.textContent = unit;
+                calcFormulaDisplay.textContent = `Rumus: ${formula}`;
+            } catch (e) {
+                calcResultDisplay.textContent = "???";
+                calcUnitDisplay.textContent = "Cek Lagi";
+                calcFormulaDisplay.textContent = e.message;
+            }
+        }
+
+        // --- QUIZ LOGIC ---
+        const questionData = [
+            { q: "Apa yang dimaksud dengan satu getaran?", options: ["Gerak dari A ke B", "Gerak bolak-balik melalui titik kesetimbangan", "Gerak melingkar beraturan", "Gerak lurus berubah beraturan"], a: 1 },
+            { q: "Dalam sistem pengukuran standar, besaran frekuensi biasanya dinyatakan dalam satuan...", options: ["Sekon", "Meter", "Hertz", "Newton"], a: 2 },
+            { q: "Satuan baku yang digunakan untuk menyatakan waktu yang dibutuhkan untuk satu getaran penuh adalah...", options: ["Hertz", "Sekon", "Detik/Menit", "Meter"], a: 1 },
+            { q: "Jika Frekuensi adalah (f) dan Periode adalah (T), maka rumusnya...", options: ["T = f x f", "T = 1 / f", "T = f / 2", "T = 1 - f"], a: 1 },
+            { q: "Simpangan terjauh dari titik kesetimbangan disebut...", options: ["Periode", "Frekuensi", "Amplitudo", "Panjang Gelombang"], a: 2 },
+            { q: "Sebuah bandul bergetar 20 kali dalam 4 detik. Berapa frekuensinya?", options: ["5 Hz", "0.2 Hz", "80 Hz", "4 Hz"], a: 0 },
+            { q: "Jika frekuensi suatu getaran adalah 50 Hz, berapa periodenya?", options: ["0.02 s", "0.2 s", "2 s", "50 s"], a: 0 },
+            { q: "Sebuah pegas digetarkan dan melakukan 60 getaran dalam waktu 15 detik. Berapakah frekuensinya?", options: ["0,25 Hz", "4 Hz", "15 Hz", "45 Hz"], a: 1 },
+            { q: "Jika bandul bergerak A-B-C-B-A, itu dihitung sebagai...", options: ["1/4 getaran", "1/2 getaran", "3/4 getaran", "1 getaran penuh"], a: 3 },
+            { q: "Titik dimana benda diam saat tidak bergetar disebut...", options: ["Titik puncak", "Titik terjauh", "Titik kesetimbangan", "Titik amplitudo"], a: 2 },
+            { q: "Berapa getaran jika bandul bergerak dari A ke B lalu ke C?", options: ["1 getaran", "1/2 getaran", "1/4 getaran", "3/4 getaran"], a: 1 },
+            { q: "Jika sebuah benda bergetar dengan frekuensi 10 Hz, maka dalam waktu 5 detik benda tersebut bergetar sebanyak...", options: ["2 kali", "5 kali", "10 kali", "50 kali"], a: 3 },
+            { q: "Rumus mencari frekuensi jika diketahui jumlah getaran (n) dan waktu (t) adalah...", options: ["f = t / n", "f = n x t", "f = n / t", "f = n + t"], a: 2 },
+            { q: "Sebuah pegas melakukan 100 getaran dalam 25 detik. Periodenya adalah...", options: ["4 s", "0.25 s", "25 s", "0.4 s"], a: 1 },
+            { q: "Jika periode getaran semakin besar, maka frekuensinya akan...", options: ["Semakin besar", "Semakin kecil", "Tetap sama", "Menjadi nol"], a: 1 }
+        ];
+
+        let studentData = { name: "", class: "" };
+
+        window.startQuiz = function() {
+            const name = document.getElementById('student-name').value.trim();
+            const cls = document.getElementById('student-class').value.trim();
+
+            if (!name || !cls) {
+                showModal({ title: "Ops!", message: "Mohon isi Nama dan Kelas dulu ya sebelum mulai.", type: 'warning' });
+                return;
+            }
+
+            studentData.name = name;
+            studentData.class = cls;
+
+            document.getElementById('display-name').textContent = name;
+            document.getElementById('display-class').textContent = cls;
+
+            document.getElementById('quiz-login').classList.add('hidden');
+            document.getElementById('quiz-container').classList.remove('hidden');
+
+            renderQuestions();
+        }
+
+        function renderQuestions() {
+            const form = document.getElementById('quiz-form');
+            form.innerHTML = ""; 
+
+            questionData.forEach((item, index) => {
+                const qDiv = document.createElement('div');
+                qDiv.className = "bg-white p-6 rounded-2xl shadow border border-gray-100 relative overflow-hidden";
+                
+                let optionsHtml = "";
+                item.options.forEach((opt, optIndex) => {
+                    // Styled Radio Button Structure
+                    optionsHtml += `
+                        <label class="option-label group flex items-center p-3 rounded-xl cursor-pointer bg-white mb-2 relative">
+                            <input type="radio" name="q${index}" value="${optIndex}" class="option-input hidden peer">
+                            
+                            <!-- Content Wrapper -->
+                            <div class="option-content w-full h-full flex items-center p-2 rounded-lg transition-all duration-300">
+                                <!-- Circle Indicator -->
+                                <span class="option-circle w-8 h-8 flex-shrink-0 flex items-center justify-center bg-slate-100 rounded-full mr-3 text-sm font-bold text-slate-500 border-2 border-slate-200">
+                                    ${String.fromCharCode(65+optIndex)}
+                                </span>
+                                <!-- Text -->
+                                <span class="font-medium text-slate-700 text-lg peer-checked:text-violet-900">${opt}</span>
+                            </div>
+                        </label>
+                    `;
+                });
+
+                qDiv.innerHTML = `
+                    <div class="absolute top-0 left-0 w-1 h-full bg-violet-400"></div>
+                    <p class="font-bold text-xl mb-4 text-violet-800 font-['Fredoka']">
+                        <span class="bg-violet-100 text-violet-600 px-2 py-1 rounded-md mr-2 text-sm">No. ${index + 1}</span>
+                        ${item.q}
+                    </p>
+                    <div class="space-y-1">${optionsHtml}</div>
+                `;
+                form.appendChild(qDiv);
+            });
+        }
+
+        window.preSubmitCheck = function() {
+            let answered = 0;
+            questionData.forEach((item, index) => {
+                if (document.querySelector(`input[name="q${index}"]:checked`)) answered++;
+            });
+
+            if (answered < questionData.length) {
+                showModal({
+                    title: "Belum Selesai!",
+                    message: `Kamu baru menjawab <b class="text-red-500">${answered}</b> dari <b>15</b> soal.<br>Yakin mau dikirim sekarang?`,
+                    type: 'warning',
+                    buttons: [
+                        { text: "Lengkapi Dulu", class: "bg-gray-200 text-gray-700 hover:bg-gray-300 border-gray-300" },
+                        { text: "Kirim Saja", class: "bg-amber-500 text-white hover:bg-amber-600 border-amber-600", onClick: () => submitQuizLogic() }
+                    ]
+                });
+            } else {
+                submitQuizLogic();
+            }
+        }
+
+        async function submitQuizLogic() {
+            let correct = 0;
+            questionData.forEach((item, index) => {
+                const selected = document.querySelector(`input[name="q${index}"]:checked`);
+                if (selected && parseInt(selected.value) === item.a) correct++;
+            });
+
+            const score = Math.round((correct / questionData.length) * 100);
+            
+            // Show Loading Modal (Non-closable)
+            showModal({
+                title: "Mengirim Jawaban...",
+                message: "Tunggu sebentar, sedang menyimpan nilaimu ke database.",
+                type: 'loading',
+                buttons: [] // No buttons
+            });
+            
+            try {
+                if (!auth.currentUser) await signInAnonymously(auth);
+
+                await addDoc(collection(db, 'artifacts', appId, 'public', 'data', COLLECTION_NAME), {
+                    name: studentData.name,
+                    kelas: studentData.class,
+                    score: score,
+                    type: 'Latihan Getaran',
+                    date: new Date().toLocaleDateString('id-ID'),
+                    timestamp: Date.now()
+                });
+                
+                // Show Success Modal with Score
+                showModal({
+                    title: "Hore! Selesai!",
+                    message: `
+                        <div class="flex flex-col items-center">
+                            <span class="text-sm text-gray-500 uppercase font-bold tracking-widest mb-1">Skor Kamu</span>
+                            <span class="text-6xl font-black text-violet-600 mb-2 drop-shadow-sm">${score}</span>
+                            <span class="text-gray-500 bg-gray-100 px-3 py-1 rounded-full text-sm">Nilai sudah tersimpan</span>
+                        </div>
+                    `,
+                    type: 'success',
+                    buttons: [
+                        { text: "Lihat Rekap Nilai", class: "bg-green-500 text-white hover:bg-green-600 border-green-600", onClick: () => {
+                            window.location.href = "https://mtsn6-demak.github.io/nilai-siswa/";
+                        }}
+                    ]
+                });
+                
+                document.getElementById('quiz-form').classList.add('pointer-events-none', 'opacity-50');
+                const submitBtn = document.getElementById('submit-btn');
+                submitBtn.disabled = true;
+                submitBtn.innerHTML = '<i class="fa-solid fa-check mr-2"></i> Terkirim';
+                submitBtn.classList.replace('bg-green-500', 'bg-gray-500');
+
+            } catch (e) {
+                console.error("Error adding document: ", e);
+                let errorMsg = "Terjadi kesalahan saat menyimpan.";
+                
+                if (e.message.includes("Missing or insufficient permissions")) {
+                     errorMsg = "GAGAL SIMPAN (Izin Ditolak). Hubungi Guru untuk cek Database Rules.";
+                } else {
+                     errorMsg = "Error: " + e.message;
+                }
+
+                // Show Error Modal
+                showModal({
+                    title: "Gagal Mengirim",
+                    message: errorMsg + "<br><br>Ingin coba kirim ke web rekap nilai secara manual?",
+                    type: 'error',
+                    buttons: [
+                        { text: "Batal", class: "bg-gray-200 text-gray-700 hover:bg-gray-300" },
+                        { text: "Lanjut Manual", class: "bg-red-500 text-white hover:bg-red-600 border-red-600", onClick: () => {
+                            window.location.href = "https://mtsn6-demak.github.io/nilai-siswa/";
+                        }}
+                    ]
+                });
+            }
+        }
+    </script>
+</body>
+</html>
