@@ -1,0 +1,856 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dunia Gelombang: Riak Ceria</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts: Fredoka untuk tampilan lucu -->
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400;500;600&family=Patrick+Hand&display=swap" rel="stylesheet">
+    
+    <style>
+        body {
+            font-family: 'Fredoka', sans-serif;
+            background-color: #f0f9ff; /* Sky 50 */
+            color: #334155; /* Slate 700 */
+        }
+        h1, h2, h3 {
+            font-family: 'Fredoka', cursive;
+            letter-spacing: 0.5px;
+        }
+        p, li, label, input, select {
+            font-family: 'Patrick Hand', cursive;
+            font-size: 1.1rem;
+        }
+        .card-hover:hover {
+            transform: translateY(-5px) rotate(1deg);
+        }
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f0f9ff; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #38bdf8; 
+            border-radius: 10px;
+            border: 2px solid #f0f9ff;
+        }
+        
+        /* --- Quiz & Option Styling Enhanced --- */
+        .option-label {
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 2px solid #e2e8f0; /* slate-200 */
+            position: relative;
+            overflow: hidden;
+        }
+        .option-label:hover {
+            border-color: #a78bfa; /* violet-400 */
+            background-color: #f5f3ff; /* violet-50 */
+        }
+        /* State Checked */
+        .option-input:checked + .option-content {
+            background-color: #ede9fe; /* violet-100 */
+            border-color: #7c3aed; /* violet-600 */
+            color: #4c1d95; /* violet-900 */
+            box-shadow: 0 4px 6px -1px rgba(124, 58, 237, 0.1), 0 2px 4px -1px rgba(124, 58, 237, 0.06);
+        }
+        /* Lingkaran Indikator (A/B/C/D) */
+        .option-circle {
+            transition: all 0.3s ease;
+            border: 2px solid #cbd5e1;
+        }
+        .option-input:checked + .option-content .option-circle {
+            background-color: #7c3aed;
+            border-color: #7c3aed;
+            color: white;
+            transform: scale(1.1);
+        }
+        /* Parent Label Border Change on Check */
+        .option-input:checked + .option-content {
+            border-width: 2px;
+        }
+
+        /* --- Custom Modal Styling --- */
+        .modal-backdrop {
+            background-color: rgba(15, 23, 42, 0.6); /* Slate-900 with opacity */
+            backdrop-filter: blur(4px);
+            animation: fadeIn 0.2s ease-out;
+        }
+        .modal-content {
+            animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes popIn { from { transform: scale(0.9) translateY(10px); opacity: 0; } to { transform: scale(1) translateY(0); opacity: 1; } }
+    </style>
+</head>
+<body class="selection:bg-sky-200 selection:text-sky-900">
+
+    <!-- Navigation -->
+    <nav class="bg-sky-500 text-white shadow-lg sticky top-0 z-50 border-b-4 border-sky-600">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <div class="flex items-center space-x-2 animate-bounce-slow">
+                <i class="fa-solid fa-water text-2xl text-yellow-300"></i>
+                <span class="text-2xl font-semibold tracking-wide">FisikaCeria</span>
+            </div>
+            <div class="hidden md:flex space-x-6 text-lg">
+                <a href="#materi" class="hover:text-yellow-200 transition hover:scale-110 transform inline-block">Belajar</a>
+                <a href="#simulasi" class="hover:text-yellow-200 transition hover:scale-110 transform inline-block">Simulasi</a>
+                <a href="#kalkulator" class="hover:text-yellow-200 transition hover:scale-110 transform inline-block">Kalkulator</a>
+                <a href="#latihan" class="hover:text-yellow-200 transition hover:scale-110 transform inline-block">Latihan Soal</a>
+            </div>
+            <button id="mobile-menu-btn" class="md:hidden focus:outline-none bg-sky-600 p-2 rounded-lg text-white">
+                <i class="fa-solid fa-bars text-xl"></i>
+            </button>
+        </div>
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-sky-600 pb-4 px-4 text-center">
+            <a href="#materi" class="block py-2 hover:bg-sky-700 rounded-lg">Belajar</a>
+            <a href="#simulasi" class="block py-2 hover:bg-sky-700 rounded-lg">Simulasi</a>
+            <a href="#kalkulator" class="block py-2 hover:bg-sky-700 rounded-lg">Kalkulator</a>
+            <a href="#latihan" class="block py-2 hover:bg-sky-700 rounded-lg">Latihan Soal</a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="bg-gradient-to-b from-sky-400 to-indigo-100 pt-20 pb-32 px-4 text-center relative overflow-hidden">
+        <div class="absolute top-10 left-10 w-20 h-20 bg-yellow-300 rounded-full opacity-50 mix-blend-multiply filter blur-xl animate-pulse"></div>
+        <div class="absolute top-20 right-20 w-32 h-32 bg-indigo-300 rounded-full opacity-50 mix-blend-multiply filter blur-xl animate-pulse" style="animation-delay: 1s"></div>
+
+        <div class="container mx-auto max-w-4xl relative z-10">
+            <span class="bg-white text-sky-600 px-4 py-1 rounded-full text-sm font-bold shadow-sm mb-4 inline-block transform -rotate-2">
+                🌊 Serunya Belajar Gelombang
+            </span>
+            <h1 class="text-5xl md:text-7xl font-bold mb-6 text-white drop-shadow-md">
+                Dunia Gelombang
+            </h1>
+            <p class="text-xl md:text-2xl mb-8 text-sky-900 max-w-2xl mx-auto font-medium">
+                Pernah lihat ombak di pantai? Atau main tali yang digerakkan? 
+                Itu semua adalah contoh gelombang. Yuk cari tahu lebih dalam!
+            </p>
+            <a href="#simulasi" class="bg-indigo-500 text-white border-b-4 border-indigo-700 active:border-b-0 active:translate-y-1 px-8 py-4 rounded-full font-bold text-xl shadow-xl hover:bg-indigo-600 transition inline-flex items-center gap-3">
+                <i class="fa-solid fa-gamepad"></i> Mainkan Tali
+            </a>
+        </div>
+    </header>
+
+    <!-- Materi Section -->
+    <section id="materi" class="py-10 container mx-auto px-4 -mt-20 relative z-20">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div class="bg-white p-8 rounded-3xl shadow-lg border-4 border-orange-200 card-hover transition duration-300 transform">
+                <div class="bg-orange-100 w-16 h-16 rounded-full flex items-center justify-center mb-4 text-orange-600 mx-auto shadow-inner">
+                    <i class="fa-solid fa-wind text-3xl"></i>
+                </div>
+                <h3 class="text-2xl font-bold mb-3 text-center text-orange-600">Apa itu Gelombang?</h3>
+                <p class="text-center text-gray-600 leading-relaxed">
+                    Gelombang adalah <b>getaran yang merambat</b>. Yang merambat adalah energinya, sedangkan zat perantaranya (medium) tidak ikut pindah.
+                </p>
+            </div>
+
+            <div class="bg-white p-8 rounded-3xl shadow-lg border-4 border-sky-200 card-hover transition duration-300 transform">
+                <div class="bg-sky-100 w-16 h-16 rounded-full flex items-center justify-center mb-4 text-sky-600 mx-auto shadow-inner">
+                    <i class="fa-solid fa-ruler-horizontal text-3xl"></i>
+                </div>
+                <h3 class="text-2xl font-bold mb-3 text-center text-sky-600">Istilah Penting</h3>
+                <ul class="text-gray-600 space-y-3 text-left pl-2">
+                    <li class="flex items-start"><i class="fa-solid fa-circle text-[8px] mt-2 mr-2 text-sky-400"></i> <span><b>Panjang Gelombang (<span class="font-serif italic">&lambda;</span>):</b> Jarak satu bukit dan satu lembah.</span></li>
+                    <li class="flex items-start"><i class="fa-solid fa-circle text-[8px] mt-2 mr-2 text-sky-400"></i> <span><b>Frekuensi (f):</b> Jumlah gelombang per detik.</span></li>
+                    <li class="flex items-start"><i class="fa-solid fa-circle text-[8px] mt-2 mr-2 text-sky-400"></i> <span><b>Periode (T):</b> Waktu untuk 1 gelombang.</span></li>
+                </ul>
+            </div>
+
+            <div class="bg-white p-8 rounded-3xl shadow-lg border-4 border-teal-200 card-hover transition duration-300 transform">
+                <div class="bg-teal-100 w-16 h-16 rounded-full flex items-center justify-center mb-4 text-teal-600 mx-auto shadow-inner">
+                    <i class="fa-solid fa-calculator text-3xl"></i>
+                </div>
+                <h3 class="text-2xl font-bold mb-3 text-center text-teal-600">Rumus Cepat Rambat</h3>
+                <div class="bg-teal-50 p-4 rounded-2xl text-center space-y-3 border-2 border-teal-100 border-dashed">
+                    <p class="text-2xl font-bold text-teal-700">v = &lambda; &times; f</p>
+                    <p class="text-2xl font-bold text-teal-700">v = &lambda; / T</p>
+                    <p class="text-sm text-teal-600 mt-2 italic">v = cepat rambat (m/s)</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Simulasi Section -->
+    <section id="simulasi" class="bg-indigo-50 py-16 relative">
+        <div class="absolute top-0 left-0 w-full h-20 bg-gradient-to-b from-indigo-100 to-indigo-50"></div>
+        <div class="container mx-auto px-4 relative z-10">
+            <div class="text-center mb-10">
+                <span class="inline-block bg-white text-indigo-600 px-6 py-2 rounded-full shadow-md font-bold tracking-wider text-sm uppercase mb-3 border border-indigo-100">
+                    <i class="fa-solid fa-flask mr-2"></i>Laboratorium Virtual
+                </span>
+                <h2 class="text-4xl font-bold text-gray-800 mt-2">Simulasi Gelombang Tali 〰️</h2>
+            </div>
+            <div class="flex flex-col lg:flex-row gap-8 items-center max-w-5xl mx-auto">
+                <div class="w-full lg:w-2/3 bg-white rounded-[2rem] shadow-xl overflow-hidden relative border-8 border-indigo-200">
+                    <canvas id="waveCanvas" class="w-full h-[450px] bg-sky-50 cursor-pointer"></canvas>
+                    
+                    <div class="absolute bottom-4 left-4 bg-white/80 backdrop-blur px-4 py-2 rounded-xl shadow text-sm border-2 border-indigo-100">
+                        <p class="font-bold text-indigo-600">Info Gelombang:</p>
+                        <p class="font-mono text-sm text-gray-700">Jenis: Transversal</p>
+                    </div>
+                </div>
+                <div class="w-full lg:w-1/3 bg-white p-8 rounded-[2rem] shadow-xl border-b-8 border-sky-200">
+                    <h3 class="text-2xl font-bold mb-6 flex items-center text-sky-600">
+                        <i class="fa-solid fa-sliders mr-3"></i> Pengaturan
+                    </h3>
+                    <div class="mb-8">
+                        <label class="flex justify-between mb-3 font-bold text-gray-600">
+                            <span>Amplitudo (Tinggi)</span>
+                            <span class="bg-sky-100 text-sky-600 px-3 py-1 rounded-full text-sm" id="amp-val">50 px</span>
+                        </label>
+                        <input type="range" id="amp-slider" min="10" max="100" value="50" class="w-full h-4 bg-gray-200 rounded-full appearance-none cursor-pointer accent-sky-500 hover:accent-sky-400 transition">
+                    </div>
+                    <div class="mb-8">
+                        <label class="flex justify-between mb-3 font-bold text-gray-600">
+                            <span>Frekuensi (Kecepatan)</span>
+                            <span class="bg-indigo-100 text-indigo-600 px-3 py-1 rounded-full text-sm" id="freq-val">1.0 Hz</span>
+                        </label>
+                        <input type="range" id="freq-slider" min="0.5" max="5.0" step="0.1" value="1.0" class="w-full h-4 bg-gray-200 rounded-full appearance-none cursor-pointer accent-indigo-500 hover:accent-indigo-400 transition">
+                    </div>
+                    <div class="grid grid-cols-2 gap-4 mt-6">
+                        <button id="pause-btn" class="bg-yellow-400 hover:bg-yellow-500 text-white py-3 rounded-xl font-bold shadow-md border-b-4 border-yellow-600 active:border-b-0 active:translate-y-1 transition flex justify-center items-center gap-2">
+                            <i class="fa-solid fa-pause"></i> <span>Stop Dulu</span>
+                        </button>
+                        <button id="reset-btn" class="bg-gray-400 hover:bg-gray-500 text-white py-3 rounded-xl font-bold shadow-md border-b-4 border-gray-600 active:border-b-0 active:translate-y-1 transition flex justify-center items-center gap-2">
+                            <i class="fa-solid fa-arrows-rotate"></i> <span>Ulang</span>
+                        </button>
+                    </div>
+                    <div class="mt-6 text-center text-sm text-gray-400">
+                        *Perhatikan bagaimana bukit dan lembah bergerak!
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Kalkulator Section -->
+    <section id="kalkulator" class="py-16 container mx-auto px-4 bg-white rounded-t-[3rem] shadow-[0_-10px_40px_rgba(0,0,0,0.05)]">
+        <div class="max-w-4xl mx-auto">
+            <div class="text-center mb-10">
+                <div class="inline-block p-4 bg-blue-100 rounded-full text-blue-600 mb-4 text-3xl animate-bounce">
+                    <i class="fa-solid fa-robot"></i>
+                </div>
+                <h2 class="text-4xl font-bold text-blue-600">Mesin Hitung Gelombang</h2>
+                <p class="text-gray-500 mt-2">Hitung cepat rambat, panjang gelombang, atau frekuensi!</p>
+            </div>
+            
+            <div class="bg-blue-50 rounded-3xl shadow-lg border-2 border-blue-100 p-8">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
+                    <div class="space-y-6">
+                        <div class="bg-white p-4 rounded-xl border border-blue-100 shadow-sm">
+                            <label class="block text-lg font-bold text-blue-700 mb-2">Mau cari apa?</label>
+                            <select id="calc-mode" class="w-full p-3 bg-blue-50 border-none rounded-lg text-blue-800 font-bold focus:ring-2 focus:ring-blue-300 outline-none cursor-pointer">
+                                <option value="find-v">Cari Cepat Rambat (v)</option>
+                                <option value="find-lambda">Cari Panjang Gelombang (λ)</option>
+                                <option value="find-f">Cari Frekuensi (f)</option>
+                            </select>
+                        </div>
+                        <div id="calc-input-container" class="space-y-4"></div>
+                        <button onclick="calculate()" class="w-full bg-blue-500 hover:bg-blue-600 text-white text-xl font-bold py-3 rounded-xl shadow-lg border-b-4 border-blue-700 active:border-b-0 active:translate-y-1 transition">
+                            Hitung Sekarang! 🚀
+                        </button>
+                    </div>
+                    <div class="bg-white rounded-3xl p-8 border-4 border-dashed border-blue-200 text-center relative overflow-hidden">
+                        <div class="absolute right-0 top-0 bg-yellow-300 text-yellow-800 px-6 py-2 rounded-bl-3xl font-bold shadow-sm z-10">Hasilnya!</div>
+                        <span class="text-gray-400 font-bold uppercase tracking-widest text-sm mt-4 block">Jawabannya Adalah</span>
+                        <div class="my-4">
+                            <span id="calc-result" class="text-6xl font-black text-blue-600">---</span>
+                        </div>
+                        <div id="calc-unit" class="text-2xl font-bold text-gray-400 bg-gray-100 inline-block px-4 py-1 rounded-lg">satuan</div>
+                        <div id="calc-formula-display" class="mt-6 bg-blue-50 p-3 rounded-lg text-blue-500 font-mono text-sm border border-blue-100">
+                            Rumus yang dipakai muncul di sini
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Quiz Section (New) -->
+    <section id="latihan" class="py-16 bg-gradient-to-t from-violet-100 to-white">
+        <div class="container mx-auto px-4 max-w-4xl">
+            <div class="text-center mb-10">
+                <span class="inline-block bg-violet-500 text-white px-6 py-2 rounded-full shadow-md font-bold tracking-wider text-sm uppercase mb-3">
+                    <i class="fa-solid fa-pen-to-square mr-2"></i>Tantangan
+                </span>
+                <h2 class="text-4xl font-bold text-violet-700 mt-2">Latihan Soal</h2>
+                <p class="text-gray-600 mt-2">Uji pemahamanmu tentang Gelombang!</p>
+            </div>
+
+            <!-- Login Container -->
+            <div id="quiz-login" class="bg-white rounded-3xl shadow-xl p-8 border-4 border-violet-200 max-w-lg mx-auto relative">
+                <!-- Status Indicator -->
+                <div id="auth-status" class="absolute top-4 right-4 text-xs font-bold text-gray-400">
+                    <i class="fa-solid fa-circle text-gray-300 mr-1"></i> Menghubungkan...
+                </div>
+                
+                <div class="text-center mb-6">
+                    <i class="fa-solid fa-user-graduate text-5xl text-violet-400 mb-4"></i>
+                    <h3 class="text-2xl font-bold text-gray-700">Identitas Siswa</h3>
+                    <p class="text-sm text-gray-500">Isi nama dulu sebelum mulai ya!</p>
+                </div>
+                <div class="space-y-4">
+                    <div>
+                        <label class="block text-gray-600 font-bold mb-1">Nama Lengkap</label>
+                        <input type="text" id="student-name" class="w-full p-3 border-2 border-violet-100 rounded-xl outline-none focus:border-violet-500 bg-violet-50" placeholder="Contoh: Budi Santoso">
+                    </div>
+                    <div>
+                        <label class="block text-gray-600 font-bold mb-1">Kelas</label>
+                        <input type="text" id="student-class" class="w-full p-3 border-2 border-violet-100 rounded-xl outline-none focus:border-violet-500 bg-violet-50" placeholder="Contoh: 8A">
+                    </div>
+                    <button id="start-btn" onclick="startQuiz()" disabled class="w-full bg-gray-400 text-white font-bold py-3 rounded-xl shadow-lg cursor-not-allowed transition mt-4">
+                        Tunggu Sebentar...
+                    </button>
+                    <p id="auth-error-msg" class="text-red-500 text-xs text-center hidden">Gagal terhubung ke database. Coba refresh halaman.</p>
+                </div>
+            </div>
+
+            <!-- Quiz Container (Hidden Initially) -->
+            <div id="quiz-container" class="hidden space-y-6">
+                <div class="bg-violet-100 p-4 rounded-xl flex justify-between items-center border border-violet-200">
+                    <div class="font-bold text-violet-700">
+                        <i class="fa-solid fa-user mr-2"></i> <span id="display-name">---</span> (<span id="display-class">---</span>)
+                    </div>
+                    <div class="bg-white px-4 py-1 rounded-full text-violet-600 text-sm font-bold shadow-sm">
+                        Total: 15 Soal
+                    </div>
+                </div>
+
+                <form id="quiz-form" class="space-y-6">
+                    <!-- Questions will be injected here by JS -->
+                </form>
+
+                <div class="text-center pt-6">
+                    <button type="button" id="submit-btn" onclick="preSubmitCheck()" class="bg-green-500 hover:bg-green-600 text-white text-xl font-bold px-10 py-4 rounded-full shadow-lg border-b-4 border-green-700 active:border-b-0 active:translate-y-1 transition transform hover:scale-105">
+                        <i class="fa-solid fa-paper-plane mr-2"></i> Kirim Jawaban
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Custom Modal Structure -->
+    <div id="custom-modal" class="hidden fixed inset-0 z-[100] flex items-center justify-center modal-backdrop px-4">
+        <div class="bg-white rounded-3xl shadow-2xl p-8 max-w-md w-full modal-content border-t-8 border-violet-500 relative flex flex-col items-center">
+            <!-- Icon Bubble -->
+            <div class="absolute -top-12 bg-white rounded-full p-2 shadow-lg">
+                 <div id="modal-icon-container" class="w-20 h-20 rounded-full flex items-center justify-center text-4xl border-4 border-violet-50">
+                     <i class="fa-solid fa-bell text-violet-500"></i>
+                 </div>
+            </div>
+            
+            <div class="mt-10 text-center w-full">
+                <h3 id="modal-title" class="text-2xl font-bold text-gray-800 mb-2 font-['Fredoka']">Judul Modal</h3>
+                <div id="modal-body" class="text-gray-600 mb-8 leading-relaxed text-lg font-['Patrick_Hand']">
+                    Pesan akan muncul di sini.
+                </div>
+                
+                <div id="modal-actions" class="flex flex-col sm:flex-row gap-3 justify-center w-full">
+                    <button class="w-full bg-gray-200 text-gray-700 py-2 rounded-xl font-bold hover:bg-gray-300 transition">Batal</button>
+                    <button class="w-full bg-violet-500 text-white py-2 rounded-xl font-bold hover:bg-violet-600 transition">Lanjut</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-sky-600 text-white py-8 mt-10">
+        <div class="container mx-auto px-4 text-center">
+            <p class="font-bold text-xl mb-2 font-['Fredoka']">FisikaCeria</p>
+            <p class="text-sky-100 opacity-90 font-['Patrick_Hand']">Belajar Fisika jadi lebih gampang dan menyenangkan!</p>
+            <div class="mt-4 flex justify-center space-x-4">
+                <i class="fa-brands fa-instagram hover:text-yellow-300 cursor-pointer text-xl transition"></i>
+                <i class="fa-brands fa-tiktok hover:text-yellow-300 cursor-pointer text-xl transition"></i>
+                <i class="fa-brands fa-youtube hover:text-yellow-300 cursor-pointer text-xl transition"></i>
+            </div>
+            <p class="text-xs text-sky-200 mt-6">&copy; 2026 EduFisika Kids. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyAkX8qAS-O_5m_qaGr8Aa9XME-lVyBMibw",
+            authDomain: "belajaronline-b5512.firebaseapp.com",
+            projectId: "belajaronline-b5512",
+            storageBucket: "belajaronline-b5512.firebasestorage.app",
+            messagingSenderId: "896107581081",
+            appId: "1:896107581081:web:629056c097c90fdf583208",
+            measurementId: "G-7MKNGF9PCX"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+        const auth = getAuth(app);
+        
+        const appId = 'belajaronline-b5512';
+        const COLLECTION_NAME = 'scores';
+
+        // --- Auth & State Management ---
+        const startBtn = document.getElementById('start-btn');
+        const authStatus = document.getElementById('auth-status');
+        const authErrorMsg = document.getElementById('auth-error-msg');
+
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                console.log("User terautentikasi:", user.uid);
+                startBtn.disabled = false;
+                startBtn.classList.remove('bg-gray-400', 'cursor-not-allowed');
+                startBtn.classList.add('bg-violet-500', 'hover:bg-violet-600', 'border-b-4', 'border-violet-700');
+                startBtn.innerHTML = 'Mulai Kerjakan Soal <i class="fa-solid fa-arrow-right ml-2"></i>';
+                authStatus.innerHTML = '<i class="fa-solid fa-circle text-green-400 mr-1"></i> Siap';
+                authStatus.classList.replace('text-gray-400', 'text-green-600');
+                authErrorMsg.classList.add('hidden');
+            } else {
+                console.log("User belum login, mencoba login anonim...");
+                signInAnonymously(auth).catch((error) => {
+                    console.error("Login anonim gagal:", error);
+                    authStatus.innerHTML = '<i class="fa-solid fa-circle text-red-400 mr-1"></i> Gagal';
+                    authErrorMsg.classList.remove('hidden');
+                    authErrorMsg.textContent = "Error Login: " + error.message;
+                });
+            }
+        });
+
+        // --- Helper Functions for Modal ---
+        const modal = document.getElementById('custom-modal');
+        const modalTitle = document.getElementById('modal-title');
+        const modalBody = document.getElementById('modal-body');
+        const modalActions = document.getElementById('modal-actions');
+        const modalIconContainer = document.getElementById('modal-icon-container');
+
+        function showModal(config) {
+            modalTitle.textContent = config.title;
+            modalBody.innerHTML = config.message;
+            let iconClass = 'fa-bell';
+            let iconColor = 'text-violet-500';
+            let borderColor = 'border-violet-50';
+            if (config.type === 'warning') { iconClass = 'fa-triangle-exclamation'; iconColor = 'text-amber-500'; borderColor = 'border-amber-50'; }
+            if (config.type === 'success') { iconClass = 'fa-trophy'; iconColor = 'text-green-500'; borderColor = 'border-green-50'; }
+            if (config.type === 'error') { iconClass = 'fa-circle-xmark'; iconColor = 'text-red-500'; borderColor = 'border-red-50'; }
+            if (config.type === 'loading') { iconClass = 'fa-spinner fa-spin'; iconColor = 'text-blue-500'; borderColor = 'border-blue-50'; }
+            modalIconContainer.className = `w-20 h-20 rounded-full flex items-center justify-center text-4xl border-4 ${borderColor} bg-white shadow-inner`;
+            modalIconContainer.innerHTML = `<i class="fa-solid ${iconClass} ${iconColor}"></i>`;
+            modalActions.innerHTML = '';
+            if (config.buttons) {
+                config.buttons.forEach(btn => {
+                    const buttonEl = document.createElement('button');
+                    buttonEl.className = `w-full py-3 rounded-xl font-bold transition shadow-sm border-b-4 active:border-b-0 active:translate-y-1 ${btn.class || 'bg-gray-200 text-gray-700 border-gray-300 hover:bg-gray-300'}`;
+                    buttonEl.textContent = btn.text;
+                    buttonEl.onclick = () => { if (btn.close !== false) hideModal(); if (btn.onClick) btn.onClick(); };
+                    modalActions.appendChild(buttonEl);
+                });
+            } else if (config.type !== 'loading') {
+                const closeBtn = document.createElement('button');
+                closeBtn.className = "w-full bg-violet-500 text-white py-3 rounded-xl font-bold hover:bg-violet-600 border-b-4 border-violet-700 active:border-b-0 active:translate-y-1 transition";
+                closeBtn.textContent = "Tutup";
+                closeBtn.onclick = hideModal;
+                modalActions.appendChild(closeBtn);
+            }
+            modal.classList.remove('hidden');
+        }
+        function hideModal() { modal.classList.add('hidden'); }
+
+        // --- Mobile Menu Logic ---
+        const btn = document.getElementById('mobile-menu-btn');
+        const menu = document.getElementById('mobile-menu');
+        btn.addEventListener('click', () => { menu.classList.toggle('hidden'); });
+
+        // --- Wave Simulation Logic (Canvas) ---
+        const canvas = document.getElementById('waveCanvas');
+        const ctx = canvas.getContext('2d');
+        let isPaused = false;
+        
+        // Wave State
+        const state = {
+            amplitude: 50, // px
+            frequency: 1.0, // Hz
+            phase: 0
+        };
+
+        const ampSlider = document.getElementById('amp-slider');
+        const freqSlider = document.getElementById('freq-slider');
+        const ampValDisplay = document.getElementById('amp-val');
+        const freqValDisplay = document.getElementById('freq-val');
+
+        function resizeCanvas() {
+            canvas.width = canvas.parentElement.offsetWidth;
+            canvas.height = canvas.parentElement.offsetHeight;
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        function animate() {
+            if (!isPaused) {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                
+                // Draw Equilibrium Line
+                ctx.beginPath();
+                ctx.moveTo(0, canvas.height / 2);
+                ctx.lineTo(canvas.width, canvas.height / 2);
+                ctx.strokeStyle = '#bae6fd';
+                ctx.lineWidth = 2;
+                ctx.setLineDash([5, 5]);
+                ctx.stroke();
+                ctx.setLineDash([]);
+
+                // Draw Wave: y = A sin(kx - wt)
+                ctx.beginPath();
+                ctx.moveTo(0, canvas.height / 2);
+                
+                const angularFrequency = 2 * Math.PI * state.frequency;
+                // Speed is somewhat arbitrary here for visualization, let's say wave speed depends on nothing or fixed
+                // Actually let's just make it look good. 
+                // k = 2pi / lambda. Let's assume a fixed speed v = 200 px/s.
+                // lambda = v / f = 200 / f.
+                const v = 300; 
+                const lambda = v / state.frequency;
+                const k = (2 * Math.PI) / lambda;
+
+                // Update phase based on time
+                // We use a running time counter or just increment phase
+                state.phase += angularFrequency * 0.016; // approx 60fps
+
+                for (let x = 0; x < canvas.width; x++) {
+                    // y = A * sin(kx - phase)
+                    // Note: In canvas, y increases downwards, so we might flip sign or just add to center
+                    const y = (canvas.height / 2) - state.amplitude * Math.sin(k * x - state.phase);
+                    ctx.lineTo(x, y);
+                }
+
+                ctx.strokeStyle = '#6366f1'; // Indigo-500
+                ctx.lineWidth = 4;
+                ctx.stroke();
+
+                // Draw Particles on the string
+                for (let x = 50; x < canvas.width; x += 50) {
+                    const y = (canvas.height / 2) - state.amplitude * Math.sin(k * x - state.phase);
+                    ctx.beginPath();
+                    ctx.arc(x, y, 6, 0, Math.PI * 2);
+                    ctx.fillStyle = '#ef4444'; // Red dot
+                    ctx.fill();
+                }
+            }
+            requestAnimationFrame(animate);
+        }
+
+        ampSlider.addEventListener('input', (e) => {
+            state.amplitude = parseInt(e.target.value);
+            ampValDisplay.textContent = state.amplitude + " px";
+        });
+        freqSlider.addEventListener('input', (e) => {
+            state.frequency = parseFloat(e.target.value);
+            freqValDisplay.textContent = state.frequency + " Hz";
+        });
+        document.getElementById('pause-btn').addEventListener('click', function() {
+            isPaused = !isPaused;
+            const icon = this.querySelector('i');
+            const span = this.querySelector('span');
+            if (isPaused) {
+                icon.className = 'fa-solid fa-play';
+                span.textContent = 'Lanjut';
+                this.classList.replace('bg-yellow-400', 'bg-green-400');
+                this.classList.replace('hover:bg-yellow-500', 'hover:bg-green-500');
+            } else {
+                icon.className = 'fa-solid fa-pause';
+                span.textContent = 'Stop Dulu';
+                this.classList.replace('bg-green-400', 'bg-yellow-400');
+                this.classList.replace('hover:bg-green-500', 'hover:bg-yellow-500');
+            }
+        });
+        document.getElementById('reset-btn').addEventListener('click', () => {
+            state.amplitude = 50;
+            state.frequency = 1.0;
+            state.phase = 0;
+            ampSlider.value = 50;
+            freqSlider.value = 1.0;
+            ampValDisplay.textContent = "50 px";
+            freqValDisplay.textContent = "1.0 Hz";
+            isPaused = false;
+        });
+        animate();
+
+        // --- Calculator Logic ---
+        const calcMode = document.getElementById('calc-mode');
+        const calcInputContainer = document.getElementById('calc-input-container');
+        const calcResultDisplay = document.getElementById('calc-result');
+        const calcUnitDisplay = document.getElementById('calc-unit');
+        const calcFormulaDisplay = document.getElementById('calc-formula-display');
+
+        const calcInputs = {
+            'find-v': `
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-sm text-gray-600 font-bold mb-1">Panjang Gelombang (λ):</label>
+                        <input type="number" id="input-val-1" step="0.1" class="w-full p-2 border-2 border-blue-100 rounded-lg outline-none" placeholder="Meter">
+                    </div>
+                    <div>
+                        <label class="block text-sm text-gray-600 font-bold mb-1">Frekuensi (f):</label>
+                        <input type="number" id="input-val-2" step="0.1" class="w-full p-2 border-2 border-blue-100 rounded-lg outline-none" placeholder="Hz">
+                    </div>
+                </div>
+            `,
+            'find-lambda': `
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-sm text-gray-600 font-bold mb-1">Cepat Rambat (v):</label>
+                        <input type="number" id="input-val-1" step="0.1" class="w-full p-2 border-2 border-blue-100 rounded-lg outline-none" placeholder="m/s">
+                    </div>
+                    <div>
+                        <label class="block text-sm text-gray-600 font-bold mb-1">Frekuensi (f):</label>
+                        <input type="number" id="input-val-2" step="0.1" class="w-full p-2 border-2 border-blue-100 rounded-lg outline-none" placeholder="Hz">
+                    </div>
+                </div>
+            `,
+            'find-f': `
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-sm text-gray-600 font-bold mb-1">Cepat Rambat (v):</label>
+                        <input type="number" id="input-val-1" step="0.1" class="w-full p-2 border-2 border-blue-100 rounded-lg outline-none" placeholder="m/s">
+                    </div>
+                    <div>
+                        <label class="block text-sm text-gray-600 font-bold mb-1">Panjang Gelombang (λ):</label>
+                        <input type="number" id="input-val-2" step="0.1" class="w-full p-2 border-2 border-blue-100 rounded-lg outline-none" placeholder="Meter">
+                    </div>
+                </div>
+            `
+        };
+        function updateCalcInputs() {
+            calcInputContainer.innerHTML = calcInputs[calcMode.value];
+            calcResultDisplay.textContent = "---";
+            calcUnitDisplay.textContent = "satuan";
+            calcFormulaDisplay.textContent = "Rumus: -";
+        }
+        calcMode.addEventListener('change', updateCalcInputs);
+        updateCalcInputs();
+
+        window.calculate = function() {
+            const mode = calcMode.value;
+            let result = 0;
+            let unit = "";
+            let formula = "";
+            
+            try {
+                const val1 = parseFloat(document.getElementById('input-val-1').value);
+                const val2 = parseFloat(document.getElementById('input-val-2').value);
+
+                if (isNaN(val1) || isNaN(val2)) throw new Error("Lengkapi semua angka ya!");
+
+                if (mode === 'find-v') {
+                    // v = lambda * f
+                    result = val1 * val2;
+                    unit = "m/s";
+                    formula = `v = ${val1} × ${val2}`;
+                } 
+                else if (mode === 'find-lambda') {
+                    // lambda = v / f
+                    if (val2 === 0) throw new Error("Frekuensi tidak boleh 0");
+                    result = val1 / val2;
+                    unit = "meter";
+                    formula = `λ = ${val1} / ${val2}`;
+                }
+                else if (mode === 'find-f') {
+                    // f = v / lambda
+                    if (val2 === 0) throw new Error("Panjang gelombang tidak boleh 0");
+                    result = val1 / val2;
+                    unit = "Hz";
+                    formula = `f = ${val1} / ${val2}`;
+                }
+                
+                calcResultDisplay.textContent = result.toFixed(2);
+                calcUnitDisplay.textContent = unit;
+                calcFormulaDisplay.textContent = `Rumus: ${formula}`;
+            } catch (e) {
+                calcResultDisplay.textContent = "???";
+                calcUnitDisplay.textContent = "Cek Lagi";
+                calcFormulaDisplay.textContent = e.message;
+            }
+        }
+
+        // --- QUIZ LOGIC (NEW: Gelombang) ---
+        const questionData = [
+            { q: "Apa yang dimaksud dengan gelombang?", options: ["Perpindahan benda", "Perambatan energi melalui getaran", "Aliran air sungai", "Angin yang bertiup"], a: 1 },
+            { q: "Gelombang yang arah rambatnya tegak lurus dengan arah getarnya disebut...", options: ["Gelombang Longitudinal", "Gelombang Transversal", "Gelombang Bunyi", "Gelombang Seismik"], a: 1 },
+            { q: "Gelombang bunyi termasuk contoh dari...", options: ["Gelombang Transversal", "Gelombang Longitudinal", "Gelombang Elektromagnetik", "Gelombang Cahaya"], a: 1 },
+            { q: "Satu gelombang pada gelombang transversal terdiri dari...", options: ["1 bukit saja", "1 lembah saja", "1 bukit dan 1 lembah", "2 bukit dan 1 lembah"], a: 2 },
+            { q: "Jarak yang ditempuh gelombang dalam satu periode disebut...", options: ["Frekuensi", "Amplitudo", "Panjang Gelombang", "Cepat Rambat"], a: 2 },
+            { q: "Simbol fisika untuk panjang gelombang adalah...", options: ["T", "f", "λ", "v"], a: 2 },
+            { q: "Rumus hubungan antara Cepat Rambat (v), Panjang Gelombang (λ), dan Frekuensi (f) adalah...", options: ["v = λ / f", "v = λ × f", "v = f / λ", "v = λ + f"], a: 1 },
+            { q: "Jika panjang gelombang 2 meter dan frekuensinya 10 Hz, berapa cepat rambatnya?", options: ["5 m/s", "12 m/s", "20 m/s", "0.2 m/s"], a: 2 },
+            { q: "Apa yang ikut merambat saat gelombang terjadi?", options: ["Mediumnya", "Partikel udaranya", "Energinya", "Sumber getarnya"], a: 2 },
+            { q: "Pada gelombang longitudinal, bagian yang renggang disebut...", options: ["Rapatan", "Renggangan", "Bukit", "Lembah"], a: 1 },
+            { q: "Contoh gelombang transversal dalam kehidupan sehari-hari adalah...", options: ["Gelombang tali", "Gelombang bunyi", "Gelombang slinki", "Suara speaker"], a: 0 },
+            { q: "Jika cepat rambat gelombang 340 m/s dan frekuensinya 170 Hz, berapa panjang gelombangnya?", options: ["0.5 m", "2 m", "510 m", "170 m"], a: 1 },
+            { q: "Apa yang dimaksud dengan Amplitudo gelombang?", options: ["Jarak terjauh simpangan", "Jumlah gelombang per detik", "Waktu satu gelombang", "Kecepatan gelombang"], a: 0 },
+            { q: "Jika frekuensi diperbesar 2x dan kecepatan tetap, maka panjang gelombang akan...", options: ["Menjadi 2x lipat", "Menjadi setengahnya", "Tetap sama", "Menjadi nol"], a: 1 },
+            { q: "Satuan untuk Cepat Rambat Gelombang adalah...", options: ["Meter (m)", "Hertz (Hz)", "Meter per sekon (m/s)", "Sekon (s)"], a: 2 }
+        ];
+
+        let studentData = { name: "", class: "" };
+
+        window.startQuiz = function() {
+            const name = document.getElementById('student-name').value.trim();
+            const cls = document.getElementById('student-class').value.trim();
+
+            if (!name || !cls) {
+                showModal({ title: "Ops!", message: "Mohon isi Nama dan Kelas dulu ya sebelum mulai.", type: 'warning' });
+                return;
+            }
+
+            studentData.name = name;
+            studentData.class = cls;
+
+            document.getElementById('display-name').textContent = name;
+            document.getElementById('display-class').textContent = cls;
+
+            document.getElementById('quiz-login').classList.add('hidden');
+            document.getElementById('quiz-container').classList.remove('hidden');
+
+            renderQuestions();
+        }
+
+        function renderQuestions() {
+            const form = document.getElementById('quiz-form');
+            form.innerHTML = ""; 
+
+            questionData.forEach((item, index) => {
+                const qDiv = document.createElement('div');
+                qDiv.className = "bg-white p-6 rounded-2xl shadow border border-gray-100 relative overflow-hidden";
+                
+                let optionsHtml = "";
+                item.options.forEach((opt, optIndex) => {
+                    optionsHtml += `
+                        <label class="option-label group flex items-center p-3 rounded-xl cursor-pointer bg-white mb-2 relative">
+                            <input type="radio" name="q${index}" value="${optIndex}" class="option-input hidden peer">
+                            <div class="option-content w-full h-full flex items-center p-2 rounded-lg transition-all duration-300">
+                                <span class="option-circle w-8 h-8 flex-shrink-0 flex items-center justify-center bg-slate-100 rounded-full mr-3 text-sm font-bold text-slate-500 border-2 border-slate-200">
+                                    ${String.fromCharCode(65+optIndex)}
+                                </span>
+                                <span class="font-medium text-slate-700 text-lg peer-checked:text-violet-900">${opt}</span>
+                            </div>
+                        </label>
+                    `;
+                });
+
+                qDiv.innerHTML = `
+                    <div class="absolute top-0 left-0 w-1 h-full bg-violet-400"></div>
+                    <p class="font-bold text-xl mb-4 text-violet-800 font-['Fredoka']">
+                        <span class="bg-violet-100 text-violet-600 px-2 py-1 rounded-md mr-2 text-sm">No. ${index + 1}</span>
+                        ${item.q}
+                    </p>
+                    <div class="space-y-1">${optionsHtml}</div>
+                `;
+                form.appendChild(qDiv);
+            });
+        }
+
+        window.preSubmitCheck = function() {
+            let answered = 0;
+            questionData.forEach((item, index) => {
+                if (document.querySelector(`input[name="q${index}"]:checked`)) answered++;
+            });
+
+            if (answered < questionData.length) {
+                showModal({
+                    title: "Belum Selesai!",
+                    message: `Kamu baru menjawab <b class="text-red-500">${answered}</b> dari <b>15</b> soal.<br>Yakin mau dikirim sekarang?`,
+                    type: 'warning',
+                    buttons: [
+                        { text: "Lengkapi Dulu", class: "bg-gray-200 text-gray-700 hover:bg-gray-300 border-gray-300" },
+                        { text: "Kirim Saja", class: "bg-amber-500 text-white hover:bg-amber-600 border-amber-600", onClick: () => submitQuizLogic() }
+                    ]
+                });
+            } else {
+                submitQuizLogic();
+            }
+        }
+
+        async function submitQuizLogic() {
+            let correct = 0;
+            questionData.forEach((item, index) => {
+                const selected = document.querySelector(`input[name="q${index}"]:checked`);
+                if (selected && parseInt(selected.value) === item.a) correct++;
+            });
+
+            const score = Math.round((correct / questionData.length) * 100);
+            
+            showModal({
+                title: "Mengirim Jawaban...",
+                message: "Tunggu sebentar, sedang menyimpan nilaimu ke database.",
+                type: 'loading',
+                buttons: [] 
+            });
+            
+            try {
+                if (!auth.currentUser) await signInAnonymously(auth);
+
+                await addDoc(collection(db, 'artifacts', appId, 'public', 'data', COLLECTION_NAME), {
+                    name: studentData.name,
+                    kelas: studentData.class,
+                    score: score,
+                    type: 'Latihan Gelombang', // Updated Type
+                    date: new Date().toLocaleDateString('id-ID'),
+                    timestamp: Date.now()
+                });
+                
+                showModal({
+                    title: "Hore! Selesai!",
+                    message: `
+                        <div class="flex flex-col items-center">
+                            <span class="text-sm text-gray-500 uppercase font-bold tracking-widest mb-1">Skor Kamu</span>
+                            <span class="text-6xl font-black text-violet-600 mb-2 drop-shadow-sm">${score}</span>
+                            <span class="text-gray-500 bg-gray-100 px-3 py-1 rounded-full text-sm">Nilai sudah tersimpan</span>
+                        </div>
+                    `,
+                    type: 'success',
+                    buttons: [
+                        { text: "Lihat Rekap Nilai", class: "bg-green-500 text-white hover:bg-green-600 border-green-600", onClick: () => {
+                            window.location.href = "https://mtsn6-demak.github.io/nilai-siswa/";
+                        }}
+                    ]
+                });
+                
+                document.getElementById('quiz-form').classList.add('pointer-events-none', 'opacity-50');
+                const submitBtn = document.getElementById('submit-btn');
+                submitBtn.disabled = true;
+                submitBtn.innerHTML = '<i class="fa-solid fa-check mr-2"></i> Terkirim';
+                submitBtn.classList.replace('bg-green-500', 'bg-gray-500');
+
+            } catch (e) {
+                console.error("Error adding document: ", e);
+                let errorMsg = "Terjadi kesalahan saat menyimpan.";
+                
+                if (e.message.includes("Missing or insufficient permissions")) {
+                     errorMsg = "GAGAL SIMPAN (Izin Ditolak). Hubungi Guru untuk cek Database Rules.";
+                } else {
+                     errorMsg = "Error: " + e.message;
+                }
+
+                showModal({
+                    title: "Gagal Mengirim",
+                    message: errorMsg + "<br><br>Ingin coba kirim ke web rekap nilai secara manual?",
+                    type: 'error',
+                    buttons: [
+                        { text: "Batal", class: "bg-gray-200 text-gray-700 hover:bg-gray-300" },
+                        { text: "Lanjut Manual", class: "bg-red-500 text-white hover:bg-red-600 border-red-600", onClick: () => {
+                            window.location.href = "https://mtsn6-demak.github.io/nilai-siswa/";
+                        }}
+                    ]
+                });
+            }
+        }
+    </script>
+</body>
+</html>
