@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Uji Kompetensi - MTsN 6 Demak</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- SweetAlert2 for beautiful popups -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f0fdf4; /* Light Green background */
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%2316a34a' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.1);
+        }
+        .subject-btn {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .subject-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+        }
+        .subject-btn:active {
+            transform: scale(0.98);
+        }
+        
+        /* Animation for loading */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fade-in {
+            animation: fadeIn 0.5s ease-out forwards;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col items-center">
+
+    <!-- Navbar / Header -->
+    <header class="w-full bg-green-700 text-white shadow-lg sticky top-0 z-50">
+        <div class="max-w-4xl mx-auto px-4 py-3 flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+                <!-- Logo School -->
+                <div class="w-10 h-10 bg-white rounded-full flex items-center justify-center text-green-700 font-bold text-lg border-2 border-green-200 shadow-md">
+                    <i class="fa-solid fa-graduation-cap"></i>
+                </div>
+                <div>
+                    <h1 class="font-bold text-lg leading-tight">CBT MTsN 6 Demak</h1>
+                    <p class="text-xs text-green-100">Computer Based Test</p>
+                </div>
+            </div>
+            <div class="hidden md:block text-sm font-medium bg-green-800 px-3 py-1 rounded-full">
+                <i class="fa-regular fa-clock mr-1"></i> <span id="clock">00:00</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-grow w-full max-w-2xl px-4 py-8 flex flex-col items-center">
+
+        <!-- Token Section (Common in Exam Apps) -->
+        <div class="glass-card w-full rounded-2xl p-6 mb-6 text-center border-t-4 border-yellow-500 animate-fade-in shadow-lg relative overflow-hidden">
+            <div class="absolute top-0 right-0 p-4 opacity-10">
+                <i class="fa-solid fa-key text-6xl text-yellow-600"></i>
+            </div>
+            <h2 class="text-xl font-bold text-gray-800 mb-2">Portal Uji Kompetensi</h2>
+            <p class="text-gray-500 text-sm mb-4">Pastikan Anda memiliki Token Ujian dari Guru Mapel.</p>
+            
+            <div class="flex flex-col sm:flex-row gap-3 justify-center items-center">
+                <input type="text" id="tokenInput" placeholder="Masukkan Token Ujian" class="w-full sm:w-2/3 px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-green-500 text-center uppercase tracking-widest font-bold text-gray-700">
+                <button onclick="validateToken()" class="w-full sm:w-auto bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-lg font-semibold transition-colors shadow-md">
+                    Masuk
+                </button>
+            </div>
+        </div>
+
+        <!-- Teacher Info Small -->
+        <div class="w-full flex items-center justify-between mb-4 px-2">
+            <div>
+                <p class="text-xs text-gray-500 font-semibold uppercase tracking-wider">Guru Pengampu</p>
+                <p class="text-sm font-bold text-gray-700">Ahmad Zulfikar, S.Pd.</p>
+            </div>
+            <div class="text-right">
+                <p class="text-xs text-gray-500 font-semibold uppercase tracking-wider">Status Server</p>
+                <p class="text-sm font-bold text-green-600 flex items-center justify-end">
+                    <span class="w-2 h-2 bg-green-500 rounded-full mr-2 animate-pulse"></span> Online
+                </p>
+            </div>
+        </div>
+
+        <!-- Subject Selection Container -->
+        <div class="w-full space-y-4">
+
+            <!-- Fiqih and IPA Cards removed as requested -->
+            <!-- History Button removed as requested -->
+
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="w-full bg-white border-t border-gray-200 text-gray-500 py-6 text-center text-xs mt-auto">
+        <div class="max-w-2xl mx-auto px-4">
+            <p class="mb-2 font-semibold text-green-700">MTsN 6 Demak</p>
+            <p>&copy; 2026 E-Learning System. Developed by Tim IT.</p>
+        </div>
+    </footer>
+
+    <!-- JavaScript Logic -->
+    <script>
+        // ==========================================
+        // KONFIGURASI TOKEN & LINK UJIAN (EDIT DI SINI)
+        // ==========================================
+        // Format: 'TOKEN': { url: 'LINK_TUJUAN', mapel: 'NAMA_MAPEL' }
+        const databaseUjian = {
+            'TD928H': { 
+                url: 'https://mtsn6-demak.github.io/formatif/getaran', 
+                mapel: 'Getaran & Gelombang' 
+            },
+            'UH1FIQIH': { 
+                url: 'https://mtsn6-demak.github.io/formatif/thoharoh', 
+                mapel: 'Fiqih: Thoharoh' 
+            },
+            'PTSIPA8': { 
+                url: 'https://google.com', // Contoh link lain
+                mapel: 'PTS IPA Kelas 8' 
+            }
+            // Tambahkan baris baru di bawah ini untuk token lainnya...
+        };
+        // ==========================================
+
+        // Clock functionality
+        function updateClock() {
+            const now = new Date();
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            document.getElementById('clock').innerText = `${hours}:${minutes} WIB`;
+        }
+        setInterval(updateClock, 1000);
+        updateClock();
+
+        // Token Validation Logic
+        function validateToken() {
+            // Ambil input dan bersihkan spasi serta ubah ke huruf besar
+            const inputToken = document.getElementById('tokenInput').value.trim().toUpperCase();
+            
+            if(!inputToken) {
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Token Kosong',
+                    text: 'Silahkan masukkan Token Ujian terlebih dahulu!',
+                    confirmButtonColor: '#16a34a'
+                });
+                return;
+            }
+
+            // Cek apakah token ada di dalam databaseUjian
+            if (databaseUjian.hasOwnProperty(inputToken)) {
+                const dataUjian = databaseUjian[inputToken];
+                
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Token Valid!',
+                    html: `Membuka Soal: <b>${dataUjian.mapel}</b>`,
+                    timer: 2000,
+                    showConfirmButton: false,
+                    willClose: () => {
+                        // Arahkan ke link yang sesuai dengan token
+                        window.location.href = dataUjian.url;
+                    }
+                });
+            } else {
+                // Jika token tidak ditemukan
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Token Tidak Dikenali',
+                    text: 'Pastikan kode token yang Anda masukkan benar.',
+                    confirmButtonColor: '#d33'
+                });
+            }
+        }
+        
+        // Subject selection logic removed as buttons are gone
+    </script>
+</body>
+</html>
