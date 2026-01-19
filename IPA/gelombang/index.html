@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dunia Gelombang: Riak Ceria</title>
+    <title>Dunia Gelombang</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- FontAwesome -->
@@ -87,6 +87,24 @@
         }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
         @keyframes popIn { from { transform: scale(0.9) translateY(10px); opacity: 0; } to { transform: scale(1) translateY(0); opacity: 1; } }
+        
+        /* Tab Animation */
+        .tab-btn {
+            transition: all 0.3s ease;
+        }
+        .tab-active {
+            background-color: #4f46e5; /* indigo-600 */
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+        .tab-inactive {
+            background-color: #e0e7ff; /* indigo-100 */
+            color: #4338ca; /* indigo-700 */
+        }
+        .tab-inactive:hover {
+            background-color: #c7d2fe;
+        }
     </style>
 </head>
 <body class="selection:bg-sky-200 selection:text-sky-900">
@@ -100,7 +118,7 @@
             </div>
             <div class="hidden md:flex space-x-6 text-lg">
                 <a href="#materi" class="hover:text-yellow-200 transition hover:scale-110 transform inline-block">Belajar</a>
-                <a href="#simulasi" class="hover:text-yellow-200 transition hover:scale-110 transform inline-block">Simulasi</a>
+                <a href="#simulasi" class="hover:text-yellow-200 transition hover:scale-110 transform inline-block">Lab Virtual</a>
                 <a href="#kalkulator" class="hover:text-yellow-200 transition hover:scale-110 transform inline-block">Kalkulator</a>
                 <a href="#latihan" class="hover:text-yellow-200 transition hover:scale-110 transform inline-block">Latihan Soal</a>
             </div>
@@ -111,7 +129,7 @@
         <!-- Mobile Menu -->
         <div id="mobile-menu" class="hidden md:hidden bg-sky-600 pb-4 px-4 text-center">
             <a href="#materi" class="block py-2 hover:bg-sky-700 rounded-lg">Belajar</a>
-            <a href="#simulasi" class="block py-2 hover:bg-sky-700 rounded-lg">Simulasi</a>
+            <a href="#simulasi" class="block py-2 hover:bg-sky-700 rounded-lg">Lab Virtual</a>
             <a href="#kalkulator" class="block py-2 hover:bg-sky-700 rounded-lg">Kalkulator</a>
             <a href="#latihan" class="block py-2 hover:bg-sky-700 rounded-lg">Latihan Soal</a>
         </div>
@@ -124,17 +142,16 @@
 
         <div class="container mx-auto max-w-4xl relative z-10">
             <span class="bg-white text-sky-600 px-4 py-1 rounded-full text-sm font-bold shadow-sm mb-4 inline-block transform -rotate-2">
-                🌊 Serunya Belajar Gelombang
+                🌊 Serunya Belajar Fisika
             </span>
             <h1 class="text-5xl md:text-7xl font-bold mb-6 text-white drop-shadow-md">
                 Dunia Gelombang
             </h1>
             <p class="text-xl md:text-2xl mb-8 text-sky-900 max-w-2xl mx-auto font-medium">
-                Pernah lihat ombak di pantai? Atau main tali yang digerakkan? 
-                Itu semua adalah contoh gelombang. Yuk cari tahu lebih dalam!
+                Apa bedanya Gelombang Transversal dan Longitudinal? Yuk kita cari tahu lewat simulasi!
             </p>
             <a href="#simulasi" class="bg-indigo-500 text-white border-b-4 border-indigo-700 active:border-b-0 active:translate-y-1 px-8 py-4 rounded-full font-bold text-xl shadow-xl hover:bg-indigo-600 transition inline-flex items-center gap-3">
-                <i class="fa-solid fa-gamepad"></i> Mainkan Tali
+                <i class="fa-solid fa-flask"></i> Masuk Laboratorium
             </a>
         </div>
     </header>
@@ -148,7 +165,7 @@
                 </div>
                 <h3 class="text-2xl font-bold mb-3 text-center text-orange-600">Apa itu Gelombang?</h3>
                 <p class="text-center text-gray-600 leading-relaxed">
-                    Gelombang adalah <b>getaran yang merambat</b>. Yang merambat adalah energinya, sedangkan zat perantaranya (medium) tidak ikut pindah.
+                    Gelombang adalah <b>energi yang merambat</b>. Yang berpindah adalah energinya, sedangkan zat perantaranya (medium) hanya bergerak naik-turun atau bolak-balik.
                 </p>
             </div>
 
@@ -168,11 +185,11 @@
                 <div class="bg-teal-100 w-16 h-16 rounded-full flex items-center justify-center mb-4 text-teal-600 mx-auto shadow-inner">
                     <i class="fa-solid fa-calculator text-3xl"></i>
                 </div>
-                <h3 class="text-2xl font-bold mb-3 text-center text-teal-600">Rumus Cepat Rambat</h3>
+                <h3 class="text-2xl font-bold mb-3 text-center text-teal-600">Rumus Fisika</h3>
                 <div class="bg-teal-50 p-4 rounded-2xl text-center space-y-3 border-2 border-teal-100 border-dashed">
-                    <p class="text-2xl font-bold text-teal-700">v = &lambda; &times; f</p>
-                    <p class="text-2xl font-bold text-teal-700">v = &lambda; / T</p>
-                    <p class="text-sm text-teal-600 mt-2 italic">v = cepat rambat (m/s)</p>
+                    <p class="text-xl font-bold text-teal-700">v = &lambda; &times; f</p>
+                    <p class="text-xl font-bold text-teal-700">v = s / t</p>
+                    <p class="text-sm text-teal-600 mt-2 italic">v = Cepat Rambat (m/s)</p>
                 </div>
             </div>
         </div>
@@ -182,49 +199,93 @@
     <section id="simulasi" class="bg-indigo-50 py-16 relative">
         <div class="absolute top-0 left-0 w-full h-20 bg-gradient-to-b from-indigo-100 to-indigo-50"></div>
         <div class="container mx-auto px-4 relative z-10">
-            <div class="text-center mb-10">
+            <div class="text-center mb-6">
                 <span class="inline-block bg-white text-indigo-600 px-6 py-2 rounded-full shadow-md font-bold tracking-wider text-sm uppercase mb-3 border border-indigo-100">
                     <i class="fa-solid fa-flask mr-2"></i>Laboratorium Virtual
                 </span>
-                <h2 class="text-4xl font-bold text-gray-800 mt-2">Simulasi Gelombang Tali 〰️</h2>
+                <h2 class="text-4xl font-bold text-gray-800 mt-2">Jenis Gelombang</h2>
             </div>
-            <div class="flex flex-col lg:flex-row gap-8 items-center max-w-5xl mx-auto">
-                <div class="w-full lg:w-2/3 bg-white rounded-[2rem] shadow-xl overflow-hidden relative border-8 border-indigo-200">
-                    <canvas id="waveCanvas" class="w-full h-[450px] bg-sky-50 cursor-pointer"></canvas>
+
+            <!-- Tab Navigation -->
+            <div class="flex justify-center gap-4 mb-8 flex-wrap">
+                <button onclick="switchSim('transversal')" id="tab-transversal" class="tab-btn tab-active px-6 py-3 rounded-xl font-bold text-lg shadow-sm flex items-center gap-2">
+                    <i class="fa-solid fa-wave-square"></i> Gelombang Transversal
+                </button>
+                <button onclick="switchSim('longitudinal')" id="tab-longitudinal" class="tab-btn tab-inactive px-6 py-3 rounded-xl font-bold text-lg shadow-sm flex items-center gap-2">
+                    <i class="fa-solid fa-volume-high"></i> Gelombang Longitudinal
+                </button>
+            </div>
+
+            <div class="flex flex-col lg:flex-row gap-8 items-stretch max-w-6xl mx-auto">
+                <!-- Canvas Area -->
+                <div class="w-full lg:w-3/4 bg-white rounded-[2rem] shadow-xl overflow-hidden relative border-8 border-indigo-200 min-h-[500px]">
+                    <canvas id="simCanvas" class="w-full h-full bg-sky-50 cursor-pointer block"></canvas>
                     
-                    <div class="absolute bottom-4 left-4 bg-white/80 backdrop-blur px-4 py-2 rounded-xl shadow text-sm border-2 border-indigo-100">
-                        <p class="font-bold text-indigo-600">Info Gelombang:</p>
-                        <p class="font-mono text-sm text-gray-700">Jenis: Transversal</p>
+                    <div class="absolute bottom-4 left-4 bg-white/90 backdrop-blur px-4 py-2 rounded-xl shadow text-sm border-2 border-indigo-100 z-10">
+                        <p class="font-bold text-indigo-600" id="sim-info-title">Gelombang Transversal</p>
+                        <p class="font-mono text-sm text-gray-700" id="sim-info-desc">Arah getar tegak lurus arah rambat. (Contoh: Tali)</p>
                     </div>
                 </div>
-                <div class="w-full lg:w-1/3 bg-white p-8 rounded-[2rem] shadow-xl border-b-8 border-sky-200">
-                    <h3 class="text-2xl font-bold mb-6 flex items-center text-sky-600">
-                        <i class="fa-solid fa-sliders mr-3"></i> Pengaturan
-                    </h3>
-                    <div class="mb-8">
-                        <label class="flex justify-between mb-3 font-bold text-gray-600">
-                            <span>Amplitudo (Tinggi)</span>
-                            <span class="bg-sky-100 text-sky-600 px-3 py-1 rounded-full text-sm" id="amp-val">50 px</span>
-                        </label>
-                        <input type="range" id="amp-slider" min="10" max="100" value="50" class="w-full h-4 bg-gray-200 rounded-full appearance-none cursor-pointer accent-sky-500 hover:accent-sky-400 transition">
+
+                <!-- Controls Area -->
+                <div class="w-full lg:w-1/4 bg-white p-6 rounded-[2rem] shadow-xl border-b-8 border-sky-200 flex flex-col justify-between">
+                    <div>
+                        <h3 class="text-2xl font-bold mb-6 flex items-center text-sky-600">
+                            <i class="fa-solid fa-sliders mr-3"></i> Pengaturan
+                        </h3>
+
+                        <!-- Controls: Transversal -->
+                        <div id="controls-transversal" class="sim-controls">
+                            <div class="mb-6">
+                                <label class="flex justify-between mb-2 font-bold text-gray-600">
+                                    <span>Amplitudo (Tinggi)</span>
+                                    <span class="bg-sky-100 text-sky-600 px-2 py-1 rounded text-xs" id="trans-amp-val">50 cm</span>
+                                </label>
+                                <input type="range" id="trans-amp-slider" min="10" max="100" value="50" class="w-full h-3 bg-gray-200 rounded-full appearance-none cursor-pointer accent-sky-500">
+                            </div>
+                            <div class="mb-6">
+                                <label class="flex justify-between mb-2 font-bold text-gray-600">
+                                    <span>Frekuensi</span>
+                                    <span class="bg-indigo-100 text-indigo-600 px-2 py-1 rounded text-xs" id="trans-freq-val">1.0 Hz</span>
+                                </label>
+                                <input type="range" id="trans-freq-slider" min="0.5" max="3.0" step="0.1" value="1.0" class="w-full h-3 bg-gray-200 rounded-full appearance-none cursor-pointer accent-indigo-500">
+                            </div>
+                            <div class="bg-indigo-50 p-3 rounded-lg border border-indigo-100 text-xs text-gray-600 mt-4">
+                                <span class="font-bold block mb-1">Ciri Khas:</span>
+                                Terbentuk <b>Bukit</b> dan <b>Lembah</b>.
+                            </div>
+                        </div>
+
+                        <!-- Controls: Longitudinal -->
+                        <div id="controls-longitudinal" class="sim-controls hidden">
+                            <div class="mb-6">
+                                <label class="flex justify-between mb-2 font-bold text-gray-600">
+                                    <span>Frekuensi</span>
+                                    <span class="bg-green-100 text-green-600 px-2 py-1 rounded text-xs" id="long-freq-val">2 Hz</span>
+                                </label>
+                                <input type="range" id="long-freq-slider" min="1" max="5" step="0.5" value="2" class="w-full h-3 bg-gray-200 rounded-full appearance-none cursor-pointer accent-green-500">
+                            </div>
+                            <div class="mb-6">
+                                <label class="flex justify-between mb-2 font-bold text-gray-600">
+                                    <span>Amplitudo</span>
+                                    <span class="bg-teal-100 text-teal-600 px-2 py-1 rounded text-xs" id="long-amp-val">20 cm</span>
+                                </label>
+                                <input type="range" id="long-amp-slider" min="5" max="40" value="20" class="w-full h-3 bg-gray-200 rounded-full appearance-none cursor-pointer accent-teal-500">
+                            </div>
+                             <div class="bg-teal-50 p-3 rounded-lg border border-teal-100 text-xs text-gray-600 mt-4">
+                                <span class="font-bold block mb-1">Ciri Khas:</span>
+                                Terbentuk <b>Rapatan</b> dan <b>Renggangan</b>.
+                            </div>
+                        </div>
                     </div>
-                    <div class="mb-8">
-                        <label class="flex justify-between mb-3 font-bold text-gray-600">
-                            <span>Frekuensi (Kecepatan)</span>
-                            <span class="bg-indigo-100 text-indigo-600 px-3 py-1 rounded-full text-sm" id="freq-val">1.0 Hz</span>
-                        </label>
-                        <input type="range" id="freq-slider" min="0.5" max="5.0" step="0.1" value="1.0" class="w-full h-4 bg-gray-200 rounded-full appearance-none cursor-pointer accent-indigo-500 hover:accent-indigo-400 transition">
-                    </div>
-                    <div class="grid grid-cols-2 gap-4 mt-6">
+
+                    <div class="mt-6 grid grid-cols-2 gap-3">
                         <button id="pause-btn" class="bg-yellow-400 hover:bg-yellow-500 text-white py-3 rounded-xl font-bold shadow-md border-b-4 border-yellow-600 active:border-b-0 active:translate-y-1 transition flex justify-center items-center gap-2">
-                            <i class="fa-solid fa-pause"></i> <span>Stop Dulu</span>
+                            <i class="fa-solid fa-pause"></i> <span>Stop</span>
                         </button>
                         <button id="reset-btn" class="bg-gray-400 hover:bg-gray-500 text-white py-3 rounded-xl font-bold shadow-md border-b-4 border-gray-600 active:border-b-0 active:translate-y-1 transition flex justify-center items-center gap-2">
-                            <i class="fa-solid fa-arrows-rotate"></i> <span>Ulang</span>
+                            <i class="fa-solid fa-arrows-rotate"></i> <span>Reset</span>
                         </button>
-                    </div>
-                    <div class="mt-6 text-center text-sm text-gray-400">
-                        *Perhatikan bagaimana bukit dan lembah bergerak!
                     </div>
                 </div>
             </div>
@@ -274,7 +335,7 @@
         </div>
     </section>
 
-    <!-- Quiz Section (New) -->
+    <!-- Quiz Section -->
     <section id="latihan" class="py-16 bg-gradient-to-t from-violet-100 to-white">
         <div class="container mx-auto px-4 max-w-4xl">
             <div class="text-center mb-10">
@@ -341,10 +402,10 @@
     <div id="custom-modal" class="hidden fixed inset-0 z-[100] flex items-center justify-center modal-backdrop px-4">
         <div class="bg-white rounded-3xl shadow-2xl p-8 max-w-md w-full modal-content border-t-8 border-violet-500 relative flex flex-col items-center">
             <!-- Icon Bubble -->
-            <div class="absolute -top-12 bg-white rounded-full p-2 shadow-lg">
-                 <div id="modal-icon-container" class="w-20 h-20 rounded-full flex items-center justify-center text-4xl border-4 border-violet-50">
-                     <i class="fa-solid fa-bell text-violet-500"></i>
-                 </div>
+            <div class="absolute -top-12 bg-white rounded-full p-2 shadow-lg"> 
+                <div id="modal-icon-container" class="w-20 h-20 rounded-full flex items-center justify-center text-4xl border-4 border-violet-50">
+                    <i class="fa-solid fa-bell text-violet-500"></i>
+                </div>
             </div>
             
             <div class="mt-10 text-center w-full">
@@ -371,7 +432,7 @@
                 <i class="fa-brands fa-tiktok hover:text-yellow-300 cursor-pointer text-xl transition"></i>
                 <i class="fa-brands fa-youtube hover:text-yellow-300 cursor-pointer text-xl transition"></i>
             </div>
-            <p class="text-xs text-sky-200 mt-6">&copy; 2026 EduFisika Kids. All rights reserved.</p>
+            <p class="text-xs text-sky-200 mt-6">&copy; 2026 MTsN 6 Demak. All rights reserved.</p>
         </div>
     </footer>
 
@@ -468,23 +529,25 @@
         const menu = document.getElementById('mobile-menu');
         btn.addEventListener('click', () => { menu.classList.toggle('hidden'); });
 
-        // --- Wave Simulation Logic (Canvas) ---
-        const canvas = document.getElementById('waveCanvas');
+        // --- MULTI-SIMULATION LOGIC ---
+        const canvas = document.getElementById('simCanvas');
         const ctx = canvas.getContext('2d');
         let isPaused = false;
-        
-        // Wave State
-        const state = {
-            amplitude: 50, // px
-            frequency: 1.0, // Hz
-            phase: 0
+        let activeSim = 'transversal'; // 'transversal' or 'longitudinal'
+        let animationFrameId;
+
+        // State objects for each simulation
+        const simState = {
+            transversal: { amp: 50, freq: 1.0, phase: 0 },
+            longitudinal: { freq: 2, amp: 20, phase: 0, coils: [] } // Changed particles to coils
         };
 
-        const ampSlider = document.getElementById('amp-slider');
-        const freqSlider = document.getElementById('freq-slider');
-        const ampValDisplay = document.getElementById('amp-val');
-        const freqValDisplay = document.getElementById('freq-val');
+        // Initialize Coils (Slinky Lines)
+        function initLongitudinalCoils() {
+           // Not needed for continuous spiral drawing, handled in draw loop
+        }
 
+        // Resize
         function resizeCanvas() {
             canvas.width = canvas.parentElement.offsetWidth;
             canvas.height = canvas.parentElement.offsetHeight;
@@ -492,68 +555,196 @@
         window.addEventListener('resize', resizeCanvas);
         resizeCanvas();
 
-        function animate() {
-            if (!isPaused) {
-                ctx.clearRect(0, 0, canvas.width, canvas.height);
-                
-                // Draw Equilibrium Line
+        // --- DRAWING FUNCTIONS ---
+
+        function drawTransversal() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            // Equilibrium Line
+            ctx.beginPath();
+            ctx.moveTo(0, canvas.height / 2);
+            ctx.lineTo(canvas.width, canvas.height / 2);
+            ctx.strokeStyle = '#bae6fd';
+            ctx.lineWidth = 2;
+            ctx.setLineDash([5, 5]);
+            ctx.stroke();
+            ctx.setLineDash([]);
+
+            // Wave
+            ctx.beginPath();
+            ctx.moveTo(0, canvas.height / 2);
+            
+            const angularFrequency = 2 * Math.PI * simState.transversal.freq;
+            const v = 300; // Visual speed
+            const lambda = v / simState.transversal.freq;
+            const k = (2 * Math.PI) / lambda;
+            
+            if (!isPaused) simState.transversal.phase += angularFrequency * 0.016;
+
+            for (let x = 0; x < canvas.width; x++) {
+                const y = (canvas.height / 2) - simState.transversal.amp * Math.sin(k * x - simState.transversal.phase);
+                ctx.lineTo(x, y);
+            }
+
+            ctx.strokeStyle = '#6366f1'; 
+            ctx.lineWidth = 4;
+            ctx.stroke();
+
+            // Particles
+            for (let x = 50; x < canvas.width; x += 50) {
+                const y = (canvas.height / 2) - simState.transversal.amp * Math.sin(k * x - simState.transversal.phase);
                 ctx.beginPath();
-                ctx.moveTo(0, canvas.height / 2);
-                ctx.lineTo(canvas.width, canvas.height / 2);
-                ctx.strokeStyle = '#bae6fd';
-                ctx.lineWidth = 2;
-                ctx.setLineDash([5, 5]);
-                ctx.stroke();
-                ctx.setLineDash([]);
+                ctx.arc(x, y, 6, 0, Math.PI * 2);
+                ctx.fillStyle = '#ef4444'; 
+                ctx.fill();
+            }
+        }
 
-                // Draw Wave: y = A sin(kx - wt)
-                ctx.beginPath();
-                ctx.moveTo(0, canvas.height / 2);
+        function drawLongitudinal() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            const angularFreq = 2 * Math.PI * simState.longitudinal.freq;
+            if(!isPaused) simState.longitudinal.phase += angularFreq * 0.016;
+
+            const wavelength = 250; 
+            const k = (2 * Math.PI) / wavelength;
+            const centerY = canvas.height / 2;
+            const coilRadius = 60;
+            const pointsPerLoop = 20; // smoothness
+            
+            // Draw Piston (Source)
+            // Moves sinusoidally based on source phase
+            const sourceDisp = simState.longitudinal.amp * Math.sin(-simState.longitudinal.phase);
+            const startX = 60 + sourceDisp;
+            
+            // Piston Arm & Body
+            ctx.fillStyle = '#64748b'; // Slate 500
+            ctx.fillRect(startX - 20, centerY - 70, 20, 140);
+            
+            // Draw Spiral Slinky (Continuous Line)
+            ctx.beginPath();
+            ctx.strokeStyle = '#4f46e5'; // Indigo 600
+            ctx.lineWidth = 3;
+
+            // We iterate along the equilibrium length of the slinky
+            const totalLength = canvas.width - 100;
+            const numLoops = 40; 
+            const totalSteps = numLoops * pointsPerLoop;
+            
+            let firstPoint = true;
+
+            for(let i = 0; i <= totalSteps; i++) {
+                const ratio = i / totalSteps;
+                const equilibriumX = ratio * totalLength; // 0 to length
                 
-                const angularFrequency = 2 * Math.PI * state.frequency;
-                // Speed is somewhat arbitrary here for visualization, let's say wave speed depends on nothing or fixed
-                // Actually let's just make it look good. 
-                // k = 2pi / lambda. Let's assume a fixed speed v = 200 px/s.
-                // lambda = v / f = 200 / f.
-                const v = 300; 
-                const lambda = v / state.frequency;
-                const k = (2 * Math.PI) / lambda;
-
-                // Update phase based on time
-                // We use a running time counter or just increment phase
-                state.phase += angularFrequency * 0.016; // approx 60fps
-
-                for (let x = 0; x < canvas.width; x++) {
-                    // y = A * sin(kx - phase)
-                    // Note: In canvas, y increases downwards, so we might flip sign or just add to center
-                    const y = (canvas.height / 2) - state.amplitude * Math.sin(k * x - state.phase);
+                // Wave displacement at this point
+                // Traveling wave: sin(kx - wt)
+                // Note: phase moves wave right. We subtract phase.
+                const displacement = simState.longitudinal.amp * Math.sin(k * equilibriumX - simState.longitudinal.phase);
+                
+                // Actual X position = start + eq + disp
+                const x = startX + equilibriumX + displacement;
+                
+                // Spiral Y calculation (Projected 3D Helix)
+                // Angle goes from 0 to numLoops * 2PI
+                const angle = ratio * numLoops * 2 * Math.PI;
+                
+                // Y = Center + Radius * cos(angle)
+                const y = centerY + coilRadius * Math.cos(angle);
+                
+                if(firstPoint) {
+                    ctx.moveTo(x, y);
+                    firstPoint = false;
+                } else {
                     ctx.lineTo(x, y);
                 }
-
-                ctx.strokeStyle = '#6366f1'; // Indigo-500
-                ctx.lineWidth = 4;
-                ctx.stroke();
-
-                // Draw Particles on the string
-                for (let x = 50; x < canvas.width; x += 50) {
-                    const y = (canvas.height / 2) - state.amplitude * Math.sin(k * x - state.phase);
-                    ctx.beginPath();
-                    ctx.arc(x, y, 6, 0, Math.PI * 2);
-                    ctx.fillStyle = '#ef4444'; // Red dot
-                    ctx.fill();
-                }
             }
+            ctx.stroke();
+            
+            // Draw a Marker Bead (Highlight a specific particle)
+            // Pick a specific loop index, e.g., middle of slinky
+            const markerLoopIndex = 20;
+            const markerRatio = markerLoopIndex / numLoops;
+            const markerEqX = markerRatio * totalLength;
+            const markerDisp = simState.longitudinal.amp * Math.sin(k * markerEqX - simState.longitudinal.phase);
+            const markerX = startX + markerEqX + markerDisp;
+            // Marker sits on "top" of coil visually (angle=0, cos(0)=1 is bottom? typically screen Y is down)
+            // Let's place it at y = centerY - coilRadius (top of screen Y)
+            
+            ctx.beginPath();
+            ctx.arc(markerX, centerY - coilRadius - 5, 8, 0, 2*Math.PI);
+            ctx.fillStyle = '#ef4444'; // Red
+            ctx.fill();
+            
+            // Text Label
+            ctx.fillStyle = '#334155';
+            ctx.textAlign = "center";
+            ctx.font = "bold 14px Fredoka";
+            ctx.fillText("Partikel", markerX, centerY - coilRadius - 18);
+        }
+
+        // Main Animation Loop
+        function animate() {
+            if (activeSim === 'transversal') drawTransversal();
+            else if (activeSim === 'longitudinal') drawLongitudinal();
+            
             requestAnimationFrame(animate);
         }
 
-        ampSlider.addEventListener('input', (e) => {
-            state.amplitude = parseInt(e.target.value);
-            ampValDisplay.textContent = state.amplitude + " px";
+        // --- UI & CONTROL LOGIC ---
+
+        // Switch Tabs
+        window.switchSim = function(simName) {
+            activeSim = simName;
+            isPaused = false;
+            
+            // Reset Button States
+            ['transversal', 'longitudinal'].forEach(s => {
+                const btn = document.getElementById(`tab-${s}`);
+                const controls = document.getElementById(`controls-${s}`);
+                if (s === simName) {
+                    btn.classList.replace('tab-inactive', 'tab-active');
+                    controls.classList.remove('hidden');
+                } else {
+                    btn.classList.replace('tab-active', 'tab-inactive');
+                    controls.classList.add('hidden');
+                }
+            });
+
+            // Update Info Box
+            const infoTitle = document.getElementById('sim-info-title');
+            const infoDesc = document.getElementById('sim-info-desc');
+            if(simName === 'transversal') {
+                infoTitle.textContent = "Gelombang Transversal";
+                infoDesc.textContent = "Arah getar tegak lurus arah rambat. (Contoh: Tali)";
+            } else if(simName === 'longitudinal') {
+                infoTitle.textContent = "Gelombang Longitudinal";
+                infoDesc.textContent = "Arah getar sejajar arah rambat. (Contoh: Bunyi/Slinki)";
+            }
+        }
+
+        // Controls Listeners - TRANSVERSAL
+        document.getElementById('trans-amp-slider').addEventListener('input', (e) => {
+            simState.transversal.amp = parseInt(e.target.value);
+            document.getElementById('trans-amp-val').textContent = simState.transversal.amp + " cm";
         });
-        freqSlider.addEventListener('input', (e) => {
-            state.frequency = parseFloat(e.target.value);
-            freqValDisplay.textContent = state.frequency + " Hz";
+        document.getElementById('trans-freq-slider').addEventListener('input', (e) => {
+            simState.transversal.freq = parseFloat(e.target.value);
+            document.getElementById('trans-freq-val').textContent = simState.transversal.freq + " Hz";
         });
+
+        // Controls Listeners - LONGITUDINAL
+        document.getElementById('long-freq-slider').addEventListener('input', (e) => {
+            simState.longitudinal.freq = parseFloat(e.target.value);
+            document.getElementById('long-freq-val').textContent = simState.longitudinal.freq + " Hz";
+        });
+        document.getElementById('long-amp-slider').addEventListener('input', (e) => {
+            simState.longitudinal.amp = parseInt(e.target.value);
+            document.getElementById('long-amp-val').textContent = simState.longitudinal.amp + " cm";
+        });
+
+
+        // Global Controls
         document.getElementById('pause-btn').addEventListener('click', function() {
             isPaused = !isPaused;
             const icon = this.querySelector('i');
@@ -565,21 +756,31 @@
                 this.classList.replace('hover:bg-yellow-500', 'hover:bg-green-500');
             } else {
                 icon.className = 'fa-solid fa-pause';
-                span.textContent = 'Stop Dulu';
+                span.textContent = 'Stop';
                 this.classList.replace('bg-green-400', 'bg-yellow-400');
                 this.classList.replace('hover:bg-green-500', 'hover:bg-yellow-500');
             }
         });
+
         document.getElementById('reset-btn').addEventListener('click', () => {
-            state.amplitude = 50;
-            state.frequency = 1.0;
-            state.phase = 0;
-            ampSlider.value = 50;
-            freqSlider.value = 1.0;
-            ampValDisplay.textContent = "50 px";
-            freqValDisplay.textContent = "1.0 Hz";
+            // Reset logic based on active sim
+            if(activeSim === 'transversal') {
+                simState.transversal.amp = 50; simState.transversal.freq = 1.0;
+                document.getElementById('trans-amp-slider').value = 50;
+                document.getElementById('trans-freq-slider').value = 1.0;
+                document.getElementById('trans-amp-val').textContent = "50 cm";
+                document.getElementById('trans-freq-val').textContent = "1.0 Hz";
+            } else if(activeSim === 'longitudinal') {
+                simState.longitudinal.freq = 2; simState.longitudinal.amp = 20;
+                document.getElementById('long-freq-slider').value = 2;
+                document.getElementById('long-amp-slider').value = 20;
+                document.getElementById('long-freq-val').textContent = "2 Hz";
+                document.getElementById('long-amp-val').textContent = "20 cm";
+            }
             isPaused = false;
         });
+
+        // Start Animation
         animate();
 
         // --- Calculator Logic ---
@@ -679,10 +880,10 @@
             }
         }
 
-        // --- QUIZ LOGIC (NEW: Gelombang) ---
+        // --- QUIZ LOGIC (Combined) ---
         const questionData = [
-            { q: "Apa yang dimaksud dengan gelombang?", options: ["Perpindahan benda", "Perambatan energi melalui getaran", "Aliran air sungai", "Angin yang bertiup"], a: 1 },
-            { q: "Gelombang yang arah rambatnya tegak lurus dengan arah getarnya disebut...", options: ["Gelombang Longitudinal", "Gelombang Transversal", "Gelombang Bunyi", "Gelombang Seismik"], a: 1 },
+            { q: "Apa yang dimaksud dengan gelombang?", options: ["Perpindahan benda", "Energi yang merambat melalui medium", "Aliran air sungai", "Angin yang bertiup"], a: 1 },
+            { q: "Gelombang yang arah rambatnya tegak lurus dengan arah gerakan partikelnya disebut...", options: ["Gelombang Longitudinal", "Gelombang Transversal", "Gelombang Bunyi", "Gelombang Seismik"], a: 1 },
             { q: "Gelombang bunyi termasuk contoh dari...", options: ["Gelombang Transversal", "Gelombang Longitudinal", "Gelombang Elektromagnetik", "Gelombang Cahaya"], a: 1 },
             { q: "Satu gelombang pada gelombang transversal terdiri dari...", options: ["1 bukit saja", "1 lembah saja", "1 bukit dan 1 lembah", "2 bukit dan 1 lembah"], a: 2 },
             { q: "Jarak yang ditempuh gelombang dalam satu periode disebut...", options: ["Frekuensi", "Amplitudo", "Panjang Gelombang", "Cepat Rambat"], a: 2 },
@@ -695,7 +896,7 @@
             { q: "Jika cepat rambat gelombang 340 m/s dan frekuensinya 170 Hz, berapa panjang gelombangnya?", options: ["0.5 m", "2 m", "510 m", "170 m"], a: 1 },
             { q: "Apa yang dimaksud dengan Amplitudo gelombang?", options: ["Jarak terjauh simpangan", "Jumlah gelombang per detik", "Waktu satu gelombang", "Kecepatan gelombang"], a: 0 },
             { q: "Jika frekuensi diperbesar 2x dan kecepatan tetap, maka panjang gelombang akan...", options: ["Menjadi 2x lipat", "Menjadi setengahnya", "Tetap sama", "Menjadi nol"], a: 1 },
-            { q: "Satuan untuk Cepat Rambat Gelombang adalah...", options: ["Meter (m)", "Hertz (Hz)", "Meter per sekon (m/s)", "Sekon (s)"], a: 2 }
+            { q: "Hukum yang menjelaskan gaya pegas (F = -kx) disebut...", options: ["Hukum Newton", "Hukum Hooke", "Hukum Pascal", "Hukum Archimedes"], a: 1 }
         ];
 
         let studentData = { name: "", class: "" };
@@ -724,7 +925,6 @@
         function renderQuestions() {
             const form = document.getElementById('quiz-form');
             form.innerHTML = ""; 
-
             questionData.forEach((item, index) => {
                 const qDiv = document.createElement('div');
                 qDiv.className = "bg-white p-6 rounded-2xl shadow border border-gray-100 relative overflow-hidden";
@@ -832,9 +1032,9 @@
                 console.error("Error adding document: ", e);
                 let errorMsg = "Terjadi kesalahan saat menyimpan.";
                 
-                if (e.message.includes("Missing or insufficient permissions")) {
+                if (e.message.includes("Missing or insufficient permissions")) { 
                      errorMsg = "GAGAL SIMPAN (Izin Ditolak). Hubungi Guru untuk cek Database Rules.";
-                } else {
+                } else { 
                      errorMsg = "Error: " + e.message;
                 }
 
