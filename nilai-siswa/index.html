@@ -220,7 +220,7 @@
         // State untuk Sorting
         let currentSort = { column: 'timestamp', direction: 'desc' };
 
-        // --- HELPER FUNCTIONS FOR SMART FORMATTING & RENAMING ---
+        // --- HELPER FUNCTIONS ---
         
         // 1. Fungsi seragamkan kelas cerdas
         function normalizeClass(kelasInput) {
@@ -245,42 +245,30 @@
             return grade + suffix;
         }
 
-        // 2. Fungsi UPDATE OTOMATIS TULISAN MATERI (SMART RENAME)
-        // Tambahkan aturan penggantian kata di sini
+        // 2. Fungsi UPDATE OTOMATIS TULISAN MATERI
         function normalizeMateri(materiInput) {
             if (!materiInput) return '-';
             const text = materiInput.toString();
             const lower = text.toLowerCase();
 
-            // --- AREA PENGATURAN KATA KUNCI (Edit di sini) ---
-            
-            // --> UPDATED: Penanganan Khusus Jumat <--
-            // Jika mengandung kata "shalat jumat" (termasuk latihan shalat jumat)
             if (lower.includes('shalat jumat')) return 'Shalat Jumat';
-            
-            // Jika mengandung kata "khutbah jumat" (termasuk latihan khutbah jumat)
             if (lower.includes('khutbah jumat')) return 'Khutbah Jumat';
-
-            // Aturan Lama
-            // Jika mengandung "optik" -> ubah jadi "Cahaya dan Alat Optik"
             if (lower.includes('optik')) return 'Cahaya dan Alat Optik';
-            
-            // Jika mengandung "listrik" -> ubah jadi "Listrik Dinamis"
             if (lower.includes('listrik')) return 'Listrik Dinamis';
-            
-            // Jika mengandung "getaran" atau "gelombang" -> ubah jadi "Getaran & Gelombang"
             if (lower.includes('getaran') || lower.includes('gelombang')) return 'Getaran & Gelombang';
-            
-            // Jika mengandung "tata surya" -> ubah jadi "Sistem Tata Surya"
             if (lower.includes('tata surya')) return 'Sistem Tata Surya';
-            
-            // Jika mengandung "sel" -> ubah jadi "Sel Hewan & Tumbuhan"
             if (lower.includes('sel')) return 'Sel Hewan & Tumbuhan';
 
-            // --- Batas Area Pengaturan ---
-
-            // Jika tidak ada kata kunci yang cocok, kembalikan teks aslinya
             return text;
+        }
+
+        // 3. Helper Regex Splitter (Pemisah Nama)
+        function splitNames(nameStr) {
+            if (!nameStr) return [];
+            // Pisahkan berdasarkan: simbol &, koma, plus, garis miring, atau kata DAN/AND dengan spasi
+            return nameStr.split(/\s*&\s*|\s*,\s*|\s*\+\s*|\s+DAN\s+|\s+AND\s+|\s*\/\s*/i)
+                          .map(n => n.trim())
+                          .filter(n => n.length > 0);
         }
 
         // --- AUTH & KONEKSI ---
@@ -313,41 +301,57 @@
             }
         });
 
-        // --- LOGIKA SIMPAN DATA ---
+        // --- LOGIKA SIMPAN DATA BARU ---
         async function checkIncomingDataAndSave() {
             const params = new URLSearchParams(window.location.search);
             const rawName = params.get('name');
-            const name = rawName ? rawName.toUpperCase() : null;
-            const score = params.get('score');
-            const rawKelas = params.get('kelas');
-            const kelas = normalizeClass(rawKelas);
-            const materi = params.get('materi') || params.get('mapel') || '-';
-            const sessionKey = `saved_v2_${name}_${score}_${params.get('date')}`;
+            
+            if (!rawName) return;
 
-            if (name && score && !sessionStorage.getItem(sessionKey)) {
+            const score = params.get('score');
+            
+            // Menggunakan v4 untuk memaksa refresh logika simpan jika perlu
+            const sessionKey = `saved_v4_${rawName}_${score}_${params.get('date')}`;
+
+            if (score && !sessionStorage.getItem(sessionKey)) {
                 try {
                     Swal.fire({ title: 'Menyimpan...', didOpen: () => { Swal.showLoading() } });
 
-                    await addDoc(collection(db, 'artifacts', appId, 'public', 'data', COLLECTION_NAME), {
-                        name: name,
-                        kelas: kelas,
-                        score: parseInt(score),
-                        materi: materi,
-                        type: params.get('type') || 'Kuis',
-                        date: params.get('date') || new Date().toLocaleDateString('id-ID'),
-                        timestamp: Date.now()
+                    // Gunakan fungsi splitNames yang sama
+                    let upperName = rawName.toUpperCase();
+                    const namesList = splitNames(upperName);
+
+                    const rawKelas = params.get('kelas');
+                    const kelas = normalizeClass(rawKelas);
+                    const materi = params.get('materi') || params.get('mapel') || '-';
+                    const type = params.get('type') || 'Kuis';
+                    const date = params.get('date') || new Date().toLocaleDateString('id-ID');
+                    const timestamp = Date.now();
+                    
+                    const promises = namesList.map(studentName => {
+                        return addDoc(collection(db, 'artifacts', appId, 'public', 'data', COLLECTION_NAME), {
+                            name: studentName,
+                            kelas: kelas,
+                            score: parseInt(score),
+                            materi: materi,
+                            type: type,
+                            date: date,
+                            timestamp: timestamp
+                        });
                     });
+
+                    await Promise.all(promises);
 
                     sessionStorage.setItem(sessionKey, 'true');
                     
-                    // Kita pakai normalizeMateri juga untuk notifikasi agar terlihat rapi
                     const displayMateri = normalizeMateri(materi);
+                    const namesString = namesList.join(', ');
                     
                     Swal.fire({
                         icon: 'success',
                         title: 'Berhasil!',
-                        text: `Nilai ${displayMateri} atas nama ${name} (Kelas ${kelas}) telah tersimpan.`,
-                        timer: 3000,
+                        text: `Nilai ${displayMateri} untuk ${namesList.length} siswa (${namesString}) telah tersimpan.`,
+                        timer: 4000,
                         showConfirmButton: false
                     });
 
@@ -359,43 +363,50 @@
             }
         }
 
-        // --- LOGIKA PENGOLAHAN DATA UTAMA ---
+        // --- LOGIKA PENGOLAHAN DATA (DIPERBARUI: RETROACTIVE SPLIT) ---
         function processAndAggregateData(rawData) {
             const studentMap = {};
 
             rawData.forEach(item => {
-                const nameKey = item.name ? item.name.toUpperCase().trim() : 'TANPA NAMA';
-                const cleanClass = normalizeClass(item.kelas);
+                const rawNameStr = item.name ? item.name.toUpperCase().trim() : 'TANPA NAMA';
                 
-                // >>> PENERAPAN SMART RENAME MATERI DISINI <<<
+                // --- PERBAIKAN: Split nama yang ada di database saat INI JUGA ---
+                // Ini akan memperbaiki tampilan data lama yang terlanjur tergabung
+                const individualNames = splitNames(rawNameStr);
+
+                const cleanClass = normalizeClass(item.kelas);
                 const rawMateri = item.materi || item.type || '-';
                 const cleanMateri = normalizeMateri(rawMateri);
 
-                if (!studentMap[nameKey]) {
-                    studentMap[nameKey] = {
-                        ...item,
-                        name: nameKey,
-                        kelas: cleanClass,
-                        materi: cleanMateri, // Simpan nama materi yang sudah dirapikan
-                        totalScore: parseInt(item.score) || 0,
-                        count: 1,
-                        originalId: item.id, 
-                        latestTimestamp: item.timestamp || 0
-                    };
-                } else {
-                    const entry = studentMap[nameKey];
-                    entry.totalScore += (parseInt(item.score) || 0);
-                    entry.count += 1;
+                individualNames.forEach(singleName => {
+                    const nameKey = singleName;
 
-                    if ((item.timestamp || 0) > entry.latestTimestamp) {
-                        entry.latestTimestamp = item.timestamp;
-                        entry.originalId = item.id; 
-                        entry.kelas = cleanClass;   
-                        entry.materi = cleanMateri; // Update nama materi juga jika data baru masuk
-                        entry.date = item.date;
-                        entry.timestamp = item.timestamp; 
+                    if (!studentMap[nameKey]) {
+                        studentMap[nameKey] = {
+                            ...item, // Salin properti lain (id asli mungkin duplikat, tidak apa untuk tampilan)
+                            name: nameKey,
+                            kelas: cleanClass,
+                            materi: cleanMateri,
+                            totalScore: parseInt(item.score) || 0,
+                            count: 1,
+                            originalId: item.id, 
+                            latestTimestamp: item.timestamp || 0
+                        };
+                    } else {
+                        const entry = studentMap[nameKey];
+                        entry.totalScore += (parseInt(item.score) || 0);
+                        entry.count += 1;
+
+                        if ((item.timestamp || 0) > entry.latestTimestamp) {
+                            entry.latestTimestamp = item.timestamp;
+                            entry.originalId = item.id; 
+                            entry.kelas = cleanClass;   
+                            entry.materi = cleanMateri;
+                            entry.date = item.date;
+                            entry.timestamp = item.timestamp; 
+                        }
                     }
-                }
+                });
             });
 
             return Object.values(studentMap).map(student => {
@@ -453,7 +464,6 @@
                         <td class="p-5 text-xs text-slate-500 font-mono">${dateDisplay}</td>
                         <td class="p-5 font-bold text-slate-700 text-base">${item.name}</td>
                         <td class="p-5"><span class="bg-indigo-100 text-indigo-700 px-3 py-1 rounded-full text-xs font-bold border border-indigo-200">${item.kelas}</span></td>
-                        <!-- Materi yang ditampilkan di sini sudah otomatis dirapikan -->
                         <td class="p-5 text-sm text-slate-600 font-medium">${item.materi || item.type || '-'}</td>
                         <td class="p-5 text-center">${scoreDisplay}</td>
                         <td class="p-5 text-center">
