@@ -113,7 +113,7 @@
                 <div class="text-gray-600 text-sm mb-4 space-y-1">
                     <p>1. <strong>Bagian A (Pilihan Ganda):</strong> Pilihlah satu jawaban yang paling benar.</p>
                     <p>2. <strong>Bagian B (Menjodohkan):</strong> Pasangkan pernyataan di sebelah kiri dengan jawaban yang tepat di sebelah kanan.</p>
-                    <p>3. Setelah selesai, klik tombol "Selesai" untuk mengirim jawaban.</p>
+                    <p>3. Setelah selesai, klik tombol "Selesai" untuk mengirim nilai ke server.</p>
                 </div>
                 <div class="flex items-center text-xs text-gray-500 space-x-4">
                     <span class="flex items-center"><i class="fa-solid fa-user-tie mr-2 text-green-600"></i> Ahmad Zulfikar, S.Pd.</span>
@@ -140,7 +140,7 @@
                 <div class="sticky bottom-4 z-40 pb-4 pt-2">
                     <button type="submit" class="w-full bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-bold py-4 rounded-xl shadow-lg transform transition hover:-translate-y-1 active:scale-95 flex items-center justify-center space-x-2">
                         <i class="fa-solid fa-paper-plane"></i>
-                        <span>Selesai & Kirim Jawaban</span>
+                        <span>Selesai & Kirim Nilai</span>
                     </button>
                 </div>
             </form>
@@ -157,7 +157,27 @@
     </footer>
 
     <!-- JavaScript Logic -->
-    <script>
+    <script type="module">
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js';
+        import { getAuth, signInAnonymously } from 'https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js';
+        import { getFirestore, collection, addDoc } from 'https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js';
+
+        // --- FIREBASE CONFIG (Match with Dashboard) ---
+        const firebaseConfig = {
+            apiKey: "AIzaSyAkX8qAS-O_5m_qaGr8Aa9XME-lVyBMibw",
+            authDomain: "belajaronline-b5512.firebaseapp.com",
+            projectId: "belajaronline-b5512",
+            storageBucket: "belajaronline-b5512.firebasestorage.app",
+            messagingSenderId: "896107581081",
+            appId: "1:896107581081:web:629056c097c90fdf583208",
+            measurementId: "G-7MKNGF9PCX"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+        const appId = 'belajaronline-b5512';
+
         // --- DATA SOAL PILIHAN GANDA (20 Soal) ---
         const pgQuestions = [
             { id: 1, text: "Shalat jumat adalah shalat yang khusus dilaksanakan pada hari jumat pada waktu ....", options: { a: "Subuh", b: "Dhuhur", c: "Asar", d: "Magrib" }, correct: "b" },
@@ -168,12 +188,12 @@
             { id: 6, text: "Rukun shalat jumat yang dapat dijadikan sebagai media pendidikan bagi umat Islam adalah ....", options: { a: "Azan", b: "Shalat tahiyatul masjid", c: "Duduk", d: "Khutbah" }, correct: "d" },
             { id: 7, text: "Salah satu hikmah shalat jumat bagi umat Islam dalam bidang sosial adalah ....", options: { a: "Menggerakkan perekonomian umat", b: "Sebagai sarana untuk menambah ilmu agama", c: "Mempererat tali silaturahmi dan persatuan umat", d: "Meningkatkan rasa takut kepada Allah" }, correct: "c" },
             { id: 8, text: "Hikmah bagi umat Islam ketika duduk di lantai masjid mendengarkan khutbah adalah ....", options: { a: "Menujukkan bahwa wibawa dan kehormatan tidak penting dalam agama Islam", b: "Lebih menghemat biaya dalam pelaksanaan ibadah", c: "Adanya perbedaan status sosial bagi yang menempati shaf depan dan belakang", d: "Menunjukkan kerendahan hati dan persamaan manusia di hadapan Tuhan" }, correct: "d" },
-            { id: 9, text: "4 golongan yang boleh meninggalkan sholat jum'at menurut hadist (hamba sahaya, wanita, anak kecil, orang sakit), kecuali ...", arab: "إِلَّا أَرْبَعَةً: عَبْدُ مَمْلُوكٌ أَوِ امْرَأَةٌ أَو صَبِيٌّ أَوْ مَرِيضٌ", options: { a: "Orang yang sakit", b: "Anak-anak", c: "Orang yang super sibuk", d: "Perempuan" }, correct: "c" },
+            { id: 9, text: "4 golongan yang boleh meninggalkan sholat jum'at menurut hadist (hamba sahaya, wanita, anak kecil, orang sakit), kecuali ...", arab: "إِلَّا أَرْبَعَةً: عَبْدُ مَمْلُوكٌ أَوِ امْرَأَةٌ أَو صَبِيٌّ أَوْ مَرِيضٌ", options: { a: "Orang yang sakit", b: "Anak-anak", c: "Orang yang super sibuk", d: "Perempuan" }, correct: "c" },
             { id: 10, text: "Sebelum mengikuti ibadah jum'at kita disunnahkan untuk melaksanakan hal berikut, kecuali....", options: { a: "Mandi besar", b: "Menggunakan wangi-wangian", c: "Mengucapkan kalimat talbiyah", d: "Memakai pakaian terbaik, berwarna putih" }, correct: "c" },
             { id: 11, text: "Diantara nilai-nilai dalam rangkaian ibadah Jum'at adalah, kecuali ....", options: { a: "Memilih Mengingat Allah dibanding keduniawian", b: "Disiplin waktu", c: "Membiasakan tidur siang ketika khutbah", d: "Nilai kebersamaan" }, correct: "c" },
             { id: 12, text: "Waktu do'a mustajab di hari Jum'at yang hendaknya kita manfaatkan untuk banyak berdo'a adalah ketika....", options: { a: "Khatib duduk diantara dua khutbah", b: "Khatib mengucap salam", c: "Selesai ibadah jum'at", d: "Sebelum khatib naik mimbar" }, correct: "a" },
             { id: 13, text: "QS. Al-Jumuah: 9 memerintahkan bahwa ketika ada panggilan sholat jum'at, hendaknya kita bersegera mengingat Allah dan ....", options: { a: "Meninggalkan jual beli", b: "Meneruskan jual beli", c: "Menunggu khutbah dilaksanakan", d: "Menunggu adzan kedua" }, correct: "a" },
-            { id: 14, text: "Hadits riwayat Bukhari menyebutkan sholat jum'at dilaksanakan ketika....", arab: "كَانَ يُصَلِّي الْجُمُعَةَ حِيْنَ تَمِيْلُ الشَّمْسُ", options: { a: "Matahari naik sepenggalah", b: "Matahari telah tergelincir", c: "Matahari akan terbenam", d: "Matahari akan berada ditengah-tengah" }, correct: "b" },
+            { id: 14, text: "Hadits riwayat Bukhari menyebutkan sholat jum'at dilaksanakan ketika....", arab: "كَانَ يُصَلِّي الْجُمُعَةَ حِيْنَ تَمِيْلُ الشَّمْسُ", options: { a: "Matahari naik sepenggalah", b: "Matahari telah tergelincir", c: "Matahari akan terbenam", d: "Matahari akan berada ditengah-tengah" }, correct: "b" },
             { id: 15, text: "Salah satu sunnah yang hendaknya dikerjakan ketika khutbah Jum'at adalah ....", options: { a: "Tema khutbah disesuaikan dengan kebutuhan dan kondisi jama'ah", b: "Khutbah hendaknya panjang dan bahasa yang indah", c: "Khutbah dilakukan dengan penuh semangat dan menggebu-gebu", d: "Berwasiat kepada diri sendiri dan jama'ah untuk bertaqwa" }, correct: "a" },
             { id: 16, text: "Apabila kita berkata kepada anak-anak pada saat khutbah Jum'at dengan kata-kata 'diamlah' maka ibadah sholat jum'at kita ....", options: { a: "Afdhol", b: "Berpahala", c: "Keutamaan", d: "Sia-sia" }, correct: "d" },
             { id: 17, text: "Berikut adalah syarat-syarat seseorang diwajibkan untuk sholat jum'at dan berdosa besar jika meninggalkannya yaitu, kecuali....", options: { a: "Orang yang mukim", b: "Laki-laki, merdeka, sehat", c: "Anak laki-laki", d: "Baligh" }, correct: "c" },
@@ -194,7 +214,7 @@
             { id: "m8", question: "Do’a untuk kaum muslimin dalam khutbah Jum’at", answer: "Rukun khutbah Jum’at" }
         ];
         
-        // Pilihan jawaban untuk dropdown (Diambil dari Kolom B)
+        // Pilihan jawaban untuk dropdown
         const matchingOptions = [
             "Sunnah",
             "Tidak wajib sholat dhuhur",
@@ -207,7 +227,6 @@
         ];
 
         // --- RENDER FUNCTIONS ---
-
         function renderPG() {
             const container = document.getElementById('questionsContainer');
             let html = '';
@@ -243,8 +262,6 @@
         function renderMatching() {
             const container = document.getElementById('matchingContainer');
             let html = '';
-
-            // Generate options HTML sorted alphabetically for UX, or randomized
             const optionsHtml = matchingOptions.sort().map(opt => `<option value="${opt}">${opt}</option>`).join('');
 
             matchingData.forEach((item, index) => {
@@ -268,7 +285,6 @@
 
         // --- NEW LOGIC: Start Button Handler ---
         document.getElementById('btnStart').addEventListener('click', function() {
-            // Validasi Identitas
             const nama = document.getElementById('namaSiswa').value.trim();
             const kelas = document.getElementById('kelasSiswa').value;
 
@@ -282,17 +298,14 @@
                 return;
             }
 
-            // Lock Input & Hide Start Button
             document.getElementById('namaSiswa').disabled = true;
             document.getElementById('kelasSiswa').disabled = true;
             this.classList.add('hidden'); 
-
-            // Show Exam Section with Animation
+            
             const examSection = document.getElementById('examSection');
             examSection.classList.remove('hidden');
             examSection.classList.add('animate-fade-in');
 
-            // Scroll to questions gently
             setTimeout(() => {
                 examSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
             }, 300);
@@ -302,17 +315,15 @@
         document.getElementById('quizForm').addEventListener('submit', function(e) {
             e.preventDefault();
             
-            // Re-validate
             const nama = document.getElementById('namaSiswa').value.trim();
             const kelas = document.getElementById('kelasSiswa').value;
 
-            // Konfirmasi sebelum kirim
             Swal.fire({
                 title: 'Kirim Jawaban?',
-                text: "Pastikan semua jawaban sudah terisi. Anda akan langsung diarahkan ke halaman nilai.",
+                text: "Apakah kamu yakin semua jawaban sudah benar?",
                 icon: 'question',
                 showCancelButton: true,
-                confirmButtonColor: '#2563eb', // Blue
+                confirmButtonColor: '#2563eb',
                 cancelButtonColor: '#9ca3af',
                 confirmButtonText: 'Ya, Kirim!',
                 cancelButtonText: 'Cek Lagi'
@@ -323,53 +334,103 @@
             });
         });
 
-        function processSubmission(nama, kelas) {
-            let totalScore = 0;
-            const formData = new FormData(document.getElementById('quizForm'));
-
-            // 1. Hitung Nilai PG (Bobot 3 poin per soal -> 20x3 = 60)
-            pgQuestions.forEach(q => {
-                const userAns = formData.get(`q${q.id}`);
-                if (userAns === q.correct) {
-                    totalScore += 3;
-                }
-            });
-
-            // 2. Hitung Nilai Menjodohkan (Bobot 5 poin per soal -> 8x5 = 40)
-            matchingData.forEach(m => {
-                const userAns = formData.get(`match_${m.id}`);
-                if (userAns === m.answer) {
-                    totalScore += 5;
-                }
-            });
-
+        // --- MAIN LOGIC: SCORING & FIREBASE UPLOAD ---
+        async function processSubmission(nama, kelas) {
             // Tampilkan Loading
             Swal.fire({
-                title: 'Mengirim Jawaban...',
-                text: 'Mohon tunggu, sedang memproses nilai.',
+                title: 'Mengirim Nilai...',
+                text: 'Mohon jangan tutup halaman ini.',
                 allowOutsideClick: false,
                 didOpen: () => {
                     Swal.showLoading();
                 }
             });
 
-            // URL Target
-            const targetBaseUrl = "https://mtsn6-demak.github.io/nilai-siswa/";
-            const targetUrl = `${targetBaseUrl}?name=${encodeURIComponent(nama)}&score=${totalScore}&kelas=${encodeURIComponent(kelas)}&type=Kuis Fiqih&date=${encodeURIComponent(new Date().toLocaleDateString('id-ID'))}`;
-            
-            // Redirect
-            setTimeout(() => {
-                try {
-                    window.location.href = targetUrl;
-                } catch (error) {
-                    console.error("Redirect Error:", error);
-                    Swal.fire({
-                        icon: 'success',
-                        title: 'Selesai!',
-                        html: `Terima kasih <b>${nama}</b>.<br>Nilai Anda: <b>${totalScore}</b>.<br><br><a href="${targetUrl}" target="_blank" class="text-blue-600 underline">Klik di sini jika tidak otomatis dialihkan</a>`
-                    });
+            // 1. Hitung Nilai
+            let totalScore = 0;
+            let correctCount = 0;
+            const formData = new FormData(document.getElementById('quizForm'));
+
+            // PG
+            pgQuestions.forEach(q => {
+                const userAns = formData.get(`q${q.id}`);
+                if (userAns === q.correct) {
+                    totalScore += 3;
+                    correctCount++;
                 }
-            }, 1500);
+            });
+
+            // Menjodohkan
+            let matchCorrect = 0;
+            matchingData.forEach(m => {
+                const userAns = formData.get(`match_${m.id}`);
+                if (userAns === m.answer) {
+                    totalScore += 5;
+                    matchCorrect++;
+                }
+            });
+
+            // 2. Kirim ke Firebase
+            try {
+                // Login Anonymously (wajib untuk rule firestore)
+                await signInAnonymously(auth);
+
+                // Add document
+                await addDoc(collection(db, 'artifacts', appId, 'public', 'data', 'scores'), {
+                    name: nama.toUpperCase(),
+                    kelas: kelas,
+                    score: parseInt(totalScore),
+                    materi: "Fiqih - Shalat Jumat", // Penanda materi
+                    date: new Date().toLocaleDateString('id-ID'),
+                    timestamp: Date.now()
+                });
+
+                // 3. Tampilkan PopUp Sukses
+                let scoreColor = totalScore >= 75 ? "text-green-600" : "text-red-600";
+                let message = totalScore >= 75 ? "Selamat! Anda Lulus KKM." : "Tetap Semangat! Belajar lagi ya.";
+                let iconType = totalScore >= 75 ? "success" : "warning";
+
+                Swal.fire({
+                    title: '<span class="text-xl font-bold">Hasil Terkirim!</span>',
+                    html: `
+                        <div class="text-left bg-gray-50 p-4 rounded-lg border border-gray-200 mt-2">
+                            <div class="flex justify-between mb-2">
+                                <span class="text-gray-600">Nama:</span>
+                                <span class="font-bold text-gray-800">${nama}</span>
+                            </div>
+                            <div class="flex justify-between mb-4 border-b pb-2">
+                                <span class="text-gray-600">Kelas:</span>
+                                <span class="font-bold text-gray-800">${kelas}</span>
+                            </div>
+                            
+                            <div class="text-center my-6">
+                                <div class="text-6xl font-extrabold ${scoreColor} mb-2">${totalScore}</div>
+                                <div class="text-sm text-gray-500 uppercase tracking-wide">Nilai Akhir</div>
+                            </div>
+                            
+                            <p class="text-center italic font-medium text-gray-700">${message}</p>
+                            <p class="text-xs text-blue-500 mt-2 text-center"><i class="fa-solid fa-cloud-arrow-up"></i> Data berhasil disimpan ke server.</p>
+                        </div>
+                    `,
+                    icon: iconType,
+                    confirmButtonText: '<i class="fa-solid fa-rotate-right mr-2"></i> Ulangi Tes',
+                    confirmButtonColor: '#374151',
+                    allowOutsideClick: false
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        window.location.reload();
+                    }
+                });
+
+            } catch (error) {
+                console.error("Firebase Error:", error);
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Gagal Mengirim',
+                    text: 'Terjadi kesalahan koneksi. Coba periksa internet Anda dan kirim ulang.',
+                    confirmButtonText: 'Coba Lagi'
+                });
+            }
         }
 
         // Initialize Render
