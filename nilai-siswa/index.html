@@ -90,7 +90,7 @@
                 </div>
             </div>
             
-            <div class="bg-white p-6 rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-slate-100 flex items-center gap-5 hover:-translate-y-1 transition duration-300">
+            <div class="bg-white p-6 rounded-3xl shadow-[0_8px_30_rgb(0,0,0,0.04)] border border-slate-100 flex items-center gap-5 hover:-translate-y-1 transition duration-300">
                 <div class="bg-orange-100 p-4 rounded-2xl text-orange-600">
                     <i data-lucide="star" class="w-8 h-8"></i>
                 </div>
@@ -124,7 +124,7 @@
                 </h2>
                 <div class="flex gap-4 w-full md:w-auto">
                     <div class="relative w-full md:w-72">
-                        <input type="text" id="searchInput" onkeyup="window.filterTable()" placeholder="Cari Nama atau Kelas..." class="w-full pl-11 pr-4 py-3 bg-white border border-slate-200 rounded-xl focus:outline-none focus:ring-4 focus:ring-blue-100 focus:border-blue-400 transition font-semibold text-sm">
+                        <input type="text" id="searchInput" onkeyup="window.filterTable()" placeholder="Cari Nama, Kelas, Materi..." class="w-full pl-11 pr-4 py-3 bg-white border border-slate-200 rounded-xl focus:outline-none focus:ring-4 focus:ring-blue-100 focus:border-blue-400 transition font-semibold text-sm">
                         <i data-lucide="search" class="w-5 h-5 text-slate-400 absolute left-4 top-3.5"></i>
                     </div>
                 </div>
@@ -177,7 +177,7 @@
                 </table>
             </div>
             <div class="p-4 bg-slate-50/80 text-xs font-semibold text-slate-400 text-center border-t border-slate-100">
-                MTsN 6 Demak • Sistem Penilaian Digital v2.6 (Auto-Materi)
+                MTsN 6 Demak • Sistem Penilaian Digital v2.7 (Universal-Sync)
             </div>
         </div>
     </main>
@@ -238,7 +238,6 @@
             if (lower.includes('khutbah jumat')) return 'Khutbah Jumat';
             if (lower.includes('optik')) return 'Cahaya dan Alat Optik';
             if (lower.includes('listrik')) return 'Listrik Dinamis';
-            if (lower.includes('shalat jumat')) || if (lower.includes('khutbah jumat')) return 'Formatif : Shalat Jumat';
             if (lower.includes('tata surya')) return 'Sistem Tata Surya';
             if (lower.includes('sel')) return 'Sel Hewan & Tumbuhan';
             return text;
@@ -246,6 +245,7 @@
 
         function splitNames(nameStr) {
             if (!nameStr) return [];
+            // Regex lebih aman agar tidak memotong nama "Dani" atau "Andi"
             return nameStr.split(/\s*&\s*|\s*,\s*|\s*\+\s*|\s+DAN\s+|\s+AND\s+|\s*\/\s*/i)
                           .map(n => n.trim())
                           .filter(n => n.length > 2);
@@ -278,20 +278,22 @@
         // --- SAVE DATA ---
         async function checkIncomingDataAndSave() {
             const params = new URLSearchParams(window.location.search);
-            const rawName = params.get('name');
-            const score = params.get('score');
             
-            if (!rawName || !score) return;
+            // Support parameter dalam Bahasa Indonesia atau Inggris
+            const rawName = params.get('nama') || params.get('name');
+            const scoreRaw = params.get('nilai') || params.get('score');
+            
+            if (!rawName || !scoreRaw) return;
 
-            const sessionKey = `saved_v6_${rawName}_${score}_${params.get('date') || 'today'}`;
+            // Session key unik per input agar tidak double save saat refresh
+            const sessionKey = `saved_v7_${rawName}_${scoreRaw}_${params.get('materi') || 'none'}`;
 
             if (!sessionStorage.getItem(sessionKey)) {
                 try {
-                    Swal.fire({ title: 'Menyimpan...', didOpen: () => { Swal.showLoading() }, allowOutsideClick: false });
+                    Swal.fire({ title: 'Menyimpan Nilai...', didOpen: () => { Swal.showLoading() }, allowOutsideClick: false });
 
                     const namesList = splitNames(rawName.toUpperCase());
-                    const kelas = normalizeClass(params.get('kelas'));
-                    // Cek parameter materi atau mapel dari URL
+                    const kelas = normalizeClass(params.get('kelas') || params.get('kls'));
                     const materi = params.get('materi') || params.get('mapel') || params.get('type') || '-';
                     const date = params.get('date') || new Date().toLocaleDateString('id-ID');
                     const timestamp = Date.now();
@@ -300,7 +302,7 @@
                         return addDoc(collection(db, 'artifacts', appId, 'public', 'data', COLLECTION_NAME), {
                             name: studentName,
                             kelas: kelas,
-                            score: parseInt(score),
+                            score: parseInt(scoreRaw),
                             materi: materi,
                             date: date,
                             timestamp: timestamp
@@ -313,11 +315,12 @@
                     Swal.fire({
                         icon: 'success',
                         title: 'Berhasil!',
-                        text: `Data untuk ${namesList.length} siswa telah disimpan.`,
-                        timer: 3000,
+                        text: `Nilai berhasil disimpan untuk ${namesList.length} siswa.`,
+                        timer: 2500,
                         showConfirmButton: false
                     });
 
+                    // Hapus parameter URL agar bersih
                     window.history.replaceState({}, document.title, window.location.pathname);
                 } catch (e) {
                     Swal.fire({ icon: 'error', title: 'Gagal Simpan', text: e.message });
@@ -332,12 +335,12 @@
             rawData.forEach(item => {
                 const nameStr = item.name ? item.name.toUpperCase().trim() : 'TANPA NAMA';
                 const cleanClass = normalizeClass(item.kelas);
-                
-                // Cari materi di berbagai field yang mungkin (materi, mapel, type)
                 const rawMateri = item.materi || item.mapel || item.type || '-';
                 const cleanMateri = normalizeMateri(rawMateri);
                 
-                const uniqueKey = `${nameStr}|${cleanClass}`;
+                // KUNCI UNIK: Nama + Kelas + Materi
+                // Ini penting agar materi berbeda muncul di baris berbeda
+                const uniqueKey = `${nameStr}|${cleanClass}|${cleanMateri}`;
 
                 if (!studentMap[uniqueKey]) {
                     studentMap[uniqueKey] = {
@@ -355,14 +358,9 @@
                     entry.totalScore += (parseInt(item.score) || 0);
                     entry.count += 1;
 
-                    // Update informasi tampilan dengan data terbaru berdasarkan timestamp
                     if ((item.timestamp || 0) >= entry.latestTimestamp) {
                         entry.latestTimestamp = item.timestamp;
                         entry.originalId = item.id;
-                        // Hanya update materi jika data terbaru punya materi yang valid
-                        if (cleanMateri !== '-') {
-                            entry.materi = cleanMateri;
-                        }
                         entry.date = item.date;
                         entry.timestamp = item.timestamp;
                     }
@@ -391,7 +389,7 @@
                 window.filterTable(); 
                 updateStats(processed);
             }, (err) => {
-                console.error("Snapshot error:", err);
+                console.error("Firebase Snapshot Error:", err);
             });
         }
 
@@ -399,4 +397,3 @@
         function renderTable(data) {
             const tbody = document.getElementById('score-table-body');
             
-        
