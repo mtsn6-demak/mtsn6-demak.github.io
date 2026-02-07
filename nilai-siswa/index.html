@@ -12,13 +12,12 @@
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
     
     <style>
-        body { 
-            font-family: 'Nunito', sans-serif; 
+        body {
+            font-family: 'Nunito', sans-serif;
             background: linear-gradient(135deg, #eef2ff 0%, #fdf2f8 100%);
             min-height: 100vh;
         }
         
-        /* Glassmorphism Effect */
         .glass {
             background: rgba(255, 255, 255, 0.7);
             backdrop-filter: blur(10px);
@@ -29,21 +28,19 @@
         .fade-in { animation: fadeIn 0.6s cubic-bezier(0.22, 1, 0.36, 1); }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
         
-        /* Custom Scrollbar for Table */
         .custom-scroll::-webkit-scrollbar { height: 8px; }
         .custom-scroll::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 4px; }
         .custom-scroll::-webkit-scrollbar-thumb { background: #c7c7c7; border-radius: 4px; }
         .custom-scroll::-webkit-scrollbar-thumb:hover { background: #a0a0a0; }
 
-        /* Sortable Header Styles */
         th.sortable {
             cursor: pointer;
             transition: background-color 0.2s;
             user-select: none;
         }
         th.sortable:hover {
-            background-color: #eff6ff; /* blue-50 */
-            color: #2563eb; /* blue-600 */
+            background-color: #eff6ff;
+            color: #2563eb;
         }
     </style>
 </head>
@@ -77,8 +74,8 @@
         
         <!-- Connection Status -->
         <div id="connection-status" class="mb-6 text-sm font-semibold text-center text-slate-400 flex justify-center items-center gap-2 bg-white/50 py-2 rounded-full w-fit mx-auto px-6 border border-white">
-            <div class="animate-spin w-4 h-4 border-2 border-slate-300 border-t-blue-500 rounded-full"></div> 
-            Menghubungkan...
+            <div class="animate-spin w-4 h-4 border-2 border-slate-300 border-t-blue-500 rounded-full"></div>
+             Menghubungkan...
         </div>
 
         <!-- Dashboard Cards -->
@@ -127,7 +124,7 @@
                 </h2>
                 <div class="flex gap-4 w-full md:w-auto">
                     <div class="relative w-full md:w-72">
-                        <input type="text" id="searchInput" onkeyup="window.filterTable()" placeholder="Cari Nama Siswa..." class="w-full pl-11 pr-4 py-3 bg-white border border-slate-200 rounded-xl focus:outline-none focus:ring-4 focus:ring-blue-100 focus:border-blue-400 transition font-semibold text-sm">
+                        <input type="text" id="searchInput" onkeyup="window.filterTable()" placeholder="Cari Nama atau Kelas..." class="w-full pl-11 pr-4 py-3 bg-white border border-slate-200 rounded-xl focus:outline-none focus:ring-4 focus:ring-blue-100 focus:border-blue-400 transition font-semibold text-sm">
                         <i data-lucide="search" class="w-5 h-5 text-slate-400 absolute left-4 top-3.5"></i>
                     </div>
                 </div>
@@ -138,39 +135,31 @@
                     <thead>
                         <tr class="bg-slate-50 text-slate-500 text-xs font-bold uppercase tracking-wider border-b border-slate-100">
                             <th class="p-5 text-center w-16">No</th>
-                            
-                            <!-- Kolom Waktu Sortable -->
                             <th class="p-5 sortable group" onclick="window.sortTable('timestamp')">
                                 <div class="flex items-center gap-1">
                                     Waktu 
                                     <i id="icon-timestamp" data-lucide="arrow-up-down" class="w-3 h-3 text-slate-300 group-hover:text-blue-500"></i>
                                 </div>
                             </th>
-                            
-                            <!-- Kolom Sortable -->
                             <th class="p-5 sortable group" onclick="window.sortTable('name')">
                                 <div class="flex items-center gap-1">
                                     Nama Siswa 
                                     <i id="icon-name" data-lucide="arrow-up-down" class="w-3 h-3 text-slate-300 group-hover:text-blue-500"></i>
                                 </div>
                             </th>
-                            
                             <th class="p-5 sortable group" onclick="window.sortTable('kelas')">
                                 <div class="flex items-center gap-1">
                                     Kelas 
                                     <i id="icon-kelas" data-lucide="arrow-up-down" class="w-3 h-3 text-slate-300 group-hover:text-blue-500"></i>
                                 </div>
                             </th>
-                            
                             <th class="p-5">Materi</th>
-                            
                             <th class="p-5 text-center sortable group" onclick="window.sortTable('score')">
                                 <div class="flex items-center justify-center gap-1">
                                     Nilai 
                                     <i id="icon-score" data-lucide="arrow-up-down" class="w-3 h-3 text-slate-300 group-hover:text-blue-500"></i>
                                 </div>
                             </th>
-                            
                             <th class="p-5 text-center">Status</th>
                             <th class="p-5 text-center">Aksi</th>
                         </tr>
@@ -188,18 +177,17 @@
                 </table>
             </div>
             <div class="p-4 bg-slate-50/80 text-xs font-semibold text-slate-400 text-center border-t border-slate-100">
-                MTsN 6 Demak • Sistem Penilaian Digital v2.4 (Smart-Rename)
+                MTsN 6 Demak • Sistem Penilaian Digital v2.6 (Auto-Materi)
             </div>
         </div>
-
     </main>
 
     <script type="module">
         import { initializeApp } from 'https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js';
         import { getAuth, signInAnonymously, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js';
-        import { getFirestore, collection, addDoc, getDocs, doc, deleteDoc, onSnapshot } from 'https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js';
+        import { getFirestore, collection, addDoc, getDocs, doc, deleteDoc, onSnapshot, query, orderBy } from 'https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js';
 
-        // --- KONFIGURASI FIREBASE ---
+        // --- FIREBASE CONFIG ---
         const firebaseConfig = {
             apiKey: "AIzaSyAkX8qAS-O_5m_qaGr8Aa9XME-lVyBMibw",
             authDomain: "belajaronline-b5512.firebaseapp.com",
@@ -217,16 +205,12 @@
         const COLLECTION_NAME = 'scores';
         
         let globalData = [];
-        // State untuk Sorting
         let currentSort = { column: 'timestamp', direction: 'desc' };
 
-        // --- HELPER FUNCTIONS ---
-        
-        // 1. Fungsi seragamkan kelas cerdas
+        // --- HELPERS ---
         function normalizeClass(kelasInput) {
             if (!kelasInput) return '-';
             let str = kelasInput.toString().toUpperCase();
-
             let grade = '';
             if (str.includes('8') || str.includes('VIII')) grade = '8';
             else if (str.includes('9') || str.includes('IX')) grade = '9';
@@ -236,21 +220,20 @@
 
             let cleanStr = str
                 .replace(/KELAS|KLS|MTS|SMP/g, '')
-                .replace(/VIII|VII|IX|IV|V|VI/g, '') 
-                .replace(/[0-9]/g, '') 
+                .replace(/VIII|VII|IX|IV|V|VI/g, '')
+                .replace(/[0-9]/g, '')
                 .replace(/[^A-Z]/g, ''); 
-
+            
             let suffix = cleanStr.charAt(0);
-            if (!suffix) return grade;
-            return grade + suffix;
+            return grade + (suffix || '');
         }
 
-        // 2. Fungsi UPDATE OTOMATIS TULISAN MATERI
         function normalizeMateri(materiInput) {
             if (!materiInput) return '-';
-            const text = materiInput.toString();
+            const text = materiInput.toString().trim();
+            if (text === "" || text === "null" || text === "undefined") return '-';
+            
             const lower = text.toLowerCase();
-
             if (lower.includes('shalat jumat')) return 'Shalat Jumat';
             if (lower.includes('khutbah jumat')) return 'Khutbah Jumat';
             if (lower.includes('optik')) return 'Cahaya dan Alat Optik';
@@ -258,31 +241,22 @@
             if (lower.includes('getaran') || lower.includes('gelombang')) return 'Getaran & Gelombang';
             if (lower.includes('tata surya')) return 'Sistem Tata Surya';
             if (lower.includes('sel')) return 'Sel Hewan & Tumbuhan';
-
             return text;
         }
 
-        // 3. Helper Regex Splitter (Pemisah Nama)
         function splitNames(nameStr) {
             if (!nameStr) return [];
-            // Pisahkan berdasarkan: simbol &, koma, plus, garis miring, atau kata DAN/AND dengan spasi
             return nameStr.split(/\s*&\s*|\s*,\s*|\s*\+\s*|\s+DAN\s+|\s+AND\s+|\s*\/\s*/i)
                           .map(n => n.trim())
-                          .filter(n => n.length > 0);
+                          .filter(n => n.length > 2);
         }
 
-        // --- AUTH & KONEKSI ---
+        // --- AUTH ---
         const initAuth = async () => {
             try {
                 await signInAnonymously(auth);
             } catch (error) {
                 console.error("Auth Error:", error);
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Koneksi Gagal',
-                    text: 'Gagal masuk ke database. Cek konfigurasi Firebase.',
-                    confirmButtonColor: '#ef4444'
-                });
             }
         };
 
@@ -301,146 +275,132 @@
             }
         });
 
-        // --- LOGIKA SIMPAN DATA BARU ---
+        // --- SAVE DATA ---
         async function checkIncomingDataAndSave() {
             const params = new URLSearchParams(window.location.search);
             const rawName = params.get('name');
-            
-            if (!rawName) return;
-
             const score = params.get('score');
             
-            // Menggunakan v4 untuk memaksa refresh logika simpan jika perlu
-            const sessionKey = `saved_v4_${rawName}_${score}_${params.get('date')}`;
+            if (!rawName || !score) return;
 
-            if (score && !sessionStorage.getItem(sessionKey)) {
+            const sessionKey = `saved_v6_${rawName}_${score}_${params.get('date') || 'today'}`;
+
+            if (!sessionStorage.getItem(sessionKey)) {
                 try {
-                    Swal.fire({ title: 'Menyimpan...', didOpen: () => { Swal.showLoading() } });
+                    Swal.fire({ title: 'Menyimpan...', didOpen: () => { Swal.showLoading() }, allowOutsideClick: false });
 
-                    // Gunakan fungsi splitNames yang sama
-                    let upperName = rawName.toUpperCase();
-                    const namesList = splitNames(upperName);
-
-                    const rawKelas = params.get('kelas');
-                    const kelas = normalizeClass(rawKelas);
-                    const materi = params.get('materi') || params.get('mapel') || '-';
-                    const type = params.get('type') || 'Kuis';
+                    const namesList = splitNames(rawName.toUpperCase());
+                    const kelas = normalizeClass(params.get('kelas'));
+                    // Cek parameter materi atau mapel dari URL
+                    const materi = params.get('materi') || params.get('mapel') || params.get('type') || '-';
                     const date = params.get('date') || new Date().toLocaleDateString('id-ID');
                     const timestamp = Date.now();
-                    
+
                     const promises = namesList.map(studentName => {
                         return addDoc(collection(db, 'artifacts', appId, 'public', 'data', COLLECTION_NAME), {
                             name: studentName,
                             kelas: kelas,
                             score: parseInt(score),
                             materi: materi,
-                            type: type,
                             date: date,
                             timestamp: timestamp
                         });
                     });
 
                     await Promise.all(promises);
-
                     sessionStorage.setItem(sessionKey, 'true');
-                    
-                    const displayMateri = normalizeMateri(materi);
-                    const namesString = namesList.join(', ');
-                    
+
                     Swal.fire({
                         icon: 'success',
                         title: 'Berhasil!',
-                        text: `Nilai ${displayMateri} untuk ${namesList.length} siswa (${namesString}) telah tersimpan.`,
-                        timer: 4000,
+                        text: `Data untuk ${namesList.length} siswa telah disimpan.`,
+                        timer: 3000,
                         showConfirmButton: false
                     });
 
                     window.history.replaceState({}, document.title, window.location.pathname);
-
                 } catch (e) {
-                    Swal.fire({ icon: 'error', title: 'Gagal', text: e.message });
+                    Swal.fire({ icon: 'error', title: 'Gagal Simpan', text: e.message });
                 }
             }
         }
 
-        // --- LOGIKA PENGOLAHAN DATA (DIPERBARUI: RETROACTIVE SPLIT) ---
+        // --- AGGREGATION LOGIC ---
         function processAndAggregateData(rawData) {
             const studentMap = {};
 
             rawData.forEach(item => {
-                const rawNameStr = item.name ? item.name.toUpperCase().trim() : 'TANPA NAMA';
-                
-                // --- PERBAIKAN: Split nama yang ada di database saat INI JUGA ---
-                // Ini akan memperbaiki tampilan data lama yang terlanjur tergabung
-                const individualNames = splitNames(rawNameStr);
-
+                const nameStr = item.name ? item.name.toUpperCase().trim() : 'TANPA NAMA';
                 const cleanClass = normalizeClass(item.kelas);
-                const rawMateri = item.materi || item.type || '-';
+                
+                // Cari materi di berbagai field yang mungkin (materi, mapel, type)
+                const rawMateri = item.materi || item.mapel || item.type || '-';
                 const cleanMateri = normalizeMateri(rawMateri);
+                
+                const uniqueKey = `${nameStr}|${cleanClass}`;
 
-                individualNames.forEach(singleName => {
-                    const nameKey = singleName;
+                if (!studentMap[uniqueKey]) {
+                    studentMap[uniqueKey] = {
+                        ...item,
+                        name: nameStr,
+                        kelas: cleanClass,
+                        materi: cleanMateri,
+                        totalScore: parseInt(item.score) || 0,
+                        count: 1,
+                        originalId: item.id,
+                        latestTimestamp: item.timestamp || 0
+                    };
+                } else {
+                    const entry = studentMap[uniqueKey];
+                    entry.totalScore += (parseInt(item.score) || 0);
+                    entry.count += 1;
 
-                    if (!studentMap[nameKey]) {
-                        studentMap[nameKey] = {
-                            ...item, // Salin properti lain (id asli mungkin duplikat, tidak apa untuk tampilan)
-                            name: nameKey,
-                            kelas: cleanClass,
-                            materi: cleanMateri,
-                            totalScore: parseInt(item.score) || 0,
-                            count: 1,
-                            originalId: item.id, 
-                            latestTimestamp: item.timestamp || 0
-                        };
-                    } else {
-                        const entry = studentMap[nameKey];
-                        entry.totalScore += (parseInt(item.score) || 0);
-                        entry.count += 1;
-
-                        if ((item.timestamp || 0) > entry.latestTimestamp) {
-                            entry.latestTimestamp = item.timestamp;
-                            entry.originalId = item.id; 
-                            entry.kelas = cleanClass;   
+                    // Update informasi tampilan dengan data terbaru berdasarkan timestamp
+                    if ((item.timestamp || 0) >= entry.latestTimestamp) {
+                        entry.latestTimestamp = item.timestamp;
+                        entry.originalId = item.id;
+                        // Hanya update materi jika data terbaru punya materi yang valid
+                        if (cleanMateri !== '-') {
                             entry.materi = cleanMateri;
-                            entry.date = item.date;
-                            entry.timestamp = item.timestamp; 
                         }
+                        entry.date = item.date;
+                        entry.timestamp = item.timestamp;
                     }
-                });
+                }
             });
 
-            return Object.values(studentMap).map(student => {
-                student.score = Math.round(student.totalScore / student.count);
-                student.id = student.originalId; 
-                return student;
+            return Object.values(studentMap).map(s => {
+                s.score = Math.round(s.totalScore / s.count);
+                s.id = s.originalId; 
+                return s;
             });
         }
 
-        // --- BACA DATA ---
+        // --- DATA SUBSCRIBER ---
         function subscribeToData() {
             const q = collection(db, 'artifacts', appId, 'public', 'data', COLLECTION_NAME);
             
-            onSnapshot(q, (querySnapshot) => {
+            onSnapshot(q, (snapshot) => {
                 const rawData = [];
-                querySnapshot.forEach((doc) => {
+                snapshot.forEach((doc) => {
                     rawData.push({ id: doc.id, ...doc.data() });
                 });
-                
-                const processedData = processAndAggregateData(rawData);
-                processedData.sort((a, b) => b.timestamp - a.timestamp);
-                
-                globalData = processedData;
+
+                const processed = processAndAggregateData(rawData);
+                globalData = processed;
                 window.filterTable(); 
-                updateStats(processedData);
+                updateStats(processed);
+            }, (err) => {
+                console.error("Snapshot error:", err);
             });
         }
 
-        // --- RENDER UI ---
+        // --- UI RENDERING ---
         function renderTable(data) {
             const tbody = document.getElementById('score-table-body');
             
             if (!data || data.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="8" class="p-10 text-center text-slate-400 italic">Tidak ada data ditemukan.</td></tr>`;
+                tbody.innerHTML = `<tr><td colspan="8" class="p-10 text-center text-slate-400 italic">Tidak ada data siswa.</td></tr>`;
                 return;
             }
 
@@ -448,13 +408,12 @@
             data.forEach((item, index) => {
                 const isPass = item.score >= 75;
                 const badgeColor = isPass ? 'bg-emerald-100 text-emerald-700 border-emerald-200' : 'bg-rose-100 text-rose-700 border-rose-200';
-                const statusText = isPass ? 'Tuntas' : 'Remidi';
                 const dateDisplay = item.timestamp ? new Date(item.timestamp).toLocaleString('id-ID', { hour:'2-digit', minute:'2-digit', day:'numeric', month:'short' }) : item.date;
                 
                 const scoreDisplay = item.count > 1 
                     ? `<div class="flex flex-col items-center">
                          <span class="text-lg font-extrabold ${item.score >= 80 ? 'text-blue-600' : 'text-slate-600'}">${item.score}</span>
-                         <span class="text-[10px] text-slate-400 bg-slate-100 px-1.5 py-0.5 rounded">Avg (${item.count})</span>
+                         <span class="text-[10px] text-slate-400 bg-slate-100 px-1.5 py-0.5 rounded">Rata-rata (${item.count})</span>
                        </div>`
                     : `<span class="text-lg font-extrabold ${item.score >= 80 ? 'text-blue-600' : 'text-slate-600'}">${item.score}</span>`;
 
@@ -464,15 +423,15 @@
                         <td class="p-5 text-xs text-slate-500 font-mono">${dateDisplay}</td>
                         <td class="p-5 font-bold text-slate-700 text-base">${item.name}</td>
                         <td class="p-5"><span class="bg-indigo-100 text-indigo-700 px-3 py-1 rounded-full text-xs font-bold border border-indigo-200">${item.kelas}</span></td>
-                        <td class="p-5 text-sm text-slate-600 font-medium">${item.materi || item.type || '-'}</td>
+                        <td class="p-5 text-sm text-slate-600 font-medium">${item.materi || '-'}</td>
                         <td class="p-5 text-center">${scoreDisplay}</td>
                         <td class="p-5 text-center">
                             <span class="${badgeColor} px-3 py-1 rounded-full text-xs font-bold border flex items-center justify-center gap-1 w-fit mx-auto">
-                                ${statusText}
+                                ${isPass ? 'Tuntas' : 'Remidi'}
                             </span>
                         </td>
                         <td class="p-5 text-center">
-                            <button onclick="window.deleteItem('${item.id}')" class="p-2 bg-white border border-slate-200 rounded-lg text-slate-400 hover:text-rose-500 hover:border-rose-200 hover:bg-rose-50 transition shadow-sm" title="Hapus Data Terbaru">
+                            <button onclick="window.deleteItem('${item.id}', '${item.name}')" class="p-2 bg-white border border-slate-200 rounded-lg text-slate-400 hover:text-rose-500 hover:border-rose-200 hover:bg-rose-50 transition shadow-sm" title="Hapus Data Terbaru">
                                 <i data-lucide="trash" class="w-4 h-4"></i>
                             </button>
                         </td>
@@ -484,176 +443,122 @@
             updateSortIcons();
         }
 
-        // --- SORTING LOGIC ---
+        // --- SORT & FILTER ---
         window.sortTable = (column) => {
             if (currentSort.column === column) {
                 currentSort.direction = currentSort.direction === 'asc' ? 'desc' : 'asc';
             } else {
                 currentSort.column = column;
-                currentSort.direction = 'asc'; 
-                if (column === 'score') currentSort.direction = 'desc'; 
-                if (column === 'timestamp') currentSort.direction = 'desc';
+                currentSort.direction = (column === 'score' || column === 'timestamp') ? 'desc' : 'asc';
             }
             window.filterTable();
         };
 
-        function performSort(data) {
-            return data.sort((a, b) => {
-                let valA = a[currentSort.column];
-                let valB = b[currentSort.column];
-                if (!valA && valA !== 0) valA = "";
-                if (!valB && valB !== 0) valB = "";
-                if (typeof valA === 'string') valA = valA.toLowerCase();
-                if (typeof valB === 'string') valB = valB.toLowerCase();
-                if (valA < valB) return currentSort.direction === 'asc' ? -1 : 1;
-                if (valA > valB) return currentSort.direction === 'asc' ? 1 : -1;
+        window.filterTable = () => {
+            const filter = document.getElementById('searchInput').value.toUpperCase();
+            let filtered = globalData.filter(item => 
+                item.name.includes(filter) || (item.kelas && item.kelas.includes(filter))
+            );
+
+            filtered.sort((a, b) => {
+                let vA = a[currentSort.column];
+                let vB = b[currentSort.column];
+                if (typeof vA === 'string') { vA = vA.toLowerCase(); vB = vB.toLowerCase(); }
+                if (vA < vB) return currentSort.direction === 'asc' ? -1 : 1;
+                if (vA > vB) return currentSort.direction === 'asc' ? 1 : -1;
                 return 0;
             });
-        }
+
+            renderTable(filtered);
+        };
 
         function updateSortIcons() {
             ['timestamp', 'name', 'kelas', 'score'].forEach(col => {
                 const icon = document.getElementById(`icon-${col}`);
                 if(icon) {
                     icon.setAttribute('data-lucide', 'arrow-up-down');
-                    icon.classList.remove('text-blue-600');
-                    icon.classList.add('text-slate-300');
+                    icon.classList.replace('text-blue-600', 'text-slate-300');
                 }
             });
-            const activeIcon = document.getElementById(`icon-${currentSort.column}`);
-            if (activeIcon) {
-                activeIcon.classList.remove('text-slate-300');
-                activeIcon.classList.add('text-blue-600');
-                if (currentSort.direction === 'asc') activeIcon.setAttribute('data-lucide', 'arrow-up');
-                else activeIcon.setAttribute('data-lucide', 'arrow-down');
+            const active = document.getElementById(`icon-${currentSort.column}`);
+            if (active) {
+                active.classList.replace('text-slate-300', 'text-blue-600');
+                active.setAttribute('data-lucide', currentSort.direction === 'asc' ? 'arrow-up' : 'arrow-down');
             }
             lucide.createIcons();
         }
 
-        // --- FILTER & UTILS ---
-        window.filterTable = () => {
-            const input = document.getElementById('searchInput');
-            const filter = input.value.toUpperCase(); 
-            let filteredData = globalData.filter(item => 
-                item.name.includes(filter) || 
-                (item.kelas && item.kelas.includes(filter))
-            );
-            filteredData = performSort(filteredData);
-            renderTable(filteredData);
-        };
-
         function updateStats(data) {
             document.getElementById('total-students').textContent = data.length;
             if (data.length > 0) {
-                const totalScore = data.reduce((acc, curr) => acc + curr.score, 0);
-                const avg = (totalScore / data.length).toFixed(1);
+                const avg = (data.reduce((a, b) => a + b.score, 0) / data.length).toFixed(1);
                 document.getElementById('avg-score').textContent = avg;
             } else {
                 document.getElementById('avg-score').textContent = "0";
             }
         }
 
-        window.downloadCSV = () => {
-            if (globalData.length === 0) {
-                Swal.fire('Oops...', 'Tidak ada data untuk diunduh.', 'info');
-                return;
-            }
-            let csvContent = "data:text/csv;charset=utf-8,No,Waktu,Nama Siswa,Kelas,Materi,Nilai Akhir (Rata2),Status\n";
-            const input = document.getElementById('searchInput');
-            const filter = input.value.toUpperCase();
-            let exportData = globalData.filter(item => item.name.includes(filter) || (item.kelas && item.kelas.includes(filter)));
-            exportData = performSort(exportData);
-            exportData.forEach((item, index) => {
-                const status = item.score >= 75 ? 'Tuntas' : 'Remidi';
-                const time = item.timestamp ? new Date(item.timestamp).toLocaleString('id-ID') : item.date;
-                const mat = item.materi || item.type || '-';
-                csvContent += `${index + 1},"${time}","${item.name}",${item.kelas},"${mat}",${item.score},${status}\n`;
-            });
-            const encodedUri = encodeURI(csvContent);
-            const link = document.createElement("a");
-            link.setAttribute("href", encodedUri);
-            link.setAttribute("download", "Rekap_Nilai_MTsN6.csv");
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-        };
-
-        // --- ACTION HANDLERS ---
-        window.deleteItem = async (docId) => {
+        // --- ACTIONS ---
+        window.deleteItem = async (docId, name) => {
             const { value: pin } = await Swal.fire({
-                title: 'Verifikasi Guru',
-                text: 'Masukkan PIN untuk menghapus data terbaru siswa ini',
+                title: 'Konfirmasi Guru',
+                text: `Hapus satu record data terbaru milik ${name}?`,
                 input: 'password',
                 inputPlaceholder: 'PIN Guru',
                 icon: 'warning',
                 showCancelButton: true,
-                confirmButtonColor: '#3b82f6',
-                cancelButtonColor: '#94a3b8',
-                confirmButtonText: 'Verifikasi'
+                confirmButtonColor: '#ef4444'
             });
 
             if (pin === "443588") {
-                Swal.fire({
-                    title: 'Yakin hapus?',
-                    text: "Data terbaru siswa ini akan dihapus.",
-                    icon: 'question',
-                    showCancelButton: true,
-                    confirmButtonColor: '#e11d48',
-                    cancelButtonColor: '#64748b',
-                    confirmButtonText: 'Ya, Hapus!',
-                    cancelButtonText: 'Batal'
-                }).then(async (result) => {
-                    if (result.isConfirmed) {
-                        try {
-                            await deleteDoc(doc(db, 'artifacts', appId, 'public', 'data', COLLECTION_NAME, docId));
-                            Swal.fire('Terhapus!', 'Data nilai terbaru siswa telah dihapus.', 'success');
-                        } catch(e) {
-                            Swal.fire('Error', e.message, 'error');
-                        }
-                    }
-                });
+                try {
+                    await deleteDoc(doc(db, 'artifacts', appId, 'public', 'data', COLLECTION_NAME, docId));
+                    Swal.fire('Terhapus', 'Record data telah dihapus.', 'success');
+                } catch(e) {
+                    Swal.fire('Gagal', e.message, 'error');
+                }
             } else if (pin) {
-                Swal.fire('Akses Ditolak', 'PIN yang Anda masukkan salah.', 'error');
+                Swal.fire('PIN Salah', '', 'error');
             }
         };
 
         window.clearData = async () => {
             const { value: pin } = await Swal.fire({
-                title: 'RESET DATABASE',
-                text: 'Masukkan PIN Admin untuk menghapus SEMUA data.',
+                title: 'RESET SEMUA DATA',
+                text: 'Tindakan ini akan menghapus seluruh isi database.',
                 input: 'password',
                 icon: 'error',
                 showCancelButton: true,
-                confirmButtonColor: '#e11d48',
-                confirmButtonText: 'Proses Reset'
+                confirmButtonColor: '#e11d48'
             });
 
             if (pin === "443588") {
-                Swal.fire({
-                    title: 'PERINGATAN KERAS!',
-                    html: "Anda akan menghapus <b>SELURUH DATA NILAI</b>.<br>Tindakan ini permanen.",
-                    icon: 'warning',
-                    showCancelButton: true,
-                    confirmButtonColor: '#e11d48',
-                    confirmButtonText: 'Ya, Kosongkan Database',
-                    cancelButtonText: 'Jangan!'
-                }).then(async (result) => {
-                    if (result.isConfirmed) {
-                        Swal.fire({title: 'Sedang menghapus...', didOpen: () => Swal.showLoading()});
-                        try {
-                            const q = collection(db, 'artifacts', appId, 'public', 'data', COLLECTION_NAME);
-                            const snapshot = await getDocs(q);
-                            const deletePromises = snapshot.docs.map(d => deleteDoc(d.ref));
-                            await Promise.all(deletePromises);
-                            Swal.fire('Selesai', 'Database telah dikosongkan.', 'success');
-                        } catch(e) {
-                            Swal.fire('Gagal', e.message, 'error');
-                        }
-                    }
-                });
-            } else if (pin) {
-                Swal.fire('Salah PIN', 'Anda tidak memiliki akses admin.', 'error');
+                Swal.fire({title: 'Membersihkan...', didOpen: () => Swal.showLoading()});
+                try {
+                    const snapshot = await getDocs(collection(db, 'artifacts', appId, 'public', 'data', COLLECTION_NAME));
+                    const promises = snapshot.docs.map(d => deleteDoc(d.ref));
+                    await Promise.all(promises);
+                    Swal.fire('Selesai', 'Database kosong.', 'success');
+                } catch(e) {
+                    Swal.fire('Gagal', e.message, 'error');
+                }
             }
+        };
+
+        window.downloadCSV = () => {
+            if (globalData.length === 0) return;
+            let csv = "No,Waktu,Nama,Kelas,Materi,Nilai,Status\n";
+            globalData.forEach((item, i) => {
+                const time = item.timestamp ? new Date(item.timestamp).toLocaleString('id-ID') : item.date;
+                csv += `${i+1},"${time}","${item.name}","${item.kelas}","${item.materi}",${item.score},${item.score >= 75 ? 'Tuntas':'Remidi'}\n`;
+            });
+            const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+            const link = document.createElement("a");
+            link.href = URL.createObjectURL(blob);
+            link.setAttribute("download", `Rekap_Nilai_${new Date().toLocaleDateString()}.csv`);
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
         };
 
         lucide.createIcons();
