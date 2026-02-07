@@ -238,7 +238,7 @@
             if (lower.includes('khutbah jumat')) return 'Khutbah Jumat';
             if (lower.includes('optik')) return 'Cahaya dan Alat Optik';
             if (lower.includes('listrik')) return 'Listrik Dinamis';
-            
+            if (lower.includes('shalat jumat')) || if (lower.includes('khutbah jumat')) return 'Formatif : Shalat Jumat';
             if (lower.includes('tata surya')) return 'Sistem Tata Surya';
             if (lower.includes('sel')) return 'Sel Hewan & Tumbuhan';
             return text;
