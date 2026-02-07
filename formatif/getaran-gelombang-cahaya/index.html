@@ -541,7 +541,11 @@
 
             // URL Target
             const targetBaseUrl = "https://mtsn6-demak.github.io/nilai-siswa/";
-            const targetUrl = `${targetBaseUrl}?name=${encodeURIComponent(nama)}&score=${totalScore}&kelas=${encodeURIComponent(kelas)}&type=Uji Kompetensi IPA&date=${encodeURIComponent(new Date().toLocaleDateString('id-ID'))}`;
+            
+            // UPDATE: Menambahkan parameter materi secara eksplisit
+            const materiValue = "Formatif : Getaran, Gelombang, dan Cahaya";
+            
+            const targetUrl = `${targetBaseUrl}?name=${encodeURIComponent(nama)}&score=${totalScore}&kelas=${encodeURIComponent(kelas)}&materi=${encodeURIComponent(materiValue)}&type=Uji Kompetensi IPA&date=${encodeURIComponent(new Date().toLocaleDateString('id-ID'))}`;
             
             // Redirect
             setTimeout(() => {
