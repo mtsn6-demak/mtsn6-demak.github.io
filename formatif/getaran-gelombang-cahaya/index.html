@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Uji Kompetensi IPA - Getaran & Gelombang</title>
+    <title>Tes Formatif IPA - Getaran, Gelombang dan Cahaya</title>
     
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -20,7 +20,7 @@
         body {
             font-family: 'Poppins', sans-serif;
             background-color: #f0fdf4; /* Light Green background */
-            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%2316a34a' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%2316a34a' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
         }
         .glass-card {
             background: rgba(255, 255, 255, 0.95);
@@ -70,8 +70,8 @@
                     <i class="fa-solid fa-chevron-left"></i>
                 </a>
                 <div>
-                    <h1 class="font-bold text-lg leading-tight">Uji Kompetensi IPA</h1>
-                    <p class="text-xs text-green-100">Bab: Getaran, Gelombang & Bunyi</p>
+                    <h1 class="font-bold text-lg leading-tight">Tes Formatif IPA</h1>
+                    <p class="text-xs text-green-100">Bab: Getaran, Gelombang & Cahaya</p>
                 </div>
             </div>
             <div class="text-sm font-medium bg-green-800 px-3 py-1 rounded-full border border-green-600">
@@ -164,7 +164,32 @@
     </footer>
 
     <!-- JavaScript Logic -->
-    <script>
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyAkX8qAS-O_5m_qaGr8Aa9XME-lVyBMibw",
+            authDomain: "belajaronline-b5512.firebaseapp.com",
+            projectId: "belajaronline-b5512",
+            storageBucket: "belajaronline-b5512.firebasestorage.app",
+            messagingSenderId: "896107581081",
+            appId: "1:896107581081:web:629056c097c90fdf583208",
+            measurementId: "G-7MKNGF9PCX"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+        const auth = getAuth(app);
+        const appId = 'belajaronline-b5512';
+        const COLLECTION_NAME = 'scores';
+
+        // Auto login anonym
+        signInAnonymously(auth).catch((error) => {
+            console.error("Auth Error:", error);
+        });
+
         // --- DATA SOAL PILIHAN GANDA (20 Soal) ---
         
         // --- 1. Definisi SVG Soal (Ilustrasi Soal) ---
@@ -372,7 +397,7 @@
             { id: "m10", question: "Bagian bola mata yang bening dan dapat tembus cahaya", answer: "Kornea" }
         ];
         
-        // Pilihan jawaban untuk dropdown (Diambil dari Kunci Jawaban Isian)
+        // Pilihan jawaban untuk dropdown
         const matchingOptions = [
             "Periode",
             "Gelombang",
@@ -395,7 +420,6 @@
             let html = '';
 
             pgQuestions.forEach((q, index) => {
-                // Check if image or table exists
                 const mediaContent = q.img ? `<div class="mb-4">${q.img}</div>` : (q.table ? `<div class="mb-4 overflow-x-auto">${q.table}</div>` : '');
 
                 html += `
@@ -428,8 +452,6 @@
         function renderMatching() {
             const container = document.getElementById('matchingContainer');
             let html = '';
-
-            // Sort options alphabetically for better UX
             const optionsHtml = matchingOptions.sort().map(opt => `<option value="${opt}">${opt}</option>`).join('');
 
             matchingData.forEach((item, index) => {
@@ -453,7 +475,6 @@
 
         // --- LOGIC: Start Button Handler ---
         document.getElementById('btnStart').addEventListener('click', function() {
-            // Validasi Identitas
             const nama = document.getElementById('namaSiswa').value.trim();
             const kelas = document.getElementById('kelasSiswa').value;
 
@@ -467,17 +488,14 @@
                 return;
             }
 
-            // Lock Input & Hide Start Button
             document.getElementById('namaSiswa').disabled = true;
             document.getElementById('kelasSiswa').disabled = true;
             this.classList.add('hidden'); 
 
-            // Show Exam Section with Animation
             const examSection = document.getElementById('examSection');
             examSection.classList.remove('hidden');
             examSection.classList.add('animate-fade-in');
 
-            // Scroll to questions gently
             setTimeout(() => {
                 examSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
             }, 300);
@@ -487,14 +505,12 @@
         document.getElementById('quizForm').addEventListener('submit', function(e) {
             e.preventDefault();
             
-            // Re-validate
             const nama = document.getElementById('namaSiswa').value.trim();
             const kelas = document.getElementById('kelasSiswa').value;
 
-            // Konfirmasi sebelum kirim
             Swal.fire({
                 title: 'Kirim Jawaban?',
-                text: "Pastikan semua jawaban sudah terisi. Anda akan langsung mengetahui nilai Anda.",
+                text: "Pastikan semua jawaban sudah terisi. Nilai akan langsung muncul.",
                 icon: 'question',
                 showCancelButton: true,
                 confirmButtonColor: '#2563eb', // Blue
@@ -508,11 +524,11 @@
             });
         });
 
-        function processSubmission(nama, kelas) {
+        async function processSubmission(nama, kelas) {
             let totalScore = 0;
             const formData = new FormData(document.getElementById('quizForm'));
 
-            // 1. Hitung Nilai PG (Bobot 3 poin per soal -> 20x3 = 60 poin)
+            // 1. Hitung Nilai PG
             pgQuestions.forEach(q => {
                 const userAns = formData.get(`q${q.id}`);
                 if (userAns === q.correct) {
@@ -520,10 +536,9 @@
                 }
             });
 
-            // 2. Hitung Nilai Menjodohkan (Bobot 4 poin per soal -> 10x4 = 40 poin)
+            // 2. Hitung Nilai Menjodohkan
             matchingData.forEach(m => {
                 const userAns = formData.get(`match_${m.id}`);
-                // Simple string matching (case insensitive)
                 if (userAns && userAns.toLowerCase() === m.answer.toLowerCase()) {
                     totalScore += 4;
                 }
@@ -531,35 +546,61 @@
 
             // Tampilkan Loading
             Swal.fire({
-                title: 'Mengirim Jawaban...',
-                text: 'Mohon tunggu, sedang memproses nilai.',
+                title: 'Menyimpan Nilai...',
+                text: 'Mohon tunggu sebentar.',
                 allowOutsideClick: false,
                 didOpen: () => {
                     Swal.showLoading();
                 }
             });
 
-            // URL Target
-            const targetBaseUrl = "https://mtsn6-demak.github.io/nilai-siswa/";
-            
-            // UPDATE: Menambahkan parameter materi secara eksplisit
-            const materiValue = "Formatif : Getaran, Gelombang, dan Cahaya";
-            
-            const targetUrl = `${targetBaseUrl}?name=${encodeURIComponent(nama)}&score=${totalScore}&kelas=${encodeURIComponent(kelas)}&materi=${encodeURIComponent(materiValue)}&type=Uji Kompetensi IPA&date=${encodeURIComponent(new Date().toLocaleDateString('id-ID'))}`;
-            
-            // Redirect
-            setTimeout(() => {
-                try {
-                    window.location.href = targetUrl;
-                } catch (error) {
-                    console.error("Redirect Error:", error);
-                    Swal.fire({
-                        icon: 'success',
-                        title: 'Selesai!',
-                        html: `Terima kasih <b>${nama}</b>.<br>Nilai Anda: <b>${totalScore}</b>.<br><br><a href="${targetUrl}" target="_blank" class="text-blue-600 underline">Klik di sini jika tidak otomatis dialihkan</a>`
-                    });
-                }
-            }, 1500);
+            try {
+                // Pastikan user terautentikasi sebelum menyimpan
+                if (!auth.currentUser) await signInAnonymously(auth);
+
+                const materiValue = "Formatif : Getaran, Gelombang, dan Cahaya";
+
+                // Simpan ke Firestore
+                await addDoc(collection(db, 'artifacts', appId, 'public', 'data', COLLECTION_NAME), {
+                    name: nama,
+                    kelas: kelas,
+                    score: totalScore,
+                    materi: materiValue,
+                    type: 'Uji Kompetensi IPA',
+                    date: new Date().toLocaleDateString('id-ID'),
+                    timestamp: Date.now()
+                });
+
+                // Tampilkan Modal Sukses dengan Nilai
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Hebat! Selesai!',
+                    html: `
+                        <div class="flex flex-col items-center">
+                            <span class="text-sm text-gray-500 uppercase font-bold tracking-widest mb-1">Nilai Kamu</span>
+                            <span class="text-6xl font-black text-green-600 mb-2 drop-shadow-sm">${totalScore}</span>
+                            <span class="text-gray-500 bg-gray-100 px-3 py-1 rounded-full text-sm">Sudah tersimpan di database</span>
+                        </div>
+                    `,
+                    confirmButtonText: 'Lihat Peringkat',
+                    confirmButtonColor: '#2563eb',
+                    showCancelButton: true,
+                    cancelButtonText: 'Tutup'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        window.location.href = "https://mtsn6-demak.github.io/nilai-siswa/";
+                    }
+                });
+
+            } catch (error) {
+                console.error("Submission Error:", error);
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Gagal Menyimpan',
+                    text: 'Terjadi kesalahan koneksi. Silakan coba lagi atau screenshot nilai Anda.',
+                    footer: `Nilai Anda: <b>${totalScore}</b> (Catat nilai ini)`
+                });
+            }
         }
 
         // Initialize Render
