@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KimiaCeria: Unsur & Atom</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400;500;600&family=Patrick+Hand&display=swap" rel="stylesheet">
+    
+    <!-- MathJax -->
+    <script>
+        window.MathJax = {
+            tex: { inlineMath: [['$', '$']], displayMath: [['$$', '$$']] },
+            options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre'] }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+    <style>
+        body { font-family: 'Fredoka', sans-serif; background-color: #f0f9ff; color: #1e293b; }
+        h1, h2, h3, h4 { font-family: 'Fredoka', cursive; letter-spacing: 0.5px; }
+        p, li, td, th { font-family: 'Patrick Hand', cursive; font-size: 1.15rem; }
+        
+        .card-hover:hover { transform: translateY(-3px); box-shadow: 0 10px 25px -5px rgba(59, 130, 246, 0.15); }
+        
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #f0f9ff; }
+        ::-webkit-scrollbar-thumb { background: #3b82f6; border-radius: 4px; }
+
+        /* Table Styling */
+        .materi-table th { background-color: #dbeafe; color: #1e40af; padding: 12px; border: 2px solid #bfdbfe; }
+        .materi-table td { padding: 10px; border: 2px solid #e2e8f0; background-color: white; }
+
+        /* Quiz Styling */
+        .option-label { cursor: pointer; transition: all 0.2s ease; border: 2px solid #cbd5e1; }
+        .option-input:checked + .option-content {
+            background-color: #eff6ff; border-color: #2563eb; color: #1e3a8a;
+        }
+        .option-input:checked + .option-content .option-circle {
+            background-color: #2563eb; border-color: #2563eb; color: white;
+        }
+
+        /* Modal */
+        .modal-backdrop { background-color: rgba(15, 23, 42, 0.7); backdrop-filter: blur(4px); }
+    </style>
+</head>
+<body class="selection:bg-blue-200 selection:text-blue-900">
+
+    <!-- Navigation -->
+    <nav class="bg-blue-600 text-white shadow-lg sticky top-0 z-50 border-b-4 border-blue-800">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <div class="flex items-center space-x-2">
+                <i class="fa-solid fa-shapes text-2xl text-yellow-300 animate-bounce"></i>
+                <span class="text-2xl font-semibold tracking-wide">KimiaCeria</span>
+            </div>
+            <div class="hidden md:flex space-x-6 text-lg">
+                <a href="#materi" class="hover:text-yellow-200 transition transform hover:scale-105">Rangkuman Materi</a>
+                <a href="#simulasi" class="hover:text-yellow-200 transition transform hover:scale-105">Atom vs Unsur</a>
+                <a href="#latihan" class="hover:text-yellow-200 transition transform hover:scale-105">Kuis & Nilai</a>
+            </div>
+            <button id="mobile-menu-btn" class="md:hidden bg-blue-700 p-2 rounded-lg"><i class="fa-solid fa-bars"></i></button>
+        </div>
+        <div id="mobile-menu" class="hidden md:hidden bg-blue-700 pb-4 px-4 text-center shadow-inner">
+            <a href="#materi" class="block py-2 border-b border-blue-600">Rangkuman Materi</a>
+            <a href="#simulasi" class="block py-2 border-b border-blue-600">Atom vs Unsur</a>
+            <a href="#latihan" class="block py-2">Kuis & Nilai</a>
+        </div>
+    </nav>
+
+    <!-- Hero -->
+    <header class="bg-gradient-to-b from-blue-500 to-sky-100 pt-16 pb-24 px-4 text-center relative overflow-hidden">
+        <div class="container mx-auto max-w-4xl relative z-10">
+            <span class="bg-white text-blue-600 px-4 py-1 rounded-full text-sm font-bold shadow-sm mb-4 inline-block transform -rotate-1">
+                📚 Rangkuman IPA Kelas 8
+            </span>
+            <h1 class="text-4xl md:text-6xl font-bold mb-4 text-white drop-shadow-md">
+                Unsur, Atom & Tabel Periodik
+            </h1>
+            <p class="text-lg md:text-xl mb-6 text-blue-900 max-w-2xl mx-auto font-medium bg-white/30 backdrop-blur-sm p-4 rounded-xl">
+                "Unsur adalah zat tunggal yang tidak dapat diuraikan lagi. Ada logam, non-logam, dan semi-logam. Yuk pelajari perbedaannya!"
+            </p>
+            <a href="#materi" class="bg-indigo-600 text-white border-b-4 border-indigo-800 active:border-b-0 active:translate-y-1 px-8 py-3 rounded-full font-bold text-lg shadow-xl hover:bg-indigo-700 transition inline-flex items-center gap-2">
+                <i class="fa-solid fa-book-open"></i> Mulai Baca
+            </a>
+        </div>
+    </header>
+
+    <!-- Content / Materi Section -->
+    <section id="materi" class="py-10 container mx-auto px-4 -mt-16 relative z-20">
+        
+        <!-- 1. Pengertian & Klasifikasi Unsur -->
+        <div class="bg-white p-6 md:p-8 rounded-3xl shadow-lg border-t-8 border-blue-500 mb-8 card-hover">
+            <h2 class="text-3xl font-bold text-blue-700 mb-6 flex items-center">
+                <span class="bg-blue-100 p-2 rounded-lg mr-3"><i class="fa-solid fa-layer-group"></i></span> 
+                1. Pengertian & Jenis Unsur
+            </h2>
+            <p class="mb-4 text-gray-700">
+                <b>Unsur</b> adalah zat tunggal atau zat murni yang tidak dapat diuraikan lagi menjadi zat yang lebih sederhana melalui reaksi kimia. Di alam, ada sekitar 92 unsur alami dan sisanya unsur buatan (total ±106 jenis).
+            </p>
+            
+            <div class="grid md:grid-cols-3 gap-6 mt-6">
+                <!-- Logam -->
+                <div class="bg-blue-50 p-5 rounded-2xl border border-blue-200">
+                    <h3 class="text-xl font-bold text-blue-800 mb-2 border-b-2 border-blue-200 pb-1">A. Unsur Logam</h3>
+                    <ul class="list-disc pl-4 space-y-1 text-sm text-gray-700">
+                        <li>Berwujud padat (kecuali raksa/merkuri yang cair).</li>
+                        <li>Berwarna putih mengkilap.</li>
+                        <li>Penghantar listrik & panas (konduktor).</li>
+                        <li>Dapat ditempa/dibentuk.</li>
+                    </ul>
+                    <div class="mt-3 text-sm bg-white p-3 rounded-lg shadow-sm">
+                        <b>Contoh:</b>
+                        <br>• Khrom ($Cr$): Bumper mobil.
+                        <br>• Besi ($Fe$): Campuran baja.
+                        <br>• Tembaga ($Cu$): Kabel listrik.
+                        <br>• Emas ($Au$): Perhiasan.
+                    </div>
+                </div>
+
+                <!-- Non Logam -->
+                <div class="bg-teal-50 p-5 rounded-2xl border border-teal-200">
+                    <h3 class="text-xl font-bold text-teal-800 mb-2 border-b-2 border-teal-200 pb-1">B. Unsur Non-Logam</h3>
+                    <ul class="list-disc pl-4 space-y-1 text-sm text-gray-700">
+                        <li>Ada yang padat, cair, gas.</li>
+                        <li>Tidak mengkilap & rapuh.</li>
+                        <li>Bukan penghantar listrik (isolator).</li>
+                    </ul>
+                    <div class="mt-3 text-sm bg-white p-3 rounded-lg shadow-sm">
+                        <b>Contoh:</b>
+                        <br>• Brom ($Br$): Obat penenang.
+                        <br>• Yodium ($I$): Antiseptik & garam.
+                        <br>• Fluor ($F$): Pasta gigi.
+                        <br>• Oksigen ($O$), Karbon ($C$).
+                    </div>
+                </div>
+
+                <!-- Semi Logam -->
+                <div class="bg-orange-50 p-5 rounded-2xl border border-orange-200">
+                    <h3 class="text-xl font-bold text-orange-800 mb-2 border-b-2 border-orange-200 pb-1">C. Unsur Semi Logam</h3>
+                    <p class="text-sm mb-2">Disebut juga <i>Metaloid</i>. Memiliki sifat di antara logam dan non-logam (semikonduktor).</p>
+                    <div class="mt-3 text-sm bg-white p-3 rounded-lg shadow-sm">
+                        <b>Contoh:</b>
+                        <br>• Silicon ($Si$): Pemotong, gelas, chip elektronik.
+                        <br>• Germanium ($Ge$).
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 2. Perbedaan Unsur & Atom -->
+        <div class="bg-white p-6 md:p-8 rounded-3xl shadow-lg border-t-8 border-indigo-500 mb-8 card-hover">
+            <h2 class="text-3xl font-bold text-indigo-700 mb-6 flex items-center">
+                <span class="bg-indigo-100 p-2 rounded-lg mr-3"><i class="fa-solid fa-microscope"></i></span> 
+                2. Perbedaan Unsur dan Atom
+            </h2>
+            <div class="overflow-x-auto">
+                <table class="w-full materi-table text-left border-collapse">
+                    <thead>
+                        <tr>
+                            <th class="w-1/2 text-center">Unsur</th>
+                            <th class="w-1/2 text-center">Atom</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Zat kimia murni yang terdiri dari satu jenis atom.</td>
+                            <td>Unit terkecil penyusun materi/unsur.</td>
+                        </tr>
+                        <tr>
+                            <td>Tidak dapat dipecah lagi dengan reaksi kimia biasa.</td>
+                            <td>Tersusun dari partikel subatom (Proton, Elektron, Neutron).</td>
+                        </tr>
+                        <tr>
+                            <td>Ditulis dengan lambang unsur (Contoh: $O_2$, $H_2$).</td>
+                            <td>Memiliki sifat unik (massa & ukuran sendiri).</td>
+                        </tr>
+                        <tr>
+                            <td>Bisa diamati secara makroskopis (benda nyata).</td>
+                            <td>Sangat kecil, tidak terlihat mikroskop biasa.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- 3. Tabel Periodik -->
+        <div class="bg-white p-6 md:p-8 rounded-3xl shadow-lg border-t-8 border-sky-500 mb-8 card-hover">
+            <h2 class="text-3xl font-bold text-sky-700 mb-6 flex items-center">
+                <span class="bg-sky-100 p-2 rounded-lg mr-3"><i class="fa-solid fa-table-cells"></i></span> 
+                3. Tabel Periodik & Sifatnya
+            </h2>
+            
+            <div class="flex flex-col md:flex-row gap-8">
+                <div class="md:w-1/2">
+                    <p class="mb-4">Unsur kimia disusun dalam tabel periodik berdasarkan <b>Nomor Atom</b>.</p>
+                    <ul class="space-y-3">
+                        <li class="flex items-start bg-sky-50 p-3 rounded-lg">
+                            <span class="bg-sky-500 text-white rounded-full w-6 h-6 flex items-center justify-center mr-3 text-xs flex-shrink-0">1</span>
+                            <span><b>Periode:</b> Baris horizontal (mendatar).</span>
+                        </li>
+                        <li class="flex items-start bg-sky-50 p-3 rounded-lg">
+                            <span class="bg-sky-500 text-white rounded-full w-6 h-6 flex items-center justify-center mr-3 text-xs flex-shrink-0">2</span>
+                            <span><b>Golongan:</b> Kolom vertikal (tegak). Disebut juga famili.</span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="md:w-1/2 bg-slate-50 p-4 rounded-xl border border-slate-200">
+                    <h4 class="font-bold text-slate-700 mb-3 text-lg border-b border-slate-300 pb-2">Sifat Keperiodikan (Kiri ke Kanan)</h4>
+                    <ul class="text-sm space-y-2 text-slate-600">
+                        <li><i class="fa-solid fa-arrow-right text-blue-500 mr-2"></i><b>Jari-jari Atom:</b> Semakin kecil (mengecil).</li>
+                        <li><i class="fa-solid fa-arrow-right text-blue-500 mr-2"></i><b>Energi Ionisasi:</b> Cenderung membesar.</li>
+                        <li><i class="fa-solid fa-arrow-right text-blue-500 mr-2"></i><b>Afinitas Elektron:</b> Semakin negatif (makin besar).</li>
+                        <li><i class="fa-solid fa-arrow-right text-blue-500 mr-2"></i><b>Elektronegativitas:</b> Semakin besar.</li>
+                        <li><i class="fa-solid fa-arrow-right text-blue-500 mr-2"></i><b>Sifat Logam:</b> Berkurang (makin non-logam).</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+    </section>
+
+    <!-- Simulation Section (Visualizing Atom vs Element) -->
+    <section id="simulasi" class="bg-blue-50 py-16">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-8">
+                <span class="inline-block bg-white text-blue-600 px-6 py-2 rounded-full shadow-md font-bold text-sm uppercase mb-3 border border-blue-100">
+                    <i class="fa-solid fa-eye mr-2"></i>Visualisasi Konsep
+                </span>
+                <h2 class="text-3xl font-bold text-gray-800">Partikel Penyusun Atom</h2>
+                <p class="text-gray-600">Atom tersusun dari Proton (+), Neutron (netral), dan Elektron (-).</p>
+            </div>
+            
+            <div class="flex flex-col lg:flex-row gap-8 items-center max-w-5xl mx-auto">
+                <div class="w-full lg:w-2/3 bg-slate-900 rounded-[2rem] shadow-2xl overflow-hidden relative border-4 border-slate-700">
+                    <canvas id="atomCanvas" class="w-full h-[400px] cursor-pointer"></canvas>
+                    <div class="absolute bottom-4 left-4 text-white bg-black/50 p-3 rounded-lg backdrop-blur-sm">
+                        <p class="text-xs text-gray-300">Model Bohr (Sederhana)</p>
+                        <p class="font-bold text-yellow-400" id="atom-name">Hidrogen ($H$)</p>
+                    </div>
+                </div>
+                
+                <div class="w-full lg:w-1/3 space-y-4">
+                    <div class="bg-white p-5 rounded-2xl shadow-md border-l-4 border-red-500">
+                        <h4 class="font-bold text-red-600">Proton & Neutron</h4>
+                        <p class="text-sm text-gray-600">Berada di inti atom (nukleus). Menyusun massa atom.</p>
+                    </div>
+                    <div class="bg-white p-5 rounded-2xl shadow-md border-l-4 border-yellow-400">
+                        <h4 class="font-bold text-yellow-600">Elektron</h4>
+                        <p class="text-sm text-gray-600">Mengelilingi inti pada kulit atom. Sangat ringan.</p>
+                    </div>
+                    <div class="bg-white p-4 rounded-2xl shadow border border-blue-100">
+                        <label class="block text-sm font-bold text-blue-800 mb-2">Ganti Model Unsur:</label>
+                        <select id="element-selector" onchange="changeAtom(this.value)" class="w-full p-2 bg-blue-50 border border-blue-200 rounded-lg text-blue-900 font-bold focus:outline-none focus:ring-2 focus:ring-blue-400">
+                            <option value="1">Hidrogen (H) - Non Logam</option>
+                            <option value="2">Helium (He) - Gas Mulia</option>
+                            <option value="3">Litium (Li) - Logam</option>
+                            <option value="6">Karbon (C) - Non Logam</option>
+                            <option value="8">Oksigen (O) - Non Logam</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Quiz Section -->
+    <section id="latihan" class="py-16 bg-white">
+        <div class="container mx-auto px-4 max-w-3xl">
+            <div class="text-center mb-10">
+                <span class="inline-block bg-blue-600 text-white px-6 py-2 rounded-full shadow-md font-bold text-sm uppercase mb-3">
+                    <i class="fa-solid fa-pen-nib mr-2"></i>Evaluasi
+                </span>
+                <h2 class="text-4xl font-bold text-blue-800">Latihan Soal</h2>
+                <p class="text-gray-500 mt-2">Soal diambil dari materi di atas.</p>
+            </div>
+
+            <!-- Login Box -->
+            <div id="quiz-login" class="bg-white rounded-3xl shadow-xl p-8 border-4 border-blue-50 relative overflow-hidden">
+                <div class="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-blue-400 to-indigo-500"></div>
+                <div class="text-center mb-6">
+                    <div class="w-20 h-20 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4 text-blue-600 text-3xl">
+                        <i class="fa-solid fa-user-graduate"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-gray-800">Identitas Siswa</h3>
+                </div>
+                <div class="space-y-4">
+                    <input type="text" id="student-name" class="w-full p-4 border-2 border-slate-200 rounded-xl outline-none focus:border-blue-500 bg-slate-50 transition" placeholder="Nama Lengkap">
+                    <input type="text" id="student-class" class="w-full p-4 border-2 border-slate-200 rounded-xl outline-none focus:border-blue-500 bg-slate-50 transition" placeholder="Kelas (Contoh: 8A)">
+                    <button onclick="startQuiz()" class="w-full bg-blue-600 text-white font-bold py-4 rounded-xl shadow-lg hover:bg-blue-700 transition transform active:scale-95">
+                        Mulai Mengerjakan <i class="fa-solid fa-arrow-right ml-2"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Quiz Container -->
+            <div id="quiz-container" class="hidden space-y-8">
+                <div class="flex justify-between items-center bg-blue-50 px-5 py-3 rounded-xl border border-blue-100">
+                    <div class="font-bold text-blue-800 flex items-center">
+                        <i class="fa-solid fa-id-badge mr-2"></i> <span id="display-name">Siswa</span>
+                    </div>
+                    <div class="text-sm font-bold text-blue-600 bg-white px-3 py-1 rounded-full shadow-sm">
+                        Total: 10 Soal
+                    </div>
+                </div>
+
+                <form id="quiz-form" class="space-y-6"></form>
+
+                <div class="text-center pt-4">
+                    <button type="button" onclick="preSubmitCheck()" class="bg-green-600 hover:bg-green-700 text-white text-xl font-bold px-12 py-4 rounded-full shadow-lg border-b-4 border-green-800 active:border-b-0 active:translate-y-1 transition transform hover:scale-105">
+                        <i class="fa-solid fa-paper-plane mr-2"></i> Kirim Jawaban
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Modal -->
+    <div id="custom-modal" class="hidden fixed inset-0 z-[100] flex items-center justify-center modal-backdrop px-4">
+        <div class="bg-white rounded-3xl shadow-2xl p-8 max-w-sm w-full relative flex flex-col items-center text-center animate-[popIn_0.3s_ease-out]">
+            <div id="modal-icon" class="w-16 h-16 bg-blue-50 rounded-full flex items-center justify-center text-3xl mb-4 text-blue-600 shadow-inner"></div>
+            <h3 id="modal-title" class="text-2xl font-bold mb-2 text-slate-800 font-['Fredoka']"></h3>
+            <div id="modal-body" class="text-slate-600 mb-6 text-lg font-['Patrick_Hand']"></div>
+            <div id="modal-actions" class="flex gap-3 w-full"></div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-slate-900 text-slate-300 py-10 mt-10 border-t-4 border-blue-500">
+        <div class="container mx-auto px-4 text-center">
+            <h4 class="font-bold text-2xl text-white mb-2 font-['Fredoka']">KimiaCeria</h4>
+            <p class="text-sm max-w-md mx-auto mb-6">Media Pembelajaran IPA Kelas 8 Berbasis Web.</p>
+            <div class="text-xs opacity-60">
+                &copy; 2026 Materi IPA Terpadu.
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        import { getAuth, signInAnonymously, onAuthStateChanged, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+
+        // Firebase Setup
+        const firebaseConfig = JSON.parse(__firebase_config || '{}');
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+        const auth = getAuth(app);
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'kimia-ceria';
+
+        let currentUser = null;
+        const initAuth = async () => {
+            try {
+                if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
+                    await signInWithCustomToken(auth, __initial_auth_token);
+                } else {
+                    await signInAnonymously(auth);
+                }
+            } catch (err) { console.error("Auth error", err); }
+        };
+        initAuth();
+        onAuthStateChanged(auth, user => currentUser = user);
+
+        // --- ATOM VISUALIZATION ---
+        const canvas = document.getElementById('atomCanvas');
+        const ctx = canvas.getContext('2d');
+        let currentProtons = 1;
+        let angle = 0;
+
+        function resizeCanvas() {
+            if(canvas.parentElement) {
+                canvas.width = canvas.parentElement.offsetWidth;
+                canvas.height = canvas.parentElement.offsetHeight;
+            }
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        window.changeAtom = (val) => {
+            currentProtons = parseInt(val);
+            const names = {1: "Hidrogen (H)", 2: "Helium (He)", 3: "Litium (Li)", 6: "Karbon (C)", 8: "Oksigen (O)"};
+            document.getElementById('atom-name').textContent = names[currentProtons];
+        };
+
+        function drawAtom() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            const cx = canvas.width / 2;
+            const cy = canvas.height / 2;
+
+            // Inti (Proton + Neutron)
+            for(let i=0; i<currentProtons*2; i++){
+                ctx.beginPath();
+                const r = 6;
+                const ox = Math.cos(i*13)*10; 
+                const oy = Math.sin(i*13)*10;
+                ctx.arc(cx+ox, cy+oy, r, 0, Math.PI*2);
+                ctx.fillStyle = i%2===0 ? '#ef4444' : '#facc15'; // Red & Yellow
+                ctx.fill();
+            }
+
+            // Kulit Elektron
+            const shells = [
+                {r: 60, n: Math.min(currentProtons, 2), s: 0.05},
+                {r: 110, n: Math.max(0, Math.min(currentProtons-2, 8)), s: 0.03}
+            ];
+
+            angle += 0.02;
+
+            shells.forEach((shell, idx) => {
+                if(shell.n > 0){
+                    ctx.beginPath();
+                    ctx.arc(cx, cy, shell.r, 0, Math.PI*2);
+                    ctx.strokeStyle = 'rgba(255,255,255,0.2)';
+                    ctx.lineWidth = 2;
+                    ctx.stroke();
+
+                    for(let j=0; j<shell.n; j++){
+                        const theta = angle * (idx+1) + (j * (Math.PI*2/shell.n));
+                        const ex = cx + Math.cos(theta)*shell.r;
+                        const ey = cy + Math.sin(theta)*shell.r;
+                        
+                        ctx.beginPath();
+                        ctx.arc(ex, ey, 6, 0, Math.PI*2);
+                        ctx.fillStyle = '#60a5fa'; // Blue electron
+                        ctx.shadowColor = '#60a5fa';
+                        ctx.shadowBlur = 10;
+                        ctx.fill();
+                        ctx.shadowBlur = 0;
+                    }
+                }
+            });
+            requestAnimationFrame(drawAtom);
+        }
+        drawAtom();
+
+        // --- QUIZ DATA BASED ON UPLOADED IMAGES ---
+        const quizData = [
+            {
+                q: "Zat tunggal atau zat murni yang tidak dapat diuraikan lagi menjadi zat yang lebih sederhana disebut...",
+                options: ["Senyawa", "Campuran", "Unsur", "Atom"],
+                a: 2
+            },
+            {
+                q: "Berikut ini yang merupakan ciri-ciri dari unsur LOGAM adalah...",
+                options: ["Rapuh dan tidak mengkilap", "Konduktor listrik dan dapat ditempa", "Berwujud gas pada suhu ruang", "Isolator panas yang baik"],
+                a: 1
+            },
+            {
+                q: "Unsur Khrom ($Cr$) dalam kehidupan sehari-hari sering digunakan untuk...",
+                options: ["Bumper mobil agar tahan karat", "Bahan dasar obat antiseptik", "Isi pensil", "Kabel listrik"],
+                a: 0
+            },
+            {
+                q: "Manakah di bawah ini yang termasuk contoh unsur Semi-Logam (Metaloid)?",
+                options: ["Emas ($Au$)", "Oksigen ($O$)", "Silicon ($Si$)", "Besi ($Fe$)"],
+                a: 2
+            },
+            {
+                q: "Yodium ($I$) adalah unsur non-logam yang biasanya digunakan dalam industri...",
+                options: ["Pembuatan Pesawat", "Kesehatan (Antiseptik) & Garam", "Kabel Listrik", "Perhiasan"],
+                a: 1
+            },
+            {
+                q: "Perbedaan utama antara Unsur dan Atom adalah...",
+                options: ["Unsur adalah bagian terkecil, Atom adalah zat murni", "Atom bisa dilihat mata, Unsur tidak", "Atom adalah unit terkecil penyusun unsur", "Tidak ada bedanya"],
+                a: 2
+            },
+            {
+                q: "Dalam Tabel Periodik, baris horizontal (mendatar) disebut sebagai...",
+                options: ["Golongan", "Periode", "Famili", "Metaloid"],
+                a: 1
+            },
+            {
+                q: "Bagaimana kecenderungan Jari-jari Atom dalam satu periode (dari kiri ke kanan)?",
+                options: ["Semakin besar", "Tetap sama", "Semakin kecil", "Acak"],
+                a: 2
+            },
+            {
+                q: "Sifat unsur kimia untuk menarik elektron dalam suatu ikatan disebut...",
+                options: ["Energi Ionisasi", "Afinitas Elektron", "Elektronegativitas", "Radioaktivitas"],
+                a: 2
+            },
+            {
+                q: "Unsur yang berwujud cair pada suhu ruang adalah...",
+                options: ["Emas ($Au$)", "Raksa/Merkuri ($Hg$)", "Besi ($Fe$)", "Aluminium ($Al$)"],
+                a: 1
+            }
+        ];
+
+        // Quiz Logic
+        window.startQuiz = () => {
+            const name = document.getElementById('student-name').value.trim();
+            const cls = document.getElementById('student-class').value.trim();
+            
+            if(!name || !cls) {
+                return showModal({
+                    title: "Ups!", 
+                    message: "Mohon isi Nama dan Kelas terlebih dahulu.", 
+                    icon: '<i class="fa-solid fa-circle-exclamation text-yellow-500"></i>',
+                    buttons: [{text: "Oke", class: "bg-blue-600 text-white hover:bg-blue-700"}]
+                });
+            }
+
+            document.getElementById('display-name').textContent = name;
+            document.getElementById('quiz-login').classList.add('hidden');
+            document.getElementById('quiz-container').classList.remove('hidden');
+
+            const form = document.getElementById('quiz-form');
+            form.innerHTML = "";
+            
+            quizData.forEach((item, idx) => {
+                const qDiv = document.createElement('div');
+                qDiv.className = "bg-white p-5 rounded-2xl shadow-sm border border-slate-100";
+                
+                let optsHtml = "";
+                item.options.forEach((opt, oIdx) => {
+                    optsHtml += `
+                        <label class="option-label block relative mb-3 rounded-xl overflow-hidden">
+                            <input type="radio" name="q${idx}" value="${oIdx}" class="option-input absolute opacity-0 w-full h-full cursor-pointer z-10">
+                            <div class="option-content p-3 flex items-center transition-colors">
+                                <span class="option-circle w-8 h-8 rounded-full border-2 border-slate-300 flex items-center justify-center mr-3 text-sm font-bold text-slate-500 flex-shrink-0">
+                                    ${String.fromCharCode(65+oIdx)}
+                                </span>
+                                <span class="text-slate-700 font-medium">${opt}</span>
+                            </div>
+                        </label>
+                    `;
+                });
+
+                qDiv.innerHTML = `
+                    <p class="font-bold text-lg text-blue-800 mb-4 font-['Fredoka']">
+                        <span class="bg-blue-100 text-blue-600 px-2 py-1 rounded text-sm mr-2">No. ${idx+1}</span>
+                        ${item.q}
+                    </p>
+                    <div>${optsHtml}</div>
+                `;
+                form.appendChild(qDiv);
+            });
+            
+            if (window.MathJax) MathJax.typesetPromise();
+        };
+
+        window.preSubmitCheck = () => {
+            let answered = 0;
+            quizData.forEach((_, i) => { if(document.querySelector(`input[name="q${i}"]:checked`)) answered++; });
+
+            if(answered < quizData.length) {
+                showModal({
+                    title: "Belum Selesai",
+                    message: `Kamu baru mengisi <b>${answered}</b> dari <b>${quizData.length}</b> soal.`,
+                    icon: '<i class="fa-solid fa-clipboard-question text-orange-500"></i>',
+                    buttons: [
+                        {text: "Lanjutkan", class: "bg-slate-200 text-slate-700 hover:bg-slate-300"},
+                        {text: "Kirim Saja", class: "bg-blue-600 text-white hover:bg-blue-700", action: submitQuiz}
+                    ]
+                });
+            } else {
+                submitQuiz();
+            }
+        };
+
+        async function submitQuiz() {
+            const loadingModal = showModal({
+                title: "Mengirim...",
+                message: "Sedang menyimpan nilai ke database.",
+                icon: '<i class="fa-solid fa-spinner fa-spin text-blue-500"></i>',
+                buttons: []
+            });
+
+            let correct = 0;
+            quizData.forEach((item, i) => {
+                const sel = document.querySelector(`input[name="q${i}"]:checked`);
+                if(sel && parseInt(sel.value) === item.a) correct++;
+            });
+            const score = Math.round((correct / quizData.length) * 100);
+
+            try {
+                if(!currentUser) await signInAnonymously(auth);
+                await addDoc(collection(db, 'artifacts', appId, 'public', 'data', 'scores'), {
+                    name: document.getElementById('student-name').value,
+                    class: document.getElementById('student-class').value,
+                    score: score,
+                    quiz: "Unsur & Atom",
+                    timestamp: Date.now()
+                });
+
+                hideModal(); // Close loading
+                showModal({
+                    title: "Hore! Selesai!",
+                    message: `
+                        <div class="py-2">
+                            <p class="text-slate-500 mb-1">Nilai Kamu:</p>
+                            <p class="text-6xl font-black text-blue-600 drop-shadow-sm mb-2">${score}</p>
+                            <p class="text-sm bg-green-100 text-green-700 py-1 px-3 rounded-full inline-block">
+                                <i class="fa-solid fa-check-circle mr-1"></i> Tersimpan
+                            </p>
+                        </div>
+                    `,
+                    icon: '<i class="fa-solid fa-trophy text-yellow-400"></i>',
+                    buttons: [{text: "Tutup", class: "bg-blue-600 text-white hover:bg-blue-700", action: () => location.reload()}]
+                });
+
+            } catch(e) {
+                hideModal();
+                showModal({
+                    title: "Gagal Kirim",
+                    message: "Terjadi kesalahan koneksi. Coba lagi ya.",
+                    icon: '<i class="fa-solid fa-circle-xmark text-red-500"></i>',
+                    buttons: [{text: "Tutup", class: "bg-slate-200"}]
+                });
+            }
+        }
+
+        // --- MODAL UTILS ---
+        const modal = document.getElementById('custom-modal');
+        const mTitle = document.getElementById('modal-title');
+        const mBody = document.getElementById('modal-body');
+        const mIcon = document.getElementById('modal-icon');
+        const mActions = document.getElementById('modal-actions');
+
+        window.showModal = (cfg) => {
+            mTitle.textContent = cfg.title;
+            mBody.innerHTML = cfg.message;
+            mIcon.innerHTML = cfg.icon || '';
+            mActions.innerHTML = '';
+            
+            cfg.buttons.forEach(btn => {
+                const b = document.createElement('button');
+                b.className = `flex-1 py-3 rounded-xl font-bold transition ${btn.class}`;
+                b.innerHTML = btn.text;
+                b.onclick = () => {
+                    if(btn.action) btn.action();
+                    else hideModal();
+                };
+                mActions.appendChild(b);
+            });
+            modal.classList.remove('hidden');
+        };
+
+        window.hideModal = () => modal.classList.add('hidden');
+        document.getElementById('mobile-menu-btn').onclick = () => document.getElementById('mobile-menu').classList.toggle('hidden');
+
+    </script>
+</body>
+</html>
