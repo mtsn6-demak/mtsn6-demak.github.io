@@ -61,14 +61,21 @@
 
         <!-- Teacher Profile Card -->
         <div class="glass-card w-full rounded-2xl p-6 mb-8 text-center border-t-4 border-green-500 animate-fade-in-down">
-            <div class="w-24 h-24 mx-auto bg-gray-200 rounded-full mb-4 overflow-hidden border-4 border-green-100 shadow-sm relative">
-                <!-- Using FontAwesome User Icon as placeholder avatar -->
-                <div class="w-full h-full flex items-center justify-center bg-green-50 text-green-600 text-4xl">
-                    <i class="fa-solid fa-user-tie"></i>
-                </div>
+            <div class="w-24 h-24 mx-auto bg-gray-200 rounded-full mb-4 overflow-hidden border-4 border-green-100 shadow-sm relative group">
+                
+                <!-- BAGIAN FOTO PROFIL -->
+                <!-- Pastikan Anda mengupload file bernama 'foto-profil.jpg' ke GitHub di folder yang sama -->
+                <!-- Jika foto belum diupload, gambar placeholder akan muncul -->
+                <img src="foto-profil.jpg" 
+                     onerror="this.src='https://ui-avatars.com/api/?name=Ahmad+Zulfikar&background=0D8ABC&color=fff&size=128'" 
+                     alt="Ahmad Zulfikar, S.Pd." 
+                     class="w-full h-full object-cover">
+                     
             </div>
+
             <h2 class="text-2xl font-bold text-gray-800">Ahmad Zulfikar, S.Pd.</h2>
             <p class="text-gray-500 mt-1">Guru Pengampu Mata Pelajaran</p>
+            
             <div class="mt-4 flex justify-center space-x-2">
                 <span class="px-3 py-1 bg-green-100 text-green-700 rounded-full text-xs font-semibold">Fiqih</span>
                 <span class="px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-xs font-semibold">IPA</span>
@@ -116,7 +123,7 @@
                 </div>
             </a>
 
-            <!-- Uji Kompetensi Section (NEW) -->
+            <!-- Uji Kompetensi Section -->
             <a href="https://mtsn6-demak.github.io/formatif" class="subject-btn w-full bg-gradient-to-r from-purple-500 to-indigo-500 text-white p-5 rounded-xl flex items-center justify-between cursor-pointer group hover:no-underline">
                 <div class="flex items-center space-x-4">
                     <div class="bg-white/20 p-3 rounded-lg">
