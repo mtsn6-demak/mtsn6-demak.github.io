@@ -1,0 +1,870 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fikih Ibadah: Shalat Jama' & Qashar</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400;500;600&family=Patrick+Hand&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+    
+    <style>
+        body {
+            font-family: 'Fredoka', sans-serif;
+            background-color: #f0fdf4; /* Green 50 */
+            color: #14532d; /* Green 900 */
+        }
+        h1, h2, h3 {
+            font-family: 'Fredoka', cursive;
+            letter-spacing: 0.5px;
+        }
+        p, li, label, input, select {
+            font-family: 'Patrick Hand', cursive;
+            font-size: 1.1rem;
+        }
+        .arabic-text {
+            font-family: 'Amiri', serif;
+            direction: rtl;
+            line-height: 2;
+        }
+        
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f0fdf4; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #22c55e; 
+            border-radius: 10px;
+            border: 2px solid #f0fdf4;
+        }
+        
+        /* --- Quiz & Option Styling --- */
+        .option-label {
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 2px solid #dcfce7; /* green-100 */
+            position: relative;
+            overflow: hidden;
+        }
+        .option-label:hover {
+            border-color: #4ade80; /* green-400 */
+            background-color: #f0fdf4; /* green-50 */
+        }
+        /* State Checked */
+        .option-input:checked + .option-content {
+            background-color: #dcfce7; /* green-100 */
+            border-color: #16a34a; /* green-600 */
+            color: #14532d; /* green-900 */
+            box-shadow: 0 4px 6px -1px rgba(22, 163, 74, 0.1), 0 2px 4px -1px rgba(22, 163, 74, 0.06);
+        }
+        .option-circle {
+            transition: all 0.3s ease;
+            border: 2px solid #86efac;
+        }
+        .option-input:checked + .option-content .option-circle {
+            background-color: #16a34a;
+            border-color: #16a34a;
+            color: white;
+            transform: scale(1.1);
+        }
+        .option-input:checked + .option-content {
+            border-width: 2px;
+        }
+
+        /* --- Custom Modal Styling --- */
+        .modal-backdrop {
+            background-color: rgba(20, 83, 45, 0.6); /* Green-900 opacity */
+            backdrop-filter: blur(4px);
+            animation: fadeIn 0.2s ease-out;
+        }
+        .modal-content {
+            animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes popIn { from { transform: scale(0.9) translateY(10px); opacity: 0; } to { transform: scale(1) translateY(0); opacity: 1; } }
+        
+        /* Fade transition for Niat text */
+        .fade-text {
+            transition: opacity 0.3s ease-in-out;
+        }
+    </style>
+</head>
+<body class="selection:bg-green-200 selection:text-green-900">
+
+    <!-- Navigation -->
+    <nav class="bg-emerald-600 text-white shadow-lg sticky top-0 z-50 border-b-4 border-emerald-700">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <div class="flex items-center space-x-2 animate-bounce-slow">
+                <i class="fa-solid fa-mosque text-2xl text-yellow-300"></i>
+                <span class="text-2xl font-semibold tracking-wide">FikihCeria</span>
+            </div>
+            <div class="hidden md:flex space-x-6 text-lg">
+                <a href="#materi" class="hover:text-yellow-200 transition hover:scale-110 transform inline-block">Materi</a>
+                <a href="#simulasi" class="hover:text-yellow-200 transition hover:scale-110 transform inline-block">Niat</a>
+                <a href="#kalkulator" class="hover:text-yellow-200 transition hover:scale-110 transform inline-block">Cek Syarat</a>
+                <a href="#latihan" class="hover:text-yellow-200 transition hover:scale-110 transform inline-block">Uji Kompetensi</a>
+            </div>
+            <button id="mobile-menu-btn" class="md:hidden focus:outline-none bg-emerald-700 p-2 rounded-lg text-white">
+                <i class="fa-solid fa-bars text-xl"></i>
+            </button>
+        </div>
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-emerald-600 pb-4 px-4 text-center">
+            <a href="#materi" class="block py-2 hover:bg-emerald-700 rounded-lg">Materi</a>
+            <a href="#simulasi" class="block py-2 hover:bg-emerald-700 rounded-lg">Niat</a>
+            <a href="#kalkulator" class="block py-2 hover:bg-emerald-700 rounded-lg">Cek Syarat</a>
+            <a href="#latihan" class="block py-2 hover:bg-emerald-700 rounded-lg">Uji Kompetensi</a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="bg-gradient-to-b from-emerald-500 to-green-100 pt-20 pb-32 px-4 text-center relative overflow-hidden">
+        <div class="absolute top-10 left-10 w-20 h-20 bg-yellow-300 rounded-full opacity-50 mix-blend-multiply filter blur-xl animate-pulse"></div>
+        <div class="absolute top-20 right-20 w-32 h-32 bg-teal-300 rounded-full opacity-50 mix-blend-multiply filter blur-xl animate-pulse" style="animation-delay: 1s"></div>
+
+        <div class="container mx-auto max-w-4xl relative z-10">
+            <span class="bg-white text-emerald-600 px-4 py-1 rounded-full text-sm font-bold shadow-sm mb-4 inline-block transform -rotate-2">
+                📖 Modul Fikih Kelas 7
+            </span>
+            <h1 class="text-5xl md:text-7xl font-bold mb-6 text-white drop-shadow-md">
+                Ketentuan Shalat Jama'
+            </h1>
+            <p class="text-xl md:text-2xl mb-8 text-green-900 max-w-2xl mx-auto font-medium">
+                "Sesungguhnya Allah menyukai apabila rukhshah (keringanan) dari-Nya diambil, sebagaimana Dia membenci apabila maksiat dilakukan."
+            </p>
+            <a href="#materi" class="bg-yellow-400 text-yellow-900 border-b-4 border-yellow-600 active:border-b-0 active:translate-y-1 px-8 py-4 rounded-full font-bold text-xl shadow-xl hover:bg-yellow-500 transition inline-flex items-center gap-3">
+                <i class="fa-solid fa-book-open"></i> Mulai Belajar
+            </a>
+        </div>
+    </header>
+
+    <!-- Materi Section -->
+    <section id="materi" class="py-10 container mx-auto px-4 -mt-20 relative z-20">
+        <!-- Definisi & Dasar Hukum -->
+        <div class="bg-white p-8 rounded-3xl shadow-lg border-4 border-emerald-200 mb-8">
+            <div class="flex flex-col md:flex-row gap-6 items-start">
+                <div class="bg-emerald-100 p-4 rounded-2xl shrink-0">
+                    <i class="fa-solid fa-scale-balanced text-4xl text-emerald-600"></i>
+                </div>
+                <div>
+                    <h3 class="text-2xl font-bold mb-3 text-emerald-700">A. Pengertian & Dasar Hukum</h3>
+                    <p class="text-gray-700 leading-relaxed mb-4">
+                        Secara bahasa, <strong>Jama'</strong> berarti mengumpulkan. Menurut istilah, shalat jama' adalah menggabungkan dua shalat wajib yang dikerjakan dalam satu waktu yang dibolehkan oleh syari'at Islam. Ini adalah bentuk <strong>Rukhshah</strong> (keringanan) dari Allah SWT.
+                    </p>
+                    <div class="bg-emerald-50 p-4 rounded-xl border border-emerald-100">
+                        <strong class="block text-emerald-800 mb-2">Dalil (HR. Bukhari):</strong>
+                        <p class="italic text-gray-600 text-sm">
+                            "Dari Anas, ia berkata: Rasulullah saw. apabila berangkat menuju perjalanan sebelum tergelincir matahari, beliau ta'khirkan shalat zuhur ke waktu asar. Kemudian beliau turun untuk menjama' shalat keduanya..."
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <!-- Macam-Macam -->
+            <div class="bg-white p-8 rounded-3xl shadow-lg border-4 border-teal-200">
+                <h3 class="text-2xl font-bold mb-4 text-teal-700"><i class="fa-solid fa-layer-group mr-2"></i>B. Macam-Macam Shalat Jama'</h3>
+                
+                <div class="space-y-4">
+                    <div class="bg-teal-50 p-4 rounded-xl">
+                        <strong class="text-teal-800 text-lg">1. Jama' Taqdim</strong>
+                        <p class="text-gray-600 text-sm mt-1">Mengumpulkan dua shalat wajib dikerjakan pada <strong>waktu awal</strong>.</p>
+                        <p class="text-gray-500 text-xs mt-1">Contoh: Mengerjakan Dhuhur & Ashar di waktu Dhuhur.</p>
+                        <ul class="list-disc pl-4 mt-2 text-sm text-teal-700 font-bold">
+                            <li>Harus Tertib (Dhuhur dulu baru Ashar)</li>
+                            <li>Niat Jama' pada shalat pertama</li>
+                            <li>Muwalah (Berurutan/Tidak diselingi)</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="bg-teal-50 p-4 rounded-xl">
+                        <strong class="text-teal-800 text-lg">2. Jama' Ta'khir</strong>
+                        <p class="text-gray-600 text-sm mt-1">Mengumpulkan dua shalat wajib dikerjakan pada <strong>waktu akhir</strong>.</p>
+                        <p class="text-gray-500 text-xs mt-1">Contoh: Mengerjakan Dhuhur & Ashar di waktu Ashar.</p>
+                        <ul class="list-disc pl-4 mt-2 text-sm text-teal-700 font-bold">
+                            <li>Wajib Niat menunda (Niat Jama') saat waktu shalat pertama masih ada.</li>
+                            <li>Boleh memilih mana yang didahulukan (Tidak wajib tertib, tapi afdhal tertib).</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Syarat Sah -->
+            <div class="bg-white p-8 rounded-3xl shadow-lg border-4 border-yellow-200">
+                <h3 class="text-2xl font-bold mb-4 text-yellow-700"><i class="fa-solid fa-list-check mr-2"></i>C. Syarat-Syarat Umum</h3>
+                <ul class="space-y-3 text-gray-700">
+                    <li class="flex items-start">
+                        <i class="fa-solid fa-check text-green-500 mt-1 mr-2"></i>
+                        <span><strong>Musafir:</strong> Orang dalam perjalanan bukan untuk maksiat.</span>
+                    </li>
+                    <li class="flex items-start">
+                        <i class="fa-solid fa-check text-green-500 mt-1 mr-2"></i>
+                        <span><strong>Jarak Minimal:</strong> Perjalanan mencapai minimal <strong>80.64 km</strong> (atau 2 marhalah).</span>
+                    </li>
+                    <li class="flex items-start">
+                        <i class="fa-solid fa-check text-green-500 mt-1 mr-2"></i>
+                        <span><strong>Tidak Boleh Makmum pada Mukim:</strong> Musafir tidak boleh bermakmum kepada orang yang mukim (penduduk menetap).</span>
+                    </li>
+                    <li class="flex items-start">
+                        <i class="fa-solid fa-check text-green-500 mt-1 mr-2"></i>
+                        <span><strong>Kondisi Khusus:</strong> Sedang sakit atau hujan lebat yang menghalangi ke masjid.</span>
+                    </li>
+                    <li class="flex items-start">
+                        <i class="fa-solid fa-check text-green-500 mt-1 mr-2"></i>
+                        <span><strong>Berniat:</strong> Berniat shalat jamak.</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Simulasi Section (Niat) -->
+    <section id="simulasi" class="bg-green-50 py-16 relative">
+        <div class="absolute top-0 left-0 w-full h-20 bg-gradient-to-b from-green-100 to-green-50"></div>
+        <div class="container mx-auto px-4 relative z-10">
+            <div class="text-center mb-10">
+                <span class="inline-block bg-white text-emerald-600 px-6 py-2 rounded-full shadow-md font-bold tracking-wider text-sm uppercase mb-3 border border-emerald-100">
+                    <i class="fa-solid fa-hands-praying mr-2"></i>Hafalan Bacaan
+                </span>
+                <h2 class="text-4xl font-bold text-gray-800 mt-2">Lafal Niat Shalat Jama' 🕌</h2>
+                <p class="text-gray-500">Sesuai Modul Fikih Kelas 7 (Halaman 19-20)</p>
+            </div>
+            
+            <div class="flex flex-col lg:flex-row gap-8 items-start max-w-6xl mx-auto">
+                <!-- Controls & Selection -->
+                <div class="w-full lg:w-1/3 bg-white p-8 rounded-[2rem] shadow-xl border-b-8 border-teal-200">
+                    <h3 class="text-2xl font-bold mb-4 flex items-center text-teal-600">
+                        <i class="fa-solid fa-list-check mr-3"></i> Pilih Niat
+                    </h3>
+                    
+                    <div class="space-y-4 mb-6">
+                        <label class="block text-gray-500 font-bold mb-1 text-sm">Mau niat yang mana?</label>
+                        <select id="intent-selector" onchange="updateNiat()" class="w-full p-4 border-2 border-emerald-100 rounded-xl outline-none focus:border-emerald-400 bg-emerald-50 font-bold text-emerald-800 shadow-sm cursor-pointer hover:bg-emerald-100 transition">
+                            <optgroup label="Jama' Taqdim (Contoh: Dhuhur & Ashar)">
+                                <option value="taqdim_dzuhur">1. Shalat Pertama (Dhuhur)</option>
+                                <option value="taqdim_ashar">2. Shalat Kedua (Ashar)</option>
+                            </optgroup>
+                            <optgroup label="Jama' Ta'khir (Contoh: Maghrib & Isya)">
+                                <option value="takhir_maghrib">1. Shalat Maghrib (di waktu Isya)</option>
+                                <option value="takhir_isya">2. Shalat Isya (di waktu Isya)</option>
+                            </optgroup>
+                        </select>
+                    </div>
+
+                    <div class="bg-teal-50 p-4 rounded-xl border border-teal-100">
+                        <h4 class="font-bold text-teal-800 mb-2 text-sm uppercase tracking-wide"><i class="fa-solid fa-lightbulb mr-2"></i>Tata Cara Singkat</h4>
+                        <p id="niat-note" class="text-sm text-teal-700 leading-relaxed">
+                            Kerjakan shalat Dhuhur 4 rakaat dahulu, setelah salam langsung berdiri (tanpa dzikir) untuk mengerjakan shalat Ashar 4 rakaat.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Display Area -->
+                <div class="w-full lg:w-2/3 bg-white rounded-[2rem] shadow-xl overflow-hidden relative border-8 border-emerald-200 min-h-[450px] flex flex-col items-center justify-center p-8 text-center bg-[url('https://www.transparenttextures.com/patterns/arabesque.png')]">
+                    <div id="niat-content" class="fade-text w-full">
+                        <p id="niat-title" class="text-emerald-500 font-bold mb-6 uppercase tracking-widest text-sm bg-emerald-50 inline-block px-4 py-1 rounded-full border border-emerald-100">
+                            Niat Shalat Dhuhur (Jama' Taqdim)
+                        </p>
+                        
+                        <h2 id="niat-arabic" class="arabic-text text-2xl md:text-4xl leading-loose text-gray-800 mb-8 font-bold py-2">
+                            أُصَلِّي فَرْضَ الظُّهْرِ أَرْبَعَ رَكَعَاتٍ مَجْمُوْعًا بِالْعَصْرِ جَمْعَ تَقْدِيْمٍ لِلهِ تَعَالَى
+                        </h2>
+                        
+                        <p id="niat-latin" class="text-lg text-emerald-700 italic mb-4 font-medium px-4">
+                            "Ushallii fardhazh zhuhri arba'a raka'aatin majmuu'an bil 'ashri jam'a taqdiimin lillaahi ta'aalaa."
+                        </p>
+                        
+                        <hr class="w-24 mx-auto border-emerald-200 my-6">
+                        
+                        <p id="niat-mean" class="text-gray-600 text-base leading-relaxed">
+                            "Saya niat shalat fardhu dzuhur empat rakaat digabungkan dengan shalat asar dengan jamak taqdim karena Allah Ta'ala."
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Kalkulator Section (Checker) -->
+    <section id="kalkulator" class="py-16 container mx-auto px-4 bg-white rounded-t-[3rem] shadow-[0_-10px_40px_rgba(0,0,0,0.05)]">
+        <div class="max-w-4xl mx-auto">
+            <div class="text-center mb-10">
+                <div class="inline-block p-4 bg-emerald-100 rounded-full text-emerald-600 mb-4 text-3xl animate-bounce">
+                    <i class="fa-solid fa-calculator"></i>
+                </div>
+                <h2 class="text-4xl font-bold text-emerald-600">Cek Syarat Jama'</h2>
+                <p class="text-gray-500 mt-2">Berdasarkan ketentuan jarak minimal 80.64 km</p>
+            </div>
+            
+            <div class="bg-emerald-50 rounded-3xl shadow-lg border-2 border-emerald-100 p-8">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
+                    <div class="space-y-6">
+                        <div class="bg-white p-6 rounded-xl border border-emerald-100 shadow-sm space-y-4">
+                            <div>
+                                <label class="block text-gray-600 font-bold mb-1">Status Perjalanan</label>
+                                <select id="input-condition" class="w-full p-3 border-2 border-emerald-100 rounded-lg outline-none focus:border-emerald-400">
+                                    <option value="Mukim">Mukim (Tidak bepergian)</option>
+                                    <option value="Sakit">Sakit (Sulit ke Masjid)</option>
+                                    <option value="PerjalananJauh">Perjalanan > 81 km</option>
+                                    <option value="PerjalananDekat">Perjalanan < 80 km</option>
+                                    <option value="MakmumMukim">Musafir tapi Makmum ke Mukim</option>
+                                </select>
+                            </div>
+                        </div>
+                        <button onclick="checkJama()" class="w-full bg-emerald-500 hover:bg-emerald-600 text-white text-xl font-bold py-3 rounded-xl shadow-lg border-b-4 border-emerald-700 active:border-b-0 active:translate-y-1 transition">
+                            Cek Hukumnya 🚀
+                        </button>
+                    </div>
+                    
+                    <div class="bg-white rounded-3xl p-8 border-4 border-dashed border-emerald-200 text-center relative overflow-hidden flex flex-col items-center justify-center min-h-[300px]">
+                        <div class="absolute right-0 top-0 bg-yellow-300 text-yellow-800 px-6 py-2 rounded-bl-3xl font-bold shadow-sm z-10">Hasil Analisa</div>
+                        <span class="text-gray-400 font-bold uppercase tracking-widest text-sm mb-4 block">Kesimpulan:</span>
+                        
+                        <div id="check-result" class="text-5xl font-black text-emerald-600 mb-4 transition-all">---</div>
+                        <div id="check-reason" class="bg-emerald-50 px-4 py-3 rounded-lg text-emerald-800 font-medium border border-emerald-100 text-sm leading-relaxed">
+                            Masukkan kondisimu di sebelah kiri.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Quiz Section -->
+    <section id="latihan" class="py-16 bg-gradient-to-t from-emerald-100 to-white">
+        <div class="container mx-auto px-4 max-w-4xl">
+            <div class="text-center mb-10">
+                <span class="inline-block bg-emerald-500 text-white px-6 py-2 rounded-full shadow-md font-bold tracking-wider text-sm uppercase mb-3">
+                    <i class="fa-solid fa-brain mr-2"></i>HOTS (High Order Thinking Skills)
+                </span>
+                <h2 class="text-4xl font-bold text-emerald-700 mt-2">Uji Kompetensi</h2>
+                <p class="text-gray-600 mt-2">Analisis kasus berdasarkan modul fikih.</p>
+            </div>
+
+            <!-- Login Container -->
+            <div id="quiz-login" class="bg-white rounded-3xl shadow-xl p-8 border-4 border-emerald-200 max-w-lg mx-auto relative">
+                <div id="auth-status" class="absolute top-4 right-4 text-xs font-bold text-gray-400">
+                    <i class="fa-solid fa-circle text-gray-300 mr-1"></i> Menghubungkan...
+                </div>
+                
+                <div class="text-center mb-6">
+                    <i class="fa-solid fa-user-graduate text-5xl text-emerald-400 mb-4"></i>
+                    <h3 class="text-2xl font-bold text-gray-700">Identitas Siswa</h3>
+                    <p class="text-sm text-gray-500">Isi nama dulu sebelum mulai ya!</p>
+                </div>
+                <div class="space-y-4">
+                    <div>
+                        <label class="block text-gray-600 font-bold mb-1">Nama Lengkap</label>
+                        <input type="text" id="student-name" class="w-full p-3 border-2 border-emerald-100 rounded-xl outline-none focus:border-emerald-500 bg-emerald-50" placeholder="Contoh: Ahmad Santoso">
+                    </div>
+                    <div>
+                        <label class="block text-gray-600 font-bold mb-1">Kelas</label>
+                        <input type="text" id="student-class" class="w-full p-3 border-2 border-emerald-100 rounded-xl outline-none focus:border-emerald-500 bg-emerald-50" placeholder="Contoh: 7A">
+                    </div>
+                    <button id="start-btn" onclick="startQuiz()" disabled class="w-full bg-gray-400 text-white font-bold py-3 rounded-xl shadow-lg cursor-not-allowed transition mt-4">
+                        Tunggu Sebentar...
+                    </button>
+                    <p id="auth-error-msg" class="text-red-500 text-xs text-center hidden">Gagal terhubung ke database. Coba refresh halaman.</p>
+                </div>
+            </div>
+
+            <!-- Quiz Container -->
+            <div id="quiz-container" class="hidden space-y-6">
+                <div class="bg-emerald-100 p-4 rounded-xl flex justify-between items-center border border-emerald-200">
+                    <div class="font-bold text-emerald-700">
+                        <i class="fa-solid fa-user mr-2"></i> <span id="display-name">---</span> (<span id="display-class">---</span>)
+                    </div>
+                    <div class="bg-white px-4 py-1 rounded-full text-emerald-600 text-sm font-bold shadow-sm">
+                        Total: 10 Soal HOTS
+                    </div>
+                </div>
+
+                <form id="quiz-form" class="space-y-6">
+                    <!-- Questions will be injected here by JS -->
+                </form>
+
+                <div class="text-center pt-6">
+                    <button type="button" id="submit-btn" onclick="preSubmitCheck()" class="bg-green-500 hover:bg-green-600 text-white text-xl font-bold px-10 py-4 rounded-full shadow-lg border-b-4 border-green-700 active:border-b-0 active:translate-y-1 transition transform hover:scale-105">
+                        <i class="fa-solid fa-paper-plane mr-2"></i> Kirim Jawaban
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Custom Modal -->
+    <div id="custom-modal" class="hidden fixed inset-0 z-[100] flex items-center justify-center modal-backdrop px-4">
+        <div class="bg-white rounded-3xl shadow-2xl p-8 max-w-md w-full modal-content border-t-8 border-emerald-500 relative flex flex-col items-center">
+            <div class="absolute -top-12 bg-white rounded-full p-2 shadow-lg"> 
+                <div id="modal-icon-container" class="w-20 h-20 rounded-full flex items-center justify-center text-4xl border-4 border-emerald-50">
+                    <i class="fa-solid fa-bell text-emerald-500"></i>
+                </div>
+            </div>
+            <div class="mt-10 text-center w-full">
+                <h3 id="modal-title" class="text-2xl font-bold text-gray-800 mb-2 font-['Fredoka']">Judul Modal</h3>
+                <div id="modal-body" class="text-gray-600 mb-8 leading-relaxed text-lg font-['Patrick_Hand']">
+                    Pesan akan muncul di sini.
+                </div>
+                <div id="modal-actions" class="flex flex-col sm:flex-row gap-3 justify-center w-full">
+                    <!-- Buttons injected via JS -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-emerald-600 text-white py-8 mt-10">
+        <div class="container mx-auto px-4 text-center">
+            <p class="font-bold text-xl mb-2 font-['Fredoka']">FikihCeria</p>
+            <p class="text-emerald-100 opacity-90 font-['Patrick_Hand']">Modul FIQIH / MTs/SMP / Kelas 7 / Semester Genap / AGS</p>
+            <p class="text-xs text-emerald-200 mt-6">&copy; 2026 EduFikih Kids. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyAkX8qAS-O_5m_qaGr8Aa9XME-lVyBMibw",
+            authDomain: "belajaronline-b5512.firebaseapp.com",
+            projectId: "belajaronline-b5512",
+            storageBucket: "belajaronline-b5512.firebasestorage.app",
+            messagingSenderId: "896107581081",
+            appId: "1:896107581081:web:629056c097c90fdf583208",
+            measurementId: "G-7MKNGF9PCX"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+        const auth = getAuth(app);
+        
+        const appId = 'belajaronline-b5512';
+        const COLLECTION_NAME = 'scores';
+
+        // --- Auth & State Management ---
+        const startBtn = document.getElementById('start-btn');
+        const authStatus = document.getElementById('auth-status');
+        const authErrorMsg = document.getElementById('auth-error-msg');
+
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                console.log("User terautentikasi:", user.uid);
+                startBtn.disabled = false;
+                startBtn.classList.remove('bg-gray-400', 'cursor-not-allowed');
+                startBtn.classList.add('bg-emerald-500', 'hover:bg-emerald-600', 'border-b-4', 'border-emerald-700');
+                startBtn.innerHTML = 'Mulai Kerjakan Soal <i class="fa-solid fa-arrow-right ml-2"></i>';
+                authStatus.innerHTML = '<i class="fa-solid fa-circle text-green-400 mr-1"></i> Siap';
+                authStatus.classList.replace('text-gray-400', 'text-green-600');
+                authErrorMsg.classList.add('hidden');
+            } else {
+                signInAnonymously(auth).catch((error) => {
+                    authStatus.innerHTML = '<i class="fa-solid fa-circle text-red-400 mr-1"></i> Gagal';
+                    authErrorMsg.classList.remove('hidden');
+                    authErrorMsg.textContent = "Error Login: " + error.message;
+                });
+            }
+        });
+
+        // --- Data Niat & Helper Functions ---
+        window.intentData = {
+            taqdim_dzuhur: {
+                title: "Jama' Taqdim: 1. Shalat Dhuhur",
+                arabic: "أُصَلِّي فَرْضَ الظُّهْرِ أَرْبَعَ رَكَعَاتٍ مَجْمُوْعًا بِالْعَصْرِ جَمْعَ تَقْدِيْمٍ لِلهِ تَعَالَى",
+                latin: "Ushallii fardhazh zhuhri arba'a raka'aatin majmuu'an bil 'ashri jam'a taqdiimin lillaahi ta'aalaa.",
+                mean: "Saya niat shalat shalat duhur empat rakaat digabungkan dengan shalat asar dengan jamak takdim karena Allah Ta'ala",
+                note: "Dilakukan di waktu Dhuhur. Setelah salam, langsung berdiri untuk shalat Ashar."
+            },
+            taqdim_ashar: {
+                title: "Jama' Taqdim: 2. Shalat Ashar",
+                arabic: "أُصَلِّي فَرْضَ الْعَصْرِ أَرْبَعَ رَكَعَاتٍ مَجْمُوْعًا بِالظُّهْرِ جَمْعَ تَقْدِيْمٍ لِلهِ تَعَالَى",
+                latin: "Ushallii fardhal 'ashri arba'a raka'aatin majmuu'an bizh zhuhri jam'a taqdiimin lillaahi ta'aalaa.",
+                mean: "Saya niat shalat asar empat rakaat digabungkan dengan shalat duhur dengan jamak takdim karena Allah ta'ala",
+                note: "Dilakukan langsung setelah shalat Dhuhur selesai, tanpa jeda dzikir/doa."
+            },
+            takhir_maghrib: {
+                 title: "Jama' Ta'khir: Shalat Maghrib",
+                 arabic: "أُصَلِّي فَرْضَ الْمَغْرِبِ ثَلَاثَ رَكَعَاتٍ مَجْمُوْعًا تَاخِيْرًا مَعَ الْعِشَاءِ فَرْضًا ِللهِ تَعَالَى",
+                 latin: "Ushallii fardhal maghribi tsalaatsa raka'aatin majmuu'an ta'khiiran ma'al 'isyaai fardhan lillaahi ta'aalaa.",
+                 mean: "Saya niat shalat shalat magrib tiga rakaat digabungkan dengan shalat 'isya dengan jamak ta'khir karena Allah Ta'ala",
+                 note: "Dilakukan di waktu Isya. Boleh mendahulukan Isya dulu atau Maghrib dulu."
+            },
+            takhir_isya: {
+                 title: "Jama' Ta'khir: Shalat Isya",
+                 arabic: "أُصَلِّي فَرْضَ الْعِشَاءِ أَرْبَعَ رَكَعَاتٍ مَجْمُوْعًا تَاخِيْرًا مَعَ الْمَغْرِبِ فَرْضًا ِللهِ تَعَالَى",
+                 latin: "Ushallii fardhal 'isyaai arba'a raka'aatin majmuu'an ta'khiiran ma'al maghribi fardhan lillaahi ta'aalaa.",
+                 mean: "Saya berniat shalat 'isya empat rakaat digabungkan dengan shalat magrib dengan jamak ta'khir karena Allah Ta'ala.",
+                 note: "Dilakukan di waktu Isya."
+            }
+        };
+
+        window.updateNiat = function() {
+            const selector = document.getElementById('intent-selector');
+            const key = selector.value;
+            const data = window.intentData[key];
+            const contentDiv = document.getElementById('niat-content');
+            
+            // Fade out
+            contentDiv.style.opacity = '0';
+            
+            setTimeout(() => {
+                document.getElementById('niat-title').textContent = data.title;
+                document.getElementById('niat-arabic').textContent = data.arabic;
+                document.getElementById('niat-latin').textContent = `"${data.latin}"`;
+                document.getElementById('niat-mean').textContent = `"${data.mean}"`;
+                document.getElementById('niat-note').textContent = data.note;
+                
+                // Fade in
+                contentDiv.style.opacity = '1';
+            }, 300);
+        }
+
+        // --- Helper Functions for Modal ---
+        const modal = document.getElementById('custom-modal');
+        const modalTitle = document.getElementById('modal-title');
+        const modalBody = document.getElementById('modal-body');
+        const modalActions = document.getElementById('modal-actions');
+        const modalIconContainer = document.getElementById('modal-icon-container');
+
+        function showModal(config) {
+            modalTitle.textContent = config.title;
+            modalBody.innerHTML = config.message;
+            let iconClass = 'fa-bell';
+            let iconColor = 'text-emerald-500';
+            let borderColor = 'border-emerald-50';
+            
+            if (config.type === 'warning') { iconClass = 'fa-triangle-exclamation'; iconColor = 'text-amber-500'; borderColor = 'border-amber-50'; }
+            if (config.type === 'success') { iconClass = 'fa-trophy'; iconColor = 'text-green-500'; borderColor = 'border-green-50'; }
+            if (config.type === 'error') { iconClass = 'fa-circle-xmark'; iconColor = 'text-red-500'; borderColor = 'border-red-50'; }
+            if (config.type === 'loading') { iconClass = 'fa-spinner fa-spin'; iconColor = 'text-blue-500'; borderColor = 'border-blue-50'; }
+
+            modalIconContainer.className = `w-20 h-20 rounded-full flex items-center justify-center text-4xl border-4 ${borderColor} bg-white shadow-inner`;
+            modalIconContainer.innerHTML = `<i class="fa-solid ${iconClass} ${iconColor}"></i>`;
+            modalActions.innerHTML = '';
+            if (config.buttons) {
+                config.buttons.forEach(btn => {
+                    const buttonEl = document.createElement('button');
+                    buttonEl.className = `w-full py-3 rounded-xl font-bold transition shadow-sm border-b-4 active:border-b-0 active:translate-y-1 ${btn.class || 'bg-gray-200 text-gray-700 border-gray-300 hover:bg-gray-300'}`;
+                    buttonEl.textContent = btn.text;
+                    buttonEl.onclick = () => { if (btn.close !== false) hideModal(); if (btn.onClick) btn.onClick(); };
+                    modalActions.appendChild(buttonEl);
+                });
+            } else if (config.type !== 'loading') {
+                const closeBtn = document.createElement('button');
+                closeBtn.className = "w-full bg-emerald-500 text-white py-3 rounded-xl font-bold hover:bg-emerald-600 border-b-4 border-emerald-700 active:border-b-0 active:translate-y-1 transition";
+                closeBtn.textContent = "Tutup";
+                closeBtn.onclick = hideModal;
+                modalActions.appendChild(closeBtn);
+            }
+            modal.classList.remove('hidden');
+        }
+        function hideModal() { modal.classList.add('hidden'); }
+
+        // --- Mobile Menu Logic ---
+        const btn = document.getElementById('mobile-menu-btn');
+        const menu = document.getElementById('mobile-menu');
+        btn.addEventListener('click', () => { menu.classList.toggle('hidden'); });
+
+        // --- Calculator Logic (Check Jama') ---
+        window.checkJama = function() {
+            const condition = document.getElementById('input-condition').value;
+            const resultEl = document.getElementById('check-result');
+            const reasonEl = document.getElementById('check-reason');
+
+            // Reset Animation
+            resultEl.classList.remove('animate-bounce');
+            void resultEl.offsetWidth; // trigger reflow
+
+            if (condition === 'Mukim') {
+                resultEl.textContent = "TIDAK BOLEH";
+                resultEl.className = "text-5xl font-black text-gray-400 mb-4 transition-all";
+                reasonEl.innerHTML = "<i class='fa-solid fa-house mr-2'></i>Shalat Jama' adalah keringanan (rukhshah) khusus bagi musafir atau kondisi darurat. Orang mukim wajib shalat pada waktunya.";
+            } else if (condition === 'PerjalananDekat') {
+                resultEl.textContent = "TIDAK BOLEH";
+                resultEl.className = "text-5xl font-black text-amber-500 mb-4 transition-all";
+                reasonEl.innerHTML = "<i class='fa-solid fa-route mr-2'></i>Jarak perjalanan kurang dari 80.64 km (2 marhalah) belum memenuhi syarat untuk menjama' shalat.";
+            } else if (condition === 'PerjalananJauh') {
+                resultEl.textContent = "BOLEH";
+                resultEl.className = "text-5xl font-black text-emerald-600 mb-4 transition-all animate-bounce";
+                reasonEl.innerHTML = "<i class='fa-solid fa-plane-departure mr-2'></i>Anda memenuhi syarat jarak (>80.64 km). Silakan ambil rukhshah ini sebagai bentuk kasih sayang Allah.";
+            } else if (condition === 'Sakit') {
+                resultEl.textContent = "BOLEH";
+                resultEl.className = "text-5xl font-black text-emerald-600 mb-4 transition-all animate-bounce";
+                reasonEl.innerHTML = "<i class='fa-solid fa-hospital-user mr-2'></i>Sakit atau hujan lebat yang menghalangi ke masjid termasuk 'Kondisi Khusus' yang membolehkan Jama'.";
+            } else if (condition === 'MakmumMukim') {
+                resultEl.textContent = "HATI-HATI";
+                resultEl.className = "text-5xl font-black text-red-500 mb-4 transition-all";
+                reasonEl.innerHTML = "<i class='fa-solid fa-users-line mr-2'></i>Anda boleh Jama', tapi TIDAK BOLEH Qashar (meringkas) jika imamnya orang Mukim (penduduk setempat). Ikuti rakaat imam.";
+            }
+        }
+
+        // --- QUIZ LOGIC (HOTS) ---
+        const questionData = [
+            { 
+                q: "Pak Andi menempuh perjalanan dinas sejauh 90 km. Ia berangkat pukul 10.00 pagi. Saat waktu Zuhur tiba, ia masih berada di jalan tol dan memutuskan untuk melakukan Jama' Ta'khir. Namun, karena kelelahan menyetir, ia lupa berniat menunda shalat saat waktu Zuhur. Bagaimana status shalat Pak Andi?", 
+                options: [
+                    "Sah, karena ia adalah musafir yang menempuh jarak lebih dari 80.64 km.", 
+                    "Tidak sah dan berdosa (Qadha), karena syarat sah Jama' Ta'khir adalah wajib berniat menunda shalat saat masih berada di waktu shalat yang pertama.", 
+                    "Sah, asalkan ia mengerjakan shalat Zuhur terlebih dahulu baru kemudian shalat Asar.", 
+                    "Makruh, sebaiknya ia berhenti di rest area terdekat untuk melakukan Jama' Taqdim saja."
+                ], 
+                a: 1 
+            },
+            { 
+                q: "Rombongan siswa MTs melakukan studi wisata. Saat istirahat, mereka melakukan Jama' Taqdim Zuhur dan Asar. Setelah salam shalat Zuhur, ketua rombongan memberikan pengarahan selama 15 menit, baru kemudian mereka lanjut shalat Asar. Apakah shalat jamak mereka sah menurut syarat 'Muwalah'?", 
+                options: [
+                    "Sah, karena jeda waktu 15 menit dianggap sebentar dalam perjalanan.", 
+                    "Sah, asalkan mereka tidak berbicara hal-hal yang tidak penting.", 
+                    "Tidak sah shalat Asarnya, karena terpisah jeda waktu yang lama. Jama' Taqdim mensyaratkan pelaksanaan secara berurutan tanpa selingan.", 
+                    "Tidak sah keduanya, mereka harus mengulang shalat Zuhur dan Asar dari awal."
+                ], 
+                a: 2 
+            },
+            { 
+                q: "Budi (Musafir) mampir ke masjid di sebuah desa. Imam masjid tersebut adalah warga lokal (Mukim) yang sedang shalat Zuhur 4 rakaat. Budi berniat Jama' Qashar (meringkas jadi 2 rakaat) di belakang imam tersebut. Bagaimana hukum shalat Budi?", 
+                options: [
+                    "Tidak sah Qasharnya. Sebagai makmum musafir yang mengikuti imam mukim, Budi wajib mengikuti imam menyempurnakan shalat 4 rakaat.", 
+                    "Sah, karena Budi memiliki niat sendiri sebagai musafir yang berhak mendapat keringanan.", 
+                    "Sah, asalkan Budi memisahkan diri (mufaraqah) setelah rakaat kedua.", 
+                    "Boleh, namun Budi harus mengganti kekurangan rakaatnya di shalat Asar nanti."
+                ], 
+                a: 0 
+            },
+            { 
+                q: "Ibu Fatimah melakukan Jama' Ta'khir Maghrib dan Isya di waktu Isya. Ia mengerjakan shalat Isya terlebih dahulu 4 rakaat, baru kemudian shalat Maghrib 3 rakaat. Apakah urutan pelaksanaan ini diperbolehkan?", 
+                options: [
+                    "Tidak boleh, shalat jamak wajib dikerjakan secara tertib (berurutan dari waktu awal).", 
+                    "Diperbolehkan. Dalam Jama' Ta'khir, tertib (urutan) tidak menjadi syarat sah, sehingga boleh mengerjakan shalat Isya dulu atau Maghrib dulu.", 
+                    "Haram, karena menyalahi aturan waktu shalat yang sudah ditetapkan.", 
+                    "Boleh, asalkan ia lupa mengerjakan shalat Maghrib."
+                ], 
+                a: 1 
+            },
+            { 
+                q: "Hujan turun sangat lebat hingga membanjiri jalanan desa, membuat warga kesulitan pergi ke masjid. Pak Rahmat yang rumahnya jauh dari masjid memutuskan untuk menjamak shalat Maghrib dan Isya di rumahnya. Apakah tindakan Pak Rahmat dibenarkan?", 
+                options: [
+                    "Tidak boleh, karena shalat jamak hanya khusus untuk orang yang bepergian (musafir).", 
+                    "Boleh, karena hujan lebat yang menghalangi ke masjid termasuk salah satu 'udzur (alasan) yang membolehkan shalat jamak bagi mukim.", 
+                    "Tidak boleh, ia harus tetap ke masjid bagaimanapun caranya.", 
+                    "Boleh, asalkan ia mengganti shalat tersebut di lain hari."
+                ], 
+                a: 1 
+            },
+            { 
+                q: "Fulan dirawat di rumah sakit dan sulit terkena air atau banyak bergerak. Ia masih sadar penuh. Apakah Fulan diperbolehkan menjamak shalatnya walau tidak dalam perjalanan?", 
+                options: [
+                    "Tidak boleh, jama' hanya untuk musafir.", 
+                    "Boleh, sakit adalah salah satu udzur syar'i yang membolehkan jama' shalat.", 
+                    "Boleh, tapi harus diganti (qadha) setelah sembuh.", 
+                    "Tidak boleh, ia harus tayamum dan shalat pada waktunya masing-masing."
+                ], 
+                a: 1 
+            },
+            { 
+                q: "Dalam pelaksanaan Jama' Taqdim (Zuhur-Asar), Amir tidak sengaja mengerjakan shalat Asar terlebih dahulu karena mengira sudah masuk waktu Asar, baru kemudian ia sadar dan mengerjakan Zuhur. Bagaimana status shalat jamaknya?", 
+                options: [
+                    "Sah, karena yang penting niatnya.", 
+                    "Sah, asalkan masih dalam satu waktu.", 
+                    "Tidak sah, karena syarat Jama' Taqdim harus tertib (mendahulukan shalat yang punya waktu).", 
+                    "Makruh, tapi tidak perlu diulang."
+                ], 
+                a: 2 
+            },
+            { 
+                q: "Hasan bepergian sejauh 120 km. Ia ingin shalat Zuhur 2 rakaat dan Asar 2 rakaat, tetapi dikerjakan pada waktunya masing-masing (tidak digabung). Apakah hal ini diperbolehkan?", 
+                options: [
+                    "Tidak boleh, Qashar harus sepaket dengan Jama'.", 
+                    "Boleh, karena Qashar (meringkas) dan Jama' (menggabung) adalah dua keringanan yang berdiri sendiri.", 
+                    "Boleh, tapi hukumnya makruh karena menyulitkan diri.", 
+                    "Tidak boleh, jika tidak di-jama' maka harus shalat sempurna (4 rakaat)."
+                ], 
+                a: 1 
+            },
+            { 
+                q: "Syarat sah Jama' Ta'khir adalah adanya niat menunda shalat. Kapan niat ini harus diucapkan/dihadirkan dalam hati?", 
+                options: [
+                    "Saat waktu shalat kedua tiba.", 
+                    "Saat mengerjakan shalat yang pertama di waktu kedua.", 
+                    "Di waktu shalat yang pertama (sebelum waktunya habis), bahwa ia akan mengerjakan shalat itu di waktu kedua.", 
+                    "Setelah selesai perjalanan."
+                ], 
+                a: 2 
+            },
+            { 
+                q: "Pak Ridwan sedang musafir di hari Jumat. Ia mengikuti shalat Jumat berjamaah di masjid pinggir kota. Setelah salam shalat Jumat, ia langsung berdiri mengerjakan shalat Asar (di-qashar 2 rakaat). Apakah tindakan Pak Ridwan benar menurut fikih Syafi'i?", 
+                options: [
+                    "Tidak benar, shalat Jumat tidak bisa dijamak.", 
+                    "Benar, shalat Jumat menempati posisi Zuhur sehingga boleh dijamak taqdim dengan Asar.", 
+                    "Tidak benar, ia harus menunggu waktu Asar tiba.", 
+                    "Benar, asalkan shalat Jumatnya juga diringkas jadi 2 rakaat."
+                ], 
+                a: 1 
+            }
+        ];
+
+        let studentData = { name: "", class: "" };
+
+        window.startQuiz = function() {
+            const name = document.getElementById('student-name').value.trim();
+            const cls = document.getElementById('student-class').value.trim();
+
+            if (!name || !cls) {
+                showModal({ title: "Ops!", message: "Mohon isi Nama dan Kelas dulu ya sebelum mulai.", type: 'warning' });
+                return;
+            }
+
+            studentData.name = name;
+            studentData.class = cls;
+
+            document.getElementById('display-name').textContent = name;
+            document.getElementById('display-class').textContent = cls;
+
+            document.getElementById('quiz-login').classList.add('hidden');
+            document.getElementById('quiz-container').classList.remove('hidden');
+
+            renderQuestions();
+        }
+
+        function renderQuestions() {
+            const form = document.getElementById('quiz-form');
+            form.innerHTML = ""; 
+            
+            questionData.forEach((item, index) => {
+                const qDiv = document.createElement('div');
+                qDiv.className = "bg-white p-6 rounded-2xl shadow border border-emerald-100 relative overflow-hidden";
+                
+                let optionsHtml = "";
+                item.options.forEach((opt, optIndex) => {
+                    optionsHtml += `
+                        <label class="option-label group flex items-start p-3 rounded-xl cursor-pointer bg-white mb-2 relative">
+                            <input type="radio" name="q${index}" value="${optIndex}" class="option-input hidden peer">
+                            <div class="option-content w-full h-full flex items-start p-2 rounded-lg transition-all duration-300">
+                                <span class="option-circle w-8 h-8 flex-shrink-0 flex items-center justify-center bg-emerald-50 rounded-full mr-3 text-sm font-bold text-emerald-500 border-2 border-emerald-200 mt-1">
+                                    ${String.fromCharCode(65+optIndex)}
+                                </span>
+                                <span class="font-medium text-emerald-900 text-sm md:text-base leading-relaxed peer-checked:text-emerald-800">${opt}</span>
+                            </div>
+                        </label>
+                    `;
+                });
+
+                qDiv.innerHTML = `
+                    <div class="absolute top-0 left-0 w-1 h-full bg-emerald-400"></div>
+                    <p class="font-bold text-lg md:text-xl mb-4 text-emerald-800 font-['Fredoka'] leading-relaxed">
+                        <span class="bg-emerald-100 text-emerald-600 px-2 py-1 rounded-md mr-2 text-sm">Kasus ${index + 1}</span>
+                        ${item.q}
+                    </p>
+                    <div class="space-y-1">${optionsHtml}</div>
+                `;
+                form.appendChild(qDiv);
+            });
+        }
+
+        window.preSubmitCheck = function() {
+            let answered = 0;
+            questionData.forEach((item, index) => {
+                if (document.querySelector(`input[name="q${index}"]:checked`)) answered++;
+            });
+
+            if (answered < questionData.length) {
+                showModal({
+                    title: "Belum Selesai!",
+                    message: `Kamu baru menjawab <b class="text-red-500">${answered}</b> dari <b>${questionData.length}</b> soal.<br>Yakin mau dikirim sekarang?`,
+                    type: 'warning',
+                    buttons: [
+                        { text: "Lengkapi Dulu", class: "bg-gray-200 text-gray-700 hover:bg-gray-300 border-gray-300" },
+                        { text: "Kirim Saja", class: "bg-amber-500 text-white hover:bg-amber-600 border-amber-600", onClick: () => submitQuizLogic() }
+                    ]
+                });
+            } else {
+                submitQuizLogic();
+            }
+        }
+
+        async function submitQuizLogic() {
+            let correct = 0;
+            questionData.forEach((item, index) => {
+                const selected = document.querySelector(`input[name="q${index}"]:checked`);
+                if (selected && parseInt(selected.value) === item.a) correct++;
+            });
+
+            const score = Math.round((correct / questionData.length) * 100);
+            
+            showModal({
+                title: "Mengirim Jawaban...",
+                message: "Tunggu sebentar, sedang menyimpan nilaimu ke database.",
+                type: 'loading',
+                buttons: [] 
+            });
+            
+            try {
+                if (!auth.currentUser) await signInAnonymously(auth);
+
+                await addDoc(collection(db, 'artifacts', appId, 'public', 'data', COLLECTION_NAME), {
+                    name: studentData.name,
+                    kelas: studentData.class,
+                    score: score,
+                    type: 'Shalat Jama (HOTS)', 
+                    date: new Date().toLocaleDateString('id-ID'),
+                    timestamp: Date.now()
+                });
+                
+                showModal({
+                    title: "Alhamdulillah! Selesai!",
+                    message: `
+                        <div class="flex flex-col items-center">
+                            <span class="text-sm text-gray-500 uppercase font-bold tracking-widest mb-1">Skor Kamu</span>
+                            <span class="text-6xl font-black text-emerald-600 mb-2 drop-shadow-sm">${score}</span>
+                            <span class="text-gray-500 bg-gray-100 px-3 py-1 rounded-full text-sm">Nilai sudah tersimpan</span>
+                        </div>
+                    `,
+                    type: 'success',
+                    buttons: [
+                        { text: "Lihat Rekap Nilai", class: "bg-green-500 text-white hover:bg-green-600 border-green-600", onClick: () => {
+                            window.location.href = "https://mtsn6-demak.github.io/nilai-siswa/";
+                        }}
+                    ]
+                });
+                
+                document.getElementById('quiz-form').classList.add('pointer-events-none', 'opacity-50');
+                const submitBtn = document.getElementById('submit-btn');
+                submitBtn.disabled = true;
+                submitBtn.innerHTML = '<i class="fa-solid fa-check mr-2"></i> Terkirim';
+                submitBtn.classList.replace('bg-green-500', 'bg-gray-500');
+
+            } catch (e) {
+                console.error("Error adding document: ", e);
+                let errorMsg = "Terjadi kesalahan saat menyimpan.";
+                
+                if (e.message.includes("Missing or insufficient permissions")) { 
+                    errorMsg = "GAGAL SIMPAN (Izin Ditolak). Hubungi Guru untuk cek Database Rules.";
+                } else { 
+                    errorMsg = "Error: " + e.message;
+                }
+
+                showModal({
+                    title: "Gagal Mengirim",
+                    message: errorMsg + "<br><br>Ingin coba kirim ke web rekap nilai secara manual?",
+                    type: 'error',
+                    buttons: [
+                        { text: "Batal", class: "bg-gray-200 text-gray-700 hover:bg-gray-300" },
+                        { text: "Lanjut Manual", class: "bg-red-500 text-white hover:bg-red-600 border-red-600", onClick: () => {
+                            window.location.href = "https://mtsn6-demak.github.io/nilai-siswa/";
+                        }}
+                    ]
+                });
+            }
+        }
+    </script>
+</body>
+</html>
