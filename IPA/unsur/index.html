@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KimiaCeria: Unsur & Atom</title>
+    <title>KimiaCeria: Unsur, Senyawa & Atom</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- FontAwesome -->
@@ -23,7 +23,7 @@
     <style>
         body { font-family: 'Fredoka', sans-serif; background-color: #f0f9ff; color: #1e293b; }
         h1, h2, h3, h4 { font-family: 'Fredoka', cursive; letter-spacing: 0.5px; }
-        p, li, td, th { font-family: 'Patrick Hand', cursive; font-size: 1.15rem; }
+        p, li, td, th, label, input { font-family: 'Patrick Hand', cursive; font-size: 1.15rem; }
         
         .card-hover:hover { transform: translateY(-3px); box-shadow: 0 10px 25px -5px rgba(59, 130, 246, 0.15); }
         
@@ -33,8 +33,9 @@
         ::-webkit-scrollbar-thumb { background: #3b82f6; border-radius: 4px; }
 
         /* Table Styling */
-        .materi-table th { background-color: #dbeafe; color: #1e40af; padding: 12px; border: 2px solid #bfdbfe; }
-        .materi-table td { padding: 10px; border: 2px solid #e2e8f0; background-color: white; }
+        .materi-table th, .kegiatan-table th { background-color: #dbeafe; color: #1e40af; padding: 12px; border: 2px solid #bfdbfe; font-family: 'Fredoka', cursive; }
+        .materi-table td, .kegiatan-table td { padding: 10px; border: 2px solid #e2e8f0; background-color: white; text-align: center; }
+        .materi-table td.text-left { text-align: left; }
 
         /* Quiz Styling */
         .option-label { cursor: pointer; transition: all 0.2s ease; border: 2px solid #cbd5e1; }
@@ -47,6 +48,34 @@
 
         /* Modal */
         .modal-backdrop { background-color: rgba(15, 23, 42, 0.7); backdrop-filter: blur(4px); }
+
+        /* Kegiatan Checkbox */
+        .kegiatan-checkbox {
+            width: 1.5rem;
+            height: 1.5rem;
+            border: 2px solid #3b82f6;
+            border-radius: 0.375rem;
+            cursor: pointer;
+            appearance: none;
+            -webkit-appearance: none;
+            display: inline-block;
+            position: relative;
+            background-color: white;
+        }
+        .kegiatan-checkbox:checked {
+            background-color: #3b82f6;
+        }
+        .kegiatan-checkbox:checked::after {
+            content: '\f00c';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            font-size: 1rem;
+            color: white;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
     </style>
 </head>
 <body class="selection:bg-blue-200 selection:text-blue-900">
@@ -59,16 +88,18 @@
                 <span class="text-2xl font-semibold tracking-wide">KimiaCeria</span>
             </div>
             <div class="hidden md:flex space-x-6 text-lg">
-                <a href="#materi" class="hover:text-yellow-200 transition transform hover:scale-105">Rangkuman Materi</a>
-                <a href="#simulasi" class="hover:text-yellow-200 transition transform hover:scale-105">Atom vs Unsur</a>
-                <a href="#latihan" class="hover:text-yellow-200 transition transform hover:scale-105">Kuis & Nilai</a>
+                <a href="#materi" class="hover:text-yellow-200 transition transform hover:scale-105">Materi</a>
+                <a href="#simulasi" class="hover:text-yellow-200 transition transform hover:scale-105">Visualisasi</a>
+                <a href="#kegiatan" class="hover:text-yellow-200 transition transform hover:scale-105">Kegiatan Siswa</a>
+                <a href="#latihan" class="hover:text-yellow-200 transition transform hover:scale-105">Latihan Soal</a>
             </div>
             <button id="mobile-menu-btn" class="md:hidden bg-blue-700 p-2 rounded-lg"><i class="fa-solid fa-bars"></i></button>
         </div>
         <div id="mobile-menu" class="hidden md:hidden bg-blue-700 pb-4 px-4 text-center shadow-inner">
-            <a href="#materi" class="block py-2 border-b border-blue-600">Rangkuman Materi</a>
-            <a href="#simulasi" class="block py-2 border-b border-blue-600">Atom vs Unsur</a>
-            <a href="#latihan" class="block py-2">Kuis & Nilai</a>
+            <a href="#materi" class="block py-2 border-b border-blue-600">Materi</a>
+            <a href="#simulasi" class="block py-2 border-b border-blue-600">Visualisasi</a>
+            <a href="#kegiatan" class="block py-2 border-b border-blue-600">Kegiatan Siswa</a>
+            <a href="#latihan" class="block py-2">Latihan Soal</a>
         </div>
     </nav>
 
@@ -79,13 +110,13 @@
                 📚 Rangkuman IPA Kelas 8
             </span>
             <h1 class="text-4xl md:text-6xl font-bold mb-4 text-white drop-shadow-md">
-                Unsur, Atom & Tabel Periodik
+                Unsur, Senyawa & Atom
             </h1>
             <p class="text-lg md:text-xl mb-6 text-blue-900 max-w-2xl mx-auto font-medium bg-white/30 backdrop-blur-sm p-4 rounded-xl">
-                "Unsur adalah zat tunggal yang tidak dapat diuraikan lagi. Ada logam, non-logam, dan semi-logam. Yuk pelajari perbedaannya!"
+                "Belajar membedakan unsur logam & non-logam, memahami molekul unsur vs senyawa, serta tabel periodik dengan mudah!"
             </p>
             <a href="#materi" class="bg-indigo-600 text-white border-b-4 border-indigo-800 active:border-b-0 active:translate-y-1 px-8 py-3 rounded-full font-bold text-lg shadow-xl hover:bg-indigo-700 transition inline-flex items-center gap-2">
-                <i class="fa-solid fa-book-open"></i> Mulai Baca
+                <i class="fa-solid fa-book-open"></i> Mulai Belajar
             </a>
         </div>
     </header>
@@ -93,60 +124,65 @@
     <!-- Content / Materi Section -->
     <section id="materi" class="py-10 container mx-auto px-4 -mt-16 relative z-20">
         
-        <!-- 1. Pengertian & Klasifikasi Unsur -->
+        <!-- 1. Klasifikasi Unsur -->
         <div class="bg-white p-6 md:p-8 rounded-3xl shadow-lg border-t-8 border-blue-500 mb-8 card-hover">
             <h2 class="text-3xl font-bold text-blue-700 mb-6 flex items-center">
                 <span class="bg-blue-100 p-2 rounded-lg mr-3"><i class="fa-solid fa-layer-group"></i></span> 
-                1. Pengertian & Jenis Unsur
+                1. Klasifikasi & Contoh Unsur
             </h2>
             <p class="mb-4 text-gray-700">
-                <b>Unsur</b> adalah zat tunggal atau zat murni yang tidak dapat diuraikan lagi menjadi zat yang lebih sederhana melalui reaksi kimia. Di alam, ada sekitar 92 unsur alami dan sisanya unsur buatan (total ±106 jenis).
+                <b>Unsur</b> adalah zat tunggal yang tidak dapat diuraikan lagi. Berdasarkan sifatnya, unsur dibagi menjadi 3:
             </p>
             
             <div class="grid md:grid-cols-3 gap-6 mt-6">
                 <!-- Logam -->
                 <div class="bg-blue-50 p-5 rounded-2xl border border-blue-200">
                     <h3 class="text-xl font-bold text-blue-800 mb-2 border-b-2 border-blue-200 pb-1">A. Unsur Logam</h3>
-                    <ul class="list-disc pl-4 space-y-1 text-sm text-gray-700">
-                        <li>Berwujud padat (kecuali raksa/merkuri yang cair).</li>
-                        <li>Berwarna putih mengkilap.</li>
-                        <li>Penghantar listrik & panas (konduktor).</li>
+                    <p class="text-sm mb-2 font-bold">Ciri-ciri:</p>
+                    <ul class="list-disc pl-4 space-y-1 text-sm text-gray-700 mb-3">
+                        <li>Padat (kecuali raksa cair).</li>
+                        <li>Putih mengkilap.</li>
+                        <li>Konduktor (penghantar listrik/panas).</li>
                         <li>Dapat ditempa/dibentuk.</li>
                     </ul>
-                    <div class="mt-3 text-sm bg-white p-3 rounded-lg shadow-sm">
-                        <b>Contoh:</b>
-                        <br>• Khrom ($Cr$): Bumper mobil.
-                        <br>• Besi ($Fe$): Campuran baja.
-                        <br>• Tembaga ($Cu$): Kabel listrik.
-                        <br>• Emas ($Au$): Perhiasan.
+                    <div class="text-sm bg-white p-3 rounded-lg shadow-sm">
+                        <b>Contoh & Kegunaan:</b>
+                        <br>• <b>Khrom ($Cr$):</b> Bumper mobil (tahan karat).
+                        <br>• <b>Besi ($Fe$):</b> Campuran baja, paling murah.
+                        <br>• <b>Nikel ($Ni$):</b> Tahan udara/air, pelindung.
+                        <br>• <b>Tembaga ($Cu$):</b> Kabel listrik.
+                        <br>• <b>Seng ($Zn$):</b> Atap rumah.
+                        <br>• <b>Platina ($Pt$):</b> Knalpot, kontak listrik.
+                        <br>• <b>Emas ($Au$):</b> Perhiasan.
                     </div>
                 </div>
 
                 <!-- Non Logam -->
                 <div class="bg-teal-50 p-5 rounded-2xl border border-teal-200">
                     <h3 class="text-xl font-bold text-teal-800 mb-2 border-b-2 border-teal-200 pb-1">B. Unsur Non-Logam</h3>
-                    <ul class="list-disc pl-4 space-y-1 text-sm text-gray-700">
-                        <li>Ada yang padat, cair, gas.</li>
-                        <li>Tidak mengkilap & rapuh.</li>
-                        <li>Bukan penghantar listrik (isolator).</li>
+                    <p class="text-sm mb-2 font-bold">Ciri-ciri:</p>
+                    <ul class="list-disc pl-4 space-y-1 text-sm text-gray-700 mb-3">
+                        <li>Wujud padat, cair, gas.</li>
+                        <li>Kusam, tidak mengkilap.</li>
+                        <li>Isolator (tidak menghantar listrik).</li>
+                        <li>Rapuh, tidak dapat ditempa.</li>
                     </ul>
-                    <div class="mt-3 text-sm bg-white p-3 rounded-lg shadow-sm">
-                        <b>Contoh:</b>
-                        <br>• Brom ($Br$): Obat penenang.
-                        <br>• Yodium ($I$): Antiseptik & garam.
-                        <br>• Fluor ($F$): Pasta gigi.
-                        <br>• Oksigen ($O$), Karbon ($C$).
+                    <div class="text-sm bg-white p-3 rounded-lg shadow-sm">
+                        <b>Contoh & Kegunaan:</b>
+                        <br>• <b>Brom ($Br$):</b> Obat penenang saraf.
+                        <br>• <b>Yodium ($I$):</b> Garam dapur, antiseptik luka.
+                        <br>• <b>Fluor ($F$):</b> Pasta gigi (penguat gigi), Freon AC.
                     </div>
                 </div>
 
                 <!-- Semi Logam -->
                 <div class="bg-orange-50 p-5 rounded-2xl border border-orange-200">
                     <h3 class="text-xl font-bold text-orange-800 mb-2 border-b-2 border-orange-200 pb-1">C. Unsur Semi Logam</h3>
-                    <p class="text-sm mb-2">Disebut juga <i>Metaloid</i>. Memiliki sifat di antara logam dan non-logam (semikonduktor).</p>
-                    <div class="mt-3 text-sm bg-white p-3 rounded-lg shadow-sm">
+                    <p class="text-sm mb-2 font-bold">Ciri-ciri:</p>
+                    <p class="text-sm text-gray-700 mb-3">Disebut <i>Metaloid</i>. Memiliki sifat antara logam dan non-logam (Semikonduktor).</p>
+                    <div class="text-sm bg-white p-3 rounded-lg shadow-sm">
                         <b>Contoh:</b>
-                        <br>• Silicon ($Si$): Pemotong, gelas, chip elektronik.
-                        <br>• Germanium ($Ge$).
+                        <br>• <b>Silicon ($Si$) & Germanium ($Ge$):</b> Bahan pembuat chip komputer/elektronik (semikonduktor).
                     </div>
                 </div>
             </div>
@@ -155,7 +191,7 @@
         <!-- 2. Perbedaan Unsur & Atom -->
         <div class="bg-white p-6 md:p-8 rounded-3xl shadow-lg border-t-8 border-indigo-500 mb-8 card-hover">
             <h2 class="text-3xl font-bold text-indigo-700 mb-6 flex items-center">
-                <span class="bg-indigo-100 p-2 rounded-lg mr-3"><i class="fa-solid fa-microscope"></i></span> 
+                <span class="bg-indigo-100 p-2 rounded-lg mr-3"><i class="fa-solid fa-atom"></i></span> 
                 2. Perbedaan Unsur dan Atom
             </h2>
             <div class="overflow-x-auto">
@@ -168,63 +204,113 @@
                     </thead>
                     <tbody>
                         <tr>
-                            <td>Zat kimia murni yang terdiri dari satu jenis atom.</td>
-                            <td>Unit terkecil penyusun materi/unsur.</td>
+                            <td>Unsur adalah bentuk zat yang paling sederhana. Tidak dapat disederhanakan lagi.</td>
+                            <td>Atom adalah bagian dari suatu unsur.</td>
                         </tr>
                         <tr>
-                            <td>Tidak dapat dipecah lagi dengan reaksi kimia biasa.</td>
-                            <td>Tersusun dari partikel subatom (Proton, Elektron, Neutron).</td>
-                        </tr>
-                        <tr>
-                            <td>Ditulis dengan lambang unsur (Contoh: $O_2$, $H_2$).</td>
-                            <td>Memiliki sifat unik (massa & ukuran sendiri).</td>
-                        </tr>
-                        <tr>
-                            <td>Bisa diamati secara makroskopis (benda nyata).</td>
-                            <td>Sangat kecil, tidak terlihat mikroskop biasa.</td>
+                            <td>Unsur tertentu hanya terdiri dari satu jenis atom.</td>
+                            <td>Atom selanjutnya tersusun dari partikel subatom (elektron, proton, neutron).</td>
                         </tr>
                     </tbody>
                 </table>
             </div>
         </div>
 
-        <!-- 3. Tabel Periodik -->
-        <div class="bg-white p-6 md:p-8 rounded-3xl shadow-lg border-t-8 border-sky-500 mb-8 card-hover">
-            <h2 class="text-3xl font-bold text-sky-700 mb-6 flex items-center">
-                <span class="bg-sky-100 p-2 rounded-lg mr-3"><i class="fa-solid fa-table-cells"></i></span> 
-                3. Tabel Periodik & Sifatnya
+        <!-- 3. Tabel Senyawa & Perbedaan -->
+        <div class="bg-white p-6 md:p-8 rounded-3xl shadow-lg border-t-8 border-violet-500 mb-8 card-hover">
+            <h2 class="text-3xl font-bold text-violet-700 mb-6 flex items-center">
+                <span class="bg-violet-100 p-2 rounded-lg mr-3"><i class="fa-solid fa-flask"></i></span> 
+                3. Senyawa & Molekul
             </h2>
             
             <div class="flex flex-col md:flex-row gap-8">
+                <!-- Tabel Rumus Kimia -->
                 <div class="md:w-1/2">
-                    <p class="mb-4">Unsur kimia disusun dalam tabel periodik berdasarkan <b>Nomor Atom</b>.</p>
-                    <ul class="space-y-3">
-                        <li class="flex items-start bg-sky-50 p-3 rounded-lg">
-                            <span class="bg-sky-500 text-white rounded-full w-6 h-6 flex items-center justify-center mr-3 text-xs flex-shrink-0">1</span>
-                            <span><b>Periode:</b> Baris horizontal (mendatar).</span>
-                        </li>
-                        <li class="flex items-start bg-sky-50 p-3 rounded-lg">
-                            <span class="bg-sky-500 text-white rounded-full w-6 h-6 flex items-center justify-center mr-3 text-xs flex-shrink-0">2</span>
-                            <span><b>Golongan:</b> Kolom vertikal (tegak). Disebut juga famili.</span>
-                        </li>
-                    </ul>
+                    <h3 class="text-xl font-bold text-gray-800 mb-3">Daftar Rumus Kimia Penting</h3>
+                    <div class="overflow-x-auto">
+                        <table class="w-full materi-table text-sm border-collapse">
+                            <thead>
+                                <tr><th>Nama Zat</th><th>Rumus Kimia</th><th>Unsur Penyusun</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr><td class="text-left">Air</td><td>$H_2O$</td><td>Hidrogen, Oksigen</td></tr>
+                                <tr><td class="text-left">Garam Dapur</td><td>$NaCl$</td><td>Natrium, Klorin</td></tr>
+                                <tr><td class="text-left">Asam Cuka</td><td>$CH_3COOH$</td><td>Karbon, Hidrogen, Oksigen</td></tr>
+                                <tr><td class="text-left">Urea</td><td>$CO(NH_2)_2$</td><td>Karbon, Oksigen, Nitrogen, Hidrogen</td></tr>
+                                <tr><td class="text-left">Asam Sulfat</td><td>$H_2SO_4$</td><td>Hidrogen, Sulfur, Oksigen</td></tr>
+                                <tr><td class="text-left">Glukosa (Gula)</td><td>$C_6H_{12}O_6$</td><td>Karbon, Hidrogen, Oksigen</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
-                <div class="md:w-1/2 bg-slate-50 p-4 rounded-xl border border-slate-200">
-                    <h4 class="font-bold text-slate-700 mb-3 text-lg border-b border-slate-300 pb-2">Sifat Keperiodikan (Kiri ke Kanan)</h4>
-                    <ul class="text-sm space-y-2 text-slate-600">
-                        <li><i class="fa-solid fa-arrow-right text-blue-500 mr-2"></i><b>Jari-jari Atom:</b> Semakin kecil (mengecil).</li>
-                        <li><i class="fa-solid fa-arrow-right text-blue-500 mr-2"></i><b>Energi Ionisasi:</b> Cenderung membesar.</li>
-                        <li><i class="fa-solid fa-arrow-right text-blue-500 mr-2"></i><b>Afinitas Elektron:</b> Semakin negatif (makin besar).</li>
-                        <li><i class="fa-solid fa-arrow-right text-blue-500 mr-2"></i><b>Elektronegativitas:</b> Semakin besar.</li>
-                        <li><i class="fa-solid fa-arrow-right text-blue-500 mr-2"></i><b>Sifat Logam:</b> Berkurang (makin non-logam).</li>
-                    </ul>
+
+                <!-- Perbedaan Unsur & Senyawa -->
+                <div class="md:w-1/2">
+                    <h3 class="text-xl font-bold text-gray-800 mb-3">Perbedaan Unsur dan Senyawa</h3>
+                    <div class="bg-violet-50 p-4 rounded-xl border border-violet-200 h-full">
+                        <ul class="space-y-4 text-sm">
+                            <li class="flex items-start">
+                                <span class="bg-violet-500 text-white rounded-full w-6 h-6 flex items-center justify-center mr-2 flex-shrink-0">1</span>
+                                <div>
+                                    <b>Unsur:</b> Zat tunggal yang tidak bisa diuraikan secara kimia. <br>
+                                    <i>Contoh: Besi ($Fe$), Oksigen ($O$).</i>
+                                </div>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="bg-violet-500 text-white rounded-full w-6 h-6 flex items-center justify-center mr-2 flex-shrink-0">2</span>
+                                <div>
+                                    <b>Senyawa:</b> Gabungan dua unsur atau lebih melalui reaksi kimia. Sifatnya <b>berbeda</b> dari unsur penyusunnya. <br>
+                                    <i>Contoh: Air ($H_2O$) memadamkan api, padahal Hidrogen ($H$) mudah terbakar.</i>
+                                </div>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="bg-violet-500 text-white rounded-full w-6 h-6 flex items-center justify-center mr-2 flex-shrink-0">3</span>
+                                <div>
+                                    <b>Molekul Unsur vs Senyawa:</b> <br>
+                                    • Molekul Unsur: Atomnya sejenis ($O_2, Cl_2$). <br>
+                                    • Molekul Senyawa: Atomnya beda jenis ($H_2O, CO_2$).
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 4. Tabel Periodik & Sifat -->
+        <div class="bg-white p-6 md:p-8 rounded-3xl shadow-lg border-t-8 border-sky-500 mb-8 card-hover">
+            <h2 class="text-3xl font-bold text-sky-700 mb-6 flex items-center">
+                <span class="bg-sky-100 p-2 rounded-lg mr-3"><i class="fa-solid fa-table-cells"></i></span> 
+                4. Tabel Periodik & Sifat Keperiodikan
+            </h2>
+            
+            <div class="space-y-6">
+                <div class="flex gap-4 flex-wrap">
+                    <div class="flex-1 bg-sky-50 p-4 rounded-xl">
+                        <h4 class="font-bold text-sky-800 mb-2">Struktur Tabel</h4>
+                        <ul class="list-disc pl-4 text-sm space-y-1">
+                            <li><b>Periode:</b> Baris Horizontal (Lajur Mendatar).</li>
+                            <li><b>Golongan:</b> Kolom Vertikal (Lajur Tegak).</li>
+                            <li><b>Golongan VIIIA:</b> Gas Mulia ($He, Ne, Ar, Kr, Xe, Rn$).</li>
+                        </ul>
+                    </div>
+                    <div class="flex-1 bg-sky-50 p-4 rounded-xl">
+                        <h4 class="font-bold text-sky-800 mb-2">Sifat Keperiodikan (Kiri ke Kanan)</h4>
+                        <ul class="list-disc pl-4 text-sm space-y-1">
+                            <li><b>Jari-jari Atom:</b> Semakin Kecil.</li>
+                            <li><b>Energi Ionisasi:</b> Semakin Besar (Meningkat).</li>
+                            <li><b>Afinitas Elektron:</b> Semakin Besar (Meningkat).</li>
+                            <li><b>Elektronegativitas:</b> Semakin Besar.</li>
+                            <li><b>Sifat Logam:</b> Berkurang (Makin ke kanan makin Non-Logam).</li>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>
 
     </section>
 
-    <!-- Simulation Section (Visualizing Atom vs Element) -->
+    <!-- Simulation Section -->
     <section id="simulasi" class="bg-blue-50 py-16">
         <div class="container mx-auto px-4">
             <div class="text-center mb-8">
@@ -232,7 +318,6 @@
                     <i class="fa-solid fa-eye mr-2"></i>Visualisasi Konsep
                 </span>
                 <h2 class="text-3xl font-bold text-gray-800">Partikel Penyusun Atom</h2>
-                <p class="text-gray-600">Atom tersusun dari Proton (+), Neutron (netral), dan Elektron (-).</p>
             </div>
             
             <div class="flex flex-col lg:flex-row gap-8 items-center max-w-5xl mx-auto">
@@ -245,22 +330,14 @@
                 </div>
                 
                 <div class="w-full lg:w-1/3 space-y-4">
-                    <div class="bg-white p-5 rounded-2xl shadow-md border-l-4 border-red-500">
-                        <h4 class="font-bold text-red-600">Proton & Neutron</h4>
-                        <p class="text-sm text-gray-600">Berada di inti atom (nukleus). Menyusun massa atom.</p>
-                    </div>
-                    <div class="bg-white p-5 rounded-2xl shadow-md border-l-4 border-yellow-400">
-                        <h4 class="font-bold text-yellow-600">Elektron</h4>
-                        <p class="text-sm text-gray-600">Mengelilingi inti pada kulit atom. Sangat ringan.</p>
-                    </div>
                     <div class="bg-white p-4 rounded-2xl shadow border border-blue-100">
                         <label class="block text-sm font-bold text-blue-800 mb-2">Ganti Model Unsur:</label>
                         <select id="element-selector" onchange="changeAtom(this.value)" class="w-full p-2 bg-blue-50 border border-blue-200 rounded-lg text-blue-900 font-bold focus:outline-none focus:ring-2 focus:ring-blue-400">
-                            <option value="1">Hidrogen (H) - Non Logam</option>
-                            <option value="2">Helium (He) - Gas Mulia</option>
-                            <option value="3">Litium (Li) - Logam</option>
-                            <option value="6">Karbon (C) - Non Logam</option>
-                            <option value="8">Oksigen (O) - Non Logam</option>
+                            <option value="1">Hidrogen (H)</option>
+                            <option value="2">Helium (He)</option>
+                            <option value="3">Litium (Li)</option>
+                            <option value="6">Karbon (C)</option>
+                            <option value="8">Oksigen (O)</option>
                         </select>
                     </div>
                 </div>
@@ -268,52 +345,202 @@
         </div>
     </section>
 
+    <!-- Kegiatan Siswa Section (UPDATED) -->
+    <section id="kegiatan" class="py-16 bg-white">
+        <div class="container mx-auto px-4 max-w-4xl">
+            <div class="text-center mb-10">
+                <span class="inline-block bg-blue-600 text-white px-6 py-2 rounded-full shadow-md font-bold text-sm uppercase mb-3">
+                    <i class="fa-solid fa-list-check mr-2"></i>Kegiatan Siswa
+                </span>
+                <h2 class="text-4xl font-bold text-blue-800">Lembar Kerja Siswa</h2>
+                <p class="text-gray-500 mt-2">Lengkapi tabel pengamatan dan identifikasi zat di bawah ini.</p>
+            </div>
+
+            <!-- 1. Tabel Pengamatan -->
+            <div class="bg-white p-6 rounded-3xl shadow-xl border-4 border-blue-50 mb-10">
+                <h3 class="text-xl font-bold text-blue-700 mb-4 flex items-center">
+                    <span class="bg-blue-100 p-2 rounded-lg mr-3 text-sm"><i class="fa-solid fa-table"></i></span>
+                    A. Tabel Pengamatan
+                </h3>
+                <p class="mb-4 text-sm text-gray-600">Golongkan zat-zat di bawah ini dengan memberikan tanda centang (v).</p>
+                <div class="overflow-x-auto">
+                    <table class="w-full kegiatan-table border-collapse">
+                        <thead>
+                            <tr>
+                                <th class="w-10">No</th>
+                                <th>Zat</th>
+                                <th class="w-24">Unsur</th>
+                                <th class="w-24">Senyawa</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>1</td><td class="text-left pl-4">Gula</td><td><input type="checkbox" class="kegiatan-checkbox"></td><td><input type="checkbox" class="kegiatan-checkbox"></td></tr>
+                            <tr><td>2</td><td class="text-left pl-4">Air</td><td><input type="checkbox" class="kegiatan-checkbox"></td><td><input type="checkbox" class="kegiatan-checkbox"></td></tr>
+                            <tr><td>3</td><td class="text-left pl-4">Seng</td><td><input type="checkbox" class="kegiatan-checkbox"></td><td><input type="checkbox" class="kegiatan-checkbox"></td></tr>
+                            <tr><td>4</td><td class="text-left pl-4">Garam dapur</td><td><input type="checkbox" class="kegiatan-checkbox"></td><td><input type="checkbox" class="kegiatan-checkbox"></td></tr>
+                            <tr><td>5</td><td class="text-left pl-4">Besi</td><td><input type="checkbox" class="kegiatan-checkbox"></td><td><input type="checkbox" class="kegiatan-checkbox"></td></tr>
+                            <tr><td>6</td><td class="text-left pl-4">Sabun</td><td><input type="checkbox" class="kegiatan-checkbox"></td><td><input type="checkbox" class="kegiatan-checkbox"></td></tr>
+                            <tr><td>7</td><td class="text-left pl-4">Tembaga</td><td><input type="checkbox" class="kegiatan-checkbox"></td><td><input type="checkbox" class="kegiatan-checkbox"></td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- 2. Identifikasi Gambar (SVG UPDATED) -->
+            <div class="bg-white p-6 rounded-3xl shadow-xl border-4 border-blue-50 mb-10">
+                <h3 class="text-xl font-bold text-blue-700 mb-4 flex items-center">
+                    <span class="bg-blue-100 p-2 rounded-lg mr-3 text-sm"><i class="fa-solid fa-images"></i></span>
+                    B. Identifikasi Zat Berdasarkan Gambar
+                </h3>
+                <p class="mb-4 text-sm text-gray-600">Golongkan zat-zat berikut termasuk unsur, senyawa, atau campuran.</p>
+                <div class="overflow-x-auto">
+                    <table class="w-full kegiatan-table border-collapse">
+                        <thead>
+                            <tr>
+                                <th class="w-1/3">Gambar Zat</th>
+                                <th>Unsur</th>
+                                <th>Senyawa</th>
+                                <th>Campuran</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Emas Batangan (Updated SVG) -->
+                            <tr>
+                                <td class="text-center py-4">
+                                    <div class="w-32 h-24 mx-auto mb-2 flex items-center justify-center">
+                                        <svg viewBox="0 0 100 60" class="w-full h-full drop-shadow-md">
+                                            <defs>
+                                                <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                                    <stop offset="0%" style="stop-color:#fef08a;stop-opacity:1" />
+                                                    <stop offset="50%" style="stop-color:#fbbf24;stop-opacity:1" />
+                                                    <stop offset="100%" style="stop-color:#b45309;stop-opacity:1" />
+                                                </linearGradient>
+                                            </defs>
+                                            <path d="M10,40 L40,40 L50,25 L20,25 Z" fill="url(#goldGrad)" stroke="#b45309"/>
+                                            <path d="M10,40 L10,50 L40,50 L40,40 Z" fill="#d97706" stroke="#b45309"/>
+                                            <path d="M40,50 L50,35 L50,25 L40,40 Z" fill="#b45309" stroke="#b45309"/>
+                                            <path d="M30,30 L60,30 L70,15 L40,15 Z" fill="url(#goldGrad)" stroke="#b45309"/>
+                                            <path d="M30,30 L30,40 L60,40 L60,30 Z" fill="#d97706" stroke="#b45309"/>
+                                            <path d="M60,40 L70,25 L70,15 L60,30 Z" fill="#b45309" stroke="#b45309"/>
+                                            <text x="35" y="58" font-size="10" text-anchor="middle" fill="#78350f" font-weight="bold">99.9% GOLD</text>
+                                        </svg>
+                                    </div>
+                                    <p class="font-bold text-slate-700">Emas</p>
+                                </td>
+                                <td><input type="checkbox" class="kegiatan-checkbox"></td><td><input type="checkbox" class="kegiatan-checkbox"></td><td><input type="checkbox" class="kegiatan-checkbox"></td>
+                            </tr>
+                            
+                            <!-- Air Murni (Updated SVG) -->
+                            <tr>
+                                <td class="text-center py-4">
+                                    <div class="w-24 h-24 mx-auto mb-2 flex items-center justify-center">
+                                        <svg viewBox="0 0 60 80" class="w-full h-full drop-shadow-sm">
+                                            <path d="M30,5 Q5,35 5,55 A25,25 0 1,0 55,55 Q55,35 30,5 Z" fill="#3b82f6" stroke="#1d4ed8" fill-opacity="0.8"/>
+                                            <path d="M40,25 Q35,20 30,25" fill="none" stroke="white" stroke-width="2" opacity="0.6"/>
+                                            <text x="30" y="55" font-size="8" text-anchor="middle" fill="white" font-weight="bold"></text>
+                                        </svg>
+                                    </div>
+                                    <p class="font-bold text-slate-700">Air</p>
+                                </td>
+                                <td><input type="checkbox" class="kegiatan-checkbox"></td><td><input type="checkbox" class="kegiatan-checkbox"></td><td><input type="checkbox" class="kegiatan-checkbox"></td>
+                            </tr>
+
+                            <!-- Kapur Murni (Updated SVG) -->
+                            <tr>
+                                <td class="text-center py-4">
+                                    <div class="w-24 h-24 mx-auto mb-2 flex items-center justify-center">
+                                        <svg viewBox="0 0 80 60" class="w-full h-full">
+                                            <path d="M10,40 Q20,30 40,35 Q60,30 70,45 Q65,55 40,55 Q15,55 10,40 Z" fill="#f1f5f9" stroke="#cbd5e1" stroke-width="2"/>
+                                            <path d="M20,20 Q30,10 50,15 Q70,20 60,35 Q40,30 20,35 Q10,30 20,20 Z" fill="#f8fafc" stroke="#e2e8f0" stroke-width="2"/>
+                                            <text x="40" y="48" font-size="8" text-anchor="middle" fill="#64748b" font-weight="bold"></text>
+                                        </svg>
+                                    </div>
+                                    <p class="font-bold text-slate-700">Kapur</p>
+                                </td>
+                                <td><input type="checkbox" class="kegiatan-checkbox"></td><td><input type="checkbox" class="kegiatan-checkbox"></td><td><input type="checkbox" class="kegiatan-checkbox"></td>
+                            </tr>
+
+                            <!-- Gula Pasir (Improved SVG) -->
+                            <tr>
+                                <td class="text-center py-4">
+                                    <div class="w-28 h-24 mx-auto mb-2 flex items-center justify-center">
+                                        <svg viewBox="0 0 100 80" class="w-full h-full drop-shadow-md">
+                                            <path d="M20,20 Q20,10 30,10 L70,10 Q80,10 80,20 L85,70 Q85,80 75,80 L25,80 Q15,80 15,70 Z" fill="#f8fafc" stroke="#94a3b8" stroke-width="2"/>
+                                            <rect x="30" y="30" width="40" height="25" rx="5" fill="#e2e8f0"/>
+                                            <text x="50" y="45" text-anchor="middle" font-size="10" font-weight="bold" fill="#475569">GULA</text>
+                                            <text x="50" y="55" text-anchor="middle" font-size="8" font-weight="bold" fill="#475569">PASIR</text>
+                                            <circle cx="25" cy="65" r="1" fill="#cbd5e1"/><circle cx="35" cy="70" r="1" fill="#cbd5e1"/><circle cx="75" cy="60" r="1" fill="#cbd5e1"/>
+                                        </svg>
+                                    </div>
+                                    <p class="font-bold text-slate-700">Gula Pasir</p>
+                                </td>
+                                <td><input type="checkbox" class="kegiatan-checkbox"></td><td><input type="checkbox" class="kegiatan-checkbox"></td><td><input type="checkbox" class="kegiatan-checkbox"></td>
+                            </tr>
+
+                            <!-- Garam Gurih (Improved SVG) -->
+                            <tr>
+                                <td class="text-center py-4">
+                                    <div class="w-28 h-24 mx-auto mb-2 flex items-center justify-center">
+                                        <svg viewBox="0 0 100 80" class="w-full h-full drop-shadow-md">
+                                            <rect x="25" y="15" width="50" height="60" rx="2" fill="#e2e8f0" stroke="#64748b" stroke-width="2"/>
+                                            <rect x="25" y="15" width="50" height="10" fill="#94a3b8" stroke="#64748b"/>
+                                            <circle cx="50" cy="45" r="18" fill="white" stroke="#94a3b8"/>
+                                            <text x="50" y="48" text-anchor="middle" font-size="8" font-weight="bold" fill="#1e293b">GARAM</text>
+                                            <text x="50" y="58" text-anchor="middle" font-size="6" font-weight="bold" fill="#ef4444">GURIH</text>
+                                        </svg>
+                                    </div>
+                                    <p class="font-bold text-slate-700">Garam Gurih</p>
+                                </td>
+                                <td><input type="checkbox" class="kegiatan-checkbox"></td><td><input type="checkbox" class="kegiatan-checkbox"></td><td><input type="checkbox" class="kegiatan-checkbox"></td>
+                            </tr>
+
+                            <!-- Cuka Apel (Improved SVG) -->
+                            <tr>
+                                <td class="text-center py-4">
+                                    <div class="w-24 h-24 mx-auto mb-2 flex items-center justify-center">
+                                        <svg viewBox="0 0 60 100" class="w-full h-full drop-shadow-md">
+                                            <rect x="25" y="5" width="10" height="20" fill="#78350f" stroke="#451a03"/>
+                                            <path d="M20,25 L40,25 L50,40 L50,90 Q50,95 45,95 L15,95 Q10,95 10,90 L10,40 Z" fill="#92400e" stroke="#451a03" stroke-width="2"/>
+                                            <rect x="15" y="50" width="30" height="30" rx="2" fill="#fef3c7" stroke="#d97706"/>
+                                            <text x="30" y="65" text-anchor="middle" font-size="8" font-weight="bold" fill="#78350f">CUKA</text>
+                                            <text x="30" y="75" text-anchor="middle" font-size="8" font-weight="bold" fill="#78350f">APEL</text>
+                                        </svg>
+                                    </div>
+                                    <p class="font-bold text-slate-700">Cuka Apel</p>
+                                </td>
+                                <td><input type="checkbox" class="kegiatan-checkbox"></td><td><input type="checkbox" class="kegiatan-checkbox"></td><td><input type="checkbox" class="kegiatan-checkbox"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Quiz Section -->
-    <section id="latihan" class="py-16 bg-white">
+    <section id="latihan" class="py-16 bg-blue-50">
         <div class="container mx-auto px-4 max-w-3xl">
             <div class="text-center mb-10">
                 <span class="inline-block bg-blue-600 text-white px-6 py-2 rounded-full shadow-md font-bold text-sm uppercase mb-3">
                     <i class="fa-solid fa-pen-nib mr-2"></i>Evaluasi
                 </span>
                 <h2 class="text-4xl font-bold text-blue-800">Latihan Soal</h2>
-                <p class="text-gray-500 mt-2">Soal diambil dari materi di atas.</p>
             </div>
-
-            <!-- Login Box -->
             <div id="quiz-login" class="bg-white rounded-3xl shadow-xl p-8 border-4 border-blue-50 relative overflow-hidden">
-                <div class="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-blue-400 to-indigo-500"></div>
-                <div class="text-center mb-6">
-                    <div class="w-20 h-20 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4 text-blue-600 text-3xl">
-                        <i class="fa-solid fa-user-graduate"></i>
-                    </div>
-                    <h3 class="text-2xl font-bold text-gray-800">Identitas Siswa</h3>
-                </div>
                 <div class="space-y-4">
                     <input type="text" id="student-name" class="w-full p-4 border-2 border-slate-200 rounded-xl outline-none focus:border-blue-500 bg-slate-50 transition" placeholder="Nama Lengkap">
-                    <input type="text" id="student-class" class="w-full p-4 border-2 border-slate-200 rounded-xl outline-none focus:border-blue-500 bg-slate-50 transition" placeholder="Kelas (Contoh: 8A)">
-                    <button onclick="startQuiz()" class="w-full bg-blue-600 text-white font-bold py-4 rounded-xl shadow-lg hover:bg-blue-700 transition transform active:scale-95">
-                        Mulai Mengerjakan <i class="fa-solid fa-arrow-right ml-2"></i>
-                    </button>
+                    <input type="text" id="student-class" class="w-full p-4 border-2 border-slate-200 rounded-xl outline-none focus:border-blue-500 bg-slate-50 transition" placeholder="Kelas">
+                    <button onclick="startQuiz()" class="w-full bg-blue-600 text-white font-bold py-4 rounded-xl shadow-lg hover:bg-blue-700 transition transform active:scale-95">Mulai Mengerjakan</button>
                 </div>
             </div>
-
-            <!-- Quiz Container -->
             <div id="quiz-container" class="hidden space-y-8">
-                <div class="flex justify-between items-center bg-blue-50 px-5 py-3 rounded-xl border border-blue-100">
-                    <div class="font-bold text-blue-800 flex items-center">
-                        <i class="fa-solid fa-id-badge mr-2"></i> <span id="display-name">Siswa</span>
-                    </div>
-                    <div class="text-sm font-bold text-blue-600 bg-white px-3 py-1 rounded-full shadow-sm">
-                        Total: 10 Soal
-                    </div>
+                <div class="flex justify-between items-center bg-white px-5 py-3 rounded-xl border border-blue-100 shadow-sm">
+                    <div class="font-bold text-blue-800"><i class="fa-solid fa-id-badge mr-2"></i> <span id="display-name">Siswa</span></div>
+                    <div class="text-sm font-bold text-blue-600 bg-blue-50 px-3 py-1 rounded-full shadow-sm">Total: 10 Soal</div>
                 </div>
-
                 <form id="quiz-form" class="space-y-6"></form>
-
                 <div class="text-center pt-4">
-                    <button type="button" onclick="preSubmitCheck()" class="bg-green-600 hover:bg-green-700 text-white text-xl font-bold px-12 py-4 rounded-full shadow-lg border-b-4 border-green-800 active:border-b-0 active:translate-y-1 transition transform hover:scale-105">
-                        <i class="fa-solid fa-paper-plane mr-2"></i> Kirim Jawaban
-                    </button>
+                    <button type="button" onclick="preSubmitCheck()" class="bg-green-600 hover:bg-green-700 text-white text-xl font-bold px-12 py-4 rounded-full shadow-lg border-b-4 border-green-800 active:border-b-0 active:translate-y-1 transition transform hover:scale-105">Kirim Jawaban</button>
                 </div>
             </div>
         </div>
@@ -329,24 +556,11 @@
         </div>
     </div>
 
-    <!-- Footer -->
-    <footer class="bg-slate-900 text-slate-300 py-10 mt-10 border-t-4 border-blue-500">
-        <div class="container mx-auto px-4 text-center">
-            <h4 class="font-bold text-2xl text-white mb-2 font-['Fredoka']">KimiaCeria</h4>
-            <p class="text-sm max-w-md mx-auto mb-6">Media Pembelajaran IPA Kelas 8 Berbasis Web.</p>
-            <div class="text-xs opacity-60">
-                &copy; 2026 Materi IPA Terpadu.
-            </div>
-        </div>
-    </footer>
-
-    <!-- Scripts -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
         import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
         import { getAuth, signInAnonymously, onAuthStateChanged, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
 
-        // Firebase Setup
         const firebaseConfig = JSON.parse(__firebase_config || '{}');
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
@@ -391,46 +605,28 @@
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             const cx = canvas.width / 2;
             const cy = canvas.height / 2;
-
-            // Inti (Proton + Neutron)
             for(let i=0; i<currentProtons*2; i++){
                 ctx.beginPath();
-                const r = 6;
                 const ox = Math.cos(i*13)*10; 
                 const oy = Math.sin(i*13)*10;
-                ctx.arc(cx+ox, cy+oy, r, 0, Math.PI*2);
-                ctx.fillStyle = i%2===0 ? '#ef4444' : '#facc15'; // Red & Yellow
+                ctx.arc(cx+ox, cy+oy, 6, 0, Math.PI*2);
+                ctx.fillStyle = i%2===0 ? '#ef4444' : '#facc15';
                 ctx.fill();
             }
-
-            // Kulit Elektron
-            const shells = [
-                {r: 60, n: Math.min(currentProtons, 2), s: 0.05},
-                {r: 110, n: Math.max(0, Math.min(currentProtons-2, 8)), s: 0.03}
-            ];
-
+            const shells = [{r: 60, n: Math.min(currentProtons, 2)}, {r: 110, n: Math.max(0, Math.min(currentProtons-2, 8))}];
             angle += 0.02;
-
             shells.forEach((shell, idx) => {
                 if(shell.n > 0){
                     ctx.beginPath();
                     ctx.arc(cx, cy, shell.r, 0, Math.PI*2);
                     ctx.strokeStyle = 'rgba(255,255,255,0.2)';
-                    ctx.lineWidth = 2;
                     ctx.stroke();
-
                     for(let j=0; j<shell.n; j++){
                         const theta = angle * (idx+1) + (j * (Math.PI*2/shell.n));
-                        const ex = cx + Math.cos(theta)*shell.r;
-                        const ey = cy + Math.sin(theta)*shell.r;
-                        
                         ctx.beginPath();
-                        ctx.arc(ex, ey, 6, 0, Math.PI*2);
-                        ctx.fillStyle = '#60a5fa'; // Blue electron
-                        ctx.shadowColor = '#60a5fa';
-                        ctx.shadowBlur = 10;
+                        ctx.arc(cx + Math.cos(theta)*shell.r, cy + Math.sin(theta)*shell.r, 6, 0, Math.PI*2);
+                        ctx.fillStyle = '#60a5fa';
                         ctx.fill();
-                        ctx.shadowBlur = 0;
                     }
                 }
             });
@@ -438,57 +634,108 @@
         }
         drawAtom();
 
-        // --- QUIZ DATA BASED ON UPLOADED IMAGES ---
+        // --- SVG ASSETS ---
+        const svgs = {
+            defs: `
+                <defs>
+                    <radialGradient id="grad-grey" cx="30%" cy="30%" r="70%">
+                        <stop offset="0%" style="stop-color:#94a3b8;stop-opacity:1" />
+                        <stop offset="100%" style="stop-color:#475569;stop-opacity:1" />
+                    </radialGradient>
+                    <radialGradient id="grad-light" cx="30%" cy="30%" r="70%">
+                        <stop offset="0%" style="stop-color:#f1f5f9;stop-opacity:1" />
+                        <stop offset="100%" style="stop-color:#cbd5e1;stop-opacity:1" />
+                    </radialGradient>
+                    <radialGradient id="grad-dark" cx="30%" cy="30%" r="70%">
+                        <stop offset="0%" style="stop-color:#475569;stop-opacity:1" />
+                        <stop offset="100%" style="stop-color:#1e293b;stop-opacity:1" />
+                    </radialGradient>
+                </defs>
+            `,
+            q9_1: `<svg viewBox="0 0 100 60" class="w-20 h-16"><circle cx="35" cy="30" r="18" fill="url(#grad-grey)" stroke="#334155" stroke-width="1"/><circle cx="65" cy="30" r="18" fill="url(#grad-grey)" stroke="#334155" stroke-width="1"/><text x="50" y="55" font-size="10" text-anchor="middle" fill="#64748b">klorin (Cl₂)</text></svg>`,
+            q9_2: `<svg viewBox="0 0 100 60" class="w-20 h-16"><circle cx="35" cy="30" r="18" fill="url(#grad-grey)" stroke="#334155" stroke-width="1"/><circle cx="65" cy="30" r="18" fill="url(#grad-grey)" stroke="#334155" stroke-width="1"/><text x="50" y="55" font-size="10" text-anchor="middle" fill="#64748b">oksigen (O₂)</text></svg>`,
+            q9_3: `<svg viewBox="0 0 100 60" class="w-20 h-16"><circle cx="30" cy="30" r="12" fill="url(#grad-light)" stroke="#94a3b8" stroke-width="1"/><circle cx="60" cy="30" r="20" fill="url(#grad-dark)" stroke="#1e293b" stroke-width="1"/><text x="50" y="58" font-size="10" text-anchor="middle" fill="#64748b">asam klorida (HCl)</text></svg>`,
+            q9_4: `<svg viewBox="0 0 100 60" class="w-20 h-16"><circle cx="30" cy="40" r="15" fill="url(#grad-grey)" stroke="#334155"/><circle cx="70" cy="40" r="15" fill="url(#grad-grey)" stroke="#334155"/><circle cx="50" cy="20" r="15" fill="url(#grad-grey)" stroke="#334155"/><text x="50" y="58" font-size="10" text-anchor="middle" fill="#64748b">ozon (O₃)</text></svg>`,
+            
+            q10_1: `<svg viewBox="0 0 100 60" class="w-20 h-16"><g fill="white" stroke="black" stroke-width="1.5"><circle cx="35" cy="30" r="15"/><circle cx="65" cy="30" r="15"/></g><text x="35" y="34" text-anchor="middle" font-size="12" font-weight="bold">N</text><text x="65" y="34" text-anchor="middle" font-size="12" font-weight="bold">N</text></svg>`,
+            q10_2: `<svg viewBox="0 0 100 60" class="w-20 h-16"><circle cx="50" cy="30" r="15" fill="white" stroke="black" stroke-width="1.5"/><circle cx="30" cy="45" r="10" fill="white" stroke="black" stroke-width="1.5"/><circle cx="70" cy="45" r="10" fill="white" stroke="black" stroke-width="1.5"/><text x="50" y="34" text-anchor="middle" font-size="12" font-weight="bold">O</text><text x="30" y="49" text-anchor="middle" font-size="10" font-weight="bold">H</text><text x="70" y="49" text-anchor="middle" font-size="10" font-weight="bold">H</text></svg>`,
+            q10_3: `<svg viewBox="0 0 100 60" class="w-20 h-16"><circle cx="50" cy="15" r="12" fill="white" stroke="black"/><circle cx="30" cy="35" r="12" fill="white" stroke="black"/><circle cx="70" cy="35" r="12" fill="white" stroke="black"/><circle cx="50" cy="50" r="12" fill="white" stroke="black"/><text x="50" y="19" text-anchor="middle" font-size="10" font-weight="bold">P</text><text x="30" y="39" text-anchor="middle" font-size="10" font-weight="bold">P</text><text x="70" y="39" text-anchor="middle" font-size="10" font-weight="bold">P</text><text x="50" y="54" text-anchor="middle" font-size="10" font-weight="bold">P</text></svg>`,
+            q10_4: `<svg viewBox="0 0 100 60" class="w-20 h-16"><circle cx="50" cy="25" r="15" fill="white" stroke="black" stroke-width="1.5"/><circle cx="30" cy="45" r="10" fill="white" stroke="black"/><circle cx="70" cy="45" r="10" fill="white" stroke="black"/><circle cx="50" cy="55" r="10" fill="white" stroke="black"/><text x="50" y="29" text-anchor="middle" font-size="12" font-weight="bold">N</text><text x="30" y="49" text-anchor="middle" font-size="10" font-weight="bold">H</text><text x="70" y="49" text-anchor="middle" font-size="10" font-weight="bold">H</text><text x="50" y="59" text-anchor="middle" font-size="10" font-weight="bold">H</text></svg>`,
+        };
+
+        const svgBox = (num, content) => `
+            <div class="flex flex-col items-center">
+                <div class="mb-1">${svgs.defs + content}</div>
+                <span class="text-sm font-bold text-gray-600">${num}</span>
+            </div>
+        `;
+
         const quizData = [
             {
-                q: "Zat tunggal atau zat murni yang tidak dapat diuraikan lagi menjadi zat yang lebih sederhana disebut...",
-                options: ["Senyawa", "Campuran", "Unsur", "Atom"],
-                a: 2
-            },
-            {
-                q: "Berikut ini yang merupakan ciri-ciri dari unsur LOGAM adalah...",
-                options: ["Rapuh dan tidak mengkilap", "Konduktor listrik dan dapat ditempa", "Berwujud gas pada suhu ruang", "Isolator panas yang baik"],
-                a: 1
-            },
-            {
-                q: "Unsur Khrom ($Cr$) dalam kehidupan sehari-hari sering digunakan untuk...",
-                options: ["Bumper mobil agar tahan karat", "Bahan dasar obat antiseptik", "Isi pensil", "Kabel listrik"],
+                q: "Perhatikan pernyataan berikut ini!<br> (1) sifat senyawa tidak sama dengan unsur penyusunnya<br> (2) unsur dapat dibagi lagi menjadi bagian yang lebih sederhana dengan reaksi kimia biasa<br> (3) senyawa tersusun atas satu jenis unsur<br> (4) unsur-unsur tidak dapat membentuk senyawa melalui reaksi kimia<br> Diantara pernyataan di atas yang tepat adalah ....",
+                options: ["(1)", "(2)", "(3)", "(4)"],
                 a: 0
             },
             {
-                q: "Manakah di bawah ini yang termasuk contoh unsur Semi-Logam (Metaloid)?",
-                options: ["Emas ($Au$)", "Oksigen ($O$)", "Silicon ($Si$)", "Besi ($Fe$)"],
+                q: "Zat tunggal yang dapat diuraikan menjadi dua zat atau lebih melalui reaksi kimia biasa disebut...",
+                options: ["unsur", "atom", "senyawa", "molekul"],
                 a: 2
             },
             {
-                q: "Yodium ($I$) adalah unsur non-logam yang biasanya digunakan dalam industri...",
-                options: ["Pembuatan Pesawat", "Kesehatan (Antiseptik) & Garam", "Kabel Listrik", "Perhiasan"],
+                q: "Perhatikan ciri-ciri di bawah ini!<br> 1. Ada yang berwujud padat, cair, dan gas.<br> 2. Bersifat rapuh dan tidak dapat ditempa.<br> 3. Nonkonduktor, kecuali grafit.<br> Pernyataan di atas merupakan ciri dari .....",
+                options: ["larutan", "senyawa", "unsur logam", "unsur nonlogam"],
+                a: 3
+            },
+            {
+                q: "Berikut ini yang merupakan senyawa adalah.....",
+                options: ["$Au$, $F$", "$Cl$, $Na$", "$H_2O$, $NaCl$", "$Mg$, $CH_3COOH$"],
+                a: 2
+            },
+            {
+                q: "Unsur-unsur yang termasuk kedalam golongan VIIIA adalah ....",
+                options: ["$He, Ne, Ar, Kr, Xe, Rn$", "$H, Li, K, Rb, Cs, Fr$", "$Be, Mg, Ca, Sr, Ba, Ra$", "$N, P, As, Sb, Bi$"],
+                a: 0
+            },
+            {
+                q: "Zat tunggal yang tidak dapat dibagi lagi menjadi bagian yang lebih sederhana dan akan tetap mempertahankan karakteristik asli dari unsur tersebut merupakan pengertian dari ....",
+                options: ["senyawa", "unsur", "campuran", "larutan"],
                 a: 1
             },
             {
-                q: "Perbedaan utama antara Unsur dan Atom adalah...",
-                options: ["Unsur adalah bagian terkecil, Atom adalah zat murni", "Atom bisa dilihat mata, Unsur tidak", "Atom adalah unit terkecil penyusun unsur", "Tidak ada bedanya"],
+                q: "Setiap molekul urea mengandung 1 atom karbon, 1 atom oksigen, 2 atom nitrogen, dan 4 atom hidrogen, maka penulisan rumus kimia urea adalah.....",
+                options: ["$CONH_2$", "$CO_2NH$", "$((CO)_2NH)_2$", "$CO(NH_2)_2$"],
+                a: 3
+            },
+            {
+                q: "Berikut merupakan unsur-unsur yang memiliki wujud padat adalah ....",
+                options: ["$C, Ca$ dan $H$", "$Au, P$ dan $He$", "$Fe, Au,$ dan $C$", "$Fe, Au$ dan $N$"],
                 a: 2
             },
+            // Q9 - Visual matched to book Q8
             {
-                q: "Dalam Tabel Periodik, baris horizontal (mendatar) disebut sebagai...",
-                options: ["Golongan", "Periode", "Famili", "Metaloid"],
-                a: 1
+                q: `Perhatikan gambar di bawah ini!<br>
+                <div class="grid grid-cols-4 gap-2 mt-2 bg-white p-3 rounded-lg border border-gray-200">
+                    ${svgBox("1", svgs.q9_1)}
+                    ${svgBox("2", svgs.q9_2)}
+                    ${svgBox("3", svgs.q9_3)}
+                    ${svgBox("4", svgs.q9_4)}
+                </div>
+                Yang termasuk kedalam molekul unsur adalah gambar nomor....`,
+                options: ["1", "2", "3", "4"],
+                a: 1 
             },
+            // Q10 - Visual matched to book Q7
             {
-                q: "Bagaimana kecenderungan Jari-jari Atom dalam satu periode (dari kiri ke kanan)?",
-                options: ["Semakin besar", "Tetap sama", "Semakin kecil", "Acak"],
-                a: 2
-            },
-            {
-                q: "Sifat unsur kimia untuk menarik elektron dalam suatu ikatan disebut...",
-                options: ["Energi Ionisasi", "Afinitas Elektron", "Elektronegativitas", "Radioaktivitas"],
-                a: 2
-            },
-            {
-                q: "Unsur yang berwujud cair pada suhu ruang adalah...",
-                options: ["Emas ($Au$)", "Raksa/Merkuri ($Hg$)", "Besi ($Fe$)", "Aluminium ($Al$)"],
-                a: 1
+                q: `Perhatikan gambar di bawah ini!<br>
+                <div class="grid grid-cols-4 gap-2 mt-2 bg-white p-3 rounded-lg border border-gray-200">
+                    ${svgBox("1", svgs.q10_1)}
+                    ${svgBox("2", svgs.q10_2)}
+                    ${svgBox("3", svgs.q10_3)}
+                    ${svgBox("4", svgs.q10_4)}
+                </div>
+                Di antara gambar di atas yang merupakan molekul senyawa adalah ....`,
+                options: ["1 dan 2", "1 dan 3", "2 dan 4", "3 dan 4"],
+                a: 2 
             }
         ];
 
@@ -496,155 +743,67 @@
         window.startQuiz = () => {
             const name = document.getElementById('student-name').value.trim();
             const cls = document.getElementById('student-class').value.trim();
-            
-            if(!name || !cls) {
-                return showModal({
-                    title: "Ups!", 
-                    message: "Mohon isi Nama dan Kelas terlebih dahulu.", 
-                    icon: '<i class="fa-solid fa-circle-exclamation text-yellow-500"></i>',
-                    buttons: [{text: "Oke", class: "bg-blue-600 text-white hover:bg-blue-700"}]
-                });
-            }
+            if(!name || !cls) return showModal({title: "Ups!", message: "Isi nama dulu.", icon: '<i class="fa-solid fa-exclamation text-yellow-500"></i>', buttons: [{text: "Oke"}]});
 
             document.getElementById('display-name').textContent = name;
             document.getElementById('quiz-login').classList.add('hidden');
             document.getElementById('quiz-container').classList.remove('hidden');
-
             const form = document.getElementById('quiz-form');
             form.innerHTML = "";
-            
             quizData.forEach((item, idx) => {
                 const qDiv = document.createElement('div');
                 qDiv.className = "bg-white p-5 rounded-2xl shadow-sm border border-slate-100";
-                
                 let optsHtml = "";
                 item.options.forEach((opt, oIdx) => {
-                    optsHtml += `
-                        <label class="option-label block relative mb-3 rounded-xl overflow-hidden">
-                            <input type="radio" name="q${idx}" value="${oIdx}" class="option-input absolute opacity-0 w-full h-full cursor-pointer z-10">
-                            <div class="option-content p-3 flex items-center transition-colors">
-                                <span class="option-circle w-8 h-8 rounded-full border-2 border-slate-300 flex items-center justify-center mr-3 text-sm font-bold text-slate-500 flex-shrink-0">
-                                    ${String.fromCharCode(65+oIdx)}
-                                </span>
-                                <span class="text-slate-700 font-medium">${opt}</span>
-                            </div>
-                        </label>
-                    `;
+                    optsHtml += `<label class="option-label block relative mb-3 rounded-xl overflow-hidden"><input type="radio" name="q${idx}" value="${oIdx}" class="option-input absolute opacity-0 w-full h-full cursor-pointer z-10"><div class="option-content p-3 flex items-center transition-colors"><span class="option-circle w-8 h-8 rounded-full border-2 border-slate-300 flex items-center justify-center mr-3 text-sm font-bold text-slate-500 flex-shrink-0">${String.fromCharCode(65+oIdx)}</span><span class="text-slate-700 font-medium">${opt}</span></div></label>`;
                 });
-
-                qDiv.innerHTML = `
-                    <p class="font-bold text-lg text-blue-800 mb-4 font-['Fredoka']">
-                        <span class="bg-blue-100 text-blue-600 px-2 py-1 rounded text-sm mr-2">No. ${idx+1}</span>
-                        ${item.q}
-                    </p>
-                    <div>${optsHtml}</div>
-                `;
+                qDiv.innerHTML = `<p class="font-bold text-lg text-blue-800 mb-4 font-['Fredoka'] leading-relaxed"><span class="bg-blue-100 text-blue-600 px-2 py-1 rounded text-sm mr-2 align-middle">No. ${idx+1}</span><span class="align-middle">${item.q}</span></p><div>${optsHtml}</div>`;
                 form.appendChild(qDiv);
             });
-            
             if (window.MathJax) MathJax.typesetPromise();
         };
 
         window.preSubmitCheck = () => {
             let answered = 0;
             quizData.forEach((_, i) => { if(document.querySelector(`input[name="q${i}"]:checked`)) answered++; });
-
-            if(answered < quizData.length) {
-                showModal({
-                    title: "Belum Selesai",
-                    message: `Kamu baru mengisi <b>${answered}</b> dari <b>${quizData.length}</b> soal.`,
-                    icon: '<i class="fa-solid fa-clipboard-question text-orange-500"></i>',
-                    buttons: [
-                        {text: "Lanjutkan", class: "bg-slate-200 text-slate-700 hover:bg-slate-300"},
-                        {text: "Kirim Saja", class: "bg-blue-600 text-white hover:bg-blue-700", action: submitQuiz}
-                    ]
-                });
-            } else {
-                submitQuiz();
-            }
+            if(answered < quizData.length) showModal({title: "Belum Selesai", message: `Baru ${answered}/${quizData.length} soal.`, buttons: [{text: "Lanjut"}, {text: "Kirim", action: submitQuiz}]});
+            else submitQuiz();
         };
 
         async function submitQuiz() {
-            const loadingModal = showModal({
-                title: "Mengirim...",
-                message: "Sedang menyimpan nilai ke database.",
-                icon: '<i class="fa-solid fa-spinner fa-spin text-blue-500"></i>',
-                buttons: []
-            });
-
+            showModal({title: "Mengirim...", message: "Menyimpan nilai...", icon: '<i class="fa-solid fa-spinner fa-spin"></i>', buttons: []});
             let correct = 0;
             quizData.forEach((item, i) => {
                 const sel = document.querySelector(`input[name="q${i}"]:checked`);
                 if(sel && parseInt(sel.value) === item.a) correct++;
             });
             const score = Math.round((correct / quizData.length) * 100);
-
             try {
                 if(!currentUser) await signInAnonymously(auth);
-                await addDoc(collection(db, 'artifacts', appId, 'public', 'data', 'scores'), {
-                    name: document.getElementById('student-name').value,
-                    class: document.getElementById('student-class').value,
-                    score: score,
-                    quiz: "Unsur & Atom",
-                    timestamp: Date.now()
-                });
-
-                hideModal(); // Close loading
-                showModal({
-                    title: "Hore! Selesai!",
-                    message: `
-                        <div class="py-2">
-                            <p class="text-slate-500 mb-1">Nilai Kamu:</p>
-                            <p class="text-6xl font-black text-blue-600 drop-shadow-sm mb-2">${score}</p>
-                            <p class="text-sm bg-green-100 text-green-700 py-1 px-3 rounded-full inline-block">
-                                <i class="fa-solid fa-check-circle mr-1"></i> Tersimpan
-                            </p>
-                        </div>
-                    `,
-                    icon: '<i class="fa-solid fa-trophy text-yellow-400"></i>',
-                    buttons: [{text: "Tutup", class: "bg-blue-600 text-white hover:bg-blue-700", action: () => location.reload()}]
-                });
-
+                await addDoc(collection(db, 'artifacts', appId, 'public', 'data', 'scores'), {name: document.getElementById('student-name').value, class: document.getElementById('student-class').value, score: score, timestamp: Date.now()});
+                hideModal();
+                showModal({title: "Selesai!", message: `Nilai: ${score}`, buttons: [{text: "Tutup", action: () => location.reload()}]});
             } catch(e) {
                 hideModal();
-                showModal({
-                    title: "Gagal Kirim",
-                    message: "Terjadi kesalahan koneksi. Coba lagi ya.",
-                    icon: '<i class="fa-solid fa-circle-xmark text-red-500"></i>',
-                    buttons: [{text: "Tutup", class: "bg-slate-200"}]
-                });
+                showModal({title: "Gagal", message: "Coba lagi.", buttons: [{text: "Tutup"}]});
             }
         }
 
-        // --- MODAL UTILS ---
         const modal = document.getElementById('custom-modal');
         const mTitle = document.getElementById('modal-title');
         const mBody = document.getElementById('modal-body');
         const mIcon = document.getElementById('modal-icon');
         const mActions = document.getElementById('modal-actions');
-
         window.showModal = (cfg) => {
-            mTitle.textContent = cfg.title;
-            mBody.innerHTML = cfg.message;
-            mIcon.innerHTML = cfg.icon || '';
-            mActions.innerHTML = '';
-            
+            mTitle.textContent = cfg.title; mBody.innerHTML = cfg.message; mIcon.innerHTML = cfg.icon || ''; mActions.innerHTML = '';
             cfg.buttons.forEach(btn => {
-                const b = document.createElement('button');
-                b.className = `flex-1 py-3 rounded-xl font-bold transition ${btn.class}`;
-                b.innerHTML = btn.text;
-                b.onclick = () => {
-                    if(btn.action) btn.action();
-                    else hideModal();
-                };
-                mActions.appendChild(b);
+                const b = document.createElement('button'); b.className = "flex-1 py-3 rounded-xl font-bold bg-blue-100 hover:bg-blue-200 text-blue-800"; b.innerHTML = btn.text;
+                b.onclick = () => { if(btn.action) btn.action(); else hideModal(); }; mActions.appendChild(b);
             });
             modal.classList.remove('hidden');
         };
-
         window.hideModal = () => modal.classList.add('hidden');
         document.getElementById('mobile-menu-btn').onclick = () => document.getElementById('mobile-menu').classList.toggle('hidden');
-
     </script>
 </body>
 </html>
