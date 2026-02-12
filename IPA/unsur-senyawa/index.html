@@ -4,10 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>KimiaCeria: Unsur, Senyawa & Atom</title>
+    
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
+    
     <!-- FontAwesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400;500;600&family=Patrick+Hand&display=swap" rel="stylesheet">
     
@@ -21,11 +24,24 @@
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 
     <style>
-        body { font-family: 'Fredoka', sans-serif; background-color: #f0f9ff; color: #1e293b; }
-        h1, h2, h3, h4 { font-family: 'Fredoka', cursive; letter-spacing: 0.5px; }
-        p, li, td, th, label, input { font-family: 'Patrick Hand', cursive; font-size: 1.15rem; }
+        body { 
+            font-family: 'Fredoka', sans-serif; 
+            background-color: #f0f9ff; 
+            color: #1e293b; 
+        }
+        h1, h2, h3, h4 { 
+            font-family: 'Fredoka', cursive; 
+            letter-spacing: 0.5px; 
+        }
+        p, li, td, th, label, input { 
+            font-family: 'Patrick Hand', cursive; 
+            font-size: 1.15rem; 
+        }
         
-        .card-hover:hover { transform: translateY(-3px); box-shadow: 0 10px 25px -5px rgba(59, 130, 246, 0.15); }
+        .card-hover:hover { 
+            transform: translateY(-3px); 
+            box-shadow: 0 10px 25px -5px rgba(59, 130, 246, 0.15); 
+        }
         
         /* Custom Scrollbar */
         ::-webkit-scrollbar { width: 8px; }
@@ -33,21 +49,43 @@
         ::-webkit-scrollbar-thumb { background: #3b82f6; border-radius: 4px; }
 
         /* Table Styling */
-        .materi-table th, .kegiatan-table th { background-color: #dbeafe; color: #1e40af; padding: 12px; border: 2px solid #bfdbfe; font-family: 'Fredoka', cursive; }
-        .materi-table td, .kegiatan-table td { padding: 10px; border: 2px solid #e2e8f0; background-color: white; text-align: center; }
+        .materi-table th, .kegiatan-table th { 
+            background-color: #dbeafe; 
+            color: #1e40af; 
+            padding: 12px; 
+            border: 2px solid #bfdbfe; 
+            font-family: 'Fredoka', cursive; 
+        }
+        .materi-table td, .kegiatan-table td { 
+            padding: 10px; 
+            border: 2px solid #e2e8f0; 
+            background-color: white; 
+            text-align: center; 
+        }
         .materi-table td.text-left { text-align: left; }
 
         /* Quiz Styling */
-        .option-label { cursor: pointer; transition: all 0.2s ease; border: 2px solid #cbd5e1; }
+        .option-label { 
+            cursor: pointer; 
+            transition: all 0.2s ease; 
+            border: 2px solid #cbd5e1; 
+        }
         .option-input:checked + .option-content {
-            background-color: #eff6ff; border-color: #2563eb; color: #1e3a8a;
+            background-color: #eff6ff; 
+            border-color: #2563eb; 
+            color: #1e3a8a;
         }
         .option-input:checked + .option-content .option-circle {
-            background-color: #2563eb; border-color: #2563eb; color: white;
+            background-color: #2563eb; 
+            border-color: #2563eb; 
+            color: white;
         }
 
         /* Modal */
-        .modal-backdrop { background-color: rgba(15, 23, 42, 0.7); backdrop-filter: blur(4px); }
+        .modal-backdrop { 
+            background-color: rgba(15, 23, 42, 0.7); 
+            backdrop-filter: blur(4px); 
+        }
 
         /* Kegiatan Checkbox */
         .kegiatan-checkbox {
@@ -93,7 +131,9 @@
                 <a href="#kegiatan" class="hover:text-yellow-200 transition transform hover:scale-105">Kegiatan Siswa</a>
                 <a href="#latihan" class="hover:text-yellow-200 transition transform hover:scale-105">Latihan Soal</a>
             </div>
-            <button id="mobile-menu-btn" class="md:hidden bg-blue-700 p-2 rounded-lg"><i class="fa-solid fa-bars"></i></button>
+            <button id="mobile-menu-btn" class="md:hidden bg-blue-700 p-2 rounded-lg">
+                <i class="fa-solid fa-bars"></i>
+            </button>
         </div>
         <div id="mobile-menu" class="hidden md:hidden bg-blue-700 pb-4 px-4 text-center shadow-inner">
             <a href="#materi" class="block py-2 border-b border-blue-600">Materi</a>
@@ -307,7 +347,6 @@
                 </div>
             </div>
         </div>
-
     </section>
 
     <!-- Simulation Section -->
@@ -345,7 +384,7 @@
         </div>
     </section>
 
-    <!-- Kegiatan Siswa Section (UPDATED) -->
+    <!-- Kegiatan Siswa Section -->
     <section id="kegiatan" class="py-16 bg-white">
         <div class="container mx-auto px-4 max-w-4xl">
             <div class="text-center mb-10">
@@ -355,6 +394,8 @@
                 <h2 class="text-4xl font-bold text-blue-800">Lembar Kerja Siswa</h2>
                 <p class="text-gray-500 mt-2">Lengkapi tabel pengamatan dan identifikasi zat di bawah ini.</p>
             </div>
+
+            <div id="kegiatan-container">
 
             <!-- 1. Tabel Pengamatan -->
             <div class="bg-white p-6 rounded-3xl shadow-xl border-4 border-blue-50 mb-10">
@@ -374,19 +415,19 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr><td>1</td><td class="text-left pl-4">Gula</td><td><input type="checkbox" class="kegiatan-checkbox"></td><td><input type="checkbox" class="kegiatan-checkbox"></td></tr>
-                            <tr><td>2</td><td class="text-left pl-4">Air</td><td><input type="checkbox" class="kegiatan-checkbox"></td><td><input type="checkbox" class="kegiatan-checkbox"></td></tr>
-                            <tr><td>3</td><td class="text-left pl-4">Seng</td><td><input type="checkbox" class="kegiatan-checkbox"></td><td><input type="checkbox" class="kegiatan-checkbox"></td></tr>
-                            <tr><td>4</td><td class="text-left pl-4">Garam dapur</td><td><input type="checkbox" class="kegiatan-checkbox"></td><td><input type="checkbox" class="kegiatan-checkbox"></td></tr>
-                            <tr><td>5</td><td class="text-left pl-4">Besi</td><td><input type="checkbox" class="kegiatan-checkbox"></td><td><input type="checkbox" class="kegiatan-checkbox"></td></tr>
-                            <tr><td>6</td><td class="text-left pl-4">Sabun</td><td><input type="checkbox" class="kegiatan-checkbox"></td><td><input type="checkbox" class="kegiatan-checkbox"></td></tr>
-                            <tr><td>7</td><td class="text-left pl-4">Tembaga</td><td><input type="checkbox" class="kegiatan-checkbox"></td><td><input type="checkbox" class="kegiatan-checkbox"></td></tr>
+                            <tr><td>1</td><td class="text-left pl-4">Gula</td><td><input type="radio" name="kegA_1" value="unsur" class="kegiatan-checkbox"></td><td><input type="radio" name="kegA_1" value="senyawa" class="kegiatan-checkbox"></td></tr>
+                            <tr><td>2</td><td class="text-left pl-4">Air</td><td><input type="radio" name="kegA_2" value="unsur" class="kegiatan-checkbox"></td><td><input type="radio" name="kegA_2" value="senyawa" class="kegiatan-checkbox"></td></tr>
+                            <tr><td>3</td><td class="text-left pl-4">Seng</td><td><input type="radio" name="kegA_3" value="unsur" class="kegiatan-checkbox"></td><td><input type="radio" name="kegA_3" value="senyawa" class="kegiatan-checkbox"></td></tr>
+                            <tr><td>4</td><td class="text-left pl-4">Garam dapur</td><td><input type="radio" name="kegA_4" value="unsur" class="kegiatan-checkbox"></td><td><input type="radio" name="kegA_4" value="senyawa" class="kegiatan-checkbox"></td></tr>
+                            <tr><td>5</td><td class="text-left pl-4">Besi</td><td><input type="radio" name="kegA_5" value="unsur" class="kegiatan-checkbox"></td><td><input type="radio" name="kegA_5" value="senyawa" class="kegiatan-checkbox"></td></tr>
+                            <tr><td>6</td><td class="text-left pl-4">Sabun</td><td><input type="radio" name="kegA_6" value="unsur" class="kegiatan-checkbox"></td><td><input type="radio" name="kegA_6" value="senyawa" class="kegiatan-checkbox"></td></tr>
+                            <tr><td>7</td><td class="text-left pl-4">Tembaga</td><td><input type="radio" name="kegA_7" value="unsur" class="kegiatan-checkbox"></td><td><input type="radio" name="kegA_7" value="senyawa" class="kegiatan-checkbox"></td></tr>
                         </tbody>
                     </table>
                 </div>
             </div>
 
-            <!-- 2. Identifikasi Gambar (SVG UPDATED) -->
+            <!-- 2. Identifikasi Gambar -->
             <div class="bg-white p-6 rounded-3xl shadow-xl border-4 border-blue-50 mb-10">
                 <h3 class="text-xl font-bold text-blue-700 mb-4 flex items-center">
                     <span class="bg-blue-100 p-2 rounded-lg mr-3 text-sm"><i class="fa-solid fa-images"></i></span>
@@ -404,7 +445,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <!-- Emas Batangan (Updated SVG) -->
+                            <!-- Emas Batangan -->
                             <tr>
                                 <td class="text-center py-4">
                                     <div class="w-32 h-24 mx-auto mb-2 flex items-center justify-center">
@@ -427,40 +468,44 @@
                                     </div>
                                     <p class="font-bold text-slate-700">Emas</p>
                                 </td>
-                                <td><input type="checkbox" class="kegiatan-checkbox"></td><td><input type="checkbox" class="kegiatan-checkbox"></td><td><input type="checkbox" class="kegiatan-checkbox"></td>
+                                <td><input type="radio" name="kegB_1" value="unsur" class="kegiatan-checkbox"></td>
+                                <td><input type="radio" name="kegB_1" value="senyawa" class="kegiatan-checkbox"></td>
+                                <td><input type="radio" name="kegB_1" value="campuran" class="kegiatan-checkbox"></td>
                             </tr>
                             
-                            <!-- Air Murni (Updated SVG) -->
+                            <!-- Air Murni -->
                             <tr>
                                 <td class="text-center py-4">
                                     <div class="w-24 h-24 mx-auto mb-2 flex items-center justify-center">
                                         <svg viewBox="0 0 60 80" class="w-full h-full drop-shadow-sm">
                                             <path d="M30,5 Q5,35 5,55 A25,25 0 1,0 55,55 Q55,35 30,5 Z" fill="#3b82f6" stroke="#1d4ed8" fill-opacity="0.8"/>
                                             <path d="M40,25 Q35,20 30,25" fill="none" stroke="white" stroke-width="2" opacity="0.6"/>
-                                            <text x="30" y="55" font-size="8" text-anchor="middle" fill="white" font-weight="bold"></text>
                                         </svg>
                                     </div>
                                     <p class="font-bold text-slate-700">Air</p>
                                 </td>
-                                <td><input type="checkbox" class="kegiatan-checkbox"></td><td><input type="checkbox" class="kegiatan-checkbox"></td><td><input type="checkbox" class="kegiatan-checkbox"></td>
+                                <td><input type="radio" name="kegB_2" value="unsur" class="kegiatan-checkbox"></td>
+                                <td><input type="radio" name="kegB_2" value="senyawa" class="kegiatan-checkbox"></td>
+                                <td><input type="radio" name="kegB_2" value="campuran" class="kegiatan-checkbox"></td>
                             </tr>
 
-                            <!-- Kapur Murni (Updated SVG) -->
+                            <!-- Kapur Murni -->
                             <tr>
                                 <td class="text-center py-4">
                                     <div class="w-24 h-24 mx-auto mb-2 flex items-center justify-center">
                                         <svg viewBox="0 0 80 60" class="w-full h-full">
                                             <path d="M10,40 Q20,30 40,35 Q60,30 70,45 Q65,55 40,55 Q15,55 10,40 Z" fill="#f1f5f9" stroke="#cbd5e1" stroke-width="2"/>
                                             <path d="M20,20 Q30,10 50,15 Q70,20 60,35 Q40,30 20,35 Q10,30 20,20 Z" fill="#f8fafc" stroke="#e2e8f0" stroke-width="2"/>
-                                            <text x="40" y="48" font-size="8" text-anchor="middle" fill="#64748b" font-weight="bold"></text>
                                         </svg>
                                     </div>
                                     <p class="font-bold text-slate-700">Kapur</p>
                                 </td>
-                                <td><input type="checkbox" class="kegiatan-checkbox"></td><td><input type="checkbox" class="kegiatan-checkbox"></td><td><input type="checkbox" class="kegiatan-checkbox"></td>
+                                <td><input type="radio" name="kegB_3" value="unsur" class="kegiatan-checkbox"></td>
+                                <td><input type="radio" name="kegB_3" value="senyawa" class="kegiatan-checkbox"></td>
+                                <td><input type="radio" name="kegB_3" value="campuran" class="kegiatan-checkbox"></td>
                             </tr>
 
-                            <!-- Gula Pasir (Improved SVG) -->
+                            <!-- Gula Pasir -->
                             <tr>
                                 <td class="text-center py-4">
                                     <div class="w-28 h-24 mx-auto mb-2 flex items-center justify-center">
@@ -474,10 +519,12 @@
                                     </div>
                                     <p class="font-bold text-slate-700">Gula Pasir</p>
                                 </td>
-                                <td><input type="checkbox" class="kegiatan-checkbox"></td><td><input type="checkbox" class="kegiatan-checkbox"></td><td><input type="checkbox" class="kegiatan-checkbox"></td>
+                                <td><input type="radio" name="kegB_4" value="unsur" class="kegiatan-checkbox"></td>
+                                <td><input type="radio" name="kegB_4" value="senyawa" class="kegiatan-checkbox"></td>
+                                <td><input type="radio" name="kegB_4" value="campuran" class="kegiatan-checkbox"></td>
                             </tr>
 
-                            <!-- Garam Gurih (Improved SVG) -->
+                            <!-- Garam Gurih -->
                             <tr>
                                 <td class="text-center py-4">
                                     <div class="w-28 h-24 mx-auto mb-2 flex items-center justify-center">
@@ -491,10 +538,12 @@
                                     </div>
                                     <p class="font-bold text-slate-700">Garam Gurih</p>
                                 </td>
-                                <td><input type="checkbox" class="kegiatan-checkbox"></td><td><input type="checkbox" class="kegiatan-checkbox"></td><td><input type="checkbox" class="kegiatan-checkbox"></td>
+                                <td><input type="radio" name="kegB_5" value="unsur" class="kegiatan-checkbox"></td>
+                                <td><input type="radio" name="kegB_5" value="senyawa" class="kegiatan-checkbox"></td>
+                                <td><input type="radio" name="kegB_5" value="campuran" class="kegiatan-checkbox"></td>
                             </tr>
 
-                            <!-- Cuka Apel (Improved SVG) -->
+                            <!-- Cuka Apel -->
                             <tr>
                                 <td class="text-center py-4">
                                     <div class="w-24 h-24 mx-auto mb-2 flex items-center justify-center">
@@ -508,12 +557,185 @@
                                     </div>
                                     <p class="font-bold text-slate-700">Cuka Apel</p>
                                 </td>
-                                <td><input type="checkbox" class="kegiatan-checkbox"></td><td><input type="checkbox" class="kegiatan-checkbox"></td><td><input type="checkbox" class="kegiatan-checkbox"></td>
+                                <td><input type="radio" name="kegB_6" value="unsur" class="kegiatan-checkbox"></td>
+                                <td><input type="radio" name="kegB_6" value="senyawa" class="kegiatan-checkbox"></td>
+                                <td><input type="radio" name="kegB_6" value="campuran" class="kegiatan-checkbox"></td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
             </div>
+
+            <!-- 3. Komposisi Unsur dalam Senyawa -->
+            <div class="bg-white p-6 rounded-3xl shadow-xl border-4 border-blue-50 mb-10">
+                <h3 class="text-xl font-bold text-blue-700 mb-4 flex items-center">
+                    <span class="bg-blue-100 p-2 rounded-lg mr-3 text-sm"><i class="fa-solid fa-puzzle-piece"></i></span>
+                    C. Komposisi Unsur dalam Senyawa
+                </h3>
+                <p class="mb-4 text-sm text-gray-600">Pilihlah jawaban yang tepat untuk mengisi kolom yang kosong melalui menu <i>dropdown</i>.</p>
+                <div class="overflow-x-auto">
+                    <table class="w-full kegiatan-table border-collapse">
+                        <thead>
+                            <tr class="text-sm">
+                                <th class="w-1/4">Nama Zat</th>
+                                <th class="w-1/4">Rumus Kimia</th>
+                                <th class="w-1/4">Terdiri dari Unsur dgn Lambang</th>
+                                <th class="w-1/4">Nama Unsur</th>
+                            </tr>
+                        </thead>
+                        <tbody class="text-sm">
+                            <!-- Air -->
+                            <tr>
+                                <td class="font-bold text-left pl-4 text-slate-700">Air</td>
+                                <td>
+                                    <select name="kegC_1" class="w-full p-2 border-2 border-slate-200 rounded-xl outline-none focus:border-blue-500 bg-slate-50 cursor-pointer font-['Fredoka'] text-base">
+                                        <option value="">- Pilih -</option>
+                                        <option value="H2O">H₂O</option>
+                                        <option value="HO">HO</option>
+                                        <option value="H2O2">H₂O₂</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <select name="kegC_2" class="w-full p-2 border-2 border-slate-200 rounded-xl outline-none focus:border-blue-500 bg-slate-50 cursor-pointer">
+                                        <option value="">- Pilih Jawaban -</option>
+                                        <option value="1H2O">1 H, 2 O</option>
+                                        <option value="2H1O">2 H, 1 O</option>
+                                        <option value="2H2O">2 H, 2 O</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <select name="kegC_3" class="w-full p-2 border-2 border-slate-200 rounded-xl outline-none focus:border-blue-500 bg-slate-50 cursor-pointer">
+                                        <option value="">- Pilih Jawaban -</option>
+                                        <option value="Helium_Oksigen">Helium, Oksigen</option>
+                                        <option value="Klorin_Oksigen">Klorin, Oksigen</option>
+                                        <option value="Hidrogen_Oksigen">Hidrogen, Oksigen</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <!-- Garam dapur -->
+                            <tr>
+                                <td class="font-bold text-left pl-4 text-slate-700">Garam dapur</td>
+                                <td>
+                                    <select name="kegC_4" class="w-full p-2 border-2 border-slate-200 rounded-xl outline-none focus:border-blue-500 bg-slate-50 cursor-pointer font-['Fredoka'] text-base">
+                                        <option value="">- Pilih -</option>
+                                        <option value="NaOH">NaOH</option>
+                                        <option value="NaCl">NaCl</option>
+                                        <option value="HCl">HCl</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <select name="kegC_5" class="w-full p-2 border-2 border-slate-200 rounded-xl outline-none focus:border-blue-500 bg-slate-50 cursor-pointer">
+                                        <option value="">- Pilih Jawaban -</option>
+                                        <option value="1Na1Cl">1 Na, 1 Cl</option>
+                                        <option value="1Na2Cl">1 Na, 2 Cl</option>
+                                        <option value="2Na1Cl">2 Na, 1 Cl</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <select name="kegC_6" class="w-full p-2 border-2 border-slate-200 rounded-xl outline-none focus:border-blue-500 bg-slate-50 cursor-pointer">
+                                        <option value="">- Pilih Jawaban -</option>
+                                        <option value="Natrium_Karbon">Natrium, Karbon</option>
+                                        <option value="Nitrogen_Klorin">Nitrogen, Klorin</option>
+                                        <option value="Natrium_Klorin">Natrium, Klorin</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <!-- Asam sulfat -->
+                            <tr>
+                                <td class="font-bold text-left pl-4 text-slate-700">Asam sulfat</td>
+                                <td>
+                                    <select name="kegC_7" class="w-full p-2 border-2 border-slate-200 rounded-xl outline-none focus:border-blue-500 bg-slate-50 cursor-pointer font-['Fredoka'] text-base">
+                                        <option value="">- Pilih -</option>
+                                        <option value="H2S">H₂S</option>
+                                        <option value="HSO3">HSO₃</option>
+                                        <option value="H2SO4">H₂SO₄</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <select name="kegC_8" class="w-full p-2 border-2 border-slate-200 rounded-xl outline-none focus:border-blue-500 bg-slate-50 cursor-pointer">
+                                        <option value="">- Pilih Jawaban -</option>
+                                        <option value="2H1S4O">2 H, 1 S, 4 O</option>
+                                        <option value="1H2S4O">1 H, 2 S, 4 O</option>
+                                        <option value="2H4S1O">2 H, 4 S, 1 O</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <select name="kegC_9" class="w-full p-2 border-2 border-slate-200 rounded-xl outline-none focus:border-blue-500 bg-slate-50 cursor-pointer">
+                                        <option value="">- Pilih Jawaban -</option>
+                                        <option value="Hidrogen_Sulfur_Oksigen">Hidrogen, Sulfur, Oksigen</option>
+                                        <option value="Hidrogen_Sulfur_Karbon">Hidrogen, Sulfur, Karbon</option>
+                                        <option value="Helium_Sulfur_Oksigen">Helium, Sulfur, Oksigen</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <!-- Asam cuka -->
+                            <tr>
+                                <td class="font-bold text-left pl-4 text-slate-700">Asam cuka</td>
+                                <td>
+                                    <select name="kegC_10" class="w-full p-2 border-2 border-slate-200 rounded-xl outline-none focus:border-blue-500 bg-slate-50 cursor-pointer font-['Fredoka'] text-base">
+                                        <option value="">- Pilih -</option>
+                                        <option value="CH4">CH₄</option>
+                                        <option value="CH3COOH">CH₃COOH</option>
+                                        <option value="C2H5OH">C₂H₅OH</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <select name="kegC_11" class="w-full p-2 border-2 border-slate-200 rounded-xl outline-none focus:border-blue-500 bg-slate-50 cursor-pointer">
+                                        <option value="">- Pilih Jawaban -</option>
+                                        <option value="1C2O3H">1 C, 2 O, 3 H</option>
+                                        <option value="2C2O4H">2 C, 2 O, 4 H</option>
+                                        <option value="2C1O4H">2 C, 1 O, 4 H</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <select name="kegC_12" class="w-full p-2 border-2 border-slate-200 rounded-xl outline-none focus:border-blue-500 bg-slate-50 cursor-pointer">
+                                        <option value="">- Pilih Jawaban -</option>
+                                        <option value="Karbon_Oksigen_Hidrogen">Karbon, Oksigen, Hidrogen</option>
+                                        <option value="Kalsium_Oksigen_Hidrogen">Kalsium, Oksigen, Hidrogen</option>
+                                        <option value="Kalium_Oksigen_Hidrogen">Kalium, Oksigen, Hidrogen</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <!-- Natrium hidroksida -->
+                            <tr>
+                                <td class="font-bold text-left pl-4 text-slate-700">Natrium hidroksida</td>
+                                <td>
+                                    <select name="kegC_13" class="w-full p-2 border-2 border-slate-200 rounded-xl outline-none focus:border-blue-500 bg-slate-50 cursor-pointer font-['Fredoka'] text-base">
+                                        <option value="">- Pilih -</option>
+                                        <option value="Na2O">Na₂O</option>
+                                        <option value="NaCl">NaCl</option>
+                                        <option value="NaOH">NaOH</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <select name="kegC_14" class="w-full p-2 border-2 border-slate-200 rounded-xl outline-none focus:border-blue-500 bg-slate-50 cursor-pointer">
+                                        <option value="">- Pilih Jawaban -</option>
+                                        <option value="2Na1O1H">2 Na, 1 O, 1 H</option>
+                                        <option value="1Na1O1H">1 Na, 1 O, 1 H</option>
+                                        <option value="1Na2O1H">1 Na, 2 O, 1 H</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <select name="kegC_15" class="w-full p-2 border-2 border-slate-200 rounded-xl outline-none focus:border-blue-500 bg-slate-50 cursor-pointer">
+                                        <option value="">- Pilih Jawaban -</option>
+                                        <option value="Nitrogen_Oksigen_Hidrogen">Nitrogen, Oksigen, Hidrogen</option>
+                                        <option value="Natrium_Oksigen_Hidrogen">Natrium, Oksigen, Hidrogen</option>
+                                        <option value="Neon_Oksigen_Hidrogen">Neon, Oksigen, Hidrogen</option>
+                                    </select>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+            <!-- Submit Button for Kegiatan -->
+            <div class="text-center pt-4 pb-10">
+                <button type="button" id="btn-kirim-kegiatan" onclick="preSubmitKegiatanCheck()" class="bg-green-600 hover:bg-green-700 text-white text-xl font-bold px-12 py-4 rounded-full shadow-lg border-b-4 border-green-800 active:border-b-0 active:translate-y-1 transition transform hover:scale-105">
+                    Kirim Lembar Kerja
+                </button>
+            </div>
+            </div> <!-- End of kegiatan-container -->
         </div>
     </section>
 
@@ -526,6 +748,7 @@
                 </span>
                 <h2 class="text-4xl font-bold text-blue-800">Latihan Soal</h2>
             </div>
+            
             <div id="quiz-login" class="bg-white rounded-3xl shadow-xl p-8 border-4 border-blue-50 relative overflow-hidden">
                 <div class="space-y-4">
                     <input type="text" id="student-name" class="w-full p-4 border-2 border-slate-200 rounded-xl outline-none focus:border-blue-500 bg-slate-50 transition" placeholder="Nama Lengkap">
@@ -533,14 +756,24 @@
                     <button onclick="startQuiz()" class="w-full bg-blue-600 text-white font-bold py-4 rounded-xl shadow-lg hover:bg-blue-700 transition transform active:scale-95">Mulai Mengerjakan</button>
                 </div>
             </div>
+            
             <div id="quiz-container" class="hidden space-y-8">
                 <div class="flex justify-between items-center bg-white px-5 py-3 rounded-xl border border-blue-100 shadow-sm">
-                    <div class="font-bold text-blue-800"><i class="fa-solid fa-id-badge mr-2"></i> <span id="display-name">Siswa</span></div>
-                    <div class="text-sm font-bold text-blue-600 bg-blue-50 px-3 py-1 rounded-full shadow-sm">Total: 10 Soal</div>
+                    <div class="font-bold text-blue-800">
+                        <i class="fa-solid fa-id-badge mr-2"></i> 
+                        <span id="display-name">Siswa</span>
+                    </div>
+                    <div class="text-sm font-bold text-blue-600 bg-blue-50 px-3 py-1 rounded-full shadow-sm">
+                        Total: 10 Soal
+                    </div>
                 </div>
+                
                 <form id="quiz-form" class="space-y-6"></form>
+                
                 <div class="text-center pt-4">
-                    <button type="button" onclick="preSubmitCheck()" class="bg-green-600 hover:bg-green-700 text-white text-xl font-bold px-12 py-4 rounded-full shadow-lg border-b-4 border-green-800 active:border-b-0 active:translate-y-1 transition transform hover:scale-105">Kirim Jawaban</button>
+                    <button type="button" onclick="preSubmitCheck()" class="bg-green-600 hover:bg-green-700 text-white text-xl font-bold px-12 py-4 rounded-full shadow-lg border-b-4 border-green-800 active:border-b-0 active:translate-y-1 transition transform hover:scale-105">
+                        Kirim Jawaban
+                    </button>
                 </div>
             </div>
         </div>
@@ -556,27 +789,38 @@
         </div>
     </div>
 
+    <!-- Scripts -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
         import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
-        import { getAuth, signInAnonymously, onAuthStateChanged, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
 
-        const firebaseConfig = JSON.parse(__firebase_config || '{}');
+        // Menggunakan konfigurasi Firebase dari dashboard Rekap Nilai agar terhubung
+        const firebaseConfig = {
+            apiKey: "AIzaSyAkX8qAS-O_5m_qaGr8Aa9XME-lVyBMibw",
+            authDomain: "belajaronline-b5512.firebaseapp.com",
+            projectId: "belajaronline-b5512",
+            storageBucket: "belajaronline-b5512.firebasestorage.app",
+            messagingSenderId: "896107581081",
+            appId: "1:896107581081:web:629056c097c90fdf583208",
+            measurementId: "G-7MKNGF9PCX"
+        };
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
         const auth = getAuth(app);
-        const appId = typeof __app_id !== 'undefined' ? __app_id : 'kimia-ceria';
+        const appId = 'belajaronline-b5512'; // Sesuai dengan web Rekap Nilai
 
         let currentUser = null;
+
         const initAuth = async () => {
             try {
-                if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
-                    await signInWithCustomToken(auth, __initial_auth_token);
-                } else {
-                    await signInAnonymously(auth);
-                }
-            } catch (err) { console.error("Auth error", err); }
+                // Login anonim langsung ke database Rekap Nilai
+                await signInAnonymously(auth);
+            } catch (err) { 
+                console.error("Auth error", err); 
+            }
         };
+
         initAuth();
         onAuthStateChanged(auth, user => currentUser = user);
 
@@ -597,7 +841,13 @@
 
         window.changeAtom = (val) => {
             currentProtons = parseInt(val);
-            const names = {1: "Hidrogen (H)", 2: "Helium (He)", 3: "Litium (Li)", 6: "Karbon (C)", 8: "Oksigen (O)"};
+            const names = {
+                1: "Hidrogen (H)", 
+                2: "Helium (He)", 
+                3: "Litium (Li)", 
+                6: "Karbon (C)", 
+                8: "Oksigen (O)"
+            };
             document.getElementById('atom-name').textContent = names[currentProtons];
         };
 
@@ -605,26 +855,36 @@
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             const cx = canvas.width / 2;
             const cy = canvas.height / 2;
-            for(let i=0; i<currentProtons*2; i++){
+
+            // Draw Nucleus
+            for(let i = 0; i < currentProtons * 2; i++){
                 ctx.beginPath();
-                const ox = Math.cos(i*13)*10; 
-                const oy = Math.sin(i*13)*10;
-                ctx.arc(cx+ox, cy+oy, 6, 0, Math.PI*2);
-                ctx.fillStyle = i%2===0 ? '#ef4444' : '#facc15';
+                const ox = Math.cos(i * 13) * 10; 
+                const oy = Math.sin(i * 13) * 10;
+                ctx.arc(cx + ox, cy + oy, 6, 0, Math.PI * 2);
+                ctx.fillStyle = i % 2 === 0 ? '#ef4444' : '#facc15';
                 ctx.fill();
             }
-            const shells = [{r: 60, n: Math.min(currentProtons, 2)}, {r: 110, n: Math.max(0, Math.min(currentProtons-2, 8))}];
+
+            // Draw Electron Shells
+            const shells = [
+                {r: 60, n: Math.min(currentProtons, 2)}, 
+                {r: 110, n: Math.max(0, Math.min(currentProtons - 2, 8))}
+            ];
+            
             angle += 0.02;
+            
             shells.forEach((shell, idx) => {
                 if(shell.n > 0){
                     ctx.beginPath();
-                    ctx.arc(cx, cy, shell.r, 0, Math.PI*2);
+                    ctx.arc(cx, cy, shell.r, 0, Math.PI * 2);
                     ctx.strokeStyle = 'rgba(255,255,255,0.2)';
                     ctx.stroke();
-                    for(let j=0; j<shell.n; j++){
-                        const theta = angle * (idx+1) + (j * (Math.PI*2/shell.n));
+                    
+                    for(let j = 0; j < shell.n; j++){
+                        const theta = angle * (idx + 1) + (j * (Math.PI * 2 / shell.n));
                         ctx.beginPath();
-                        ctx.arc(cx + Math.cos(theta)*shell.r, cy + Math.sin(theta)*shell.r, 6, 0, Math.PI*2);
+                        ctx.arc(cx + Math.cos(theta) * shell.r, cy + Math.sin(theta) * shell.r, 6, 0, Math.PI * 2);
                         ctx.fillStyle = '#60a5fa';
                         ctx.fill();
                     }
@@ -634,7 +894,7 @@
         }
         drawAtom();
 
-        // --- SVG ASSETS ---
+        // --- SVG ASSETS FOR QUIZ ---
         const svgs = {
             defs: `
                 <defs>
@@ -711,7 +971,6 @@
                 options: ["$C, Ca$ dan $H$", "$Au, P$ dan $He$", "$Fe, Au,$ dan $C$", "$Fe, Au$ dan $N$"],
                 a: 2
             },
-            // Q9 - Visual matched to book Q8
             {
                 q: `Perhatikan gambar di bawah ini!<br>
                 <div class="grid grid-cols-4 gap-2 mt-2 bg-white p-3 rounded-lg border border-gray-200">
@@ -724,7 +983,6 @@
                 options: ["1", "2", "3", "4"],
                 a: 1 
             },
-            // Q10 - Visual matched to book Q7
             {
                 q: `Perhatikan gambar di bawah ini!<br>
                 <div class="grid grid-cols-4 gap-2 mt-2 bg-white p-3 rounded-lg border border-gray-200">
@@ -739,71 +997,306 @@
             }
         ];
 
+        // Kegiatan Logic
+        window.preSubmitKegiatanCheck = () => {
+            let answered = 0;
+            const total = 28; // 7(A) + 6(B) + 15(C)
+            for(let i=1; i<=7; i++) if(document.querySelector(`input[name="kegA_${i}"]:checked`)) answered++;
+            for(let i=1; i<=6; i++) if(document.querySelector(`input[name="kegB_${i}"]:checked`)) answered++;
+            for(let i=1; i<=15; i++) if(document.querySelector(`select[name="kegC_${i}"]`).value !== "") answered++;
+            
+            if(answered < total) {
+                showModal({
+                    title: "Belum Selesai", 
+                    message: `Baru dikerjakan ${answered} dari ${total} pertanyaan.`, 
+                    buttons: [
+                        {text: "Lanjut Mengerjakan"}, 
+                        {text: "Kirim Tetap", action: promptKegiatanIdentity}
+                    ]
+                });
+            } else {
+                promptKegiatanIdentity();
+            }
+        };
+
+        window.promptKegiatanIdentity = () => {
+            showModal({
+                title: "Data Diri Pengamat",
+                message: `
+                    <p class="mb-4 text-sm text-slate-500">Silakan isi nama dan kelas Anda untuk menyimpan nilai pengamatan.</p>
+                    <input type="text" id="popup-name" class="w-full p-4 border-2 border-slate-200 rounded-xl outline-none focus:border-blue-500 bg-slate-50 transition mb-3" placeholder="Nama Lengkap">
+                    <input type="text" id="popup-class" class="w-full p-4 border-2 border-slate-200 rounded-xl outline-none focus:border-blue-500 bg-slate-50 transition" placeholder="Kelas">
+                    <p id="popup-error" class="text-red-500 text-sm mt-3 hidden font-bold animate-pulse"><i class="fa-solid fa-circle-exclamation mr-1"></i> Nama dan Kelas wajib diisi!</p>
+                `,
+                icon: '<i class="fa-solid fa-user-graduate text-blue-500"></i>',
+                buttons: [
+                    {text: "Batal"},
+                    {text: "Simpan & Lihat Nilai", action: validateAndSubmitKegiatan}
+                ]
+            });
+        };
+
+        window.validateAndSubmitKegiatan = () => {
+            const name = document.getElementById('popup-name').value.trim();
+            const cls = document.getElementById('popup-class').value.trim();
+
+            if (!name || !cls) {
+                document.getElementById('popup-error').classList.remove('hidden');
+                return;
+            }
+
+            submitKegiatan(name, cls);
+        };
+
+        async function submitKegiatan(name, cls) {
+            showModal({
+                title: "Mengirim...", 
+                message: "Menyimpan nilai pengamatan Anda...", 
+                icon: '<i class="fa-solid fa-spinner fa-spin"></i>', 
+                buttons: []
+            });
+            
+            // Kunci Jawaban (Telah disesuaikan agar tidak mengecoh siswa kelas 8)
+            const answersA = {
+                kegA_1: 'senyawa', // Gula
+                kegA_2: 'senyawa', // Air
+                kegA_3: 'unsur',   // Seng
+                kegA_4: 'senyawa', // Garam Dapur
+                kegA_5: 'unsur',   // Besi
+                kegA_6: 'senyawa', // Sabun
+                kegA_7: 'unsur'    // Tembaga
+            };
+            const answersB = {
+                kegB_1: 'unsur',    // Emas
+                kegB_2: 'senyawa',  // Air Murni
+                kegB_3: 'senyawa',  // Kapur Murni
+                kegB_4: 'senyawa',  // Gula Pasir
+                kegB_5: 'senyawa',  // Garam Gurih (Dianggap sebagai Senyawa Garam/MSG)
+                kegB_6: 'senyawa'   // Cuka Apel (Dianggap sebagai Senyawa Asam Cuka)
+            };
+            const answersC = {
+                kegC_1: 'H2O',
+                kegC_2: '2H1O',
+                kegC_3: 'Hidrogen_Oksigen',
+                kegC_4: 'NaCl',
+                kegC_5: '1Na1Cl',
+                kegC_6: 'Natrium_Klorin',
+                kegC_7: 'H2SO4',
+                kegC_8: '2H1S4O',
+                kegC_9: 'Hidrogen_Sulfur_Oksigen',
+                kegC_10: 'CH3COOH',
+                kegC_11: '2C2O4H',
+                kegC_12: 'Karbon_Oksigen_Hidrogen',
+                kegC_13: 'NaOH',
+                kegC_14: '1Na1O1H',
+                kegC_15: 'Natrium_Oksigen_Hidrogen'
+            };
+
+            let correct = 0;
+            let total = Object.keys(answersA).length + Object.keys(answersB).length + Object.keys(answersC).length;
+
+            for(let key in answersA) {
+                const sel = document.querySelector(`input[name="${key}"]:checked`);
+                if(sel && sel.value === answersA[key]) correct++;
+            }
+            for(let key in answersB) {
+                const sel = document.querySelector(`input[name="${key}"]:checked`);
+                if(sel && sel.value === answersB[key]) correct++;
+            }
+            for(let key in answersC) {
+                const sel = document.querySelector(`select[name="${key}"]`);
+                if(sel && sel.value === answersC[key]) correct++;
+            }
+            
+            const score = Math.round((correct / total) * 100);
+            
+            try {
+                if(!currentUser) await signInAnonymously(auth);
+                
+                await addDoc(collection(db, 'artifacts', appId, 'public', 'data', 'scores'), {
+                    name: name, 
+                    kelas: cls, 
+                    score: score,
+                    materi: 'Lembar Kerja Kimia', 
+                    date: new Date().toLocaleDateString('id-ID'),
+                    timestamp: Date.now()
+                });
+                
+                hideModal();
+                showModal({
+                    title: "Selesai!", 
+                    message: `Luar Biasa! Nilai Lembar Kerja Anda: <strong>${score}</strong>`, 
+                    icon: '<i class="fa-solid fa-medal text-yellow-400"></i>',
+                    buttons: [{text: "Tutup"}]
+                });
+                
+                // Kunci pilihan jawaban setelah berhasil dikirim
+                document.querySelectorAll('.kegiatan-checkbox').forEach(el => el.disabled = true);
+                document.querySelectorAll('select[name^="kegC_"]').forEach(el => el.disabled = true);
+                document.getElementById('btn-kirim-kegiatan').classList.add('hidden');
+            } catch(e) {
+                hideModal();
+                showModal({
+                    title: "Gagal Mengirim", 
+                    message: "Terjadi kesalahan koneksi, coba lagi.", 
+                    icon: '<i class="fa-solid fa-xmark text-red-500"></i>',
+                    buttons: [{text: "Tutup"}]
+                });
+            }
+        }
+
         // Quiz Logic
         window.startQuiz = () => {
             const name = document.getElementById('student-name').value.trim();
             const cls = document.getElementById('student-class').value.trim();
-            if(!name || !cls) return showModal({title: "Ups!", message: "Isi nama dulu.", icon: '<i class="fa-solid fa-exclamation text-yellow-500"></i>', buttons: [{text: "Oke"}]});
+            
+            if(!name || !cls) {
+                return showModal({
+                    title: "Ups!", 
+                    message: "Isi nama dan kelas terlebih dahulu.", 
+                    icon: '<i class="fa-solid fa-exclamation text-yellow-500"></i>', 
+                    buttons: [{text: "Oke"}]
+                });
+            }
 
             document.getElementById('display-name').textContent = name;
             document.getElementById('quiz-login').classList.add('hidden');
             document.getElementById('quiz-container').classList.remove('hidden');
+            
             const form = document.getElementById('quiz-form');
             form.innerHTML = "";
+            
             quizData.forEach((item, idx) => {
                 const qDiv = document.createElement('div');
                 qDiv.className = "bg-white p-5 rounded-2xl shadow-sm border border-slate-100";
+                
                 let optsHtml = "";
                 item.options.forEach((opt, oIdx) => {
-                    optsHtml += `<label class="option-label block relative mb-3 rounded-xl overflow-hidden"><input type="radio" name="q${idx}" value="${oIdx}" class="option-input absolute opacity-0 w-full h-full cursor-pointer z-10"><div class="option-content p-3 flex items-center transition-colors"><span class="option-circle w-8 h-8 rounded-full border-2 border-slate-300 flex items-center justify-center mr-3 text-sm font-bold text-slate-500 flex-shrink-0">${String.fromCharCode(65+oIdx)}</span><span class="text-slate-700 font-medium">${opt}</span></div></label>`;
+                    optsHtml += `
+                        <label class="option-label block relative mb-3 rounded-xl overflow-hidden">
+                            <input type="radio" name="q${idx}" value="${oIdx}" class="option-input absolute opacity-0 w-full h-full cursor-pointer z-10">
+                            <div class="option-content p-3 flex items-center transition-colors">
+                                <span class="option-circle w-8 h-8 rounded-full border-2 border-slate-300 flex items-center justify-center mr-3 text-sm font-bold text-slate-500 flex-shrink-0">
+                                    ${String.fromCharCode(65 + oIdx)}
+                                </span>
+                                <span class="text-slate-700 font-medium">${opt}</span>
+                            </div>
+                        </label>
+                    `;
                 });
-                qDiv.innerHTML = `<p class="font-bold text-lg text-blue-800 mb-4 font-['Fredoka'] leading-relaxed"><span class="bg-blue-100 text-blue-600 px-2 py-1 rounded text-sm mr-2 align-middle">No. ${idx+1}</span><span class="align-middle">${item.q}</span></p><div>${optsHtml}</div>`;
+                
+                qDiv.innerHTML = `
+                    <p class="font-bold text-lg text-blue-800 mb-4 font-['Fredoka'] leading-relaxed">
+                        <span class="bg-blue-100 text-blue-600 px-2 py-1 rounded text-sm mr-2 align-middle">No. ${idx + 1}</span>
+                        <span class="align-middle">${item.q}</span>
+                    </p>
+                    <div>${optsHtml}</div>
+                `;
                 form.appendChild(qDiv);
             });
+            
             if (window.MathJax) MathJax.typesetPromise();
         };
 
         window.preSubmitCheck = () => {
             let answered = 0;
-            quizData.forEach((_, i) => { if(document.querySelector(`input[name="q${i}"]:checked`)) answered++; });
-            if(answered < quizData.length) showModal({title: "Belum Selesai", message: `Baru ${answered}/${quizData.length} soal.`, buttons: [{text: "Lanjut"}, {text: "Kirim", action: submitQuiz}]});
-            else submitQuiz();
+            quizData.forEach((_, i) => { 
+                if(document.querySelector(`input[name="q${i}"]:checked`)) answered++; 
+            });
+            
+            if(answered < quizData.length) {
+                showModal({
+                    title: "Belum Selesai", 
+                    message: `Baru dikerjakan ${answered} dari ${quizData.length} soal.`, 
+                    buttons: [
+                        {text: "Lanjut"}, 
+                        {text: "Kirim Tetap", action: submitQuiz}
+                    ]
+                });
+            } else {
+                submitQuiz();
+            }
         };
 
         async function submitQuiz() {
-            showModal({title: "Mengirim...", message: "Menyimpan nilai...", icon: '<i class="fa-solid fa-spinner fa-spin"></i>', buttons: []});
+            showModal({
+                title: "Mengirim...", 
+                message: "Menyimpan nilai Anda...", 
+                icon: '<i class="fa-solid fa-spinner fa-spin"></i>', 
+                buttons: []
+            });
+            
             let correct = 0;
             quizData.forEach((item, i) => {
                 const sel = document.querySelector(`input[name="q${i}"]:checked`);
                 if(sel && parseInt(sel.value) === item.a) correct++;
             });
+            
             const score = Math.round((correct / quizData.length) * 100);
+            
             try {
                 if(!currentUser) await signInAnonymously(auth);
-                await addDoc(collection(db, 'artifacts', appId, 'public', 'data', 'scores'), {name: document.getElementById('student-name').value, class: document.getElementById('student-class').value, score: score, timestamp: Date.now()});
+                
+                await addDoc(collection(db, 'artifacts', appId, 'public', 'data', 'scores'), {
+                    name: document.getElementById('student-name').value, 
+                    kelas: document.getElementById('student-class').value, 
+                    score: score, 
+                    materi: 'Evaluasi Kimia',
+                    date: new Date().toLocaleDateString('id-ID'),
+                    timestamp: Date.now()
+                });
+                
                 hideModal();
-                showModal({title: "Selesai!", message: `Nilai: ${score}`, buttons: [{text: "Tutup", action: () => location.reload()}]});
+                showModal({
+                    title: "Selesai!", 
+                    message: `Luar Biasa! Nilai Anda: <strong>${score}</strong>`, 
+                    icon: '<i class="fa-solid fa-medal text-yellow-400"></i>',
+                    buttons: [{text: "Tutup", action: () => location.reload()}]
+                });
             } catch(e) {
                 hideModal();
-                showModal({title: "Gagal", message: "Coba lagi.", buttons: [{text: "Tutup"}]});
+                showModal({
+                    title: "Gagal Mengirim", 
+                    message: "Terjadi kesalahan koneksi, coba lagi.", 
+                    icon: '<i class="fa-solid fa-xmark text-red-500"></i>',
+                    buttons: [{text: "Tutup"}]
+                });
             }
         }
 
+        // Modal Logic
         const modal = document.getElementById('custom-modal');
         const mTitle = document.getElementById('modal-title');
         const mBody = document.getElementById('modal-body');
         const mIcon = document.getElementById('modal-icon');
         const mActions = document.getElementById('modal-actions');
+        
         window.showModal = (cfg) => {
-            mTitle.textContent = cfg.title; mBody.innerHTML = cfg.message; mIcon.innerHTML = cfg.icon || ''; mActions.innerHTML = '';
+            mTitle.textContent = cfg.title; 
+            mBody.innerHTML = cfg.message; 
+            mIcon.innerHTML = cfg.icon || ''; 
+            mActions.innerHTML = '';
+            
             cfg.buttons.forEach(btn => {
-                const b = document.createElement('button'); b.className = "flex-1 py-3 rounded-xl font-bold bg-blue-100 hover:bg-blue-200 text-blue-800"; b.innerHTML = btn.text;
-                b.onclick = () => { if(btn.action) btn.action(); else hideModal(); }; mActions.appendChild(b);
+                const b = document.createElement('button'); 
+                b.className = "flex-1 py-3 rounded-xl font-bold bg-blue-100 hover:bg-blue-200 text-blue-800 transition transform active:scale-95"; 
+                b.innerHTML = btn.text;
+                b.onclick = () => { 
+                    if(btn.action) btn.action(); 
+                    else hideModal(); 
+                }; 
+                mActions.appendChild(b);
             });
+            
             modal.classList.remove('hidden');
         };
+        
         window.hideModal = () => modal.classList.add('hidden');
-        document.getElementById('mobile-menu-btn').onclick = () => document.getElementById('mobile-menu').classList.toggle('hidden');
+        
+        // Mobile Menu
+        document.getElementById('mobile-menu-btn').onclick = () => {
+            document.getElementById('mobile-menu').classList.toggle('hidden');
+        };
     </script>
 </body>
 </html>
