@@ -9,149 +9,200 @@
     <script src="https://cdn.tailwindcss.com"></script>
     
     <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
     <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Outfit', 'sans-serif'],
+                    },
+                    colors: {
+                        // Palet Hijau Estetik Lebih Segar (Fresh Sage & Forest)
+                        'aesthetic': {
+                            50: '#eef5f2',  // Background sedikit lebih 'isi' (tidak putih mati)
+                            100: '#d5e6de', // Border lebih terlihat
+                            200: '#b0d0c0',
+                            300: '#83b39c',
+                            400: '#5c947a', // Hijau utama lebih segar (Solid Sage)
+                            500: '#42755e', // Hover state
+                            600: '#325949', // Text sub-heading
+                            700: '#28463a', // Text heading (Dark Forest)
+                            800: '#213830',
+                            900: '#1c2e28',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
     <style>
         body {
-            font-family: 'Poppins', sans-serif;
-            background-color: #f0fdf4; /* Light Green background */
-            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%2316a34a' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            background-color: #eef5f2; /* Warna dasar lebih creamy/hijau muda */
+            color: #213830;
         }
-        .glass-card {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.1);
+        
+        /* Smooth Fade In Animation */
+        .fade-in {
+            animation: fadeIn 0.8s ease-out forwards;
+            opacity: 0;
+            transform: translateY(10px);
         }
-        .subject-btn {
-            transition: all 0.3s ease;
+
+        .delay-100 { animation-delay: 0.1s; }
+        .delay-200 { animation-delay: 0.2s; }
+        .delay-300 { animation-delay: 0.3s; }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
-        .subject-btn:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+
+        /* Hover effect for cards */
+        .menu-card {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .menu-card:hover {
+            transform: translateY(-4px);
+            border-color: #5c947a; /* Warna border saat hover lebih tegas */
+            background-color: #ffffff;
+            box-shadow: 0 12px 25px -8px rgba(92, 148, 122, 0.25); /* Shadow hijau lebih berasa */
         }
     </style>
 </head>
-<body class="min-h-screen flex flex-col items-center">
+<body class="min-h-screen flex flex-col items-center selection:bg-aesthetic-300 selection:text-white">
 
-    <!-- Navbar / Header -->
-    <header class="w-full bg-green-700 text-white shadow-lg sticky top-0 z-50">
-        <div class="max-w-4xl mx-auto px-4 py-4 flex items-center justify-between">
-            <div class="flex items-center space-x-3">
-                <!-- Placeholder Logo School -->
-                <div class="w-10 h-10 bg-white rounded-full flex items-center justify-center text-green-700 font-bold text-lg border-2 border-green-200">
-                    <i class="fa-solid fa-school"></i>
+    <!-- Navbar / Header (Glassmorphism with Stronger Tint) -->
+    <header class="w-full bg-white/80 backdrop-blur-md sticky top-0 z-50 border-b border-aesthetic-200 shadow-sm">
+        <div class="max-w-2xl mx-auto px-6 py-4 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <!-- Logo lebih tegas -->
+                <div class="w-9 h-9 bg-aesthetic-500 text-white rounded-lg flex items-center justify-center text-sm shadow-md ring-2 ring-aesthetic-100">
+                    <i class="fa-solid fa-book-open"></i>
                 </div>
                 <div>
-                    <h1 class="font-bold text-lg leading-tight">MTsN 6 Demak</h1>
-                    <p class="text-xs text-green-100">Portal Belajar Online</p>
+                    <h1 class="font-bold text-aesthetic-800 text-sm leading-tight">MTsN 6 Demak</h1>
+                    <p class="text-[10px] text-aesthetic-500 font-medium">Belajar Oline</p>
                 </div>
             </div>
-            <div class="hidden md:block text-sm font-medium">
-                Tahun Ajaran 2025/2026
+            <div class="text-xs font-semibold text-aesthetic-600 bg-aesthetic-100 px-3 py-1.5 rounded-full border border-aesthetic-200">
+                2025/2026
             </div>
         </div>
     </header>
 
     <!-- Main Content -->
-    <main class="flex-grow w-full max-w-2xl px-4 py-8 flex flex-col items-center">
+    <main class="flex-grow w-full max-w-xl px-6 py-8 flex flex-col">
 
-        <!-- Teacher Profile Card -->
-        <div class="glass-card w-full rounded-2xl p-6 mb-8 text-center border-t-4 border-green-500 animate-fade-in-down">
-            <div class="w-24 h-24 mx-auto bg-gray-200 rounded-full mb-4 overflow-hidden border-4 border-green-100 shadow-sm relative group">
-                
-                <!-- BAGIAN FOTO PROFIL -->
-                <!-- Pastikan Anda mengupload file bernama 'foto-profil.jpg' ke GitHub di folder yang sama -->
-                <!-- Jika foto belum diupload, gambar placeholder akan muncul -->
-                <img src="foto-profil.jpg" 
-                     onerror="this.src='https://ui-avatars.com/api/?name=Ahmad+Zulfikar&background=0D8ABC&color=fff&size=128'" 
-                     alt="Ahmad Zulfikar, S.Pd." 
-                     class="w-full h-full object-cover">
-                     
+        <!-- Teacher Profile (Clean Center) -->
+        <div class="text-center mb-10 fade-in bg-white p-6 rounded-3xl border border-aesthetic-100 shadow-sm">
+            <div class="relative w-24 h-24 mx-auto mb-4">
+                <div class="w-full h-full rounded-full overflow-hidden border-4 border-aesthetic-50 shadow-inner group">
+                     <!-- 
+                        FOTO PROFIL
+                        1. Prioritas Utama: File lokal 'foto-profil.jpg'
+                        2. Jika file tidak ada (atau error), load UI Avatars (Inisial AZ) dengan warna tema hijau.
+                     -->
+                    <img src="foto-profil.jpg" 
+                         onerror="this.src='https://ui-avatars.com/api/?name=Ahmad+Zulfikar&background=5c947a&color=fff&size=128&bold=true'" 
+                         alt="Ahmad Zulfikar" 
+                         class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                </div>
+                <!-- Status Dot -->
+                <div class="absolute bottom-1 right-1 w-5 h-5 bg-green-500 border-4 border-white rounded-full" title="Online"></div>
             </div>
-
-            <h2 class="text-2xl font-bold text-gray-800">Ahmad Zulfikar, S.Pd.</h2>
-            <p class="text-gray-500 mt-1">Guru Pengampu Mata Pelajaran</p>
             
-            <div class="mt-4 flex justify-center space-x-2">
-                <span class="px-3 py-1 bg-green-100 text-green-700 rounded-full text-xs font-semibold">Fiqih</span>
-                <span class="px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-xs font-semibold">IPA</span>
+            <h1 class="text-xl font-bold text-aesthetic-800">Ahmad Zulfikar, S.Pd.</h1>
+            <p class="text-sm text-aesthetic-500 mt-1 font-medium">Guru Fiqih & Ilmu Pengetahuan Alam</p>
+        </div>
+
+        <!-- Menu Section -->
+        <div class="space-y-4">
+            <div class="flex items-center gap-3 mb-4 fade-in delay-100 px-1">
+                <span class="text-xs font-bold text-aesthetic-600 uppercase tracking-widest">Materi Belajar</span>
             </div>
-        </div>
 
-        <!-- Instructional Text -->
-        <div class="text-center mb-6">
-            <h3 class="text-xl font-semibold text-gray-700">Menu Utama</h3>
-            <p class="text-gray-500 text-sm">Pilih menu di bawah untuk memulai aktivitas belajar</p>
-        </div>
-
-        <!-- Subject Buttons Container -->
-        <div class="w-full space-y-4">
-
-            <!-- Fiqih Section -->
-            <a href="https://mtsn6-demak.github.io/fiqih" class="subject-btn w-full bg-gradient-to-r from-emerald-500 to-green-600 text-white p-5 rounded-xl flex items-center justify-between cursor-pointer group hover:no-underline">
-                <div class="flex items-center space-x-4">
-                    <div class="bg-white/20 p-3 rounded-lg">
-                        <i class="fa-solid fa-mosque text-2xl"></i>
+            <!-- Fiqih Card -->
+            <a href="https://mtsn6-demak.github.io/fiqih" class="menu-card fade-in delay-100 block bg-white border border-aesthetic-200 rounded-2xl p-5 group no-underline shadow-sm">
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center gap-5">
+                        <!-- Icon Background lebih berwarna -->
+                        <div class="w-12 h-12 rounded-xl bg-aesthetic-100 text-aesthetic-600 flex items-center justify-center text-xl group-hover:scale-110 group-hover:bg-aesthetic-500 group-hover:text-white transition-all duration-300 shadow-sm">
+                            <i class="fa-solid fa-mosque"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-aesthetic-800 font-bold group-hover:text-aesthetic-600 transition-colors">Fiqih</h3>
+                            <p class="text-xs text-aesthetic-500 mt-0.5 font-medium">Ibadah & Syariah Islam</p>
+                        </div>
                     </div>
-                    <div class="text-left">
-                        <h4 class="font-bold text-lg">Mata Pelajaran Fiqih</h4>
-                        <p class="text-green-100 text-xs">Materi Ibadah & Syariah</p>
+                    <div class="w-8 h-8 rounded-full bg-aesthetic-50 flex items-center justify-center text-aesthetic-300 group-hover:bg-aesthetic-500 group-hover:text-white transition-all">
+                        <i class="fa-solid fa-arrow-right text-xs"></i>
                     </div>
-                </div>
-                <div class="bg-white/20 rounded-full w-8 h-8 flex items-center justify-center group-hover:bg-white/30 transition-colors">
-                    <i class="fa-solid fa-arrow-right text-sm"></i>
                 </div>
             </a>
 
-            <!-- IPA Section -->
-            <a href="https://mtsn6-demak.github.io/IPA" class="subject-btn w-full bg-gradient-to-r from-blue-500 to-indigo-600 text-white p-5 rounded-xl flex items-center justify-between cursor-pointer group hover:no-underline">
-                <div class="flex items-center space-x-4">
-                    <div class="bg-white/20 p-3 rounded-lg">
-                        <i class="fa-solid fa-flask text-2xl"></i>
+            <!-- IPA Card -->
+            <a href="https://mtsn6-demak.github.io/IPA" class="menu-card fade-in delay-200 block bg-white border border-aesthetic-200 rounded-2xl p-5 group no-underline shadow-sm">
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center gap-5">
+                        <div class="w-12 h-12 rounded-xl bg-teal-50 text-teal-600 flex items-center justify-center text-xl group-hover:scale-110 group-hover:bg-teal-600 group-hover:text-white transition-all duration-300 shadow-sm">
+                            <i class="fa-solid fa-flask-vial"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-aesthetic-800 font-bold group-hover:text-teal-700 transition-colors">Ilmu Pengetahuan Alam</h3>
+                            <p class="text-xs text-aesthetic-500 mt-0.5 font-medium">Biologi & Fisika Dasar</p>
+                        </div>
                     </div>
-                    <div class="text-left">
-                        <h4 class="font-bold text-lg">Mata Pelajaran IPA</h4>
-                        <p class="text-blue-100 text-xs">Fisika & Biologi Alam</p>
+                    <div class="w-8 h-8 rounded-full bg-aesthetic-50 flex items-center justify-center text-aesthetic-300 group-hover:bg-teal-600 group-hover:text-white transition-all">
+                        <i class="fa-solid fa-arrow-right text-xs"></i>
                     </div>
-                </div>
-                <div class="bg-white/20 rounded-full w-8 h-8 flex items-center justify-center group-hover:bg-white/30 transition-colors">
-                    <i class="fa-solid fa-arrow-right text-sm"></i>
                 </div>
             </a>
 
-            <!-- Uji Kompetensi Section -->
-            <a href="https://mtsn6-demak.github.io/formatif" class="subject-btn w-full bg-gradient-to-r from-purple-500 to-indigo-500 text-white p-5 rounded-xl flex items-center justify-between cursor-pointer group hover:no-underline">
-                <div class="flex items-center space-x-4">
-                    <div class="bg-white/20 p-3 rounded-lg">
-                        <i class="fa-solid fa-pen-to-square text-2xl"></i>
+            <div class="flex items-center gap-3 mb-4 mt-8 fade-in delay-300 px-1">
+                <span class="text-xs font-bold text-aesthetic-600 uppercase tracking-widest">Aktivitas Siswa</span>
+            </div>
+
+            <!-- Uji Kompetensi -->
+            <a href="https://mtsn6-demak.github.io/formatif" class="menu-card fade-in delay-300 block bg-white border border-aesthetic-200 rounded-2xl p-5 group no-underline shadow-sm">
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center gap-5">
+                        <div class="w-12 h-12 rounded-xl bg-yellow-50 text-yellow-600 flex items-center justify-center text-xl group-hover:scale-110 group-hover:bg-yellow-500 group-hover:text-white transition-all duration-300 shadow-sm">
+                            <i class="fa-solid fa-file-pen"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-aesthetic-800 font-bold group-hover:text-yellow-700 transition-colors">Uji Kompetensi</h3>
+                            <p class="text-xs text-aesthetic-500 mt-0.5 font-medium">Evaluasi & Tugas</p>
+                        </div>
                     </div>
-                    <div class="text-left">
-                        <h4 class="font-bold text-lg">Uji Kompetensi</h4>
-                        <p class="text-purple-100 text-xs">Tes Formatif & Latihan Soal</p>
+                        <div class="w-8 h-8 rounded-full bg-aesthetic-50 flex items-center justify-center text-aesthetic-300 group-hover:bg-orange-500 group-hover:text-white transition-all">
+                        <i class="fa-solid fa-arrow-right text-xs"></i>
                     </div>
-                </div>
-                <div class="bg-white/20 rounded-full w-8 h-8 flex items-center justify-center group-hover:bg-white/30 transition-colors">
-                    <i class="fa-solid fa-arrow-right text-sm"></i>
                 </div>
             </a>
 
-            <!-- Nilai Siswa Section -->
-            <a href="https://mtsn6-demak.github.io/nilai-siswa" class="subject-btn w-full bg-gradient-to-r from-orange-500 to-red-500 text-white p-5 rounded-xl flex items-center justify-between cursor-pointer group hover:no-underline">
-                <div class="flex items-center space-x-4">
-                    <div class="bg-white/20 p-3 rounded-lg">
-                        <i class="fa-solid fa-clipboard-check text-2xl"></i>
+            <!-- Nilai Siswa -->
+            <a href="https://mtsn6-demak.github.io/nilai-siswa" class="menu-card fade-in delay-300 block bg-white border border-aesthetic-200 rounded-2xl p-5 group no-underline shadow-sm">
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center gap-5">
+                        <div class="w-12 h-12 rounded-xl bg-orange-50 text-orange-600 flex items-center justify-center text-xl group-hover:scale-110 group-hover:bg-orange-500 group-hover:text-white transition-all duration-300 shadow-sm">
+                            <i class="fa-solid fa-chart-pie"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-aesthetic-800 font-bold group-hover:text-orange-700 transition-colors">Rekap Nilai</h3>
+                            <p class="text-xs text-aesthetic-500 mt-0.5 font-medium">Laporan Hasil Belajar</p>
+                        </div>
                     </div>
-                    <div class="text-left">
-                        <h4 class="font-bold text-lg">Cek Nilai Siswa</h4>
-                        <p class="text-orange-100 text-xs">Lihat hasil belajar & evaluasi</p>
+                    <div class="w-8 h-8 rounded-full bg-aesthetic-50 flex items-center justify-center text-aesthetic-300 group-hover:bg-orange-500 group-hover:text-white transition-all">
+                        <i class="fa-solid fa-arrow-right text-xs"></i>
                     </div>
-                </div>
-                <div class="bg-white/20 rounded-full w-8 h-8 flex items-center justify-center group-hover:bg-white/30 transition-colors">
-                    <i class="fa-solid fa-arrow-up-right-from-square text-sm"></i>
                 </div>
             </a>
 
@@ -160,11 +211,21 @@
     </main>
 
     <!-- Footer -->
-    <footer class="w-full bg-gray-800 text-gray-400 py-6 text-center text-xs mt-auto">
-        <div class="max-w-2xl mx-auto px-4">
-            <p class="mb-2">&copy; 2026 MTsN 6 Demak. All Rights Reserved.</p>
-            <p>Dikembangkan untuk Pembelajaran Daring.</p>
+    <footer class="w-full text-center py-8 mt-auto fade-in delay-300">
+        <div class="flex justify-center gap-6 mb-5">
+            <a href="#" class="w-8 h-8 rounded-full bg-white flex items-center justify-center text-aesthetic-400 shadow-sm hover:bg-aesthetic-500 hover:text-white transition-all">
+                <i class="fa-brands fa-whatsapp"></i>
+            </a>
+            <a href="#" class="w-8 h-8 rounded-full bg-white flex items-center justify-center text-aesthetic-400 shadow-sm hover:bg-aesthetic-500 hover:text-white transition-all">
+                <i class="fa-brands fa-instagram"></i>
+            </a>
+            <a href="#" class="w-8 h-8 rounded-full bg-white flex items-center justify-center text-aesthetic-400 shadow-sm hover:bg-aesthetic-500 hover:text-white transition-all">
+                <i class="fa-regular fa-envelope"></i>
+            </a>
         </div>
+        <p class="text-[11px] text-aesthetic-500 font-medium tracking-wide">
+            &copy; 2026 MTsN 6 Demak | Dibuat oleh Ahmad Zulfikar <i class="fa-solid fa-heart text-red-400 mx-0.5 text-[10px]"></i>
+        </p>
     </footer>
 
 </body>
