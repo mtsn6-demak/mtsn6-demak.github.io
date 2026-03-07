@@ -3,260 +3,293 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fikih Ibadah: Shalat Jumat</title>
+    <title>Materi Fiqih: Shalat Jumat</title>
+    
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
+    
     <!-- FontAwesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400;500;600&family=Patrick+Hand&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&display=swap" rel="stylesheet">
     
+    <!-- Google Fonts: Outfit (Utama) & Amiri (Arab) -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Outfit', 'sans-serif'],
+                        arabic: ['Amiri', 'serif'],
+                    },
+                    colors: {
+                        // Palet Hijau Estetik
+                        'aesthetic': {
+                            50: '#eef5f2',
+                            100: '#d5e6de',
+                            200: '#b0d0c0',
+                            300: '#83b39c',
+                            400: '#5c947a',
+                            500: '#42755e',
+                            600: '#325949',
+                            700: '#28463a',
+                            800: '#213830',
+                            900: '#1c2e28',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
     <style>
         body {
-            font-family: 'Fredoka', sans-serif;
-            background-color: #f0fdf4; /* Green 50 */
-            color: #14532d; /* Green 900 */
-        }
-        h1, h2, h3 {
-            font-family: 'Fredoka', cursive;
-            letter-spacing: 0.5px;
-        }
-        p, li, label, input, select {
-            font-family: 'Patrick Hand', cursive;
-            font-size: 1.1rem;
-        }
-        .arabic-text {
-            font-family: 'Amiri', serif;
-            direction: rtl;
-        }
-        .card-hover:hover {
-            transform: translateY(-5px) rotate(1deg);
-        }
-        /* Custom Scrollbar */
-        ::-webkit-scrollbar {
-            width: 10px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #f0fdf4; 
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #22c55e; 
-            border-radius: 10px;
-            border: 2px solid #f0fdf4;
+            background-color: #eef5f2;
+            color: #213830;
+            scroll-behavior: smooth;
         }
         
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #eef5f2; }
+        ::-webkit-scrollbar-thumb { background: #b0d0c0; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: #83b39c; }
+
+        /* Smooth Fade In Animation */
+        .fade-in {
+            animation: fadeIn 0.8s ease-out forwards;
+            opacity: 0;
+            transform: translateY(10px);
+        }
+        .delay-100 { animation-delay: 0.1s; }
+        .delay-200 { animation-delay: 0.2s; }
+
+        @keyframes fadeIn {
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Card Styles */
+        .menu-card {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .menu-card:hover {
+            transform: translateY(-4px);
+            border-color: #5c947a;
+            background-color: #ffffff;
+            box-shadow: 0 12px 25px -8px rgba(92, 148, 122, 0.25);
+        }
+
         /* --- Quiz & Option Styling --- */
         .option-label {
             cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            border: 2px solid #dcfce7; /* green-100 */
-            position: relative;
-            overflow: hidden;
+            transition: all 0.3s ease;
+            border: 1px solid #d5e6de; /* aesthetic-100 */
         }
         .option-label:hover {
-            border-color: #4ade80; /* green-400 */
-            background-color: #f0fdf4; /* green-50 */
+            border-color: #83b39c; /* aesthetic-300 */
+            background-color: #eef5f2; /* aesthetic-50 */
         }
-        /* State Checked */
         .option-input:checked + .option-content {
-            background-color: #dcfce7; /* green-100 */
-            border-color: #16a34a; /* green-600 */
-            color: #14532d; /* green-900 */
-            box-shadow: 0 4px 6px -1px rgba(22, 163, 74, 0.1), 0 2px 4px -1px rgba(22, 163, 74, 0.06);
-        }
-        .option-circle {
-            transition: all 0.3s ease;
-            border: 2px solid #86efac;
+            background-color: #eef5f2;
+            border-color: #5c947a; /* aesthetic-400 */
+            box-shadow: 0 4px 15px -5px rgba(92, 148, 122, 0.15);
         }
         .option-input:checked + .option-content .option-circle {
-            background-color: #16a34a;
-            border-color: #16a34a;
+            background-color: #5c947a;
             color: white;
-            transform: scale(1.1);
+            border-color: #5c947a;
         }
         .option-input:checked + .option-content {
-            border-width: 2px;
+            border-width: 1px;
+            border-style: solid;
         }
 
-        /* --- Custom Modal Styling --- */
+        /* Modal Animation */
         .modal-backdrop {
-            background-color: rgba(20, 83, 45, 0.6); /* Green-900 opacity */
+            background-color: rgba(33, 56, 48, 0.6); /* aesthetic-800 opacity */
             backdrop-filter: blur(4px);
             animation: fadeIn 0.2s ease-out;
         }
         .modal-content {
             animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-        @keyframes popIn { from { transform: scale(0.9) translateY(10px); opacity: 0; } to { transform: scale(1) translateY(0); opacity: 1; } }
+        @keyframes popIn { 
+            from { transform: scale(0.95) translateY(10px); opacity: 0; } 
+            to { transform: scale(1) translateY(0); opacity: 1; } 
+        }
     </style>
 </head>
-<body class="selection:bg-green-200 selection:text-green-900">
+<body class="selection:bg-aesthetic-200 selection:text-aesthetic-900">
 
-    <!-- Navigation -->
-    <nav class="bg-emerald-600 text-white shadow-lg sticky top-0 z-50 border-b-4 border-emerald-700">
-        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
-            <div class="flex items-center space-x-2 animate-bounce-slow">
-                <i class="fa-solid fa-mosque text-2xl text-yellow-300"></i>
-                <span class="text-2xl font-semibold tracking-wide">FikihCeria</span>
+    <!-- Navbar / Header (Glassmorphism) -->
+    <header class="w-full bg-white/80 backdrop-blur-md sticky top-0 z-50 border-b border-aesthetic-200 shadow-sm">
+        <div class="max-w-5xl mx-auto px-6 py-4 flex items-center justify-between">
+            <div class="flex items-center gap-4">
+                <!-- Back Button -->
+                <a href="https://mtsn6-demak.github.io/fiqih" class="w-8 h-8 rounded-full bg-white border border-aesthetic-200 text-aesthetic-500 hover:bg-aesthetic-500 hover:text-white flex items-center justify-center transition-all shadow-sm">
+                    <i class="fas fa-arrow-left text-sm"></i>
+                </a>
+                
+                <div class="flex items-center gap-3">
+                    <div class="w-9 h-9 bg-aesthetic-500 text-white rounded-lg flex items-center justify-center text-sm shadow-md ring-2 ring-aesthetic-100">
+                        <i class="fa-solid fa-mosque"></i>
+                    </div>
+                    <div>
+                        <h1 class="font-bold text-aesthetic-800 text-sm leading-tight">Materi Fiqih</h1>
+                        <p class="text-[10px] text-aesthetic-500 font-medium">Shalat Jumat</p>
+                    </div>
+                </div>
             </div>
-            <div class="hidden md:flex space-x-6 text-lg">
-                <a href="#materi" class="hover:text-yellow-200 transition hover:scale-110 transform inline-block">Materi</a>
-                <a href="#simulasi" class="hover:text-yellow-200 transition hover:scale-110 transform inline-block">Niat</a>
-                <a href="#kalkulator" class="hover:text-yellow-200 transition hover:scale-110 transform inline-block">Cek Wajib</a>
-                <a href="#latihan" class="hover:text-yellow-200 transition hover:scale-110 transform inline-block">Latihan</a>
+
+            <!-- Page Navigation (Desktop) -->
+            <div class="hidden md:flex space-x-6 text-xs font-semibold text-aesthetic-600">
+                <a href="#materi" class="hover:text-aesthetic-400 transition-colors">Ringkasan</a>
+                <a href="#simulasi" class="hover:text-aesthetic-400 transition-colors">Niat</a>
+                <a href="#kalkulator" class="hover:text-aesthetic-400 transition-colors">Cek Wajib</a>
+                <a href="#latihan" class="px-3 py-1 bg-aesthetic-100 rounded-full hover:bg-aesthetic-200 transition-colors">Latihan Soal</a>
             </div>
-            <button id="mobile-menu-btn" class="md:hidden focus:outline-none bg-emerald-700 p-2 rounded-lg text-white">
-                <i class="fa-solid fa-bars text-xl"></i>
+
+            <button id="mobile-menu-btn" class="md:hidden text-aesthetic-600 focus:outline-none">
+                <i class="fa-solid fa-bars text-lg"></i>
             </button>
         </div>
+
         <!-- Mobile Menu -->
-        <div id="mobile-menu" class="hidden md:hidden bg-emerald-600 pb-4 px-4 text-center">
-            <a href="#materi" class="block py-2 hover:bg-emerald-700 rounded-lg">Materi</a>
-            <a href="#simulasi" class="block py-2 hover:bg-emerald-700 rounded-lg">Niat</a>
-            <a href="#kalkulator" class="block py-2 hover:bg-emerald-700 rounded-lg">Cek Wajib</a>
-            <a href="#latihan" class="block py-2 hover:bg-emerald-700 rounded-lg">Latihan</a>
-        </div>
-    </nav>
-
-    <!-- Hero Section -->
-    <header class="bg-gradient-to-b from-emerald-500 to-green-100 pt-20 pb-32 px-4 text-center relative overflow-hidden">
-        <div class="absolute top-10 left-10 w-20 h-20 bg-yellow-300 rounded-full opacity-50 mix-blend-multiply filter blur-xl animate-pulse"></div>
-        <div class="absolute top-20 right-20 w-32 h-32 bg-teal-300 rounded-full opacity-50 mix-blend-multiply filter blur-xl animate-pulse" style="animation-delay: 1s"></div>
-
-        <div class="container mx-auto max-w-4xl relative z-10">
-            <span class="bg-white text-emerald-600 px-4 py-1 rounded-full text-sm font-bold shadow-sm mb-4 inline-block transform -rotate-2">
-                🌙 Mari Meraih Berkah
-            </span>
-            <h1 class="text-5xl md:text-7xl font-bold mb-6 text-white drop-shadow-md">
-                Shalat Jumat
-            </h1>
-            <p class="text-xl md:text-2xl mb-8 text-green-900 max-w-2xl mx-auto font-medium">
-                "Wahai orang-orang yang beriman! Apabila telah diseru untuk melaksanakan salat pada hari Jumat, maka segeralah kamu mengingat Allah..." (QS. Al-Jumu'ah: 9)
-            </p>
-            <a href="#simulasi" class="bg-yellow-400 text-yellow-900 border-b-4 border-yellow-600 active:border-b-0 active:translate-y-1 px-8 py-4 rounded-full font-bold text-xl shadow-xl hover:bg-yellow-500 transition inline-flex items-center gap-3">
-                <i class="fa-solid fa-book-open"></i> Pelajari Niat
-            </a>
+        <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-aesthetic-100 pb-4 px-4 text-center text-sm font-medium text-aesthetic-600 shadow-lg absolute w-full left-0">
+            <a href="#materi" class="block py-3 border-b border-aesthetic-50 hover:bg-aesthetic-50">Ringkasan</a>
+            <a href="#simulasi" class="block py-3 border-b border-aesthetic-50 hover:bg-aesthetic-50">Praktik Niat</a>
+            <a href="#kalkulator" class="block py-3 border-b border-aesthetic-50 hover:bg-aesthetic-50">Kalkulator Wajib</a>
+            <a href="#latihan" class="block py-3 text-aesthetic-500 font-bold hover:bg-aesthetic-50">Latihan Soal</a>
         </div>
     </header>
 
+    <!-- Hero Section -->
+    <section class="w-full px-6 pt-16 pb-24 text-center fade-in relative">
+        <div class="max-w-3xl mx-auto">
+            <span class="inline-block px-3 py-1 bg-aesthetic-100 text-aesthetic-600 rounded-full text-[10px] font-bold tracking-widest uppercase mb-4 border border-aesthetic-200">
+                Fikih Ibadah
+            </span>
+            <h1 class="text-4xl md:text-6xl font-bold text-aesthetic-800 mb-6 tracking-tight">
+                Shalat Jumat
+            </h1>
+            <p class="text-aesthetic-600 text-sm md:text-base leading-relaxed mb-8 italic">
+                "Wahai orang-orang yang beriman! Apabila telah diseru untuk melaksanakan salat pada hari Jumat, maka segeralah kamu mengingat Allah..." <br><span class="font-semibold">(QS. Al-Jumu'ah: 9)</span>
+            </p>
+            <a href="#simulasi" class="inline-flex items-center gap-2 bg-aesthetic-500 text-white px-6 py-3 rounded-full text-sm font-semibold shadow-md shadow-aesthetic-500/20 hover:bg-aesthetic-600 hover:-translate-y-1 transition-all duration-300">
+                <i class="fa-solid fa-book-open"></i> Pelajari Niat
+            </a>
+        </div>
+    </section>
+
     <!-- Materi Section -->
-    <section id="materi" class="py-10 container mx-auto px-4 -mt-20 relative z-20">
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+    <section id="materi" class="py-12 px-6 w-full max-w-5xl mx-auto -mt-16 relative z-10 fade-in delay-100">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            
             <!-- Card 1 -->
-            <div class="bg-white p-8 rounded-3xl shadow-lg border-4 border-emerald-200 card-hover transition duration-300 transform">
-                <div class="bg-emerald-100 w-16 h-16 rounded-full flex items-center justify-center mb-4 text-emerald-600 mx-auto shadow-inner">
-                    <i class="fa-solid fa-book-quran text-3xl"></i>
+            <div class="menu-card bg-white p-8 rounded-3xl border border-aesthetic-100 shadow-sm flex flex-col items-center text-center">
+                <div class="w-14 h-14 bg-aesthetic-50 rounded-xl flex items-center justify-center text-aesthetic-500 mb-5 text-2xl shadow-sm">
+                    <i class="fa-solid fa-book-quran"></i>
                 </div>
-                <h3 class="text-2xl font-bold mb-3 text-center text-emerald-700">Pengertian & Hukum</h3>
-                <p class="text-center text-gray-600 leading-relaxed mb-4">
+                <h3 class="text-lg font-bold mb-3 text-aesthetic-800">Pengertian & Hukum</h3>
+                <p class="text-xs text-aesthetic-500 leading-relaxed mb-4 flex-grow">
                     Shalat dua rakaat yang dilakukan secara berjamaah pada waktu dzuhur di hari Jumat, didahului oleh dua khutbah.
                 </p>
-                <div class="bg-emerald-50 p-2 rounded text-center text-sm">
-                    <strong>Hukum:</strong> Fardhu 'Ain bagi laki-laki muslim yang memenuhi syarat.
+                <div class="w-full bg-aesthetic-50 py-2 rounded-lg text-xs text-aesthetic-700 font-medium">
+                    Hukum: <span class="font-bold">Fardhu 'Ain</span> (Laki-laki)
                 </div>
             </div>
 
             <!-- Card 2 -->
-            <div class="bg-white p-8 rounded-3xl shadow-lg border-4 border-teal-200 card-hover transition duration-300 transform">
-                <div class="bg-teal-100 w-16 h-16 rounded-full flex items-center justify-center mb-4 text-teal-600 mx-auto shadow-inner">
-                    <i class="fa-solid fa-list-check text-3xl"></i>
+            <div class="menu-card bg-white p-8 rounded-3xl border border-aesthetic-100 shadow-sm flex flex-col">
+                <div class="w-14 h-14 bg-aesthetic-50 rounded-xl flex items-center justify-center text-aesthetic-500 mb-5 text-2xl shadow-sm mx-auto">
+                    <i class="fa-solid fa-list-check"></i>
                 </div>
-                <h3 class="text-2xl font-bold mb-3 text-center text-teal-700">Syarat Wajib & Sah</h3>
-                <div class="text-gray-600 text-left text-sm space-y-4">
+                <h3 class="text-lg font-bold mb-4 text-center text-aesthetic-800">Syarat Pelaksanaan</h3>
+                <div class="text-aesthetic-600 text-xs space-y-4">
                     <div>
-                        <strong class="text-teal-600 block mb-1">1. Syarat Wajib:</strong>
-                        <ol class="list-decimal pl-5 space-y-1">
-                            <li>Beragama Islam</li>
-                            <li>Baligh </li>
-                            <li>Berakal Sehat</li>
-                            <li>Laki-laki</li>
-                            <li>Sehat Jasmani</li>
-                            <li>Mukim</li>
-                            <li>Tidak ada halangan yang memberatkan untuk shalat jumat</li>
-                        </ol>
+                        <strong class="text-aesthetic-800 block mb-1">1. Syarat Wajib:</strong>
+                        <ul class="list-disc pl-4 space-y-1 text-aesthetic-500">
+                            <li>Islam, Baligh, Berakal</li>
+                            <li>Laki-laki & Sehat Jasmani</li>
+                            <li>Mukim (Menetap)</li>
+                            <li>Tidak ada udzur syar'i</li>
+                        </ul>
                     </div>
                     <div>
-                        <strong class="text-teal-600 block mb-1">2. Syarat Sah:</strong>
-                        <ol class="list-decimal pl-5 space-y-1">
-                            <li>Di tempat yang menetap (masjid)</li>
-                            <li>Berjamaah (min. 40 orang)</li>
-                            <li>Dilakukan di waktu Dzuhur</li>
-                            <li>Didahului dua khutbah</li>
-                        </ol>
+                        <strong class="text-aesthetic-800 block mb-1">2. Syarat Sah:</strong>
+                        <ul class="list-disc pl-4 space-y-1 text-aesthetic-500">
+                            <li>Di area pemukiman (Masjid)</li>
+                            <li>Berjamaah (Min. 40 orang)</li>
+                            <li>Waktu Dzuhur & Ada Khutbah</li>
+                        </ul>
                     </div>
                 </div>
             </div>
 
             <!-- Card 3 -->
-            <div class="bg-white p-8 rounded-3xl shadow-lg border-4 border-yellow-200 card-hover transition duration-300 transform">
-                <div class="bg-yellow-100 w-16 h-16 rounded-full flex items-center justify-center mb-4 text-yellow-600 mx-auto shadow-inner">
-                    <i class="fa-solid fa-star text-3xl"></i>
+            <div class="menu-card bg-white p-8 rounded-3xl border border-aesthetic-100 shadow-sm flex flex-col">
+                <div class="w-14 h-14 bg-aesthetic-50 rounded-xl flex items-center justify-center text-aesthetic-500 mb-5 text-2xl shadow-sm mx-auto">
+                    <i class="fa-solid fa-star"></i>
                 </div>
-                <h3 class="text-2xl font-bold mb-3 text-center text-yellow-700">Sunnah Jumat</h3>
-                <div class="text-gray-600 text-left text-sm">
-                    <ol class="list-decimal pl-5 space-y-2">
-                        <li>Mandi</li>
-                        <li>Memotong kuku</li>
+                <h3 class="text-lg font-bold mb-4 text-center text-aesthetic-800">Sunnah Jumat</h3>
+                <div class="text-aesthetic-500 text-xs">
+                    <ul class="list-decimal pl-4 space-y-2">
+                        <li>Mandi sunnah Jumat</li>
+                        <li>Memotong kuku & merapikan rambut</li>
                         <li>Memakai pakaian putih bersih</li>
-                        <li>Memakai wangi-wangian</li>
-                        <li>Bersegera datang ke masjid dan berdo'a</li>
+                        <li>Memakai wangi-wangian (bagi pria)</li>
+                        <li>Bersegera ke masjid</li>
                         <li>Shalat Tahiyatul Masjid</li>
-                        <li>Memperbanyak doa,shalawat dan dzikir lainnya hingga khutbah dimulai</li>
-                        <li>Diam menyimak khutbah</li>
-                    </ol>
+                        <li>Fokus menyimak khutbah (tidak bicara)</li>
+                    </ul>
                 </div>
             </div>
+
         </div>
     </section>
 
     <!-- Simulasi Section (Niat) -->
-    <section id="simulasi" class="bg-green-50 py-16 relative">
-        <div class="absolute top-0 left-0 w-full h-20 bg-gradient-to-b from-green-100 to-green-50"></div>
-        <div class="container mx-auto px-4 relative z-10">
-            <div class="text-center mb-10">
-                <span class="inline-block bg-white text-emerald-600 px-6 py-2 rounded-full shadow-md font-bold tracking-wider text-sm uppercase mb-3 border border-emerald-100">
-                    <i class="fa-solid fa-hands-praying mr-2"></i>Praktik Ibadah
-                </span>
-                <h2 class="text-4xl font-bold text-gray-800 mt-2">Hafalan Niat Shalat Jumat 🕌</h2>
+    <section id="simulasi" class="w-full py-16 px-6 mt-8 border-y border-aesthetic-100 bg-white fade-in delay-200">
+        <div class="max-w-4xl mx-auto">
+            <div class="flex items-center gap-3 mb-8">
+                <span class="h-px flex-grow bg-aesthetic-200"></span>
+                <span class="text-xs font-bold text-aesthetic-500 uppercase tracking-widest px-2"><i class="fa-solid fa-hands-praying mr-2"></i>Praktik Ibadah</span>
+                <span class="h-px flex-grow bg-aesthetic-200"></span>
             </div>
             
-            <div class="flex flex-col lg:flex-row gap-8 items-center max-w-5xl mx-auto">
-                <!-- Display Area -->
-                <div class="w-full lg:w-2/3 bg-white rounded-[2rem] shadow-xl overflow-hidden relative border-8 border-emerald-200 min-h-[400px] flex items-center justify-center p-8 text-center bg-[url('https://www.transparenttextures.com/patterns/arabesque.png')]">
-                    <div>
-                        <p class="text-emerald-500 font-bold mb-4 uppercase tracking-widest text-sm">Niat Sebagai Makmum</p>
-                        <h2 class="arabic-text text-3xl md:text-3xl leading-relaxed text-gray-800 mb-6 font-bold">
-                            أُصَلِّي فَرْضَ الْجُمُعَةِ رَكْعَتَيْنِ مُسْتَقْبِلَ الْقِبْلَةِ أَدَاءً مَأْمُومًا لِلهِ تَعَالَى
-                        </h2>
-                        <p class="text-lg text-emerald-700 italic mb-2 font-medium">"Ushalli fardhal jumu'ati rak'ataini mustaqbilal qiblati adaa-an ma'muman lillaahi ta'aala."</p>
-                        <hr class="w-20 mx-auto border-emerald-200 my-4">
-                        <p class="text-gray-600">"Aku berniat shalat fardhu Jumat dua rakaat menghadap kiblat sebagai makmum karena Allah Ta'ala."</p>
-                    </div>
+            <div class="flex flex-col md:flex-row gap-8 items-stretch">
+                <!-- Display Niat -->
+                <div class="w-full md:w-3/5 bg-aesthetic-50 rounded-3xl p-8 text-center flex flex-col justify-center border border-aesthetic-100">
+                    <p class="text-aesthetic-400 font-bold mb-6 text-xs tracking-widest uppercase">Niat Sebagai Makmum</p>
+                    <h2 class="font-arabic text-3xl md:text-4xl leading-[3.5rem] md:leading-[4.5rem] [word-spacing:10px] py-4 text-aesthetic-800 mb-6 font-bold" dir="rtl">
+                        أُصَلِّي فَرْضَ الْجُمُعَةِ رَكْعَتَيْنِ مُسْتَقْبِلَ الْقِبْلَةِ أَدَاءً مَأْمُومًا لِلهِ تَعَالَى
+                    </h2>
+                    <p class="text-sm text-aesthetic-600 italic mb-4 font-medium">"Ushalli fardhal jumu'ati rak'ataini mustaqbilal qiblati adaa-an ma'muman lillaahi ta'aala."</p>
+                    <p class="text-xs text-aesthetic-500 leading-relaxed max-w-sm mx-auto">"Aku berniat shalat fardhu Jumat dua rakaat menghadap kiblat sebagai makmum karena Allah Ta'ala."</p>
                 </div>
 
-                <!-- Controls -->
-                <div class="w-full lg:w-1/3 bg-white p-8 rounded-[2rem] shadow-xl border-b-8 border-teal-200">
-                    <h3 class="text-2xl font-bold mb-6 flex items-center text-teal-600">
-                        <i class="fa-solid fa-sliders mr-3"></i> Panduan
-                    </h3>
-                    <div class="space-y-4">
-                        <div class="bg-teal-50 p-4 rounded-xl border border-teal-100">
-                            <h4 class="font-bold text-teal-800 mb-2"><i class="fa-solid fa-1 mr-2"></i>Waktu Pelaksanaan</h4>
-                            <p class="text-sm text-teal-700">Dilakukan di waktu Dzuhur pada hari Jumat.</p>
-                        </div>
-                        <div class="bg-teal-50 p-4 rounded-xl border border-teal-100">
-                            <h4 class="font-bold text-teal-800 mb-2"><i class="fa-solid fa-2 mr-2"></i>Jumlah Rakaat</h4>
-                            <p class="text-sm text-teal-700">2 Rakaat secara berjamaah (jahar/suara keras).</p>
-                        </div>
-                        <div class="bg-teal-50 p-4 rounded-xl border border-teal-100">
-                            <h4 class="font-bold text-teal-800 mb-2"><i class="fa-solid fa-3 mr-2"></i>Urutan</h4>
-                            <p class="text-sm text-teal-700">Khutbah Pertama &rarr; Duduk &rarr; Khutbah Kedua &rarr; Shalat.</p>
+                <!-- Panduan -->
+                <div class="w-full md:w-2/5 flex flex-col gap-3">
+                    <div class="bg-white p-5 rounded-2xl border border-aesthetic-100 shadow-sm flex items-start gap-4">
+                        <div class="w-8 h-8 rounded-full bg-aesthetic-100 text-aesthetic-600 flex items-center justify-center font-bold text-xs flex-shrink-0">1</div>
+                        <div>
+                            <h4 class="font-bold text-aesthetic-800 text-sm mb-1">Waktu Pelaksanaan</h4>
+                            <p class="text-[11px] text-aesthetic-500">Dilakukan secara berjamaah pada waktu Dzuhur di hari Jumat.</p>
                         </div>
                     </div>
-                    <div class="mt-6 text-center text-sm text-gray-400">
-                        *Jangan lupa niat di dalam hati saat Takbiratul Ihram.
+                    <div class="bg-white p-5 rounded-2xl border border-aesthetic-100 shadow-sm flex items-start gap-4">
+                        <div class="w-8 h-8 rounded-full bg-aesthetic-100 text-aesthetic-600 flex items-center justify-center font-bold text-xs flex-shrink-0">2</div>
+                        <div>
+                            <h4 class="font-bold text-aesthetic-800 text-sm mb-1">Jumlah Rakaat</h4>
+                            <p class="text-[11px] text-aesthetic-500">Terdiri dari 2 Rakaat. Imam membaca surat dengan suara keras (jahar).</p>
+                        </div>
+                    </div>
+                    <div class="bg-white p-5 rounded-2xl border border-aesthetic-100 shadow-sm flex items-start gap-4">
+                        <div class="w-8 h-8 rounded-full bg-aesthetic-100 text-aesthetic-600 flex items-center justify-center font-bold text-xs flex-shrink-0">3</div>
+                        <div>
+                            <h4 class="font-bold text-aesthetic-800 text-sm mb-1">Urutan Ibadah</h4>
+                            <p class="text-[11px] text-aesthetic-500">Khutbah Pertama &rarr; Duduk Sebentar &rarr; Khutbah Kedua &rarr; Iqamah &rarr; Shalat.</p>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -264,124 +297,121 @@
     </section>
 
     <!-- Kalkulator Section (Checker) -->
-    <section id="kalkulator" class="py-16 container mx-auto px-4 bg-white rounded-t-[3rem] shadow-[0_-10px_40px_rgba(0,0,0,0.05)]">
-        <div class="max-w-4xl mx-auto">
-            <div class="text-center mb-10">
-                <div class="inline-block p-4 bg-emerald-100 rounded-full text-emerald-600 mb-4 text-3xl animate-bounce">
-                    <i class="fa-solid fa-clipboard-check"></i>
+    <section id="kalkulator" class="py-16 px-6 max-w-4xl mx-auto w-full fade-in delay-300">
+        <div class="text-center mb-10">
+            <h2 class="text-2xl font-bold text-aesthetic-800 mb-2">Kalkulator Hukum Jumat</h2>
+            <p class="text-aesthetic-500 text-sm">Cek apakah kamu wajib melaksanakan Shalat Jumat berdasarkan kondisimu saat ini.</p>
+        </div>
+        
+        <div class="bg-white rounded-3xl shadow-sm border border-aesthetic-200 p-6 md:p-8 flex flex-col md:flex-row gap-8">
+            <!-- Form Input -->
+            <div class="w-full md:w-1/2 space-y-4">
+                <div>
+                    <label class="block text-aesthetic-700 text-xs font-bold mb-1.5">Jenis Kelamin</label>
+                    <select id="input-gender" class="w-full p-3 text-sm border border-aesthetic-200 rounded-xl outline-none focus:border-aesthetic-400 focus:ring-1 focus:ring-aesthetic-400 transition-all bg-aesthetic-50/50">
+                        <option value="L">Laki-laki</option>
+                        <option value="P">Perempuan</option>
+                    </select>
                 </div>
-                <h2 class="text-4xl font-bold text-emerald-600">Cek Kewajiban Jumat</h2>
-                <p class="text-gray-500 mt-2">Apakah kamu sudah wajib melaksanakan Shalat Jumat?</p>
+                <div>
+                    <label class="block text-aesthetic-700 text-xs font-bold mb-1.5">Status Usia</label>
+                    <select id="input-age" class="w-full p-3 text-sm border border-aesthetic-200 rounded-xl outline-none focus:border-aesthetic-400 focus:ring-1 focus:ring-aesthetic-400 transition-all bg-aesthetic-50/50">
+                        <option value="Baligh">Sudah Baligh (Remaja/Dewasa)</option>
+                        <option value="Anak">Belum Baligh (Anak-anak)</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-aesthetic-700 text-xs font-bold mb-1.5">Status Tempat</label>
+                    <select id="input-status" class="w-full p-3 text-sm border border-aesthetic-200 rounded-xl outline-none focus:border-aesthetic-400 focus:ring-1 focus:ring-aesthetic-400 transition-all bg-aesthetic-50/50">
+                        <option value="Mukim">Mukim (Menetap di daerah tersebut)</option>
+                        <option value="Musafir">Musafir (Dalam Perjalanan Jauh)</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-aesthetic-700 text-xs font-bold mb-1.5">Kondisi Fisik</label>
+                    <select id="input-health" class="w-full p-3 text-sm border border-aesthetic-200 rounded-xl outline-none focus:border-aesthetic-400 focus:ring-1 focus:ring-aesthetic-400 transition-all bg-aesthetic-50/50">
+                        <option value="Sehat">Sehat Walafiat</option>
+                        <option value="Sakit">Sakit Parah / Udzur</option>
+                        <option value="Gila">Hilang Akal (Pingsan/Gila)</option>
+                    </select>
+                </div>
+                <button onclick="checkObligation()" class="w-full mt-2 bg-aesthetic-500 hover:bg-aesthetic-600 text-white text-sm font-bold py-3.5 rounded-xl transition-all shadow-md shadow-aesthetic-500/20">
+                    Cek Hukum Sekarang
+                </button>
             </div>
-            
-            <div class="bg-emerald-50 rounded-3xl shadow-lg border-2 border-emerald-100 p-8">
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
-                    <div class="space-y-6">
-                        <div class="bg-white p-6 rounded-xl border border-emerald-100 shadow-sm space-y-4">
-                            <div>
-                                <label class="block text-gray-600 font-bold mb-1">Jenis Kelamin</label>
-                                <select id="input-gender" class="w-full p-3 border-2 border-emerald-100 rounded-lg outline-none focus:border-emerald-400">
-                                    <option value="L">Laki-laki</option>
-                                    <option value="P">Perempuan</option>
-                                </select>
-                            </div>
-                            <div>
-                                <label class="block text-gray-600 font-bold mb-1">Status Usia</label>
-                                <select id="input-age" class="w-full p-3 border-2 border-emerald-100 rounded-lg outline-none focus:border-emerald-400">
-                                    <option value="Baligh">Sudah Baligh (Remaja,Dewasa)</option>
-                                    <option value="Anak">Belum Baligh (Anak-anak)</option>
-                                </select>
-                            </div>
-                            <div>
-                                <label class="block text-gray-600 font-bold mb-1">Status Tempat</label>
-                                <select id="input-status" class="w-full p-3 border-2 border-emerald-100 rounded-lg outline-none focus:border-emerald-400">
-                                    <option value="Mukim">Mukim (Menetap)</option>
-                                    <option value="Musafir">Musafir (Perjalanan Jauh)</option>
-                                </select>
-                            </div>
-                            <div>
-                                <label class="block text-gray-600 font-bold mb-1">Kondisi Fisik</label>
-                                <select id="input-health" class="w-full p-3 border-2 border-emerald-100 rounded-lg outline-none focus:border-emerald-400">
-                                    <option value="Sehat">Sehat</option>
-                                    <option value="Sakit">Sakit Parah / Udzur</option>
-                                    <option value="Gila">Hilang Akal (Gila/Pingsan)</option>
-                                </select>
-                            </div>
-                        </div>
-                        <button onclick="checkObligation()" class="w-full bg-emerald-500 hover:bg-emerald-600 text-white text-xl font-bold py-3 rounded-xl shadow-lg border-b-4 border-emerald-700 active:border-b-0 active:translate-y-1 transition">
-                            Cek Hukumnya 🚀
-                        </button>
-                    </div>
-                    
-                    <div class="bg-white rounded-3xl p-8 border-4 border-dashed border-emerald-200 text-center relative overflow-hidden flex flex-col items-center justify-center min-h-[300px]">
-                        <div class="absolute right-0 top-0 bg-yellow-300 text-yellow-800 px-6 py-2 rounded-bl-3xl font-bold shadow-sm z-10">Hasilnya</div>
-                        <span class="text-gray-400 font-bold uppercase tracking-widest text-sm mb-4 block">Hukum Bagi Kamu:</span>
-                        
-                        <div id="check-result" class="text-5xl font-black text-emerald-600 mb-4 transition-all">---</div>
-                        <div id="check-reason" class="bg-emerald-50 px-4 py-3 rounded-lg text-emerald-800 font-medium border border-emerald-100 text-sm leading-relaxed">
-                            Silakan lengkapi data di samping untuk melihat hukumnya.
-                        </div>
-                    </div>
+
+            <!-- Result Area -->
+            <div class="w-full md:w-1/2 bg-aesthetic-50 rounded-2xl p-6 border border-aesthetic-100 flex flex-col items-center justify-center text-center relative overflow-hidden">
+                <span class="text-aesthetic-400 font-bold uppercase tracking-widest text-[10px] mb-4 block">Kesimpulan Hukum:</span>
+                
+                <div id="check-result" class="text-3xl font-bold text-aesthetic-300 mb-4 transition-all">
+                    ---
+                </div>
+                
+                <div id="check-reason" class="text-aesthetic-600 text-xs leading-relaxed max-w-xs">
+                    Silakan atur kondisi di samping, lalu tekan tombol cek untuk melihat hukum Fiqih-nya.
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Quiz Section -->
-    <section id="latihan" class="py-16 bg-gradient-to-t from-emerald-100 to-white">
-        <div class="container mx-auto px-4 max-w-4xl">
-            <div class="text-center mb-10">
-                <span class="inline-block bg-emerald-500 text-white px-6 py-2 rounded-full shadow-md font-bold tracking-wider text-sm uppercase mb-3">
-                    <i class="fa-solid fa-pen-to-square mr-2"></i>Tantangan
-                </span>
-                <h2 class="text-4xl font-bold text-emerald-700 mt-2">Latihan Soal</h2>
-                <p class="text-gray-600 mt-2">Seberapa paham kamu tentang Shalat Jumat?</p>
+    <section id="latihan" class="w-full py-16 px-6 bg-white border-t border-aesthetic-100">
+        <div class="max-w-3xl mx-auto">
+            <div class="flex items-center gap-3 mb-8">
+                <span class="h-px flex-grow bg-aesthetic-200"></span>
+                <span class="text-xs font-bold text-aesthetic-500 uppercase tracking-widest px-2"><i class="fa-solid fa-pen-nib mr-2"></i>Evaluasi Belajar</span>
+                <span class="h-px flex-grow bg-aesthetic-200"></span>
             </div>
 
             <!-- Login Container -->
-            <div id="quiz-login" class="bg-white rounded-3xl shadow-xl p-8 border-4 border-emerald-200 max-w-lg mx-auto relative">
-                <div id="auth-status" class="absolute top-4 right-4 text-xs font-bold text-gray-400">
-                    <i class="fa-solid fa-circle text-gray-300 mr-1"></i> Menghubungkan...
+            <div id="quiz-login" class="bg-white rounded-3xl shadow-sm border border-aesthetic-200 p-8 max-w-md mx-auto relative">
+                <div id="auth-status" class="absolute top-5 right-5 text-[10px] font-bold text-aesthetic-400 flex items-center gap-1">
+                    <div class="w-2 h-2 rounded-full bg-gray-300 animate-pulse"></div> Menghubungkan...
                 </div>
                 
                 <div class="text-center mb-6">
-                    <i class="fa-solid fa-user-graduate text-5xl text-emerald-400 mb-4"></i>
-                    <h3 class="text-2xl font-bold text-gray-700">Identitas Siswa</h3>
-                    <p class="text-sm text-gray-500">Isi nama dulu sebelum mulai ya!</p>
+                    <div class="w-12 h-12 bg-aesthetic-50 rounded-full flex items-center justify-center mx-auto text-aesthetic-500 text-xl mb-3">
+                        <i class="fa-solid fa-user-graduate"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-aesthetic-800">Identitas Siswa</h3>
+                    <p class="text-xs text-aesthetic-500 mt-1">Isi data sebelum mengerjakan soal</p>
                 </div>
+                
                 <div class="space-y-4">
                     <div>
-                        <label class="block text-gray-600 font-bold mb-1">Nama Lengkap</label>
-                        <input type="text" id="student-name" class="w-full p-3 border-2 border-emerald-100 rounded-xl outline-none focus:border-emerald-500 bg-emerald-50" placeholder="Contoh: Ahmad Santoso">
+                        <label class="block text-aesthetic-700 text-xs font-bold mb-1.5">Nama Lengkap</label>
+                        <input type="text" id="student-name" class="w-full p-3 text-sm border border-aesthetic-200 rounded-xl outline-none focus:border-aesthetic-400 focus:ring-1 focus:ring-aesthetic-400 bg-aesthetic-50/50" placeholder="Cth: Ahmad Zulfikar">
                     </div>
                     <div>
-                        <label class="block text-gray-600 font-bold mb-1">Kelas</label>
-                        <input type="text" id="student-class" class="w-full p-3 border-2 border-emerald-100 rounded-xl outline-none focus:border-emerald-500 bg-emerald-50" placeholder="Contoh: 7A">
+                        <label class="block text-aesthetic-700 text-xs font-bold mb-1.5">Kelas</label>
+                        <input type="text" id="student-class" class="w-full p-3 text-sm border border-aesthetic-200 rounded-xl outline-none focus:border-aesthetic-400 focus:ring-1 focus:ring-aesthetic-400 bg-aesthetic-50/50" placeholder="Cth: 7A">
                     </div>
-                    <button id="start-btn" onclick="startQuiz()" disabled class="w-full bg-gray-400 text-white font-bold py-3 rounded-xl shadow-lg cursor-not-allowed transition mt-4">
+                    <button id="start-btn" onclick="startQuiz()" disabled class="w-full bg-gray-300 text-gray-500 font-bold py-3.5 rounded-xl cursor-not-allowed transition-all text-sm mt-2">
                         Tunggu Sebentar...
                     </button>
-                    <p id="auth-error-msg" class="text-red-500 text-xs text-center hidden">Gagal terhubung ke database. Coba refresh halaman.</p>
+                    <p id="auth-error-msg" class="text-red-500 text-[10px] text-center hidden">Koneksi terputus. Silakan muat ulang halaman.</p>
                 </div>
             </div>
 
             <!-- Quiz Container -->
             <div id="quiz-container" class="hidden space-y-6">
-                <div class="bg-emerald-100 p-4 rounded-xl flex justify-between items-center border border-emerald-200">
-                    <div class="font-bold text-emerald-700">
-                        <i class="fa-solid fa-user mr-2"></i> <span id="display-name">---</span> (<span id="display-class">---</span>)
+                <div class="bg-aesthetic-50 p-4 rounded-2xl flex justify-between items-center border border-aesthetic-100">
+                    <div class="font-semibold text-aesthetic-700 text-sm flex items-center gap-2">
+                        <i class="fa-solid fa-user-circle text-aesthetic-400 text-lg"></i> 
+                        <span id="display-name">---</span> (<span id="display-class">---</span>)
                     </div>
-                    <div class="bg-white px-4 py-1 rounded-full text-emerald-600 text-sm font-bold shadow-sm">
-                        Total: 15 Soal
+                    <div class="bg-white px-3 py-1 rounded-full text-aesthetic-500 text-xs font-bold border border-aesthetic-100">
+                        15 Soal
                     </div>
                 </div>
 
                 <form id="quiz-form" class="space-y-6">
-                    <!-- Questions will be injected here by JS -->
+                    <!-- Questions injected by JS -->
                 </form>
 
-                <div class="text-center pt-6">
-                    <button type="button" id="submit-btn" onclick="preSubmitCheck()" class="bg-green-500 hover:bg-green-600 text-white text-xl font-bold px-10 py-4 rounded-full shadow-lg border-b-4 border-green-700 active:border-b-0 active:translate-y-1 transition transform hover:scale-105">
+                <div class="text-center pt-8">
+                    <button type="button" id="submit-btn" onclick="preSubmitCheck()" class="bg-aesthetic-500 hover:bg-aesthetic-600 text-white text-sm font-bold px-8 py-3.5 rounded-full shadow-md shadow-aesthetic-500/20 transition-all hover:-translate-y-0.5">
                         <i class="fa-solid fa-paper-plane mr-2"></i> Kirim Jawaban
                     </button>
                 </div>
@@ -389,41 +419,41 @@
         </div>
     </section>
 
+    <!-- Footer -->
+    <footer class="w-full text-center py-8 border-t border-aesthetic-200 bg-eef5f2 mt-auto">
+        <div class="font-arabic text-xl text-aesthetic-600 mb-2">طَلَبُ الْعِلْمِ فَرِيْضَةٌ عَلَى كُلِّ مُسْلِمٍ</div>
+        <p class="text-[11px] text-aesthetic-500 italic mb-4">"Menuntut ilmu itu wajib bagi setiap muslim."</p>
+        <p class="text-[10px] text-aesthetic-400 tracking-wide font-medium">
+            &copy; 2026 MTsN 6 Demak. All Rights Reserved.
+        </p>
+    </footer>
+
     <!-- Custom Modal -->
     <div id="custom-modal" class="hidden fixed inset-0 z-[100] flex items-center justify-center modal-backdrop px-4">
-        <div class="bg-white rounded-3xl shadow-2xl p-8 max-w-md w-full modal-content border-t-8 border-emerald-500 relative flex flex-col items-center">
-            <div class="absolute -top-12 bg-white rounded-full p-2 shadow-lg">
-                 <div id="modal-icon-container" class="w-20 h-20 rounded-full flex items-center justify-center text-4xl border-4 border-emerald-50">
-                     <i class="fa-solid fa-bell text-emerald-500"></i>
-                 </div>
+        <div class="bg-white rounded-3xl shadow-2xl p-8 max-w-sm w-full modal-content border border-white/50 relative flex flex-col items-center text-center">
+            
+            <div id="modal-icon-container" class="w-16 h-16 rounded-full flex items-center justify-center text-2xl mb-4 bg-aesthetic-50 text-aesthetic-500 ring-4 ring-aesthetic-50/50">
+                <i class="fa-solid fa-bell"></i>
             </div>
-            <div class="mt-10 text-center w-full">
-                <h3 id="modal-title" class="text-2xl font-bold text-gray-800 mb-2 font-['Fredoka']">Judul Modal</h3>
-                <div id="modal-body" class="text-gray-600 mb-8 leading-relaxed text-lg font-['Patrick_Hand']">
-                    Pesan akan muncul di sini.
-                </div>
-                <div id="modal-actions" class="flex flex-col sm:flex-row gap-3 justify-center w-full">
-                    <!-- Buttons injected via JS -->
-                </div>
+            
+            <h3 id="modal-title" class="text-lg font-bold text-aesthetic-800 mb-2">Judul Modal</h3>
+            <div id="modal-body" class="text-aesthetic-500 text-sm mb-6 leading-relaxed">
+                Pesan akan muncul di sini.
+            </div>
+            
+            <div id="modal-actions" class="flex flex-col gap-2 w-full">
+                <!-- Buttons injected via JS -->
             </div>
         </div>
     </div>
 
-    <!-- Footer -->
-    <footer class="bg-emerald-600 text-white py-8 mt-10">
-        <div class="container mx-auto px-4 text-center">
-            <p class="font-bold text-xl mb-2 font-['Fredoka']">FikihCeria</p>
-            <p class="text-emerald-100 opacity-90 font-['Patrick_Hand']">Belajar Fikih jadi lebih mudah dan menyenangkan!</p>
-            <p class="text-xs text-emerald-200 mt-6">&copy; 2026 EduFikih Kids. All rights reserved.</p>
-        </div>
-    </footer>
-
-    <!-- Scripts -->
+    <!-- Scripts (Firebase & Logic) -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
         import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
         import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
 
+        // Keep Firebase configuration intact
         const firebaseConfig = {
             apiKey: "AIzaSyAkX8qAS-O_5m_qaGr8Aa9XME-lVyBMibw",
             authDomain: "belajaronline-b5512.firebaseapp.com",
@@ -450,15 +480,15 @@
             if (user) {
                 console.log("User terautentikasi:", user.uid);
                 startBtn.disabled = false;
-                startBtn.classList.remove('bg-gray-400', 'cursor-not-allowed');
-                startBtn.classList.add('bg-emerald-500', 'hover:bg-emerald-600', 'border-b-4', 'border-emerald-700');
-                startBtn.innerHTML = 'Mulai Kerjakan Soal <i class="fa-solid fa-arrow-right ml-2"></i>';
-                authStatus.innerHTML = '<i class="fa-solid fa-circle text-green-400 mr-1"></i> Siap';
-                authStatus.classList.replace('text-gray-400', 'text-green-600');
+                startBtn.classList.remove('bg-gray-300', 'text-gray-500', 'cursor-not-allowed');
+                startBtn.classList.add('bg-aesthetic-500', 'text-white', 'hover:bg-aesthetic-600', 'shadow-md');
+                startBtn.innerHTML = 'Mulai Kerjakan Soal';
+                authStatus.innerHTML = '<div class="w-2 h-2 rounded-full bg-emerald-400"></div> Siap';
+                authStatus.classList.replace('text-aesthetic-400', 'text-emerald-600');
                 authErrorMsg.classList.add('hidden');
             } else {
                 signInAnonymously(auth).catch((error) => {
-                    authStatus.innerHTML = '<i class="fa-solid fa-circle text-red-400 mr-1"></i> Gagal';
+                    authStatus.innerHTML = '<div class="w-2 h-2 rounded-full bg-red-400"></div> Gagal';
                     authErrorMsg.classList.remove('hidden');
                     authErrorMsg.textContent = "Error Login: " + error.message;
                 });
@@ -475,30 +505,36 @@
         function showModal(config) {
             modalTitle.textContent = config.title;
             modalBody.innerHTML = config.message;
-            let iconClass = 'fa-bell';
-            let iconColor = 'text-emerald-500';
-            let borderColor = 'border-emerald-50';
             
-            if (config.type === 'warning') { iconClass = 'fa-triangle-exclamation'; iconColor = 'text-amber-500'; borderColor = 'border-amber-50'; }
-            if (config.type === 'success') { iconClass = 'fa-trophy'; iconColor = 'text-green-500'; borderColor = 'border-green-50'; }
-            if (config.type === 'error') { iconClass = 'fa-circle-xmark'; iconColor = 'text-red-500'; borderColor = 'border-red-50'; }
-            if (config.type === 'loading') { iconClass = 'fa-spinner fa-spin'; iconColor = 'text-blue-500'; borderColor = 'border-blue-50'; }
+            // Aesthetic mapping
+            let iconClass = 'fa-bell';
+            let iconColor = 'text-aesthetic-500';
+            let bgColor = 'bg-aesthetic-50';
+            let ringColor = 'ring-aesthetic-50/50';
 
-            modalIconContainer.className = `w-20 h-20 rounded-full flex items-center justify-center text-4xl border-4 ${borderColor} bg-white shadow-inner`;
-            modalIconContainer.innerHTML = `<i class="fa-solid ${iconClass} ${iconColor}"></i>`;
+            if (config.type === 'warning') { iconClass = 'fa-triangle-exclamation'; iconColor = 'text-amber-500'; bgColor = 'bg-amber-50'; ringColor = 'ring-amber-50/50'; }
+            if (config.type === 'success') { iconClass = 'fa-check'; iconColor = 'text-emerald-500'; bgColor = 'bg-emerald-50'; ringColor = 'ring-emerald-50/50'; }
+            if (config.type === 'error') { iconClass = 'fa-xmark'; iconColor = 'text-red-500'; bgColor = 'bg-red-50'; ringColor = 'ring-red-50/50'; }
+            if (config.type === 'loading') { iconClass = 'fa-spinner fa-spin'; iconColor = 'text-aesthetic-500'; bgColor = 'bg-aesthetic-50'; ringColor = 'ring-aesthetic-50/50'; }
+
+            modalIconContainer.className = `w-16 h-16 rounded-full flex items-center justify-center text-2xl mb-4 ${bgColor} ${iconColor} ring-4 ${ringColor}`;
+            modalIconContainer.innerHTML = `<i class="fa-solid ${iconClass}"></i>`;
+            
             modalActions.innerHTML = '';
+            
             if (config.buttons) {
                 config.buttons.forEach(btn => {
                     const buttonEl = document.createElement('button');
-                    buttonEl.className = `w-full py-3 rounded-xl font-bold transition shadow-sm border-b-4 active:border-b-0 active:translate-y-1 ${btn.class || 'bg-gray-200 text-gray-700 border-gray-300 hover:bg-gray-300'}`;
+                    // Use provided class or default aesthetic gray
+                    buttonEl.className = `w-full py-3 rounded-xl font-bold text-sm transition-all ${btn.class || 'bg-aesthetic-100 text-aesthetic-600 hover:bg-aesthetic-200'}`;
                     buttonEl.textContent = btn.text;
                     buttonEl.onclick = () => { if (btn.close !== false) hideModal(); if (btn.onClick) btn.onClick(); };
                     modalActions.appendChild(buttonEl);
                 });
             } else if (config.type !== 'loading') {
                 const closeBtn = document.createElement('button');
-                closeBtn.className = "w-full bg-emerald-500 text-white py-3 rounded-xl font-bold hover:bg-emerald-600 border-b-4 border-emerald-700 active:border-b-0 active:translate-y-1 transition";
-                closeBtn.textContent = "Tutup";
+                closeBtn.className = "w-full bg-aesthetic-500 text-white py-3 rounded-xl font-bold text-sm hover:bg-aesthetic-600 transition-all shadow-md";
+                closeBtn.textContent = "Mengerti";
                 closeBtn.onclick = hideModal;
                 modalActions.appendChild(closeBtn);
             }
@@ -521,35 +557,31 @@
             const resultEl = document.getElementById('check-result');
             const reasonEl = document.getElementById('check-reason');
 
-            // Reset Animation
-            resultEl.classList.remove('animate-bounce');
-            void resultEl.offsetWidth; // trigger reflow
-
-            // Logika Fikih
+            // Logika Fikih with Aesthetic styling
             if (health === 'Gila') {
                 resultEl.textContent = "TIDAK WAJIB";
-                resultEl.className = "text-5xl font-black text-gray-400 mb-4 transition-all";
-                reasonEl.innerHTML = "<i class='fa-solid fa-brain mr-2'></i>Syarat wajib shalat adalah berakal. Orang yang hilang akal tidak terbebani hukum (taklif).";
+                resultEl.className = "text-2xl font-bold text-gray-400 mb-3 transition-all";
+                reasonEl.innerHTML = "<i class='fa-solid fa-brain mr-1.5'></i>Syarat wajib shalat adalah berakal. Orang yang hilang akal terlepas dari beban hukum.";
             } else if (gender === 'P') {
                 resultEl.textContent = "TIDAK WAJIB";
-                resultEl.className = "text-5xl font-black text-pink-500 mb-4 transition-all";
-                reasonEl.innerHTML = "<i class='fa-solid fa-person-dress mr-2'></i>Perempuan tidak diwajibkan Shalat Jumat, namun <b>wajib</b> melaksanakan Shalat Dzuhur di rumah.";
+                resultEl.className = "text-2xl font-bold text-rose-400 mb-3 transition-all";
+                reasonEl.innerHTML = "<i class='fa-solid fa-person-dress mr-1.5'></i>Perempuan tidak wajib Shalat Jumat, namun <b>wajib</b> diganti Shalat Dzuhur di rumah.";
             } else if (age === 'Anak') {
                 resultEl.textContent = "TIDAK WAJIB";
-                resultEl.className = "text-5xl font-black text-blue-400 mb-4 transition-all";
-                reasonEl.innerHTML = "<i class='fa-solid fa-child-reaching mr-2'></i>Anak yang belum baligh tidak wajib. Namun, sangat dianjurkan ikut untuk pembelajaran/latihan.";
+                resultEl.className = "text-2xl font-bold text-blue-400 mb-3 transition-all";
+                reasonEl.innerHTML = "<i class='fa-solid fa-child mr-1.5'></i>Anak yang belum baligh tidak wajib, namun dianjurkan ikut untuk pembelajaran.";
             } else if (health === 'Sakit') {
                 resultEl.textContent = "TIDAK WAJIB";
-                resultEl.className = "text-5xl font-black text-amber-500 mb-4 transition-all";
-                reasonEl.innerHTML = "<i class='fa-solid fa-bed-pulse mr-2'></i>Sakit parah termasuk udzur syar'i yang menggugurkan kewajiban Jumat. Wajib diganti Shalat Dzuhur.";
+                resultEl.className = "text-2xl font-bold text-amber-500 mb-3 transition-all";
+                reasonEl.innerHTML = "<i class='fa-solid fa-bed text-sm mr-1.5'></i>Sakit parah adalah udzur syar'i. Kewajiban Jumat gugur dan wajib Shalat Dzuhur.";
             } else if (status === 'Musafir') {
                 resultEl.textContent = "TIDAK WAJIB";
-                resultEl.className = "text-5xl font-black text-amber-500 mb-4 transition-all";
-                reasonEl.innerHTML = "<i class='fa-solid fa-plane-departure mr-2'></i>Musafir (perjalanan jauh sebelum subuh) mendapat keringanan (rukhsah). Wajib diganti Shalat Dzuhur.";
+                resultEl.className = "text-2xl font-bold text-amber-500 mb-3 transition-all";
+                reasonEl.innerHTML = "<i class='fa-solid fa-plane text-sm mr-1.5'></i>Musafir mendapat keringanan (rukhsah). Wajib diganti dengan Shalat Dzuhur.";
             } else {
-                resultEl.textContent = "WAJIB AIN!";
-                resultEl.className = "text-5xl font-black text-emerald-600 mb-4 transition-all animate-bounce";
-                reasonEl.innerHTML = "<i class='fa-solid fa-circle-check mr-2'></i>Anda Laki-laki, Baligh, Berakal, Sehat, dan Mukim. <br><b>Haram</b> meninggalkannya tanpa udzur.";
+                resultEl.textContent = "WAJIB 'AIN";
+                resultEl.className = "text-2xl font-bold text-aesthetic-600 mb-3 transition-all";
+                reasonEl.innerHTML = "<i class='fa-solid fa-circle-check mr-1.5'></i>Anda Laki-laki, Baligh, Berakal, Sehat, dan Mukim. Haram meninggalkannya.";
             }
         }
 
@@ -579,7 +611,7 @@
             const cls = document.getElementById('student-class').value.trim();
 
             if (!name || !cls) {
-                showModal({ title: "Ops!", message: "Mohon isi Nama dan Kelas dulu ya sebelum mulai.", type: 'warning' });
+                showModal({ title: "Ops!", message: "Mohon isi Nama dan Kelas dulu sebelum mulai.", type: 'warning' });
                 return;
             }
 
@@ -598,30 +630,28 @@
         function renderQuestions() {
             const form = document.getElementById('quiz-form');
             form.innerHTML = ""; 
-
             questionData.forEach((item, index) => {
                 const qDiv = document.createElement('div');
-                qDiv.className = "bg-white p-6 rounded-2xl shadow border border-emerald-100 relative overflow-hidden";
+                qDiv.className = "bg-white p-6 rounded-2xl shadow-sm border border-aesthetic-100";
                 
                 let optionsHtml = "";
                 item.options.forEach((opt, optIndex) => {
                     optionsHtml += `
-                        <label class="option-label group flex items-center p-3 rounded-xl cursor-pointer bg-white mb-2 relative">
+                        <label class="option-label group flex items-center rounded-xl cursor-pointer bg-white mb-2 relative overflow-hidden">
                             <input type="radio" name="q${index}" value="${optIndex}" class="option-input hidden peer">
-                            <div class="option-content w-full h-full flex items-center p-2 rounded-lg transition-all duration-300">
-                                <span class="option-circle w-8 h-8 flex-shrink-0 flex items-center justify-center bg-emerald-50 rounded-full mr-3 text-sm font-bold text-emerald-500 border-2 border-emerald-200">
+                            <div class="option-content w-full h-full flex items-center p-3 transition-all duration-300">
+                                <span class="option-circle w-6 h-6 flex-shrink-0 flex items-center justify-center bg-aesthetic-50 rounded-full mr-3 text-[10px] font-bold text-aesthetic-500 border border-aesthetic-200">
                                     ${String.fromCharCode(65+optIndex)}
                                 </span>
-                                <span class="font-medium text-emerald-900 text-lg peer-checked:text-emerald-800">${opt}</span>
+                                <span class="text-sm font-medium text-aesthetic-700 peer-checked:text-aesthetic-800">${opt}</span>
                             </div>
                         </label>
                     `;
                 });
 
                 qDiv.innerHTML = `
-                    <div class="absolute top-0 left-0 w-1 h-full bg-emerald-400"></div>
-                    <p class="font-bold text-xl mb-4 text-emerald-800 font-['Fredoka']">
-                        <span class="bg-emerald-100 text-emerald-600 px-2 py-1 rounded-md mr-2 text-sm">No. ${index + 1}</span>
+                    <p class="font-semibold text-sm mb-4 text-aesthetic-800 leading-relaxed">
+                        <span class="text-aesthetic-400 font-bold mr-1">${index + 1}.</span>
                         ${item.q}
                     </p>
                     <div class="space-y-1">${optionsHtml}</div>
@@ -638,12 +668,12 @@
 
             if (answered < questionData.length) {
                 showModal({
-                    title: "Belum Selesai!",
-                    message: `Kamu baru menjawab <b class="text-red-500">${answered}</b> dari <b>15</b> soal.<br>Yakin mau dikirim sekarang?`,
+                    title: "Belum Selesai",
+                    message: `Kamu baru menjawab <b class="text-red-500">${answered}</b> dari <b>15</b> soal.<br>Pastikan semua soal terisi.`,
                     type: 'warning',
                     buttons: [
-                        { text: "Lengkapi Dulu", class: "bg-gray-200 text-gray-700 hover:bg-gray-300 border-gray-300" },
-                        { text: "Kirim Saja", class: "bg-amber-500 text-white hover:bg-amber-600 border-amber-600", onClick: () => submitQuizLogic() }
+                        { text: "Lengkapi Dulu", class: "bg-aesthetic-100 text-aesthetic-600 hover:bg-aesthetic-200" },
+                        { text: "Tetap Kirim", class: "bg-amber-500 text-white hover:bg-amber-600", onClick: () => submitQuizLogic() }
                     ]
                 });
             } else {
@@ -661,8 +691,8 @@
             const score = Math.round((correct / questionData.length) * 100);
             
             showModal({
-                title: "Mengirim Jawaban...",
-                message: "Tunggu sebentar, sedang menyimpan nilaimu ke database.",
+                title: "Menyimpan...",
+                message: "Tunggu sebentar, sedang menyimpan hasil evaluasi ke database.",
                 type: 'loading',
                 buttons: [] 
             });
@@ -674,51 +704,50 @@
                     name: studentData.name,
                     kelas: studentData.class,
                     score: score,
-                    type: 'Shalat Jumat', // Updated Type
+                    type: 'Shalat Jumat',
                     date: new Date().toLocaleDateString('id-ID'),
                     timestamp: Date.now()
                 });
                 
                 showModal({
-                    title: "Alhamdulillah! Selesai!",
+                    title: "Berhasil!",
                     message: `
-                        <div class="flex flex-col items-center">
-                            <span class="text-sm text-gray-500 uppercase font-bold tracking-widest mb-1">Skor Kamu</span>
-                            <span class="text-6xl font-black text-emerald-600 mb-2 drop-shadow-sm">${score}</span>
-                            <span class="text-gray-500 bg-gray-100 px-3 py-1 rounded-full text-sm">Nilai sudah tersimpan</span>
+                        <div class="flex flex-col items-center py-2">
+                            <span class="text-xs text-aesthetic-500 uppercase font-bold tracking-widest mb-2">Nilai Akhir</span>
+                            <span class="text-5xl font-bold text-emerald-500 mb-3">${score}</span>
+                            <span class="text-aesthetic-500 text-xs">Data berhasil disimpan ke sistem.</span>
                         </div>
                     `,
                     type: 'success',
                     buttons: [
-                        { text: "Lihat Rekap Nilai", class: "bg-green-500 text-white hover:bg-green-600 border-green-600", onClick: () => {
+                        { text: "Lihat Rekap Nilai", class: "bg-aesthetic-500 text-white hover:bg-aesthetic-600", onClick: () => {
                             window.location.href = "https://mtsn6-demak.github.io/nilai-siswa/";
                         }}
                     ]
                 });
                 
-                document.getElementById('quiz-form').classList.add('pointer-events-none', 'opacity-50');
+                document.getElementById('quiz-form').classList.add('pointer-events-none', 'opacity-60');
                 const submitBtn = document.getElementById('submit-btn');
                 submitBtn.disabled = true;
-                submitBtn.innerHTML = '<i class="fa-solid fa-check mr-2"></i> Terkirim';
-                submitBtn.classList.replace('bg-green-500', 'bg-gray-500');
+                submitBtn.innerHTML = '<i class="fa-solid fa-check mr-2"></i> Sudah Terkirim';
+                submitBtn.classList.replace('bg-aesthetic-500', 'bg-aesthetic-200');
+                submitBtn.classList.replace('text-white', 'text-aesthetic-500');
 
             } catch (e) {
                 console.error("Error adding document: ", e);
-                let errorMsg = "Terjadi kesalahan saat menyimpan.";
+                let errorMsg = "Terjadi kesalahan sistem saat menyimpan.";
                 
-                if (e.message.includes("Missing or insufficient permissions")) {
-                     errorMsg = "GAGAL SIMPAN (Izin Ditolak). Hubungi Guru untuk cek Database Rules.";
-                } else {
-                     errorMsg = "Error: " + e.message;
+                if (e.message.includes("Missing or insufficient permissions")) { 
+                    errorMsg = "Gagal (Izin Ditolak). Sistem database sedang ditutup/error.";
                 }
 
                 showModal({
                     title: "Gagal Mengirim",
-                    message: errorMsg + "<br><br>Ingin coba kirim ke web rekap nilai secara manual?",
+                    message: errorMsg + "<br><br>Ingin coba rekap nilai secara manual?",
                     type: 'error',
                     buttons: [
-                        { text: "Batal", class: "bg-gray-200 text-gray-700 hover:bg-gray-300" },
-                        { text: "Lanjut Manual", class: "bg-red-500 text-white hover:bg-red-600 border-red-600", onClick: () => {
+                        { text: "Batal", class: "bg-aesthetic-100 text-aesthetic-600 hover:bg-aesthetic-200" },
+                        { text: "Lanjut Manual", class: "bg-red-500 text-white hover:bg-red-600", onClick: () => {
                             window.location.href = "https://mtsn6-demak.github.io/nilai-siswa/";
                         }}
                     ]
