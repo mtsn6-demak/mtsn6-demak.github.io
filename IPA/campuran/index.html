@@ -1,0 +1,791 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SainsLab: Materi Campuran</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Montserrat:wght@500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- MathJax -->
+    <script>
+        window.MathJax = {
+            tex: { inlineMath: [['$', '$']], displayMath: [['$$', '$$']] },
+            options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre'] }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+    <style>
+        body { 
+            font-family: 'Inter', sans-serif; 
+            background-color: #f8fafc; 
+            color: #0f172a; 
+            line-height: 1.6;
+        }
+        h1, h2, h3, h4 { 
+            font-family: 'Montserrat', sans-serif; 
+            letter-spacing: -0.5px; 
+        }
+        
+        .card-hover { transition: all 0.3s ease; }
+        .card-hover:hover { 
+            transform: translateY(-2px); 
+            box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.1); 
+        }
+        
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #f8fafc; }
+        ::-webkit-scrollbar-thumb { background: #64748b; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #475569; }
+
+        /* Table Styling */
+        .materi-table th, .kegiatan-table th { 
+            background-color: #f1f5f9; 
+            color: #334155; 
+            padding: 12px 16px; 
+            border-bottom: 2px solid #cbd5e1; 
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .materi-table td, .kegiatan-table td { 
+            padding: 12px 16px; 
+            border-bottom: 1px solid #e2e8f0; 
+            background-color: white; 
+            text-align: left; 
+            color: #475569;
+            font-size: 0.9rem;
+        }
+        
+        /* Quiz Styling */
+        .option-label { 
+            cursor: pointer; 
+            transition: all 0.2s ease; 
+            border: 1px solid #cbd5e1; 
+        }
+        .option-label:hover {
+            border-color: #94a3b8;
+            background-color: #f8fafc;
+        }
+        .option-input:checked + .option-content {
+            background-color: #f0fdfa; 
+            border-color: #0d9488; 
+            color: #0f766e; 
+        }
+        .option-input:checked + .option-content .option-circle {
+            background-color: #0d9488; 
+            border-color: #0d9488; 
+            color: white;
+        }
+
+        /* Modal */
+        .modal-backdrop { 
+            background-color: rgba(15, 23, 42, 0.85); 
+            backdrop-filter: blur(4px); 
+        }
+    </style>
+</head>
+<body class="selection:bg-teal-200 selection:text-teal-900">
+
+    <!-- Navigation -->
+    <nav class="bg-slate-900 text-slate-100 shadow-md sticky top-0 z-50 border-b border-slate-700">
+        <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+            <div class="flex items-center space-x-3">
+                <i class="fa-solid fa-microscope text-2xl text-teal-400"></i>
+                <span class="text-xl font-bold tracking-wide uppercase">Sains<span class="text-teal-400">Lab</span></span>
+            </div>
+            <div class="hidden md:flex space-x-8 text-sm font-medium text-slate-300">
+                <a href="#materi" class="hover:text-teal-300 transition-colors">Ringkasan Materi</a>
+                <a href="#pemisahan" class="hover:text-teal-300 transition-colors">Pemisahan Campuran</a>
+                <a href="#kegiatan" class="hover:text-teal-300 transition-colors">Lembar Praktikum</a>
+                <a href="#latihan" class="hover:text-teal-300 transition-colors">Latihan Soal</a>
+            </div>
+            <button id="mobile-menu-btn" class="md:hidden text-slate-300 hover:text-white transition">
+                <i class="fa-solid fa-bars text-xl"></i>
+            </button>
+        </div>
+        <div id="mobile-menu" class="hidden md:hidden bg-slate-800 border-t border-slate-700 pb-4 px-4 text-center">
+            <a href="#materi" class="block py-3 border-b border-slate-700 text-slate-300">Ringkasan Materi</a>
+            <a href="#pemisahan" class="block py-3 border-b border-slate-700 text-slate-300">Pemisahan Campuran</a>
+            <a href="#kegiatan" class="block py-3 border-b border-slate-700 text-slate-300">Lembar Praktikum</a>
+            <a href="#latihan" class="block py-3 text-slate-300">Latihan Soal</a>
+        </div>
+    </nav>
+
+    <!-- Hero -->
+    <header class="bg-gradient-to-br from-slate-900 via-slate-800 to-teal-900 pt-20 pb-28 px-4 text-center relative overflow-hidden">
+        <div class="absolute inset-0 opacity-10" style="background-image: radial-gradient(#cbd5e1 1px, transparent 1px); background-size: 30px 30px;"></div>
+        
+        <div class="container mx-auto max-w-4xl relative z-10">
+            <span class="bg-slate-800/80 text-teal-300 border border-teal-800/50 px-4 py-1.5 rounded text-xs font-bold tracking-wider uppercase shadow-sm mb-6 inline-block backdrop-blur-sm">
+                Buku Pegangan IPA Kelas 8 
+            </span>
+            <h1 class="text-4xl md:text-5xl lg:text-6xl font-extrabold mb-6 text-white tracking-tight">
+                Materi Zat: <br> <span class="text-teal-400">Campuran & Pemisahannya</span>
+            </h1>
+            <p class="text-base md:text-lg mb-8 text-slate-300 max-w-2xl mx-auto font-light leading-relaxed">
+                Pelajari apa itu campuran homogen dan heterogen, perbedaan larutan, koloid, suspensi, serta praktik teknik pemisahannya di laboratorium.
+            </p>
+            <a href="#materi" class="bg-teal-600 text-white px-8 py-3.5 rounded-lg font-semibold shadow-lg hover:bg-teal-500 hover:shadow-teal-500/25 transition-all inline-flex items-center gap-2">
+                <i class="fa-solid fa-book-open text-sm"></i> Mulai Membaca
+            </a>
+        </div>
+    </header>
+
+    <!-- MATERI SECTION 1 & 2 -->
+    <section id="materi" class="py-12 container mx-auto px-4 -mt-12 relative z-20">
+        
+        <!-- 1. Pengertian Campuran -->
+        <div class="bg-white p-6 md:p-10 rounded-xl shadow-sm border border-slate-200 mb-8 card-hover">
+            <h2 class="text-2xl md:text-3xl font-bold text-slate-800 mb-6 flex items-center border-b border-slate-100 pb-4">
+                <span class="bg-slate-100 text-teal-600 w-10 h-10 rounded flex items-center justify-center mr-4 text-lg"><i class="fa-solid fa-flask"></i></span> 
+                1. Pengertian Campuran
+            </h2>
+            <div class="text-slate-600 space-y-4 text-sm md:text-base">
+                <p>
+                    Campuran didefinisikan sebagai sebuah materi yang tersusun oleh beberapa jenis zat berbeda dengan perbandingan antara satu dan lainnya <b>tanpa melalui proses kimia</b>. Campuran terdiri dari dua bagian, meliputi campuran homogen dan campuran heterogen.
+                </p>
+                <div class="grid md:grid-cols-2 gap-6 mt-6">
+                    <div class="bg-slate-50 p-5 rounded-lg border border-slate-200">
+                        <h3 class="text-lg font-bold text-slate-800 mb-2">a. Campuran Homogen</h3>
+                        <p class="mb-3">Campuran yang terdiri dari dua atau lebih zat sehingga disaat tercampur susunan zat-zat tersebut tidak dapat dibedakan lagi.</p>
+                        <p class="text-sm">Campuran homogen juga disebut sebagai <b>larutan</b> (terdiri dari asam, basa, serta garam). <br><br><b>Contoh:</b> Sirup (terdiri dari beberapa zat berbeda), teh manis, dan alat keperluan masak/kesehatan yang menggunakan paduan logam.</p>
+                    </div>
+                    <div class="bg-slate-50 p-5 rounded-lg border border-slate-200">
+                        <h3 class="text-lg font-bold text-slate-800 mb-2">b. Campuran Heterogen</h3>
+                        <p class="mb-3">Campuran dengan susunan zat campurannya masih dapat dibedakan antara satu materi dengan materi lainnya.</p>
+                        <p class="text-sm"><b>Contoh di kehidupan sehari-hari:</b> <br>
+                        • Campuran minyak dan air.<br>
+                        • Campuran pasir dan air.<br>
+                        • Minuman serbuk kopi yang mengendap.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 2. Koloid, Larutan, dan Suspensi -->
+        <div class="bg-white p-6 md:p-10 rounded-xl shadow-sm border border-slate-200 mb-8 card-hover">
+            <h2 class="text-2xl md:text-3xl font-bold text-slate-800 mb-6 flex items-center border-b border-slate-100 pb-4">
+                <span class="bg-slate-100 text-teal-600 w-10 h-10 rounded flex items-center justify-center mr-4 text-lg"><i class="fa-solid fa-vial"></i></span> 
+                2. Koloid, Larutan, dan Suspensi
+            </h2>
+            <div class="text-slate-600 space-y-4 text-sm md:text-base mb-6">
+                <ul class="list-disc pl-5 space-y-2">
+                    <li><b>Koloid</b> adalah campuran bersifat antara larutan dan suspensi. Secara kasat mata terlihat mirip seperti larutan, namun komponen penyusunnya masih dapat dilihat dengan mikroskop. Biasanya terlihat keruh. <i>Contoh: air dan susu.</i></li>
+                    <li><b>Larutan</b> adalah campuran homogen yang terdiri atas pelarut dan zat terlarut yang tidak bisa dipisahkan lagi. <i>Contoh: air dan sirup.</i></li>
+                    <li><b>Suspensi</b> adalah campuran heterogen. Masih dapat terlihat antarkomponennya tanpa menggunakan mikroskop. Jika didiamkan dalam waktu lama, suspensi dapat mengendap. <i>Contoh: air dan tanah.</i></li>
+                </ul>
+            </div>
+            
+            <h3 class="font-bold text-slate-800 mb-3 text-lg text-center">Tabel Sistem Dispersi</h3>
+            <div class="overflow-x-auto rounded-lg border border-slate-300 shadow-sm">
+                <table class="w-full materi-table border-collapse">
+                    <thead>
+                        <tr>
+                            <th class="w-1/4">Sifat</th>
+                            <th class="w-1/4">Larutan</th>
+                            <th class="w-1/4">Koloid</th>
+                            <th class="w-1/4">Suspensi</th>
+                        </tr>
+                    </thead>
+                    <tbody class="text-sm">
+                        <tr>
+                            <td class="font-bold text-slate-700">Bentuk campuran</td>
+                            <td>Homogen, tidak dapat dibedakan</td>
+                            <td>Homogen secara makroskopis, tapi heterogen jika diamati dengan mikroskop ultra</td>
+                            <td>Heterogen</td>
+                        </tr>
+                        <tr>
+                            <td class="font-bold text-slate-700">Ukuran</td>
+                            <td>&lt;1 nm</td>
+                            <td>1-100 nm</td>
+                            <td>&gt;100 nm</td>
+                        </tr>
+                        <tr>
+                            <td class="font-bold text-slate-700">Fase</td>
+                            <td>Terdiri dari 1 fase</td>
+                            <td>Terdiri dari 2 fase</td>
+                            <td>Terdiri dari 2 fase</td>
+                        </tr>
+                        <tr>
+                            <td class="font-bold text-slate-700">Kestabilan</td>
+                            <td>Stabil</td>
+                            <td>Umumnya stabil</td>
+                            <td>Tidak stabil</td>
+                        </tr>
+                        <tr>
+                            <td class="font-bold text-slate-700">Penyaringan</td>
+                            <td>Tidak dapat disaring</td>
+                            <td>Tidak dapat disaring, kecuali dengan penyaring ultra</td>
+                            <td>Dapat disaring</td>
+                        </tr>
+                        <tr>
+                            <td class="font-bold text-slate-700">Didiamkan</td>
+                            <td>Tidak memisah dan tidak mengendap</td>
+                            <td>Tidak memisah (tahan lama) dan sukar mengendap</td>
+                            <td>Memisah dan mengendap</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- MATERI SECTION 3: Pemisahan Campuran -->
+    <section id="pemisahan" class="bg-slate-100 py-16 border-y border-slate-200">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-10">
+                <span class="inline-block bg-teal-100 text-teal-800 px-4 py-1.5 rounded text-xs font-bold uppercase tracking-wider mb-3">
+                    <i class="fa-solid fa-filter mr-1"></i> Teknik Laboratorium
+                </span>
+                <h2 class="text-3xl font-bold text-slate-800">3. Memisahkan Campuran</h2>
+                <p class="text-slate-500 mt-2 max-w-2xl mx-auto">Pemisahan campuran dapat dilakukan dengan berbagai cara dengan berdasarkan pada kriteria tertentu dan wujud zatnya.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
+                <!-- a. Filtrasi -->
+                <div class="bg-white p-5 rounded-xl shadow-sm border border-slate-200 hover:border-teal-400 transition card-hover">
+                    <div class="w-12 h-12 bg-teal-50 text-teal-600 rounded-lg flex items-center justify-center text-xl mb-4"><i class="fa-solid fa-filter"></i></div>
+                    <h3 class="font-bold text-slate-800 mb-2">a. Penyaringan (Filtrasi)</h3>
+                    <p class="text-sm text-slate-600">Teknik pemisahan berdasarkan perbedaan <b>ukuran partikel</b> zat terlarut. Cairan yang lolos kertas saring disebut <b>filtrat</b>, dan materi yang tertahan disebut <b>residu</b>.<br><i>Contoh: Menyaring pasir dari air.</i></p>
+                </div>
+                
+                <!-- b. Sentrifugasi -->
+                <div class="bg-white p-5 rounded-xl shadow-sm border border-slate-200 hover:border-teal-400 transition card-hover">
+                    <div class="w-12 h-12 bg-teal-50 text-teal-600 rounded-lg flex items-center justify-center text-xl mb-4"><i class="fa-solid fa-rotate"></i></div>
+                    <h3 class="font-bold text-slate-800 mb-2">b. Sentrifugasi</h3>
+                    <p class="text-sm text-slate-600">Pengganti metode filtrasi apabila partikel sangat halus dan jumlah campuran sedikit. Berjalan memanfaatkan <b>gaya sentrifuge</b>.<br><i>Contoh: Memisahkan sel-sel darah dari plasma darah.</i></p>
+                </div>
+
+                <!-- c. Penguapan -->
+                <div class="bg-white p-5 rounded-xl shadow-sm border border-slate-200 hover:border-teal-400 transition card-hover">
+                    <div class="w-12 h-12 bg-teal-50 text-teal-600 rounded-lg flex items-center justify-center text-xl mb-4"><i class="fa-solid fa-sun"></i></div>
+                    <h3 class="font-bold text-slate-800 mb-2">c. Penguapan</h3>
+                    <p class="text-sm text-slate-600">Didasarkan pada mudah atau tidaknya komponen menguap. Dipisahkan dengan memanaskan campuran pada suhu titik didih.<br><i>Contoh: Pembuatan garam dapur dari air laut.</i></p>
+                </div>
+
+                <!-- d. Kristalisasi -->
+                <div class="bg-white p-5 rounded-xl shadow-sm border border-slate-200 hover:border-teal-400 transition card-hover">
+                    <div class="w-12 h-12 bg-teal-50 text-teal-600 rounded-lg flex items-center justify-center text-xl mb-4"><i class="fa-solid fa-gem"></i></div>
+                    <h3 class="font-bold text-slate-800 mb-2">d. Kristalisasi</h3>
+                    <p class="text-sm text-slate-600">Proses pemurnian zat padat berdasarkan perbedaan <b>kelarutan</b> dengan pelarutnya karena penurunan suhu.<br><i>Contoh: Pemisahan air tebu untuk membentuk gula kristal.</i></p>
+                </div>
+
+                <!-- e. Distilasi -->
+                <div class="bg-white p-5 rounded-xl shadow-sm border border-slate-200 hover:border-teal-400 transition card-hover">
+                    <div class="w-12 h-12 bg-teal-50 text-teal-600 rounded-lg flex items-center justify-center text-xl mb-4"><i class="fa-solid fa-flask-vial"></i></div>
+                    <h3 class="font-bold text-slate-800 mb-2">e. Distilasi</h3>
+                    <p class="text-sm text-slate-600">Pemisahan campuran berdasarkan perbedaan <b>titik didih</b> melalui penguapan yang disertai dengan pengembunan.<br><i>Contoh: Memurnikan minyak bumi.</i></p>
+                </div>
+
+                <!-- f. Ekstraksi -->
+                <div class="bg-white p-5 rounded-xl shadow-sm border border-slate-200 hover:border-teal-400 transition card-hover">
+                    <div class="w-12 h-12 bg-teal-50 text-teal-600 rounded-lg flex items-center justify-center text-xl mb-4"><i class="fa-solid fa-fill-drip"></i></div>
+                    <h3 class="font-bold text-slate-800 mb-2">f. Ekstraksi</h3>
+                    <p class="text-sm text-slate-600">Didasarkan pada perbedaan <b>kelarutan</b> komponen dalam pelarut yang berbeda menggunakan alat <b>corong pisah</b>.<br><i>Contoh: Pemisahan campuran minyak dan air.</i></p>
+                </div>
+
+                <!-- g. Sublimasi -->
+                <div class="bg-white p-5 rounded-xl shadow-sm border border-slate-200 hover:border-teal-400 transition card-hover">
+                    <div class="w-12 h-12 bg-teal-50 text-teal-600 rounded-lg flex items-center justify-center text-xl mb-4"><i class="fa-solid fa-cloud-arrow-up"></i></div>
+                    <h3 class="font-bold text-slate-800 mb-2">g. Sublimasi</h3>
+                    <p class="text-sm text-slate-600">Pemisahan komponen campuran antara zat yang dapat menyublim (berubah padat ke gas) dan yang tidak.<br><i>Contoh: Pemisahan iodin dari campuran pasir.</i></p>
+                </div>
+
+                <!-- h. Kromatografi -->
+                <div class="bg-white p-5 rounded-xl shadow-sm border border-slate-200 hover:border-teal-400 transition card-hover">
+                    <div class="w-12 h-12 bg-teal-50 text-teal-600 rounded-lg flex items-center justify-center text-xl mb-4"><i class="fa-solid fa-barcode"></i></div>
+                    <h3 class="font-bold text-slate-800 mb-2">h. Kromatografi</h3>
+                    <p class="text-sm text-slate-600">Didasarkan pada <b>perbedaan kecepatan merambat</b> suatu zat terhadap zat lain dalam media tertentu.<br><i>Contoh: Tes narkotika pada urine.</i></p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Kegiatan Siswa Section (Praktikum LKS) -->
+    <section id="kegiatan" class="py-16 bg-white">
+        <div class="container mx-auto px-4 max-w-4xl">
+            <div class="text-center mb-12">
+                <span class="inline-block bg-slate-800 text-slate-100 px-4 py-1.5 rounded text-xs font-bold uppercase tracking-wider mb-3">
+                    <i class="fa-solid fa-microscope mr-1"></i> Praktikum
+                </span>
+                <h2 class="text-3xl font-bold text-slate-800">Kegiatan Siswa: Observasi Campuran</h2>
+                <p class="text-slate-500 mt-2">Berdasarkan prosedur kegiatan praktikum di buku halaman 46-47.</p>
+            </div>
+
+            <div id="kegiatan-container">
+                
+                <!-- Alat, Bahan, & Cara Kerja Info -->
+                <div class="bg-teal-50 p-6 rounded-xl border border-teal-200 mb-8 flex flex-col md:flex-row gap-6">
+                    <div class="md:w-1/3">
+                        <h3 class="font-bold text-teal-800 mb-2 flex items-center"><i class="fa-solid fa-box-open mr-2"></i> Alat & Bahan</h3>
+                        <ul class="list-disc pl-5 text-sm text-teal-900 space-y-1">
+                            <li>Gelas kimia & Gelas ukur</li>
+                            <li>Corong & Kertas saring</li>
+                            <li>Cawan penguap & Lampu spiritus</li>
+                            <li>Pasir & Garam dapur</li>
+                            <li>Minyak kelapa & Air suling</li>
+                        </ul>
+                    </div>
+                    <div class="md:w-2/3 border-l-2 border-teal-200 md:pl-6">
+                        <h3 class="font-bold text-teal-800 mb-2 flex items-center"><i class="fa-solid fa-list-ol mr-2"></i> Cara Kerja</h3>
+                        <ol class="list-decimal pl-5 text-sm text-teal-900 space-y-1.5">
+                            <li>Campurkan sedikit pasir dengan 10 mL air suling di gelas kimia, aduk perlahan lalu diamkan.</li>
+                            <li>Lipat kertas saring dan pasang di atas corong.</li>
+                            <li>Tambahkan 3 g garam ke dalam campuran percobaan 1, aduk. Saring campuran tersebut dan kumpulkan filtratnya (air lolosan saringan).</li>
+                            <li>Filtrat dimasukkan ke cawan penguap dan dipanaskan hingga terbentuk kristal.</li>
+                            <li>Campurkan 3 mL minyak kelapa dengan 3 mL air suling. Kocok lalu amati.</li>
+                        </ol>
+                    </div>
+                </div>
+
+                <!-- Tabel Pengamatan Interaktif -->
+                <div class="bg-white p-6 md:p-8 rounded-xl shadow-sm border border-slate-200 mb-8">
+                    <h3 class="text-lg font-bold text-slate-800 mb-4 flex items-center">
+                        <i class="fa-solid fa-clipboard-question text-teal-600 mr-3"></i>
+                        Data Hasil Pengamatan & Diskusi
+                    </h3>
+                    <p class="mb-5 text-sm text-slate-500">Berdasarkan cara kerja di atas, pilihlah kesimpulan pengamatan yang paling tepat!</p>
+                    
+                    <div class="space-y-4">
+                        <!-- Diskusi 1 -->
+                        <div class="border border-slate-200 rounded-lg p-4 bg-slate-50">
+                            <p class="font-semibold text-slate-800 text-sm mb-3">1. Bagaimana hasil dari campuran pasir dan air suling pada langkah pertama? Termasuk campuran apakah ini?</p>
+                            <select name="keg_1" class="w-full p-2.5 border border-slate-300 rounded text-sm focus:outline-none focus:ring-1 focus:ring-teal-500 bg-white">
+                                <option value="">-- Pilih Kesimpulan --</option>
+                                <option value="homogen">Menyatu bening, termasuk Campuran Homogen</option>
+                                <option value="heterogen">Menjadi keruh dan pasir mengendap, termasuk Campuran Heterogen</option>
+                            </select>
+                        </div>
+                        
+                        <!-- Diskusi 2 -->
+                        <div class="border border-slate-200 rounded-lg p-4 bg-slate-50">
+                            <p class="font-semibold text-slate-800 text-sm mb-3">2. Setelah disaring, filtrat (air + garam) tidak memiliki endapan pasir lagi. Termasuk campuran apakah air garam ini?</p>
+                            <select name="keg_2" class="w-full p-2.5 border border-slate-300 rounded text-sm focus:outline-none focus:ring-1 focus:ring-teal-500 bg-white">
+                                <option value="">-- Pilih Kesimpulan --</option>
+                                <option value="homogen">Menyatu sempurna (tidak dapat dibedakan), termasuk Campuran Homogen</option>
+                                <option value="heterogen">Masih bisa dibedakan garamnya, termasuk Campuran Heterogen</option>
+                            </select>
+                        </div>
+
+                        <!-- Diskusi 3 -->
+                        <div class="border border-slate-200 rounded-lg p-4 bg-slate-50">
+                            <p class="font-semibold text-slate-800 text-sm mb-3">3. Saat memanaskan filtrat air garam di cawan penguap, apa zat yang tersisa di akhir proses (kristalisasi)?</p>
+                            <select name="keg_3" class="w-full p-2.5 border border-slate-300 rounded text-sm focus:outline-none focus:ring-1 focus:ring-teal-500 bg-white">
+                                <option value="">-- Pilih Kesimpulan --</option>
+                                <option value="kristal">Air menguap dan terbentuk Kristal Garam di cawan</option>
+                                <option value="uap">Semuanya menguap tanpa meninggalkan sisa apapun</option>
+                            </select>
+                        </div>
+
+                        <!-- Diskusi 4 -->
+                        <div class="border border-slate-200 rounded-lg p-4 bg-slate-50">
+                            <p class="font-semibold text-slate-800 text-sm mb-3">4. Bagaimana hasil pengamatan saat minyak kelapa dicampur dengan air suling? Termasuk campuran apakah ini?</p>
+                            <select name="keg_4" class="w-full p-2.5 border border-slate-300 rounded text-sm focus:outline-none focus:ring-1 focus:ring-teal-500 bg-white">
+                                <option value="">-- Pilih Kesimpulan --</option>
+                                <option value="homogen">Air dan minyak saling menyatu, termasuk Campuran Homogen</option>
+                                <option value="heterogen">Terbentuk 2 lapisan (minyak di atas, air di bawah), termasuk Campuran Heterogen</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Submit Button for Kegiatan -->
+                <div class="text-center pt-2 pb-8">
+                    <button type="button" id="btn-kirim-kegiatan" onclick="preSubmitKegiatanCheck()" class="bg-slate-800 hover:bg-slate-700 text-white text-sm font-semibold px-10 py-3 rounded shadow transition-colors inline-flex items-center">
+                        <i class="fa-solid fa-cloud-arrow-up mr-2"></i> Kumpulkan Lembar Kerja
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Quiz Section -->
+    <section id="latihan" class="py-16 bg-slate-100 border-t border-slate-200">
+        <div class="container mx-auto px-4 max-w-3xl">
+            <div class="text-center mb-10">
+                <span class="inline-block bg-teal-100 text-teal-800 px-4 py-1.5 rounded text-xs font-bold uppercase tracking-wider mb-3">
+                    <i class="fa-solid fa-file-signature mr-1"></i> Asesmen Akhir
+                </span>
+                <h2 class="text-3xl font-bold text-slate-800">Latihan Soal Uji Kemampuan</h2>
+                <p class="text-slate-500 mt-2 text-sm">Jawablah 10 pertanyaan pilihan ganda dari materi yang telah dibaca.</p>
+            </div>
+            
+            <div id="quiz-login" class="bg-white rounded-xl shadow-sm border border-slate-200 p-8 max-w-md mx-auto">
+                <p class="text-sm text-slate-500 text-center mb-6">Silakan isi nama dan kelas kamu sebelum mulai mengerjakan latihan soal.</p>
+                <div class="space-y-4">
+                    <input type="text" id="student-name" class="w-full p-3 border border-slate-300 rounded focus:outline-none focus:ring-2 focus:ring-teal-500 bg-slate-50 transition text-sm" placeholder="Nama Lengkap Siswa">
+                    <input type="text" id="student-class" class="w-full p-3 border border-slate-300 rounded focus:outline-none focus:ring-2 focus:ring-teal-500 bg-slate-50 transition text-sm" placeholder="Kelas (contoh: 8A)">
+                    <button onclick="startQuiz()" class="w-full bg-teal-600 text-white font-semibold py-3 rounded hover:bg-teal-700 transition shadow-sm text-sm">
+                        Mulai Latihan Soal
+                    </button>
+                </div>
+            </div>
+            
+            <div id="quiz-container" class="hidden space-y-6">
+                <div class="flex justify-between items-center bg-white px-5 py-3 rounded border border-slate-200 shadow-sm">
+                    <div class="font-medium text-slate-700 text-sm">
+                        <i class="fa-regular fa-id-badge text-teal-600 mr-2"></i> <span id="display-name">Siswa</span>
+                    </div>
+                    <div class="text-xs font-bold text-slate-500 bg-slate-100 px-2.5 py-1 rounded">
+                        TOTAL: 10 SOAL
+                    </div>
+                </div>
+                
+                <form id="quiz-form" class="space-y-6"></form>
+                
+                <div class="text-center pt-6">
+                    <button type="button" onclick="preSubmitCheck()" class="bg-teal-600 hover:bg-teal-700 text-white text-sm font-semibold px-10 py-3 rounded shadow transition-colors inline-flex items-center">
+                        Kirim Jawaban <i class="fa-solid fa-paper-plane ml-2"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Modal -->
+    <div id="custom-modal" class="hidden fixed inset-0 z-[100] flex items-center justify-center modal-backdrop px-4">
+        <div class="bg-white rounded-xl shadow-2xl p-6 max-w-sm w-full relative flex flex-col items-center text-center">
+            <div id="modal-icon" class="w-12 h-12 rounded-full flex items-center justify-center text-2xl mb-4 bg-slate-50 border border-slate-100"></div>
+            <h3 id="modal-title" class="text-xl font-bold mb-2 text-slate-800"></h3>
+            <div id="modal-body" class="text-slate-600 mb-6 text-sm leading-relaxed"></div>
+            <div id="modal-actions" class="flex gap-3 w-full"></div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyAkX8qAS-O_5m_qaGr8Aa9XME-lVyBMibw",
+            authDomain: "belajaronline-b5512.firebaseapp.com",
+            projectId: "belajaronline-b5512",
+            storageBucket: "belajaronline-b5512.firebasestorage.app",
+            messagingSenderId: "896107581081",
+            appId: "1:896107581081:web:629056c097c90fdf583208",
+            measurementId: "G-7MKNGF9PCX"
+        };
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+        const auth = getAuth(app);
+        const appId = 'belajaronline-b5512';
+
+        let currentUser = null;
+
+        const initAuth = async () => {
+            try { await signInAnonymously(auth); } catch (err) { console.error("Auth error", err); }
+        };
+
+        initAuth();
+        onAuthStateChanged(auth, user => currentUser = user);
+
+        // --- QUIZ DATA (From Uploaded Photos 1-10) ---
+        // Sesuai dengan kunci jawaban dari foto buku
+        const quizData = [
+            {
+                q: "Perbedaan senyawa dan campuran adalah dari penyusunnya. Senyawa disusun oleh unsur-unsur, sedangkan campuran disusun oleh....",
+                options: ["zat", "atom", "partikel", "molekul"],
+                a: 0 // Jawab: a
+            },
+            {
+                q: "Di antara materi-materi berikut ini yang tergolong campuran adalah .....",
+                options: ["air laut, garam, asam cuka", "gula, air aki, kuningan", "besi, emas, air laut", "kuningan, air laut, perunggu"],
+                a: 3 // Jawab: d
+            },
+            {
+                q: "Campuran yang tidak dapat dibedakan antara pelarut dengan zat terlarutnya disebut ....",
+                options: ["larutan", "koloid", "suspensi", "senyawa"],
+                a: 1 // Jawab: b (Berdasarkan pembahasan buku di halaman 48)
+            },
+            {
+                q: "Campuran antara dua macam zat atau lebih yang partikel-partikel penyusunnya masih dapat dibedakan satu sama lainnya disebut ....",
+                options: ["larutan", "senyawa", "campuran heterogen", "campuran homogen"],
+                a: 2 // Jawab: c
+            },
+            {
+                q: "Di antara campuran berikut yang merupakan larutan yaitu.....",
+                options: ["jus tomat", "air sungai keruh", "es buah", "air teh"],
+                a: 3 // Jawab: d
+            },
+            {
+                q: "Berikut ini yang merupakan contoh koloid adalah....",
+                options: ["santan", "air gula", "udara", "air pasir"],
+                a: 0 // Jawab: a
+            },
+            {
+                q: "Salah satu cara pemisahan campuran adalah dengan cara penguapan yang terjadi pada kegiatan berikut ini ...",
+                options: ["mendapatkan zat pewarna dari kunyit", "mendapatkan garam dari air laut", "memisahkan minyak kelapa dari santan", "memisahkan minyak sereh dari pohon sereh"],
+                a: 1 // Jawab: b
+            },
+            {
+                q: "Pada proses penjernihan air, jika warna air masih kurang jernih, maka perlu dilakukan penyerapan warna menggunakan .... agar dapat menyerap zat kimia seperti pestisida, logam berat, dan zat organik dari air.",
+                options: ["tawas", "kaporit", "karbon aktif", "detergen"],
+                a: 2 // Jawab: c
+            },
+            {
+                q: `<div class="mb-3 text-center">
+                        <svg viewBox="0 0 320 160" class="w-full max-w-lg mx-auto border rounded bg-slate-50 mb-2">
+                            <!-- Pointer Lines -->
+                            <line x1="85" y1="25" x2="85" y2="35" stroke="#64748b" stroke-width="1"/>
+                            <line x1="60" y1="65" x2="78" y2="65" stroke="#64748b" stroke-width="1"/>
+                            <line x1="50" y1="90" x2="68" y2="90" stroke="#64748b" stroke-width="1"/>
+                            <line x1="40" y1="120" x2="68" y2="120" stroke="#64748b" stroke-width="1"/>
+                            <line x1="140" y1="50" x2="140" y2="67" stroke="#64748b" stroke-width="1"/>
+                            <line x1="165" y1="100" x2="165" y2="87" stroke="#64748b" stroke-width="1"/>
+                            <line x1="217" y1="110" x2="225" y2="110" stroke="#64748b" stroke-width="1"/>
+                            <line x1="215" y1="130" x2="225" y2="130" stroke="#64748b" stroke-width="1"/>
+
+                            <!-- Simple Distillation Apparatus Drawing -->
+                            <rect x="70" y="115" width="30" height="15" fill="#94a3b8"/> <!-- Burner -->
+                            <path d="M80 115 Q85 95 90 115" fill="#ef4444"/> <!-- Flame -->
+                            <circle cx="85" cy="90" r="15" fill="none" stroke="#334155" stroke-width="2"/> <!-- Flask -->
+                            <rect x="80" y="60" width="10" height="15" fill="none" stroke="#334155" stroke-width="2"/> <!-- Neck -->
+                            <line x1="85" y1="60" x2="85" y2="35" stroke="#334155" stroke-width="2"/> <!-- Thermometer line -->
+                            
+                            <!-- Condenser -->
+                            <line x1="90" y1="70" x2="190" y2="90" stroke="#334155" stroke-width="4"/>
+                            <path d="M100 65 L180 81 L185 91 L105 75 Z" fill="none" stroke="#0ea5e9" stroke-width="2"/> <!-- Cooling jacket -->
+                            <line x1="190" y1="90" x2="200" y2="105" stroke="#334155" stroke-width="2"/> <!-- Spout -->
+                            
+                            <!-- Receiving Flask -->
+                            <rect x="190" y="105" width="25" height="35" fill="none" stroke="#334155" stroke-width="2"/>
+                            <rect x="192" y="120" width="21" height="18" fill="#bae6fd"/> <!-- Liquid -->
+
+                            <!-- Text Labels -->
+                            <text x="85" y="20" font-size="9" text-anchor="middle" fill="#0f172a" font-family="sans-serif">Termometer</text>
+                            <text x="55" y="68" font-size="9" text-anchor="end" fill="#0f172a" font-family="sans-serif">Uap air</text>
+                            <text x="45" y="93" font-size="9" text-anchor="end" fill="#0f172a" font-family="sans-serif">Labu destilasi</text>
+                            <text x="35" y="123" font-size="9" text-anchor="end" fill="#0f172a" font-family="sans-serif">Pembakar bunsen</text>
+                            <text x="140" y="45" font-size="9" text-anchor="middle" fill="#0f172a" font-family="sans-serif">Pengembunan</text>
+                            <text x="165" y="110" font-size="9" text-anchor="end" fill="#0f172a" font-family="sans-serif">Air dingin masuk</text>
+                            <text x="230" y="113" font-size="9" text-anchor="start" fill="#0f172a" font-family="sans-serif">Wadah penampungan</text>
+                            <text x="230" y="133" font-size="9" text-anchor="start" fill="#0f172a" font-family="sans-serif">Air hasil penyulingan</text>
+                        </svg>
+                        <span class="text-xs text-slate-500 font-semibold">Perhatikan gambar pemisahan campuran berikut!</span>
+                    </div>
+                    Berdasarkan gambar, metode pemisahan campuran tersebut adalah.....`,
+                options: ["sentrifugasi", "kristalisasi", "destilasi", "ekstraksi"],
+                a: 2 // Jawab: c
+            },
+            {
+                q: "Di dalam proses pemisahan campuran secara kristalisasi, pelarut terhadap zat yang dilarutkan harus memiliki .....",
+                options: ["titik beku lebih tinggi", "titik didih lebih rendah", "titik didih lebih tinggi", "titik cair lebih tinggi"],
+                a: 1 // Jawab: b
+            }
+        ];
+
+        // Kegiatan Logic
+        window.preSubmitKegiatanCheck = () => {
+            let answered = 0;
+            for(let i=1; i<=4; i++) {
+                if(document.querySelector(`select[name="keg_${i}"]`).value !== "") answered++;
+            }
+            
+            if(answered < 4) {
+                showModal({
+                    title: "Belum Selesai", 
+                    message: `Kamu baru mengisi ${answered} dari total 4 poin diskusi pengamatan. Yuk, lengkapi dulu!`, 
+                    buttons: [
+                        {text: "Lanjutkan Mengerjakan", style: "bg-slate-100 text-slate-700"}, 
+                        {text: "Kirim Apa Adanya", action: promptKegiatanIdentity, style: "bg-teal-600 text-white"}
+                    ]
+                });
+            } else {
+                promptKegiatanIdentity();
+            }
+        };
+
+        window.promptKegiatanIdentity = () => {
+            showModal({
+                title: "Data Diri Siswa",
+                message: `
+                    <p class="mb-4 text-xs text-slate-500">Tuliskan nama dan kelasmu sebelum mengumpulkan Lembar Kerja ini.</p>
+                    <input type="text" id="popup-name" class="w-full p-2.5 border border-slate-300 rounded focus:outline-none focus:ring-1 focus:ring-teal-500 bg-white text-sm mb-3" placeholder="Nama Lengkap">
+                    <input type="text" id="popup-class" class="w-full p-2.5 border border-slate-300 rounded focus:outline-none focus:ring-1 focus:ring-teal-500 bg-white text-sm" placeholder="Kelas (contoh: 8A)">
+                    <p id="popup-error" class="text-red-500 text-xs mt-2 hidden font-medium"><i class="fa-solid fa-triangle-exclamation mr-1"></i> Nama dan kelas wajib diisi ya!</p>
+                `,
+                icon: '<i class="fa-solid fa-address-card text-teal-600"></i>',
+                buttons: [
+                    {text: "Batal", style: "bg-slate-100 text-slate-600"},
+                    {text: "Kirim Tugas", action: validateAndSubmitKegiatan, style: "bg-teal-600 text-white"}
+                ]
+            });
+        };
+
+        window.validateAndSubmitKegiatan = () => {
+            const name = document.getElementById('popup-name').value.trim();
+            const cls = document.getElementById('popup-class').value.trim();
+
+            if (!name || !cls) {
+                document.getElementById('popup-error').classList.remove('hidden');
+                return;
+            }
+
+            submitKegiatan(name, cls);
+        };
+
+        async function submitKegiatan(name, cls) {
+            showModal({
+                title: "Mengirim Data...", message: "Mohon tunggu, tugas kamu sedang dikirim ke guru...", icon: '<i class="fa-solid fa-circle-notch fa-spin text-teal-500"></i>', buttons: []
+            });
+            
+            // Kunci Jawaban Diskusi Pengamatan
+            const ansKeg = { keg_1: 'heterogen', keg_2: 'homogen', keg_3: 'kristal', keg_4: 'heterogen' };
+
+            let correct = 0;
+            for(let k in ansKeg) {
+                const s = document.querySelector(`select[name="${k}"]`);
+                if(s && s.value === ansKeg[k]) correct++;
+            }
+            
+            const score = Math.round((correct / 4) * 100);
+            
+            try {
+                if(!currentUser) await signInAnonymously(auth);
+                await addDoc(collection(db, 'artifacts', appId, 'public', 'data', 'scores'), {
+                    name: name, kelas: cls, score: score, materi: 'LKS Praktikum Campuran', date: new Date().toLocaleDateString('id-ID'), timestamp: Date.now()
+                });
+                
+                hideModal();
+                showModal({
+                    title: "Berhasil Dikirim!", message: `Hebat! Tugas LKS Praktikum kamu sudah tersimpan. Nilai kamu: <strong>${score}</strong>`, icon: '<i class="fa-solid fa-check-double text-teal-500"></i>', 
+                    buttons: [{text: "Tutup", style: "bg-teal-600 text-white"}]
+                });
+                
+                document.querySelectorAll('select[name^="keg"]').forEach(el => el.disabled = true);
+                document.getElementById('btn-kirim-kegiatan').classList.add('hidden');
+            } catch(e) {
+                hideModal();
+                showModal({
+                    title: "Gagal Mengirim", message: "Gagal terhubung ke internet. Coba periksa koneksimu ya.", icon: '<i class="fa-solid fa-triangle-exclamation text-red-500"></i>', 
+                    buttons: [{text: "Tutup", style: "bg-slate-100 text-slate-700"}]
+                });
+            }
+        }
+
+        // Quiz Logic
+        window.startQuiz = () => {
+            const name = document.getElementById('student-name').value.trim();
+            const cls = document.getElementById('student-class').value.trim();
+            
+            if(!name || !cls) {
+                return showModal({ title: "Tunggu Dulu!", message: "Isi nama dan kelasmu terlebih dahulu ya.", icon: '<i class="fa-solid fa-circle-exclamation text-amber-500"></i>', buttons: [{text: "Oke", style: "bg-slate-100 text-slate-800"}] });
+            }
+
+            document.getElementById('display-name').textContent = `${name} | ${cls}`;
+            document.getElementById('quiz-login').classList.add('hidden');
+            document.getElementById('quiz-container').classList.remove('hidden');
+            
+            const form = document.getElementById('quiz-form');
+            form.innerHTML = "";
+            
+            quizData.forEach((item, idx) => {
+                const qDiv = document.createElement('div');
+                qDiv.className = "bg-white p-6 rounded-lg border border-slate-200 shadow-sm";
+                
+                let optsHtml = "";
+                item.options.forEach((opt, oIdx) => {
+                    optsHtml += `
+                        <label class="option-label block relative mb-3 rounded overflow-hidden">
+                            <input type="radio" name="q${idx}" value="${oIdx}" class="option-input absolute opacity-0 w-full h-full cursor-pointer z-10">
+                            <div class="option-content p-3.5 flex items-center transition-colors">
+                                <span class="option-circle w-7 h-7 rounded border border-slate-300 flex items-center justify-center mr-3 text-xs font-bold text-slate-500 flex-shrink-0 transition-colors">
+                                    ${String.fromCharCode(97 + oIdx)}
+                                </span>
+                                <span class="text-slate-600 text-sm leading-snug">${opt}</span>
+                            </div>
+                        </label>
+                    `;
+                });
+                
+                qDiv.innerHTML = `
+                    <div class="font-semibold text-slate-800 mb-4 leading-relaxed text-sm md:text-base">
+                        <span class="bg-slate-100 text-slate-500 border border-slate-200 px-2 py-0.5 rounded text-xs mr-2 font-bold tracking-widest align-middle">Soal ${idx + 1}</span>
+                        <div class="inline-block align-middle mt-2 md:mt-0">${item.q}</div>
+                    </div>
+                    <div class="mt-4">${optsHtml}</div>
+                `;
+                form.appendChild(qDiv);
+            });
+            if (window.MathJax) MathJax.typesetPromise();
+        };
+
+        window.preSubmitCheck = () => {
+            let answered = 0;
+            quizData.forEach((_, i) => { if(document.querySelector(`input[name="q${i}"]:checked`)) answered++; });
+            
+            if(answered < quizData.length) {
+                showModal({ title: "Belum Tuntas", message: `Kamu baru mengerjakan ${answered} dari ${quizData.length} soal. Yuk, lengkapi!`, buttons: [{text: "Kembali Mengerjakan", style: "bg-slate-100 text-slate-700"}, {text: "Kirim Apa Adanya", action: submitQuiz, style: "bg-teal-600 text-white"}] });
+            } else {
+                submitQuiz();
+            }
+        };
+
+        async function submitQuiz() {
+            showModal({ title: "Mengoreksi...", message: "Menyimpan dan mencocokkan jawabanmu dengan kunci jawaban...", icon: '<i class="fa-solid fa-gear fa-spin text-teal-500"></i>', buttons: [] });
+            
+            let correct = 0;
+            quizData.forEach((item, i) => {
+                const sel = document.querySelector(`input[name="q${i}"]:checked`);
+                if(sel && parseInt(sel.value) === item.a) correct++;
+            });
+            
+            const score = Math.round((correct / quizData.length) * 100);
+            
+            try {
+                if(!currentUser) await signInAnonymously(auth);
+                await addDoc(collection(db, 'artifacts', appId, 'public', 'data', 'scores'), {
+                    name: document.getElementById('student-name').value, kelas: document.getElementById('student-class').value, score: score, materi: 'Latihan Soal Uji Kemampuan', date: new Date().toLocaleDateString('id-ID'), timestamp: Date.now()
+                });
+                
+                hideModal();
+                showModal({ title: "Selesai!", message: `Hebat! Nilai latihan soal kamu adalah: <strong>${score}</strong> / 100`, icon: '<i class="fa-solid fa-chart-line text-teal-600"></i>', buttons: [{text: "Tutup & Selesai", action: () => location.reload(), style: "bg-teal-600 text-white"}] });
+            } catch(e) {
+                hideModal();
+                showModal({ title: "Gagal Mengirim", message: "Koneksi terputus. Coba periksa jaringan internetmu.", icon: '<i class="fa-solid fa-plug-circle-xmark text-red-500"></i>', buttons: [{text: "Tutup", style: "bg-slate-100 text-slate-700"}] });
+            }
+        }
+
+        // Modal Logic
+        const modal = document.getElementById('custom-modal');
+        const mTitle = document.getElementById('modal-title');
+        const mBody = document.getElementById('modal-body');
+        const mIcon = document.getElementById('modal-icon');
+        const mActions = document.getElementById('modal-actions');
+        
+        window.showModal = (cfg) => {
+            mTitle.textContent = cfg.title; mBody.innerHTML = cfg.message; mIcon.innerHTML = cfg.icon || ''; mActions.innerHTML = '';
+            cfg.buttons.forEach(btn => {
+                const b = document.createElement('button'); 
+                b.className = `flex-1 py-2.5 rounded font-semibold transition text-sm ${btn.style || 'bg-slate-100 hover:bg-slate-200 text-slate-800'}`; 
+                b.innerHTML = btn.text;
+                b.onclick = () => { if(btn.action) btn.action(); else hideModal(); }; 
+                mActions.appendChild(b);
+            });
+            modal.classList.remove('hidden');
+        };
+        
+        window.hideModal = () => modal.classList.add('hidden');
+        
+        // Mobile Menu
+        document.getElementById('mobile-menu-btn').onclick = () => {
+            document.getElementById('mobile-menu').classList.toggle('hidden');
+        };
+    </script>
+</body>
+</html>
