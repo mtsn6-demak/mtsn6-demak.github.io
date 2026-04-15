@@ -3,110 +3,140 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rekap Nilai Siswa - MTsN 6 Demak</title>
+    <title>Portal Rekap Nilai Akademik</title>
     
     <!-- Libraries -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
     
+    <!-- Google Fonts (Modern Education Theme) -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        heading: ['Plus Jakarta Sans', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            50: '#eef2ff',
+                            100: '#e0e7ff',
+                            200: '#c7d2fe',
+                            500: '#6366f1',
+                            600: '#4f46e5', /* Indigo 600 - Primary */
+                            700: '#4338ca',
+                            800: '#3730a3',
+                            900: '#312e81',
+                        }
+                    },
+                    boxShadow: {
+                        'soft': '0 4px 20px -2px rgba(0, 0, 0, 0.05)',
+                        'float': '0 10px 30px -5px rgba(79, 70, 229, 0.15)',
+                    }
+                }
+            }
+        }
+    </script>
+
     <style>
         body {
-            font-family: 'Nunito', sans-serif;
-            background: linear-gradient(135deg, #eef2ff 0%, #fdf2f8 100%);
+            /* Soft radial gradient for a modern, clean background */
+            background: radial-gradient(circle at top right, #e0e7ff 0%, #f8fafc 30%, #f8fafc 100%);
+            color: #334155; /* Slate 700 */
             min-height: 100vh;
-        }
-        
-        .glass {
-            background: rgba(255, 255, 255, 0.7);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.3);
         }
 
         .fade-in { animation: fadeIn 0.6s cubic-bezier(0.22, 1, 0.36, 1); }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
         
-        .custom-scroll::-webkit-scrollbar { height: 8px; }
-        .custom-scroll::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 4px; }
-        .custom-scroll::-webkit-scrollbar-thumb { background: #c7c7c7; border-radius: 4px; }
-        .custom-scroll::-webkit-scrollbar-thumb:hover { background: #a0a0a0; }
+        /* Custom Scrollbar - Minimalist */
+        .custom-scroll::-webkit-scrollbar { height: 6px; width: 6px; }
+        .custom-scroll::-webkit-scrollbar-track { background: transparent; }
+        .custom-scroll::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+        .custom-scroll::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
 
         th.sortable {
             cursor: pointer;
-            transition: background-color 0.2s;
+            transition: all 0.2s ease;
             user-select: none;
         }
         th.sortable:hover {
-            background-color: #eff6ff;
-            color: #2563eb;
+            background-color: #f1f5f9;
+            color: #4f46e5;
         }
+        
+        /* Modal Animation */
+        .modal-enter { animation: modalEnter 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; }
+        @keyframes modalEnter { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
     </style>
 </head>
-<body class="text-slate-700 pb-10">
+<body class="font-sans antialiased selection:bg-brand-200 selection:text-brand-900 pb-10">
 
-    <!-- Navbar -->
-    <div class="max-w-7xl mx-auto pt-6 px-4">
-        <nav class="glass rounded-2xl shadow-sm px-6 py-4 flex flex-col md:flex-row justify-between items-center gap-4 z-50 sticky top-4">
+    <!-- Navbar (Glassmorphism Light) -->
+    <nav class="w-full bg-white/80 backdrop-blur-xl sticky top-0 z-50 border-b border-slate-200/80 shadow-sm">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex flex-col md:flex-row justify-between items-center gap-4">
             <div class="flex items-center gap-4">
-                <div class="bg-gradient-to-tr from-blue-500 to-purple-500 p-3 rounded-xl shadow-lg text-white transform hover:rotate-6 transition duration-300">
-                    <i data-lucide="graduation-cap" class="w-7 h-7"></i>
+                <div class="bg-brand-600 p-2.5 rounded-xl text-white shadow-md shadow-brand-500/30">
+                    <i data-lucide="book-open" class="w-6 h-6"></i>
                 </div>
                 <div>
-                    <h1 class="text-2xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600">Portal Nilai</h1>
-                    <p class="text-xs font-semibold text-slate-400 tracking-wider uppercase">MTsN 6 Demak Database</p>
+                    <h1 class="text-2xl font-bold tracking-tight font-heading leading-tight text-slate-800">Portal Data</h1>
+                    <p class="text-[10px] font-bold text-brand-600 tracking-widest uppercase">Akademik & Evaluasi</p>
                 </div>
             </div>
-            <div class="flex gap-3">
-                <button onclick="downloadCSV()" class="flex items-center gap-2 bg-emerald-500 hover:bg-emerald-600 text-white px-5 py-2.5 rounded-xl font-bold text-sm transition transform hover:scale-105 shadow-md shadow-emerald-200">
-                    <i data-lucide="file-spreadsheet" class="w-4 h-4"></i> Unduh Excel
+            <div class="flex gap-3 w-full md:w-auto">
+                <button onclick="downloadCSV()" class="flex-1 md:flex-none flex items-center justify-center gap-2 bg-white hover:bg-slate-50 border border-slate-200 text-slate-700 px-5 py-2.5 rounded-xl font-semibold text-sm transition-all shadow-sm">
+                    <i data-lucide="download" class="w-4 h-4 text-slate-400"></i> Unduh CSV
                 </button>
-                <button onclick="clearData()" class="flex items-center gap-2 bg-rose-500 hover:bg-rose-600 text-white px-5 py-2.5 rounded-xl font-bold text-sm transition transform hover:scale-105 shadow-md shadow-rose-200">
-                    <i data-lucide="trash-2" class="w-4 h-4"></i> Reset Data
+                <button onclick="clearData()" class="flex-1 md:flex-none flex items-center justify-center gap-2 bg-rose-500 hover:bg-rose-600 text-white px-5 py-2.5 rounded-xl font-semibold text-sm transition-all shadow-md shadow-rose-500/20">
+                    <i data-lucide="trash-2" class="w-4 h-4"></i> Kosongkan
                 </button>
             </div>
-        </nav>
-    </div>
+        </div>
+    </nav>
 
     <!-- Main Content -->
-    <main class="max-w-7xl mx-auto px-4 py-8 fade-in">
+    <main class="max-w-7xl mx-auto px-4 py-8 fade-in relative z-10">
         
         <!-- Connection Status -->
-        <div id="connection-status" class="mb-6 text-sm font-semibold text-center text-slate-400 flex justify-center items-center gap-2 bg-white/50 py-2 rounded-full w-fit mx-auto px-6 border border-white">
-            <div class="animate-spin w-4 h-4 border-2 border-slate-300 border-t-blue-500 rounded-full"></div>
-             Menghubungkan...
+        <div id="connection-status" class="mb-8 text-sm font-semibold text-center text-slate-500 flex justify-center items-center gap-2 bg-white/60 backdrop-blur-sm py-2.5 rounded-full w-fit mx-auto px-6 border border-slate-200/60 shadow-sm">
+            <div class="animate-spin w-4 h-4 border-2 border-slate-300 border-t-brand-600 rounded-full"></div> 
+            Menghubungkan ke Server...
         </div>
 
         <!-- Dashboard Cards -->
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-            <div class="bg-white p-6 rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-slate-100 flex items-center gap-5 hover:-translate-y-1 transition duration-300">
-                <div class="bg-indigo-100 p-4 rounded-2xl text-indigo-600">
-                    <i data-lucide="users" class="w-8 h-8"></i>
+            <div class="bg-white p-6 rounded-3xl shadow-soft border border-slate-100 flex items-center gap-5 hover:-translate-y-1 hover:shadow-float transition-all duration-300 group">
+                <div class="bg-brand-50 border border-brand-100 p-4 rounded-2xl text-brand-600 group-hover:bg-brand-600 group-hover:text-white transition-colors">
+                    <i data-lucide="users" class="w-7 h-7"></i>
                 </div>
                 <div>
-                    <p class="text-xs font-bold text-slate-400 uppercase tracking-wider">Total Siswa</p>
-                    <h3 class="text-3xl font-extrabold text-slate-800" id="total-students">0</h3>
+                    <p class="text-xs font-bold text-slate-400 uppercase tracking-wider font-heading">Total Peserta</p>
+                    <h3 class="text-3xl font-extrabold text-slate-800 font-heading tracking-tight" id="total-students">0</h3>
                 </div>
             </div>
             
-            <div class="bg-white p-6 rounded-3xl shadow-[0_8px_30_rgb(0,0,0,0.04)] border border-slate-100 flex items-center gap-5 hover:-translate-y-1 transition duration-300">
-                <div class="bg-orange-100 p-4 rounded-2xl text-orange-600">
-                    <i data-lucide="star" class="w-8 h-8"></i>
+            <div class="bg-white p-6 rounded-3xl shadow-soft border border-slate-100 flex items-center gap-5 hover:-translate-y-1 hover:shadow-float transition-all duration-300 group">
+                <div class="bg-amber-50 border border-amber-100 p-4 rounded-2xl text-amber-600 group-hover:bg-amber-500 group-hover:text-white transition-colors">
+                    <i data-lucide="award" class="w-7 h-7"></i>
                 </div>
                 <div>
-                    <p class="text-xs font-bold text-slate-400 uppercase tracking-wider">Rata-rata Kelas</p>
-                    <h3 class="text-3xl font-extrabold text-slate-800" id="avg-score">0</h3>
+                    <p class="text-xs font-bold text-slate-400 uppercase tracking-wider font-heading">Rata-rata Kelas</p>
+                    <h3 class="text-3xl font-extrabold text-slate-800 font-heading tracking-tight" id="avg-score">0</h3>
                 </div>
             </div>
 
-            <div class="bg-white p-6 rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-slate-100 flex items-center gap-5 hover:-translate-y-1 transition duration-300">
-                <div class="bg-teal-100 p-4 rounded-2xl text-teal-600">
-                    <i data-lucide="activity" class="w-8 h-8"></i>
+            <div class="bg-white p-6 rounded-3xl shadow-soft border border-slate-100 flex items-center gap-5 hover:-translate-y-1 hover:shadow-float transition-all duration-300 group">
+                <div class="bg-emerald-50 border border-emerald-100 p-4 rounded-2xl text-emerald-600 group-hover:bg-emerald-500 group-hover:text-white transition-colors">
+                    <i data-lucide="activity" class="w-7 h-7"></i>
                 </div>
                 <div>
-                    <p class="text-xs font-bold text-slate-400 uppercase tracking-wider">Status Live</p>
-                    <h3 class="text-lg font-bold text-teal-600 flex items-center gap-2" id="sync-status">
+                    <p class="text-xs font-bold text-slate-400 uppercase tracking-wider font-heading">Status Sistem</p>
+                    <h3 class="text-lg font-bold text-emerald-600 flex items-center gap-2 font-heading" id="sync-status">
                         Offline
                     </h3>
                 </div>
@@ -114,50 +144,50 @@
         </div>
 
         <!-- Data Table -->
-        <div class="bg-white rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-slate-100 overflow-hidden">
-            <div class="p-6 border-b border-slate-100 flex flex-col md:flex-row justify-between items-center gap-4 bg-slate-50/50">
-                <h2 class="text-xl font-extrabold text-slate-800 flex items-center gap-3">
-                    <span class="bg-blue-100 text-blue-600 p-2 rounded-lg">
-                        <i data-lucide="list-checks" class="w-5 h-5"></i>
+        <div class="bg-white rounded-3xl shadow-soft border border-slate-100 overflow-hidden">
+            <div class="p-6 border-b border-slate-100 flex flex-col md:flex-row justify-between items-center gap-4">
+                <h2 class="text-xl font-bold text-slate-800 flex items-center gap-3 font-heading">
+                    <span class="bg-slate-100 border border-slate-200 text-slate-600 p-2 rounded-lg">
+                        <i data-lucide="clipboard-list" class="w-5 h-5"></i>
                     </span>
-                    Daftar Nilai Masuk
+                    Tabel Evaluasi Masuk
                 </h2>
                 <div class="flex gap-4 w-full md:w-auto">
-                    <div class="relative w-full md:w-72">
-                        <input type="text" id="searchInput" onkeyup="window.filterTable()" placeholder="Cari Nama, Kelas, Materi..." class="w-full pl-11 pr-4 py-3 bg-white border border-slate-200 rounded-xl focus:outline-none focus:ring-4 focus:ring-blue-100 focus:border-blue-400 transition font-semibold text-sm">
-                        <i data-lucide="search" class="w-5 h-5 text-slate-400 absolute left-4 top-3.5"></i>
+                    <div class="relative w-full md:w-80">
+                        <input type="text" id="searchInput" onkeyup="window.filterTable()" placeholder="Cari Nama, Kelas, atau Modul..." class="w-full pl-11 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:bg-white focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500 transition-all text-sm font-medium text-slate-700">
+                        <i data-lucide="search" class="w-4 h-4 text-slate-400 absolute left-4 top-3.5"></i>
                     </div>
                 </div>
             </div>
             
             <div class="overflow-x-auto custom-scroll">
-                <table class="w-full text-left border-collapse">
+                <table class="w-full text-left border-collapse min-w-[850px]">
                     <thead>
-                        <tr class="bg-slate-50 text-slate-500 text-xs font-bold uppercase tracking-wider border-b border-slate-100">
+                        <tr class="bg-slate-50/50 text-slate-500 text-xs font-bold uppercase tracking-wider border-b border-slate-100 font-heading">
                             <th class="p-5 text-center w-16">No</th>
                             <th class="p-5 sortable group" onclick="window.sortTable('timestamp')">
-                                <div class="flex items-center gap-1">
-                                    Waktu 
-                                    <i id="icon-timestamp" data-lucide="arrow-up-down" class="w-3 h-3 text-slate-300 group-hover:text-blue-500"></i>
+                                <div class="flex items-center gap-1.5">
+                                    Waktu Submit
+                                    <i id="icon-timestamp" data-lucide="arrow-up-down" class="w-3.5 h-3.5 text-slate-300 group-hover:text-brand-600"></i>
                                 </div>
                             </th>
                             <th class="p-5 sortable group" onclick="window.sortTable('name')">
-                                <div class="flex items-center gap-1">
-                                    Nama Siswa 
-                                    <i id="icon-name" data-lucide="arrow-up-down" class="w-3 h-3 text-slate-300 group-hover:text-blue-500"></i>
+                                <div class="flex items-center gap-1.5">
+                                    Nama Peserta
+                                    <i id="icon-name" data-lucide="arrow-up-down" class="w-3.5 h-3.5 text-slate-300 group-hover:text-brand-600"></i>
                                 </div>
                             </th>
                             <th class="p-5 sortable group" onclick="window.sortTable('kelas')">
-                                <div class="flex items-center gap-1">
+                                <div class="flex items-center gap-1.5">
                                     Kelas 
-                                    <i id="icon-kelas" data-lucide="arrow-up-down" class="w-3 h-3 text-slate-300 group-hover:text-blue-500"></i>
+                                    <i id="icon-kelas" data-lucide="arrow-up-down" class="w-3.5 h-3.5 text-slate-300 group-hover:text-brand-600"></i>
                                 </div>
                             </th>
-                            <th class="p-5">Materi</th>
+                            <th class="p-5">Modul Ujian</th>
                             <th class="p-5 text-center sortable group" onclick="window.sortTable('score')">
-                                <div class="flex items-center justify-center gap-1">
-                                    Nilai 
-                                    <i id="icon-score" data-lucide="arrow-up-down" class="w-3 h-3 text-slate-300 group-hover:text-blue-500"></i>
+                                <div class="flex items-center justify-center gap-1.5">
+                                    Skor
+                                    <i id="icon-score" data-lucide="arrow-up-down" class="w-3.5 h-3.5 text-slate-300 group-hover:text-brand-600"></i>
                                 </div>
                             </th>
                             <th class="p-5 text-center">Status</th>
@@ -166,26 +196,51 @@
                     </thead>
                     <tbody id="score-table-body" class="text-sm font-medium text-slate-600 divide-y divide-slate-50">
                         <tr>
-                            <td colspan="8" class="p-10 text-center text-slate-400 italic">
-                                <div class="flex flex-col items-center justify-center gap-3">
-                                    <div class="animate-bounce text-3xl">📂</div>
-                                    <span>Sedang memuat data...</span>
+                            <td colspan="8" class="p-16 text-center text-slate-400">
+                                <div class="flex flex-col items-center justify-center gap-4">
+                                    <i data-lucide="database" class="w-10 h-10 animate-pulse text-slate-200"></i>
+                                    <span class="font-medium text-slate-500">Memuat data dari server...</span>
                                 </div>
                             </td>
                         </tr>
                     </tbody>
                 </table>
             </div>
-            <div class="p-4 bg-slate-50/80 text-xs font-semibold text-slate-400 text-center border-t border-slate-100">
-                MTsN 6 Demak • Sistem Penilaian Digital v2.7 (Universal-Sync)
+            <div class="p-4 bg-slate-50/50 text-[11px] font-semibold text-slate-400 text-center border-t border-slate-100 uppercase tracking-widest">
+                Akademik Dashboard • Versi 3.2 (Analisis Terintegrasi)
             </div>
         </div>
     </main>
 
+    <!-- Modal Analisis Butir Soal -->
+    <div id="analysis-modal" class="fixed inset-0 z-[100] hidden flex items-center justify-center bg-slate-900/40 backdrop-blur-sm px-4">
+        <div class="bg-white rounded-3xl shadow-2xl w-full max-w-2xl overflow-hidden flex flex-col max-h-[90vh] modal-enter border border-slate-100">
+            <div class="p-6 border-b border-slate-100 flex justify-between items-center bg-white">
+                <h3 class="text-xl font-bold text-slate-800 flex items-center gap-3 font-heading">
+                    <div class="bg-brand-50 text-brand-600 p-2 rounded-xl border border-brand-100">
+                        <i data-lucide="file-search" class="w-5 h-5"></i>
+                    </div>
+                    Analisis Butir Soal
+                </h3>
+                <button onclick="closeAnalysisModal()" class="p-2.5 text-slate-400 hover:text-slate-700 hover:bg-slate-100 rounded-xl transition">
+                    <i data-lucide="x" class="w-5 h-5"></i>
+                </button>
+            </div>
+            
+            <div class="p-6 overflow-y-auto custom-scroll bg-slate-50/50" id="analysis-content">
+                <!-- Data analisis akan dirender di sini oleh JavaScript -->
+            </div>
+            
+            <div class="p-5 border-t border-slate-100 bg-white flex justify-end">
+                <button onclick="closeAnalysisModal()" class="px-8 py-2.5 bg-slate-800 text-white rounded-xl text-sm font-semibold hover:bg-slate-700 transition shadow-sm">Tutup Rincian</button>
+            </div>
+        </div>
+    </div>
+
     <script type="module">
         import { initializeApp } from 'https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js';
         import { getAuth, signInAnonymously, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js';
-        import { getFirestore, collection, addDoc, getDocs, doc, deleteDoc, onSnapshot, query, orderBy } from 'https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js';
+        import { getFirestore, collection, addDoc, getDocs, doc, deleteDoc, onSnapshot } from 'https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js';
 
         // --- FIREBASE CONFIG ---
         const firebaseConfig = {
@@ -232,20 +287,7 @@
             if (!materiInput) return '-';
             const text = materiInput.toString().trim();
             if (text === "" || text === "null" || text === "undefined") return '-';
-            
-            const lower = text.toLowerCase();
-            if (lower.includes('shalat jumat')) return 'Shalat Jumat';
-            if (lower.includes('khutbah jumat')) return 'Khutbah Jumat';
-            if (lower.includes('optik')) return 'Cahaya dan Alat Optik';
             return text;
-        }
-
-        function splitNames(nameStr) {
-            if (!nameStr) return [];
-            // Regex lebih aman agar tidak memotong nama "Dani" atau "Andi"
-            return nameStr.split(/\s*&\s*|\s*,\s*|\s*\+\s*|\s+DAN\s+|\s+AND\s+|\s*\/\s*/i)
-                          .map(n => n.trim())
-                          .filter(n => n.length > 2);
         }
 
         // --- AUTH ---
@@ -262,68 +304,16 @@
         onAuthStateChanged(auth, (user) => {
             if (user) {
                 const statusEl = document.getElementById('connection-status');
-                statusEl.innerHTML = '<span class="text-emerald-500 font-bold flex items-center gap-2">✓ Terhubung</span>';
-                statusEl.classList.add('bg-emerald-50', 'border-emerald-100');
+                statusEl.innerHTML = '<span class="text-brand-600 font-bold flex items-center gap-2"><i data-lucide="check-circle-2" class="w-4 h-4"></i> Terhubung ke Server</span>';
+                statusEl.classList.replace('bg-white/60', 'bg-brand-50');
+                statusEl.classList.replace('border-slate-200/60', 'border-brand-100');
                 
-                document.getElementById('sync-status').innerHTML = '<span class="flex items-center gap-2"><span class="relative flex h-3 w-3"><span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-teal-400 opacity-75"></span><span class="relative inline-flex rounded-full h-3 w-3 bg-teal-500"></span></span> Live Sync</span>';
+                document.getElementById('sync-status').innerHTML = '<span class="flex items-center gap-2"><span class="relative flex h-3 w-3"><span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span><span class="relative inline-flex rounded-full h-3 w-3 bg-emerald-500"></span></span> Live Sync</span>';
 
                 subscribeToData();
-                checkIncomingDataAndSave();
+                lucide.createIcons();
             }
         });
-
-        // --- SAVE DATA ---
-        async function checkIncomingDataAndSave() {
-            const params = new URLSearchParams(window.location.search);
-            
-            // Support parameter dalam Bahasa Indonesia atau Inggris
-            const rawName = params.get('nama') || params.get('name');
-            const scoreRaw = params.get('nilai') || params.get('score');
-            
-            if (!rawName || !scoreRaw) return;
-
-            // Session key unik per input agar tidak double save saat refresh
-            const sessionKey = `saved_v7_${rawName}_${scoreRaw}_${params.get('materi') || 'none'}`;
-
-            if (!sessionStorage.getItem(sessionKey)) {
-                try {
-                    Swal.fire({ title: 'Menyimpan Nilai...', didOpen: () => { Swal.showLoading() }, allowOutsideClick: false });
-
-                    const namesList = splitNames(rawName.toUpperCase());
-                    const kelas = normalizeClass(params.get('kelas') || params.get('kls'));
-                    const materi = params.get('materi') || params.get('mapel') || params.get('type') || '-';
-                    const date = params.get('date') || new Date().toLocaleDateString('id-ID');
-                    const timestamp = Date.now();
-
-                    const promises = namesList.map(studentName => {
-                        return addDoc(collection(db, 'artifacts', appId, 'public', 'data', COLLECTION_NAME), {
-                            name: studentName,
-                            kelas: kelas,
-                            score: parseInt(scoreRaw),
-                            materi: materi,
-                            date: date,
-                            timestamp: timestamp
-                        });
-                    });
-
-                    await Promise.all(promises);
-                    sessionStorage.setItem(sessionKey, 'true');
-
-                    Swal.fire({
-                        icon: 'success',
-                        title: 'Berhasil!',
-                        text: `Nilai berhasil disimpan untuk ${namesList.length} siswa.`,
-                        timer: 2500,
-                        showConfirmButton: false
-                    });
-
-                    // Hapus parameter URL agar bersih
-                    window.history.replaceState({}, document.title, window.location.pathname);
-                } catch (e) {
-                    Swal.fire({ icon: 'error', title: 'Gagal Simpan', text: e.message });
-                }
-            }
-        }
 
         // --- AGGREGATION LOGIC ---
         function processAndAggregateData(rawData) {
@@ -335,8 +325,6 @@
                 const rawMateri = item.materi || item.mapel || item.type || '-';
                 const cleanMateri = normalizeMateri(rawMateri);
                 
-                // KUNCI UNIK: Nama + Kelas + Materi
-                // Ini penting agar materi berbeda muncul di baris berbeda
                 const uniqueKey = `${nameStr}|${cleanClass}|${cleanMateri}`;
 
                 if (!studentMap[uniqueKey]) {
@@ -348,7 +336,8 @@
                         totalScore: parseInt(item.score) || 0,
                         count: 1,
                         originalId: item.id,
-                        latestTimestamp: item.timestamp || 0
+                        latestTimestamp: item.timestamp || 0,
+                        details: item.details || null
                     };
                 } else {
                     const entry = studentMap[uniqueKey];
@@ -360,6 +349,7 @@
                         entry.originalId = item.id;
                         entry.date = item.date;
                         entry.timestamp = item.timestamp;
+                        entry.details = item.details || entry.details; 
                     }
                 }
             });
@@ -395,40 +385,45 @@
             const tbody = document.getElementById('score-table-body');
             
             if (!data || data.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="8" class="p-10 text-center text-slate-400 italic">Belum ada data nilai masuk.</td></tr>`;
+                tbody.innerHTML = `<tr><td colspan="8" class="p-16 text-center text-slate-400 italic">Belum ada data nilai masuk. Data akan muncul secara otomatis.</td></tr>`;
                 return;
             }
 
             let html = '';
             data.forEach((item, index) => {
                 const isPass = item.score >= 75;
-                const badgeColor = isPass ? 'bg-emerald-100 text-emerald-700 border-emerald-200' : 'bg-rose-100 text-rose-700 border-rose-200';
+                const badgeColor = isPass ? 'bg-emerald-50 text-emerald-700 border-emerald-200' : 'bg-rose-50 text-rose-700 border-rose-200';
                 const dateDisplay = item.timestamp ? new Date(item.timestamp).toLocaleString('id-ID', { hour:'2-digit', minute:'2-digit', day:'numeric', month:'short' }) : item.date;
                 
                 const scoreDisplay = item.count > 1 
                     ? `<div class="flex flex-col items-center">
-                         <span class="text-lg font-extrabold ${item.score >= 80 ? 'text-blue-600' : 'text-slate-600'}">${item.score}</span>
-                         <span class="text-[10px] text-slate-400 bg-slate-100 px-1.5 py-0.5 rounded">Rata-rata (${item.count})</span>
+                         <span class="text-base font-bold font-heading ${item.score >= 80 ? 'text-brand-600' : 'text-slate-700'}">${item.score}</span>
+                         <span class="text-[9px] text-slate-400 bg-slate-100 border border-slate-200 px-1.5 py-0.5 rounded mt-0.5 font-bold uppercase tracking-wider">Rata (${item.count}x)</span>
                        </div>`
-                    : `<span class="text-lg font-extrabold ${item.score >= 80 ? 'text-blue-600' : 'text-slate-600'}">${item.score}</span>`;
+                    : `<span class="text-base font-bold font-heading ${item.score >= 80 ? 'text-brand-600' : 'text-slate-700'}">${item.score}</span>`;
 
                 html += `
-                    <tr class="hover:bg-blue-50/50 transition duration-200 group">
-                        <td class="p-5 text-center font-bold text-slate-400">${index + 1}</td>
+                    <tr class="hover:bg-brand-50/40 transition duration-200 group">
+                        <td class="p-5 text-center font-bold text-slate-400 text-xs">${index + 1}</td>
                         <td class="p-5 text-xs text-slate-500 font-mono">${dateDisplay}</td>
-                        <td class="p-5 font-bold text-slate-700 text-base">${item.name}</td>
-                        <td class="p-5"><span class="bg-indigo-100 text-indigo-700 px-3 py-1 rounded-full text-xs font-bold border border-indigo-200">${item.kelas}</span></td>
+                        <td class="p-5 font-bold text-slate-800 text-sm font-heading">${item.name}</td>
+                        <td class="p-5"><span class="bg-slate-100 text-slate-700 px-2.5 py-1 rounded-md text-xs font-bold border border-slate-200">${item.kelas}</span></td>
                         <td class="p-5 text-sm text-slate-600 font-medium">${item.materi}</td>
                         <td class="p-5 text-center">${scoreDisplay}</td>
                         <td class="p-5 text-center">
-                            <span class="${badgeColor} px-3 py-1 rounded-full text-xs font-bold border flex items-center justify-center gap-1 w-fit mx-auto">
+                            <span class="${badgeColor} px-3 py-1 rounded-full text-xs font-bold border flex items-center justify-center w-fit mx-auto shadow-sm">
                                 ${isPass ? 'Tuntas' : 'Remidi'}
                             </span>
                         </td>
-                        <td class="p-5 text-center">
-                            <button onclick="window.deleteItem('${item.id}', '${item.name}')" class="p-2 bg-white border border-slate-200 rounded-lg text-slate-400 hover:text-rose-500 hover:border-rose-200 hover:bg-rose-50 transition shadow-sm" title="Hapus Data Terbaru">
-                                <i data-lucide="trash" class="w-4 h-4"></i>
-                            </button>
+                        <td class="p-5">
+                            <div class="flex items-center justify-center gap-2">
+                                <button onclick="window.showAnalysis('${item.id}')" class="p-2 bg-white border border-slate-200 rounded-lg text-slate-400 hover:text-brand-600 hover:border-brand-300 hover:bg-brand-50 transition shadow-sm" title="Lihat Analisis Butir Soal">
+                                    <i data-lucide="pie-chart" class="w-4 h-4"></i>
+                                </button>
+                                <button onclick="window.deleteItem('${item.id}', '${item.name}')" class="p-2 bg-white border border-slate-200 rounded-lg text-slate-400 hover:text-rose-600 hover:border-rose-300 hover:bg-rose-50 transition shadow-sm" title="Hapus Data">
+                                    <i data-lucide="trash-2" class="w-4 h-4"></i>
+                                </button>
+                            </div>
                         </td>
                     </tr>
                 `;
@@ -474,12 +469,12 @@
                 const icon = document.getElementById(`icon-${col}`);
                 if(icon) {
                     icon.setAttribute('data-lucide', 'arrow-up-down');
-                    icon.classList.replace('text-blue-600', 'text-slate-300');
+                    icon.classList.replace('text-brand-600', 'text-slate-300');
                 }
             });
             const active = document.getElementById(`icon-${currentSort.column}`);
             if (active) {
-                active.classList.replace('text-slate-300', 'text-blue-600');
+                active.classList.replace('text-slate-300', 'text-brand-600');
                 active.setAttribute('data-lucide', currentSort.direction === 'asc' ? 'arrow-up' : 'arrow-down');
             }
             lucide.createIcons();
@@ -495,42 +490,130 @@
             }
         }
 
+        // --- ANALYSIS MODAL ACTIONS ---
+        window.showAnalysis = (id) => {
+            const studentData = globalData.find(item => item.id === id);
+            if (!studentData) return;
+            
+            const modal = document.getElementById('analysis-modal');
+            const content = document.getElementById('analysis-content');
+            
+            let html = `
+                <div class="mb-6 flex flex-col md:flex-row justify-between md:items-end gap-4 bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
+                    <div>
+                        <h4 class="text-xl font-bold font-heading text-slate-800 mb-2">${studentData.name}</h4>
+                        <div class="flex flex-wrap gap-2 text-xs font-semibold">
+                            <span class="bg-slate-100 border border-slate-200 text-slate-700 px-3 py-1 rounded-md">Kelas ${studentData.kelas}</span>
+                            <span class="bg-slate-100 border border-slate-200 text-slate-600 px-3 py-1 rounded-md">${studentData.materi}</span>
+                        </div>
+                    </div>
+                    <div class="text-left md:text-right border-t md:border-t-0 md:border-l border-slate-100 pt-4 md:pt-0 md:pl-6">
+                        <span class="text-4xl font-black font-heading tracking-tighter ${studentData.score >= 75 ? 'text-emerald-500' : 'text-rose-500'}">${studentData.score}</span>
+                        <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mt-1">Skor Akhir</p>
+                    </div>
+                </div>
+            `;
+
+            if (studentData.details && Array.isArray(studentData.details)) {
+                let benar = 0;
+                let salah = 0;
+                
+                studentData.details.forEach(isCorrect => {
+                    if(isCorrect) benar++; else salah++;
+                });
+
+                html += `
+                    <div class="flex gap-4 mb-6 text-sm">
+                        <div class="flex items-center gap-2 bg-emerald-50 text-emerald-700 px-4 py-2 rounded-xl border border-emerald-200 font-semibold shadow-sm">
+                            <i data-lucide="check-circle-2" class="w-4 h-4"></i> Benar: ${benar}
+                        </div>
+                        <div class="flex items-center gap-2 bg-rose-50 text-rose-700 px-4 py-2 rounded-xl border border-rose-200 font-semibold shadow-sm">
+                            <i data-lucide="x-circle" class="w-4 h-4"></i> Salah: ${salah}
+                        </div>
+                    </div>
+                    
+                    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+                `;
+                
+                studentData.details.forEach((isCorrect, idx) => {
+                    const colorClass = isCorrect ? 'bg-white border-emerald-200 text-emerald-600' : 'bg-white border-rose-200 text-rose-500';
+                    const icon = isCorrect ? 'check' : 'x';
+                    const textLabel = isCorrect ? 'Benar' : 'Salah';
+                    html += `
+                        <div class="border rounded-xl p-4 flex flex-col items-center justify-center text-center ${colorClass} transition transform hover:-translate-y-1 hover:shadow-md cursor-default shadow-sm">
+                            <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-2">Soal ${idx + 1}</span>
+                            <div class="flex items-center justify-center gap-1.5 font-bold font-heading text-sm">
+                                <i data-lucide="${icon}" class="w-4 h-4 stroke-[3]"></i> ${textLabel}
+                            </div>
+                        </div>
+                    `;
+                });
+                html += `</div>`;
+                
+            } else {
+                html += `
+                    <div class="bg-white border border-slate-200 rounded-3xl p-10 text-center flex flex-col items-center justify-center shadow-sm">
+                        <div class="bg-slate-50 p-4 rounded-full border border-slate-100 mb-4 text-slate-300">
+                            <i data-lucide="file-question" class="w-10 h-10"></i>
+                        </div>
+                        <h5 class="text-slate-800 font-bold font-heading text-lg mb-2">Rincian Tidak Tersedia</h5>
+                        <p class="text-sm text-slate-500 max-w-sm leading-relaxed">
+                            Peserta ini mengerjakan modul versi lama yang hanya mengirimkan nilai akhir tanpa analisis tiap butir soal.
+                        </p>
+                    </div>
+                `;
+            }
+
+            content.innerHTML = html;
+            lucide.createIcons();
+            modal.classList.remove('hidden');
+        };
+
+        window.closeAnalysisModal = () => {
+            document.getElementById('analysis-modal').classList.add('hidden');
+        };
+
         // --- ACTIONS ---
         window.deleteItem = async (docId, name) => {
             const { value: pin } = await Swal.fire({
-                title: 'Konfirmasi Guru',
-                text: `Hapus satu record data terbaru milik ${name}?`,
+                title: 'Otorisasi Admin',
+                text: `Hapus data milik peserta ${name}?`,
                 input: 'password',
-                inputPlaceholder: 'PIN Guru',
+                inputPlaceholder: 'Masukkan PIN',
                 icon: 'warning',
                 showCancelButton: true,
-                confirmButtonColor: '#ef4444'
+                confirmButtonColor: '#ef4444',
+                cancelButtonText: 'Batal',
+                confirmButtonText: 'Hapus Data'
             });
 
             if (pin === "443588") {
                 try {
                     await deleteDoc(doc(db, 'artifacts', appId, 'public', 'data', COLLECTION_NAME, docId));
-                    Swal.fire('Terhapus', 'Record data telah dihapus.', 'success');
+                    Swal.fire('Terhapus', 'Data berhasil dihapus.', 'success');
                 } catch(e) {
                     Swal.fire('Gagal', e.message, 'error');
                 }
             } else if (pin) {
-                Swal.fire('PIN Salah', '', 'error');
+                Swal.fire('Ditolak', 'PIN yang Anda masukkan salah.', 'error');
             }
         };
 
         window.clearData = async () => {
             const { value: pin } = await Swal.fire({
-                title: 'RESET SEMUA DATA',
-                text: 'Tindakan ini akan menghapus seluruh isi database secara permanen.',
+                title: 'KOSONGKAN DATABASE',
+                text: 'Tindakan ini akan menghapus permanen seluruh data nilai. Lanjutkan?',
                 input: 'password',
+                inputPlaceholder: 'Masukkan PIN',
                 icon: 'error',
                 showCancelButton: true,
-                confirmButtonColor: '#e11d48'
+                confirmButtonColor: '#e11d48',
+                cancelButtonText: 'Batal',
+                confirmButtonText: 'Kosongkan'
             });
 
             if (pin === "443588") {
-                Swal.fire({title: 'Membersihkan Database...', didOpen: () => Swal.showLoading()});
+                Swal.fire({title: 'Memproses...', didOpen: () => Swal.showLoading()});
                 try {
                     const snapshot = await getDocs(collection(db, 'artifacts', appId, 'public', 'data', COLLECTION_NAME));
                     const promises = snapshot.docs.map(d => deleteDoc(d.ref));
@@ -539,6 +622,8 @@
                 } catch(e) {
                     Swal.fire('Gagal', e.message, 'error');
                 }
+            } else if (pin) {
+                Swal.fire('Ditolak', 'PIN tidak sesuai.', 'error');
             }
         };
 
@@ -552,7 +637,7 @@
             const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
             const link = document.createElement("a");
             link.href = URL.createObjectURL(blob);
-            link.setAttribute("download", `Rekap_Nilai_${new Date().toLocaleDateString()}.csv`);
+            link.setAttribute("download", `Rekap_Nilai_Akademik_${new Date().toLocaleDateString('id-ID')}.csv`);
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);
