@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fikih Ibadah: Shalat Bagi Orang Sakit</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+    
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc; /* Slate 50 */
+            color: #334155; /* Slate 700 */
+        }
+        
+        h1, h2, h3, h4, h5, .font-heading {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+        
+        .arabic-text {
+            font-family: 'Amiri', serif;
+            direction: rtl;
+            line-height: 2.2;
+        }
+        
+        /* Custom Scrollbar Modern */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #f1f5f9; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+
+        /* Modern Radio Options */
+        .option-label {
+            cursor: pointer;
+            transition: all 0.2s ease-in-out;
+            border: 1px solid #e2e8f0;
+        }
+        .option-label:hover {
+            border-color: #0f766e; /* Teal 700 */
+            background-color: #f0fdfa; /* Teal 50 */
+        }
+        .option-input:checked + .option-content {
+            background-color: #f0fdfa;
+            border-color: #0f766e;
+            box-shadow: 0 0 0 1px #0f766e;
+        }
+        .option-input:checked + .option-content .option-circle {
+            background-color: #0f766e;
+            color: white;
+            border-color: #0f766e;
+        }
+        
+        /* Islamic Pattern Overlay */
+        .pattern-bg {
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        }
+
+        /* Fade Animation */
+        .fade-text { transition: opacity 0.3s ease-in-out; }
+        
+        /* Modal Animation */
+        .modal-backdrop {
+            background-color: rgba(15, 23, 42, 0.7);
+            backdrop-filter: blur(4px);
+            animation: fadeIn 0.2s ease-out;
+        }
+        .modal-content {
+            animation: slideUp 0.3s ease-out;
+        }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes slideUp { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+    </style>
+</head>
+<body class="selection:bg-teal-200 selection:text-teal-900">
+
+    <!-- Navigation -->
+    <nav class="bg-teal-900 text-white sticky top-0 z-50 border-b border-teal-800 backdrop-blur-md bg-opacity-95">
+        <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+            <div class="flex items-center space-x-3">
+                <div class="bg-teal-800 p-2 rounded-lg text-amber-400">
+                    <i class="fa-solid fa-mosque"></i>
+                </div>
+                <span class="text-xl font-bold tracking-tight font-heading">FikihEdu</span>
+            </div>
+            <div class="hidden md:flex space-x-8 text-sm font-medium text-teal-100">
+                <a href="#materi" class="hover:text-white transition">Materi</a>
+                <a href="#simulasi" class="hover:text-white transition">Panduan Posisi</a>
+                <a href="#kalkulator" class="hover:text-white transition">Analisa Kondisi</a>
+                <a href="#latihan" class="hover:text-white transition">Uji Kompetensi</a>
+            </div>
+            <button id="mobile-menu-btn" class="md:hidden text-teal-100 hover:text-white">
+                <i class="fa-solid fa-bars text-xl"></i>
+            </button>
+        </div>
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-teal-800 px-4 py-2 border-t border-teal-700">
+            <a href="#materi" class="block py-3 text-sm text-teal-100 border-b border-teal-700">Materi</a>
+            <a href="#simulasi" class="block py-3 text-sm text-teal-100 border-b border-teal-700">Panduan Posisi</a>
+            <a href="#kalkulator" class="block py-3 text-sm text-teal-100 border-b border-teal-700">Analisa Kondisi</a>
+            <a href="#latihan" class="block py-3 text-sm text-teal-100">Uji Kompetensi</a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="bg-teal-900 relative pt-20 pb-32 overflow-hidden pattern-bg">
+        <div class="absolute inset-0 bg-gradient-to-b from-transparent to-teal-900/90"></div>
+        
+        <div class="container mx-auto px-4 relative z-10 max-w-4xl text-center">
+            <span class="inline-flex items-center gap-2 bg-teal-800/80 border border-teal-700 text-teal-100 px-4 py-1.5 rounded-full text-xs font-semibold tracking-wider uppercase mb-6 shadow-sm">
+                <i class="fa-solid fa-book-bookmark text-amber-400"></i> Modul Fikih
+            </span>
+            <h1 class="text-4xl md:text-6xl font-bold mb-6 text-white font-heading leading-tight">
+                Memahami Ketentuan <br/> <span class="text-amber-400">Shalat Bagi Orang Sakit</span>
+            </h1>
+            <p class="text-lg text-teal-100/90 max-w-2xl mx-auto font-light leading-relaxed mb-10">
+                "Agama Islam itu mudah. Allah tidak membebani seseorang melainkan sesuai dengan kesanggupannya." <br><span class="text-sm opacity-75">(QS. Al-Baqarah: 286)</span>
+            </p>
+            <a href="#materi" class="bg-amber-500 hover:bg-amber-400 text-teal-950 px-8 py-3.5 rounded-xl font-semibold transition inline-flex items-center gap-2 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5">
+                Mulai Belajar <i class="fa-solid fa-arrow-right text-sm"></i>
+            </a>
+        </div>
+    </header>
+
+    <!-- Materi Section -->
+    <section id="materi" class="py-12 container mx-auto px-4 -mt-16 relative z-20">
+        
+        <!-- Definisi & Dasar Hukum -->
+        <div class="bg-white p-8 rounded-2xl shadow-sm border border-slate-200 mb-8 hover:shadow-md transition-shadow">
+            <div class="flex flex-col md:flex-row gap-6 items-start">
+                <div class="bg-teal-50 p-4 rounded-xl shrink-0 text-teal-700">
+                    <i class="fa-solid fa-wheelchair text-3xl"></i>
+                </div>
+                <div>
+                    <h3 class="text-xl font-bold mb-3 text-slate-800 font-heading">A. Hukum Shalat Saat Sakit</h3>
+                    <p class="text-slate-600 leading-relaxed mb-5 text-sm md:text-base">
+                        Shalat fardhu lima waktu adalah kewajiban mutlak dalam kondisi apapun. Namun, Islam memberikan <strong>rukhshah (keringanan)</strong> yang luar biasa bagi orang sakit. Prinsip utamanya adalah: Lakukan apa yang mampu dilakukan, dan tinggalkan atau ganti yang tidak mampu dilakukan.
+                    </p>
+                    <div class="bg-slate-50 p-5 rounded-xl border-l-4 border-teal-600">
+                        <strong class="block text-slate-800 mb-1 text-sm font-semibold">Dalil (HR. Bukhari)</strong>
+                        <p class="italic text-slate-600 text-sm leading-relaxed">
+                            Rasulullah ﷺ bersabda kepada Imran bin Husain: "Shalatlah sambil berdiri. Jika kamu tidak mampu, maka shalatlah sambil duduk. Jika kamu tidak mampu (juga), maka shalatlah sambil berbaring ke samping."
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <!-- Macam-Macam -->
+            <div class="bg-white p-8 rounded-2xl shadow-sm border border-slate-200 hover:shadow-md transition-shadow flex flex-col">
+                <h3 class="text-xl font-bold mb-6 text-slate-800 font-heading flex items-center">
+                    <div class="bg-blue-50 text-blue-600 p-2 rounded-lg mr-3 text-sm"><i class="fa-solid fa-bed-pulse"></i></div>
+                    B. Tata Cara Gerakan
+                </h3>
+                
+                <div class="space-y-4 flex-grow">
+                    <div class="border border-slate-100 p-5 rounded-xl bg-slate-50/50 relative overflow-hidden">
+                        <div class="absolute top-0 left-0 w-1 h-full bg-blue-500"></div>
+                        <strong class="text-slate-800 text-base block mb-1">1. Duduk</strong>
+                        <p class="text-slate-600 text-sm mb-2">Bagi yang tidak mampu berdiri. Disunnahkan duduk bersila.</p>
+                        <ul class="list-disc pl-4 text-sm text-slate-600 space-y-1">
+                            <li><strong>Ruku':</strong> Menundukkan kepala & badan sedikit ke depan.</li>
+                            <li><strong>Sujud:</strong> Sujud di lantai jika mampu, atau menunduk lebih rendah dari ruku'.</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="border border-slate-100 p-5 rounded-xl bg-slate-50/50 relative overflow-hidden">
+                        <div class="absolute top-0 left-0 w-1 h-full bg-indigo-500"></div>
+                        <strong class="text-slate-800 text-base block mb-1">2. Berbaring Miring & Telentang</strong>
+                        <p class="text-slate-600 text-sm mb-2">Bagi yang tidak sanggup duduk sama sekali.</p>
+                        <ul class="list-disc pl-4 text-sm text-slate-600 space-y-1">
+                            <li><strong>Miring:</strong> Disunnahkan sisi kanan, tubuh menghadap Kiblat. Isyarat dengan anggukan.</li>
+                            <li><strong>Telentang:</strong> Kaki ke arah Kiblat, kepala diganjal bantal. Isyarat ruku/sujud dengan kepala.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Syarat Sah -->
+            <div class="bg-white p-8 rounded-2xl shadow-sm border border-slate-200 hover:shadow-md transition-shadow">
+                <h3 class="text-xl font-bold mb-6 text-slate-800 font-heading flex items-center">
+                    <div class="bg-amber-50 text-amber-600 p-2 rounded-lg mr-3 text-sm"><i class="fa-solid fa-hands-bubbles"></i></div>
+                    C. Tata Cara Bersuci
+                </h3>
+                <div class="space-y-4">
+                    <div class="flex items-start p-3 bg-slate-50 rounded-lg">
+                        <i class="fa-solid fa-circle-check text-teal-600 mt-0.5 mr-3"></i>
+                        <div>
+                            <strong class="text-slate-800 text-sm block">Wudhu Mandiri / Dibantu</strong>
+                            <span class="text-slate-600 text-sm">Jika masih aman terkena air, wajib berwudhu secara normal atau dibantu orang lain.</span>
+                        </div>
+                    </div>
+                    <div class="flex items-start p-3 bg-slate-50 rounded-lg">
+                        <i class="fa-solid fa-circle-check text-teal-600 mt-0.5 mr-3"></i>
+                        <div>
+                            <strong class="text-slate-800 text-sm block">Mengusap Luka & Perban</strong>
+                            <span class="text-slate-600 text-sm">Bagian tubuh yang sehat tetap dicuci, sedangkan bagian yang diperban cukup diusap (dengan tangan basah) di atas perbannya.</span>
+                        </div>
+                    </div>
+                    <div class="flex items-start p-3 bg-slate-50 rounded-lg">
+                        <i class="fa-solid fa-circle-check text-teal-600 mt-0.5 mr-3"></i>
+                        <div>
+                            <strong class="text-slate-800 text-sm block">Tayammum</strong>
+                            <span class="text-slate-600 text-sm">Diperbolehkan tayammum dengan debu bersih jika penggunaan air dapat membahayakan luka atau memperlambat kesembuhan.</span>
+                        </div>
+                    </div>
+                    <div class="flex items-start p-3 bg-slate-50 rounded-lg">
+                        <i class="fa-solid fa-circle-check text-teal-600 mt-0.5 mr-3"></i>
+                        <div>
+                            <strong class="text-slate-800 text-sm block">Najis yang Dimaafkan</strong>
+                            <span class="text-slate-600 text-sm">Pasien medis dengan selang kateter atau pampers yang menyulitkan diganti dimaafkan dan shalatnya tetap sah.</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Simulasi Section (Panduan) -->
+    <section id="simulasi" class="bg-teal-900 py-16 relative pattern-bg">
+        <div class="container mx-auto px-4 relative z-10">
+            <div class="text-center mb-12">
+                <span class="text-amber-400 font-semibold tracking-wider text-xs uppercase mb-2 block">Latihan Praktik</span>
+                <h2 class="text-3xl font-bold text-white font-heading">Panduan Posisi Shalat</h2>
+            </div>
+            
+            <div class="flex flex-col lg:flex-row gap-6 max-w-5xl mx-auto">
+                <!-- Controls -->
+                <div class="w-full lg:w-1/3 bg-white p-6 rounded-2xl shadow-lg flex flex-col">
+                    <label class="block text-slate-700 font-semibold mb-2 text-sm">Pilih Kondisi Pasien</label>
+                    <select id="intent-selector" onchange="updatePosisi()" class="w-full p-3.5 border border-slate-200 rounded-xl outline-none focus:border-teal-500 focus:ring-1 focus:ring-teal-500 bg-slate-50 text-slate-800 text-sm mb-6 cursor-pointer">
+                        <option value="duduk">1. Tidak Mampu Berdiri (Duduk)</option>
+                        <option value="miring">2. Tidak Mampu Duduk (Miring)</option>
+                        <option value="telentang">3. Tidak Mampu Miring (Telentang)</option>
+                        <option value="isyarat">4. Lumpuh / Kritis (Isyarat)</option>
+                    </select>
+
+                    <div class="bg-amber-50 p-4 rounded-xl border border-amber-100 mt-auto">
+                        <h4 class="font-bold text-amber-800 mb-1 text-xs uppercase tracking-wider flex items-center">
+                            <i class="fa-solid fa-lightbulb mr-2"></i>Catatan Praktik
+                        </h4>
+                        <p id="posisi-note" class="text-sm text-amber-900/80 leading-relaxed">
+                            Posisi duduk bebas, namun disunnahkan duduk bersila seperti biasa.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Display Area -->
+                <div class="w-full lg:w-2/3 bg-white rounded-2xl shadow-lg p-8 flex flex-col justify-center items-center min-h-[350px]">
+                    <div id="posisi-content" class="fade-text text-center w-full">
+                        <span id="posisi-title" class="inline-block text-xs font-bold text-teal-700 bg-teal-50 px-3 py-1 rounded-md mb-6 uppercase tracking-wider">
+                            Posisi 1: Duduk
+                        </span>
+                        
+                        <div id="posisi-icon" class="text-7xl text-teal-600 mb-6 py-2">
+                            <i class="fa-solid fa-chair"></i>
+                        </div>
+                        
+                        <h3 id="posisi-heading" class="text-2xl font-bold text-slate-800 mb-4 font-heading">
+                            Shalat Sambil Duduk
+                        </h3>
+                        
+                        <div class="w-12 h-px bg-slate-200 mx-auto my-5"></div>
+                        
+                        <p id="posisi-desc" class="text-slate-600 text-base leading-relaxed max-w-lg mx-auto">
+                            Ruku' dilakukan dengan menundukkan kepala dan badan sedikit ke depan. Sujud dilakukan di lantai jika mampu, atau menunduk lebih rendah dari ruku' jika tidak mampu.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Kalkulator Section -->
+    <section id="kalkulator" class="py-16 container mx-auto px-4">
+        <div class="max-w-4xl mx-auto">
+            <div class="text-center mb-10">
+                <h2 class="text-3xl font-bold text-slate-800 font-heading mb-2">Analisa Kondisi Bersuci & Shalat</h2>
+                <p class="text-slate-500 text-sm">Pilih kendala medis yang dialami untuk mengecek solusi fikihnya.</p>
+            </div>
+            
+            <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-2 md:p-6">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center p-4">
+                    <div class="space-y-5">
+                        <div>
+                            <label class="block text-slate-700 font-semibold mb-2 text-sm">Kendala Fisik Saat Ini</label>
+                            <select id="input-condition" class="w-full p-3.5 border border-slate-300 rounded-xl outline-none focus:border-teal-500 focus:ring-1 focus:ring-teal-500 bg-white text-slate-700">
+                                <option value="luka_air">Ada luka parah/perban yang tidak boleh kena air</option>
+                                <option value="pusing_berat">Pusing berat, tidak bisa berdiri seimbang</option>
+                                <option value="koma">Kehilangan kesadaran (Koma)</option>
+                                <option value="infus_najis">Terpasang alat medis (Kateter urin/Pampers)</option>
+                                <option value="sulit_waktu">Sangat memberatkan shalat tepat di setiap waktunya</option>
+                            </select>
+                        </div>
+                        <button onclick="checkKondisi()" class="w-full bg-teal-600 hover:bg-teal-700 text-white font-medium py-3.5 rounded-xl shadow-sm transition flex justify-center items-center gap-2">
+                            <i class="fa-solid fa-magnifying-glass text-sm"></i> Cek Solusi Fikih
+                        </button>
+                    </div>
+                    
+                    <div class="bg-slate-50 rounded-xl p-8 border border-slate-100 text-center flex flex-col items-center justify-center min-h-[220px]">
+                        <span class="text-slate-400 font-semibold uppercase tracking-widest text-xs mb-3 block">Kesimpulan Hukum</span>
+                        <div id="check-result" class="text-3xl font-bold text-slate-300 mb-4 font-heading transition-colors">---</div>
+                        <div id="check-reason" class="text-slate-600 text-sm leading-relaxed max-w-xs">
+                            Pilih kondisi di samping dan klik cek solusi.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Quiz Section -->
+    <section id="latihan" class="py-16 bg-slate-100 border-t border-slate-200">
+        <div class="container mx-auto px-4 max-w-3xl">
+            <div class="text-center mb-10">
+                <h2 class="text-3xl font-bold text-slate-800 font-heading mb-2">Uji Kompetensi</h2>
+                <p class="text-slate-500 text-sm">Analisis kasus berdasarkan modul fikih kelas 7.</p>
+            </div>
+
+            <!-- Login Container -->
+            <div id="quiz-login" class="bg-white rounded-2xl shadow-sm border border-slate-200 p-8 relative">
+                <div id="auth-status" class="absolute top-6 right-6 text-xs font-semibold text-slate-400 flex items-center">
+                    <i class="fa-solid fa-circle-notch fa-spin mr-2"></i> Menghubungkan...
+                </div>
+                
+                <div class="mb-8">
+                    <h3 class="text-xl font-bold text-slate-800 font-heading">Data Siswa</h3>
+                    <p class="text-sm text-slate-500">Lengkapi data diri sebelum memulai pengerjaan.</p>
+                </div>
+
+                <div class="space-y-4">
+                    <div>
+                        <label class="block text-slate-700 text-sm font-semibold mb-1">Nama Lengkap</label>
+                        <input type="text" id="student-name" class="w-full p-3.5 border border-slate-300 rounded-xl outline-none focus:border-teal-500 focus:ring-1 focus:ring-teal-500 bg-white" placeholder="Contoh: Ahmad Santoso">
+                    </div>
+                    <div>
+                        <label class="block text-slate-700 text-sm font-semibold mb-1">Kelas</label>
+                        <input type="text" id="student-class" class="w-full p-3.5 border border-slate-300 rounded-xl outline-none focus:border-teal-500 focus:ring-1 focus:ring-teal-500 bg-white" placeholder="Contoh: 7A">
+                    </div>
+                    <button id="start-btn" onclick="startQuiz()" disabled class="w-full bg-slate-300 text-slate-500 font-medium py-3.5 rounded-xl cursor-not-allowed transition mt-4">
+                        Memuat Sistem...
+                    </button>
+                    <p id="auth-error-msg" class="text-red-500 text-xs text-center hidden">Gagal terhubung ke database.</p>
+                </div>
+            </div>
+
+            <!-- Quiz Container -->
+            <div id="quiz-container" class="hidden space-y-6">
+                <div class="bg-teal-700 text-white p-4 rounded-xl flex justify-between items-center shadow-sm">
+                    <div class="font-medium text-sm flex items-center">
+                        <i class="fa-solid fa-circle-user mr-2 text-teal-300 text-lg"></i>
+                        <span><span id="display-name" class="font-bold">---</span> (<span id="display-class">---</span>)</span>
+                    </div>
+                    <div class="bg-teal-800 px-3 py-1 rounded-md text-xs font-semibold border border-teal-600">
+                        10 Soal Analisa
+                    </div>
+                </div>
+
+                <form id="quiz-form" class="space-y-6">
+                    <!-- Questions injected by JS -->
+                </form>
+
+                <div class="pt-6">
+                    <button type="button" id="submit-btn" onclick="preSubmitCheck()" class="w-full bg-amber-500 hover:bg-amber-600 text-teal-950 font-semibold py-4 rounded-xl shadow-sm transition flex justify-center items-center gap-2">
+                        <i class="fa-solid fa-paper-plane text-sm"></i> Kirim Jawaban
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Custom Modal -->
+    <div id="custom-modal" class="hidden fixed inset-0 z-[100] flex items-center justify-center modal-backdrop px-4">
+        <div class="bg-white rounded-2xl shadow-xl p-8 max-w-sm w-full modal-content border border-slate-100 text-center">
+            <div id="modal-icon-container" class="w-16 h-16 rounded-full mx-auto flex items-center justify-center mb-4 bg-slate-50 text-2xl">
+                <i class="fa-solid fa-bell text-slate-500"></i>
+            </div>
+            <h3 id="modal-title" class="text-xl font-bold text-slate-800 mb-2 font-heading">Judul Modal</h3>
+            <div id="modal-body" class="text-slate-600 text-sm mb-6 leading-relaxed">
+                Pesan akan muncul di sini.
+            </div>
+            <div id="modal-actions" class="flex flex-col gap-2 w-full">
+                <!-- Buttons injected via JS -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-slate-900 text-slate-400 py-10 border-t border-slate-800">
+        <div class="container mx-auto px-4 text-center">
+            <p class="font-bold text-lg text-white font-heading mb-1">FikihEdu</p>
+            <p class="text-sm">Modul FIQIH / MTs & SMP / Kelas 7 / Semester Genap</p>
+            <p class="text-xs mt-6 opacity-60">&copy; 2026 EduFikih. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+
+        // Firebase Config sesuai yang diberikan
+        const firebaseConfig = {
+            apiKey: "AIzaSyAkX8qAS-O_5m_qaGr8Aa9XME-lVyBMibw",
+            authDomain: "belajaronline-b5512.firebaseapp.com",
+            projectId: "belajaronline-b5512",
+            storageBucket: "belajaronline-b5512.firebasestorage.app",
+            messagingSenderId: "896107581081",
+            appId: "1:896107581081:web:629056c097c90fdf583208"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+        const auth = getAuth(app);
+        
+        const appId = 'belajaronline-b5512';
+        const COLLECTION_NAME = 'scores';
+
+        // --- Auth Management ---
+        const startBtn = document.getElementById('start-btn');
+        const authStatus = document.getElementById('auth-status');
+        const authErrorMsg = document.getElementById('auth-error-msg');
+
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                startBtn.disabled = false;
+                startBtn.className = "w-full bg-teal-600 hover:bg-teal-700 text-white font-medium py-3.5 rounded-xl transition mt-4";
+                startBtn.innerHTML = 'Mulai Mengerjakan <i class="fa-solid fa-arrow-right ml-2 text-sm"></i>';
+                authStatus.innerHTML = '<i class="fa-solid fa-check text-teal-500 mr-1"></i> Terhubung';
+                authStatus.classList.replace('text-slate-400', 'text-teal-600');
+                authErrorMsg.classList.add('hidden');
+            } else {
+                signInAnonymously(auth).catch((error) => {
+                    authStatus.innerHTML = '<i class="fa-solid fa-circle-xmark text-red-500 mr-1"></i> Gagal';
+                    authErrorMsg.classList.remove('hidden');
+                    authErrorMsg.textContent = "Error: " + error.message;
+                });
+            }
+        });
+
+        // --- Data Niat ---
+        window.posisiData = {
+            duduk: {
+                title: "Posisi 1: Duduk",
+                icon: "fa-chair",
+                heading: "Shalat Sambil Duduk",
+                desc: "Ruku' dilakukan dengan menundukkan kepala dan badan sedikit ke depan. Sujud dilakukan di lantai jika mampu, atau menunduk lebih rendah dari ruku' jika tidak mampu.",
+                note: "Posisi duduk bebas, namun disunnahkan duduk bersila seperti biasa."
+            },
+            miring: {
+                title: "Posisi 2: Berbaring Miring",
+                icon: "fa-bed",
+                heading: "Berbaring Miring ke Kanan",
+                desc: "Wajah dan dada dihadapkan ke arah Kiblat. Ruku' dan Sujud dilakukan dengan isyarat anggukan kepala. Anggukan sujud lebih dalam daripada ruku'.",
+                note: "Disunnahkan berbaring di atas sisi badan sebelah kanan."
+            },
+            telentang: { 
+                 title: "Posisi 3: Telentang",
+                 icon: "fa-bed-pulse",
+                 heading: "Shalat Sambil Telentang",
+                 desc: "Kedua kaki dihadapkan ke arah Kiblat (jika mungkin). Kepala ditinggikan sedikit dengan bantal agar wajah menghadap Kiblat. Ruku' dan sujud dengan isyarat.",
+                 note: "Dilakukan jika berbaring miring sudah tidak sanggup dilakukan."
+            },
+            isyarat: { 
+                 title: "Posisi 4: Isyarat Mata / Hati",
+                 icon: "fa-eye",
+                 heading: "Isyarat Mata atau Hati",
+                 desc: "Jika tubuh lumpuh total, gunakan isyarat kedipan mata untuk pergerakan. Jika mata terpejam, jalankan rukun shalat dan bacaan di dalam hati.",
+                 note: "Selama akal dan kesadaran masih ada, kewajiban shalat fardhu tidak gugur."
+            }
+        };
+
+        window.updatePosisi = function() {
+            const key = document.getElementById('intent-selector').value;
+            const data = window.posisiData[key];
+            const contentDiv = document.getElementById('posisi-content');
+            
+            contentDiv.style.opacity = '0';
+            setTimeout(() => {
+                document.getElementById('posisi-title').textContent = data.title;
+                document.getElementById('posisi-icon').innerHTML = `<i class="fa-solid ${data.icon}"></i>`;
+                document.getElementById('posisi-heading').textContent = data.heading;
+                document.getElementById('posisi-desc').textContent = data.desc;
+                document.getElementById('posisi-note').textContent = data.note;
+                contentDiv.style.opacity = '1';
+            }, 200);
+        }
+
+        // --- Modal Logic ---
+        const modal = document.getElementById('custom-modal');
+        function showModal(config) {
+            document.getElementById('modal-title').textContent = config.title;
+            document.getElementById('modal-body').innerHTML = config.message;
+            
+            let iconClass = 'fa-bell text-slate-500';
+            let bgClass = 'bg-slate-100';
+            if (config.type === 'warning') { iconClass = 'fa-triangle-exclamation text-amber-500'; bgClass = 'bg-amber-50'; }
+            if (config.type === 'success') { iconClass = 'fa-check text-teal-500'; bgClass = 'bg-teal-50'; }
+            if (config.type === 'error') { iconClass = 'fa-xmark text-red-500'; bgClass = 'bg-red-50'; }
+            if (config.type === 'loading') { iconClass = 'fa-spinner fa-spin text-blue-500'; bgClass = 'bg-blue-50'; }
+
+            document.getElementById('modal-icon-container').className = `w-16 h-16 rounded-full mx-auto flex items-center justify-center mb-4 text-2xl ${bgClass}`;
+            document.getElementById('modal-icon-container').innerHTML = `<i class="fa-solid ${iconClass}"></i>`;
+            
+            const actions = document.getElementById('modal-actions');
+            actions.innerHTML = '';
+            
+            if (config.buttons) {
+                config.buttons.forEach(btn => {
+                    const b = document.createElement('button');
+                    b.className = `w-full py-2.5 rounded-xl font-medium transition text-sm ${btn.class || 'bg-slate-100 text-slate-700 hover:bg-slate-200'}`;
+                    b.textContent = btn.text;
+                    b.onclick = () => { if (btn.close !== false) hideModal(); if (btn.onClick) btn.onClick(); };
+                    actions.appendChild(b);
+                });
+            } else if (config.type !== 'loading') {
+                const b = document.createElement('button');
+                b.className = "w-full bg-teal-600 text-white py-2.5 rounded-xl font-medium hover:bg-teal-700 transition text-sm";
+                b.textContent = "Tutup";
+                b.onclick = hideModal;
+                actions.appendChild(b);
+            }
+            modal.classList.remove('hidden');
+        }
+        function hideModal() { modal.classList.add('hidden'); }
+
+        // Mobile Nav
+        document.getElementById('mobile-menu-btn').addEventListener('click', () => { 
+            document.getElementById('mobile-menu').classList.toggle('hidden'); 
+        });
+
+        // --- Calculator Logic ---
+        window.checkKondisi = function() {
+            const cond = document.getElementById('input-condition').value;
+            const res = document.getElementById('check-result');
+            const reason = document.getElementById('check-reason');
+
+            if (cond === 'luka_air') {
+                res.textContent = "USAP / TAYAMMUM"; res.className = "text-3xl font-bold text-teal-600 mb-4 font-heading";
+                reason.innerHTML = "Wudhu bagian tubuh yang sehat. Usap lembut bagian atas perban dengan air. Jika total tak bisa kena air, ganti dengan Tayammum menggunakan debu.";
+            } else if (cond === 'pusing_berat') {
+                res.textContent = "SHALAT DUDUK"; res.className = "text-3xl font-bold text-teal-600 mb-4 font-heading";
+                reason.innerHTML = "Gugur kewajiban berdiri untuk Anda. Silakan shalat sambil duduk. Jika pusing bertambah, diperbolehkan sambil berbaring.";
+            } else if (cond === 'koma') {
+                res.textContent = "GUGUR SEMENTARA"; res.className = "text-3xl font-bold text-amber-500 mb-4 font-heading";
+                reason.innerHTML = "Syarat wajib shalat adalah berakal/sadar. Saat koma, kewajiban shalat gugur sementara dan menurut jumhur ulama tidak perlu diqadha saat sadar.";
+            } else if (cond === 'infus_najis') {
+                res.textContent = "DIMAAFKAN (SAH)"; res.className = "text-3xl font-bold text-teal-600 mb-4 font-heading";
+                reason.innerHTML = "Lakukan shalat sebisa mungkin. Jika najis tidak mungkin dibersihkan karena kondisi alat medis darurat, shalat tetap sah dan tak perlu diulang.";
+            } else if (cond === 'sulit_waktu') {
+                res.textContent = "BOLEH DI-JAMA'"; res.className = "text-3xl font-bold text-teal-600 mb-4 font-heading";
+                reason.innerHTML = "Mayoritas ulama membolehkan pasien menjamak (menggabung) shalatnya jika sulit bergerak di setiap waktu, <strong>namun TIDAK BOLEH diqashar</strong>.";
+            }
+        }
+
+        // --- Quiz Logic ---
+        const questionData = [
+            { q: "Pak Amir mengalami patah tulang kaki dan tidak bisa berdiri. Bagaimana cara Pak Amir melaksanakan shalat fardhu menurut urutan rukhshah?", options: ["Tidak wajib shalat sampai sembuh", "Shalat sambil duduk", "Shalat dengan isyarat mata", "Shalat berbaring telentang"], a: 1 },
+            { q: "Ibu Fatimah dirawat di ICU, tubuhnya lumpuh dan tidak bisa digerakkan sama sekali, namun otaknya masih sadar penuh merespon. Apa yang harus dilakukannya untuk shalat?", options: ["Shalat dalam hati/menggunakan isyarat", "Gugur kewajiban shalatnya", "Diwakilkan oleh anaknya", "Menunggu sampai bisa bergerak"], a: 0 },
+            { q: "Budi memiliki luka bakar di lengannya yang dilarang terkena air oleh dokter. Saat waktu shalat tiba, apa yang harus Budi lakukan untuk bersuci?", options: ["Langsung shalat tanpa bersuci", "Hanya mencuci muka dan kaki saja", "Membasuh yang sehat dan bertayammum/mengusap perban", "Menunda shalat sampai lukanya sembuh"], a: 2 },
+            { q: "Seorang pasien dipasang selang kateter urin sehingga tidak suci dari najis. Kondisinya medisnya tidak memungkinkan selang dilepas pasang. Bagaimana hukum shalatnya?", options: ["Tidak sah karena ada najis", "Sah karena dalam keadaan darurat medis (dimaafkan)", "Sah tetapi wajib diulang (qadha) setelah sembuh total", "Boleh ditinggalkan selagi di rumah sakit"], a: 1 },
+            { q: "Arah Kiblat saat shalat berbaring miring yang benar adalah...", options: ["Wajah dan dada dihadapkan ke arah Kiblat", "Telapak kaki dihadapkan lurus ke Kiblat", "Punggung dihadapkan ke Kiblat", "Bebas menghadap mana saja karena sedang sakit"], a: 0 },
+            { q: "Kondisi medis apakah yang dapat membuat kewajiban shalat fardhu seseorang benar-benar gugur (tidak wajib melaksanakannya saat itu)?", options: ["Lumpuh total seluruh tubuh", "Patah tulang punggung belakang", "Kehilangan kesadaran / Koma", "Diinfus dan dirawat di ruang ICU"], a: 2 },
+            { q: "Saat shalat sambil berbaring telentang, gerakan ruku' dan sujud dilakukan dengan cara...", options: ["Menggerakkan tangan ke atas dan bawah", "Isyarat anggukan kepala (anggukan sujud harus lebih dalam)", "Mengedipkan mata dua kali berturut-turut", "Membaca lafal takbir lebih keras dari biasanya"], a: 1 },
+            { q: "Jika seseorang sakit parah dan proses wudhu/pergerakan shalat sangat menyiksanya setiap kali masuk waktu, keringanan waktu apa yang diberikan fikih Islam?", options: ["Boleh menjamak (menggabung) waktu shalatnya", "Boleh meng-qashar (meringkas) jumlah rakaatnya", "Boleh menjamak sekaligus mengqashar rakaatnya", "Boleh mengganti shalat dengan membayar fidyah"], a: 0 },
+            { q: "Bila seorang pasien harus berbaring miring, posisi miring manakah yang paling disunnahkan untuk dilakukan saat shalat?", options: ["Miring ke sisi kiri tubuh", "Miring ke sisi kanan tubuh", "Miring dengan dada telungkup", "Bergantian sisi kanan dan kiri di setiap rakaat"], a: 1 },
+            { q: "Berikut ini adalah urutan prioritas tingkat kemampuan posisi shalat bagi orang sakit yang benar...", options: ["Duduk -> Isyarat -> Berbaring Miring", "Berbaring Miring -> Duduk -> Telentang", "Duduk -> Berbaring Miring -> Telentang -> Isyarat", "Telentang -> Duduk -> Isyarat"], a: 2 }
+        ];
+
+        let studentData = { name: "", class: "" };
+
+        window.startQuiz = function() {
+            const n = document.getElementById('student-name').value.trim();
+            const c = document.getElementById('student-class').value.trim();
+            if (!n || !c) return showModal({ title: "Perhatian", message: "Mohon isi Nama dan Kelas terlebih dahulu.", type: 'warning' });
+            
+            studentData = { name: n, class: c };
+            document.getElementById('display-name').textContent = n;
+            document.getElementById('display-class').textContent = c;
+            document.getElementById('quiz-login').classList.add('hidden');
+            document.getElementById('quiz-container').classList.remove('hidden');
+            
+            const form = document.getElementById('quiz-form');
+            form.innerHTML = questionData.map((item, index) => `
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
+                    <p class="font-medium text-slate-800 mb-4 text-sm leading-relaxed">
+                        <span class="text-teal-600 font-bold mr-1">${index + 1}.</span> ${item.q}
+                    </p>
+                    <div class="space-y-2">
+                        ${item.options.map((opt, oIdx) => `
+                            <label class="option-label flex items-start p-3 rounded-lg bg-white relative">
+                                <input type="radio" name="q${index}" value="${oIdx}" class="option-input hidden peer">
+                                <div class="option-content w-full flex items-start">
+                                    <span class="option-circle w-6 h-6 flex-shrink-0 flex items-center justify-center bg-slate-50 rounded-full mr-3 text-xs font-bold text-slate-500 border border-slate-300 transition-colors mt-0.5">
+                                        ${String.fromCharCode(65+oIdx)}
+                                    </span>
+                                    <span class="text-slate-600 text-sm peer-checked:text-teal-900 leading-relaxed">${opt}</span>
+                                </div>
+                            </label>
+                        `).join('')}
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        window.preSubmitCheck = function() {
+            const answered = questionData.filter((_, i) => document.querySelector(`input[name="q${i}"]:checked`)).length;
+            if (answered < questionData.length) {
+                showModal({
+                    title: "Pengecekan", message: `Kamu baru menjawab <b class="text-amber-500">${answered}</b> dari <b>${questionData.length}</b> soal.<br>Yakin ingin mengirim?`, type: 'warning',
+                    buttons: [
+                        { text: "Cek Kembali", class: "bg-slate-100 text-slate-700 hover:bg-slate-200" },
+                        { text: "Kirim Sekarang", class: "bg-teal-600 text-white hover:bg-teal-700", onClick: () => submitQuizLogic() }
+                    ]
+                });
+            } else submitQuizLogic();
+        }
+
+        async function submitQuizLogic() {
+            const correct = questionData.filter((item, i) => {
+                const sel = document.querySelector(`input[name="q${i}"]:checked`);
+                return sel && parseInt(sel.value) === item.a;
+            }).length;
+            const score = Math.round((correct / questionData.length) * 100);
+
+            showModal({ title: "Memproses...", message: "Menyimpan datamu...", type: 'loading', buttons: [] });
+
+            try {
+                if (!auth.currentUser) await signInAnonymously(auth);
+                await addDoc(collection(db, 'artifacts', appId, 'public', 'data', COLLECTION_NAME), {
+                    name: studentData.name, kelas: studentData.class, score, type: 'Shalat Bagi Orang Sakit', date: new Date().toLocaleDateString('id-ID'), timestamp: Date.now()
+                });
+
+                showModal({
+                    title: "Selesai!", type: 'success',
+                    message: `<div class="text-center"><span class="text-4xl font-bold text-teal-600 block mb-1">${score}</span><span class="text-sm text-slate-500">Nilai berhasil disimpan</span></div>`,
+                    buttons: [{ text: "Tutup & Selesai", class: "bg-teal-600 text-white hover:bg-teal-700" }]
+                });
+
+                document.getElementById('quiz-form').classList.add('pointer-events-none', 'opacity-50');
+                const btn = document.getElementById('submit-btn');
+                btn.disabled = true;
+                btn.innerHTML = '<i class="fa-solid fa-check"></i> Sudah Terkirim';
+                btn.className = "w-full bg-slate-300 text-slate-500 font-semibold py-4 rounded-xl cursor-not-allowed flex justify-center items-center gap-2";
+
+            } catch (e) {
+                console.error(e);
+                showModal({ title: "Gagal Mengirim", message: "Error: " + e.message, type: 'error' });
+            }
+        }
+    </script>
+</body>
+</html>
