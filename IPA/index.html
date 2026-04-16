@@ -5,13 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pembelajaran IPA Online - MTsN 6 Demak</title>
     
-    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     
-    <!-- Font Awesome untuk Ikon -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
-    <!-- Google Fonts (Sans-serif modern untuk Sains) -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
     
     <script>
@@ -86,7 +83,6 @@
 </head>
 <body class="min-h-screen flex flex-col font-sans antialiased selection:bg-sky-200 selection:text-sky-900">
 
-    <!-- Navigation (Full Width) -->
     <nav class="w-full bg-slate-900 text-white sticky top-0 z-50 border-b border-slate-800 backdrop-blur-md bg-opacity-95">
         <div class="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
             <div class="flex items-center space-x-3">
@@ -105,11 +101,9 @@
         </div>
     </nav>
 
-    <!-- Hero Section (Full Width) -->
     <header class="w-full bg-slate-900 relative pt-16 pb-32 overflow-hidden pattern-bg flex-shrink-0">
         <div class="absolute inset-0 bg-gradient-to-b from-transparent to-slate-900/90"></div>
         
-        <!-- Decorative Glowing Orbs -->
         <div class="absolute inset-0 overflow-hidden">
             <div class="absolute top-0 right-1/4 w-96 h-96 bg-sky-500 opacity-10 rounded-full blur-3xl"></div>
             <div class="absolute bottom-0 left-1/4 w-64 h-64 bg-cyan-400 opacity-5 rounded-full blur-2xl"></div>
@@ -120,7 +114,6 @@
                 <i class="fa-solid fa-flask text-cyan-400"></i> Modul Pembelajaran
             </span>
             
-            <!-- Main Icon (Atom) -->
             <div class="relative inline-block mb-6">
                 <div class="absolute -inset-1 bg-gradient-to-r from-sky-400 to-cyan-300 rounded-full blur opacity-30"></div>
                 <div class="relative w-24 h-24 rounded-full border-2 border-slate-700 shadow-xl bg-slate-800 flex items-center justify-center text-sky-400 text-5xl">
@@ -135,11 +128,9 @@
         </div>
     </header>
 
-    <!-- Main Content: Topic Grid -->
     <main class="flex-grow w-full max-w-6xl mx-auto px-6 pb-16 -mt-16 relative z-20">
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             
-            <!-- Card 1: Getaran, Gelombang, Cahaya -->
             <div onclick="openModal('modal-getaran')" class="cursor-pointer group fade-in delay-100 h-full">
                 <div class="menu-card bg-white border border-slate-200 rounded-3xl p-8 h-full flex flex-col items-center text-center shadow-sm relative overflow-hidden">
                     <div class="absolute inset-0 bg-gradient-to-r from-sky-50 to-transparent translate-x-[-100%] group-hover:translate-x-0 transition-transform duration-500"></div>
@@ -157,7 +148,6 @@
                 </div>
             </div>
 
-            <!-- Card 2: Unsur, Senyawa & Campuran -->
             <div onclick="openModal('modal-materi')" class="cursor-pointer group fade-in delay-200 h-full">
                 <div class="menu-card bg-white border border-slate-200 rounded-3xl p-8 h-full flex flex-col items-center text-center shadow-sm relative overflow-hidden">
                     <div class="absolute inset-0 bg-gradient-to-r from-blue-50 to-transparent translate-x-[-100%] group-hover:translate-x-0 transition-transform duration-500"></div>
@@ -175,7 +165,6 @@
                 </div>
             </div>
 
-            <!-- Card 3: Struktur Bumi (Aktif) -->
             <div onclick="openModal('modal-bumi')" class="cursor-pointer group fade-in delay-300 h-full">
                 <div class="menu-card bg-white border border-slate-200 rounded-3xl p-8 h-full flex flex-col items-center text-center shadow-sm relative overflow-hidden">
                     <div class="absolute inset-0 bg-gradient-to-r from-teal-50 to-transparent translate-x-[-100%] group-hover:translate-x-0 transition-transform duration-500"></div>
@@ -196,7 +185,6 @@
         </div>
     </main>
 
-    <!-- Footer -->
     <footer class="w-full bg-slate-900 text-slate-400 py-10 border-t border-slate-800 mt-auto">
         <div class="container mx-auto px-6 text-center">
             <p class="font-bold text-lg text-white font-heading mb-1">SainsEdu</p>
@@ -205,9 +193,6 @@
         </div>
     </footer>
 
-    <!-- MODALS -->
-
-    <!-- Coming Soon Modal -->
     <div id="comingSoonModal" class="fixed inset-0 z-[100] hidden flex items-center justify-center modal-backdrop px-4">
         <div class="bg-white rounded-3xl shadow-2xl p-8 max-w-sm w-full modal-content border border-slate-100 text-center relative">
             <div class="w-16 h-16 bg-slate-50 rounded-full flex items-center justify-center mx-auto mb-4 text-slate-400 text-3xl">
@@ -223,7 +208,6 @@
         </div>
     </div>
 
-    <!-- Modal Getaran, Gelombang, Cahaya -->
     <div id="modal-getaran" class="fixed inset-0 z-[100] hidden flex items-center justify-center modal-backdrop px-4">
         <div class="bg-white rounded-3xl shadow-2xl p-6 max-w-md w-full modal-content border border-slate-100 relative">
             <button onclick="closeModal('modal-getaran')" class="absolute top-4 right-4 w-8 h-8 rounded-full bg-slate-50 text-slate-400 hover:bg-red-50 hover:text-red-500 flex items-center justify-center transition-all">
@@ -239,7 +223,7 @@
             </div>
 
             <div class="space-y-3">
-                <a href="https://mtsn6-demak.github.io/IPA/getaran" target="_blank" class="block w-full group">
+                <a href="https://ahmdd-zulfikar.github.io/mtsn6-demak/IPA/getaran" target="_blank" class="block w-full group">
                     <div class="flex items-center p-4 border border-slate-200 rounded-2xl hover:border-sky-400 hover:bg-sky-50 transition duration-300 bg-white shadow-sm hover:shadow-md">
                         <div class="bg-sky-50 text-sky-600 w-12 h-12 rounded-xl flex items-center justify-center mr-4 flex-shrink-0 group-hover:bg-sky-600 group-hover:text-white transition-colors">
                             <i class="fas fa-stopwatch text-lg"></i>
@@ -252,7 +236,7 @@
                     </div>
                 </a>
                 
-                <a href="https://mtsn6-demak.github.io/IPA/gelombang" target="_blank" class="block w-full group">
+                <a href="https://ahmdd-zulfikar.github.io/mtsn6-demak/IPA/gelombang" target="_blank" class="block w-full group">
                     <div class="flex items-center p-4 border border-slate-200 rounded-2xl hover:border-sky-400 hover:bg-sky-50 transition duration-300 bg-white shadow-sm hover:shadow-md">
                         <div class="bg-sky-50 text-sky-600 w-12 h-12 rounded-xl flex items-center justify-center mr-4 flex-shrink-0 group-hover:bg-sky-600 group-hover:text-white transition-colors">
                             <i class="fas fa-wave-square text-lg"></i>
@@ -265,7 +249,7 @@
                     </div>
                 </a>
 
-                <a href="https://mtsn6-demak.github.io/IPA/cahaya" target="_blank" class="block w-full group">
+                <a href="https://ahmdd-zulfikar.github.io/mtsn6-demak/IPA/cahaya" target="_blank" class="block w-full group">
                     <div class="flex items-center p-4 border border-slate-200 rounded-2xl hover:border-sky-400 hover:bg-sky-50 transition duration-300 bg-white shadow-sm hover:shadow-md">
                         <div class="bg-sky-50 text-sky-600 w-12 h-12 rounded-xl flex items-center justify-center mr-4 flex-shrink-0 group-hover:bg-sky-600 group-hover:text-white transition-colors">
                             <i class="fas fa-lightbulb text-lg"></i>
@@ -281,7 +265,6 @@
         </div>
     </div>
 
-    <!-- Modal Unsur, Senyawa, Campuran -->
     <div id="modal-materi" class="fixed inset-0 z-[100] hidden flex items-center justify-center modal-backdrop px-4">
         <div class="bg-white rounded-3xl shadow-2xl p-6 max-w-md w-full modal-content border border-slate-100 relative">
             <button onclick="closeModal('modal-materi')" class="absolute top-4 right-4 w-8 h-8 rounded-full bg-slate-50 text-slate-400 hover:bg-red-50 hover:text-red-500 flex items-center justify-center transition-all">
@@ -326,9 +309,8 @@
         </div>
     </div>
 
-    <!-- Modal Struktur Bumi (BARU) -->
     <div id="modal-bumi" class="fixed inset-0 z-[100] hidden flex items-center justify-center modal-backdrop px-4">
-        <div class="bg-white rounded-3xl shadow-2xl p-6 max-w-md w-full modal-content border border-slate-100 relative">
+        <div class="bg-white rounded-3xl shadow-2xl p-6 max-w-md w-full modal-content border border-slate-100 relative max-h-[90vh] overflow-y-auto">
             <button onclick="closeModal('modal-bumi')" class="absolute top-4 right-4 w-8 h-8 rounded-full bg-slate-50 text-slate-400 hover:bg-red-50 hover:text-red-500 flex items-center justify-center transition-all">
                 <i class="fas fa-times"></i>
             </button>
@@ -342,27 +324,53 @@
             </div>
 
             <div class="space-y-3">
-                <a href="https://ahmdd-zulfikar.github.io/mtsn6-demak/IPA/strukturbumi-lempengtektonik" target="_blank" class="block w-full group">
+                <a href="https://ahmdd-zulfikar.github.io/mtsn6-demak/IPA/struktur-bumi" target="_blank" class="block w-full group">
                     <div class="flex items-center p-4 border border-slate-200 rounded-2xl hover:border-teal-400 hover:bg-teal-50 transition duration-300 bg-white shadow-sm hover:shadow-md">
                         <div class="bg-teal-50 text-teal-600 w-12 h-12 rounded-xl flex items-center justify-center mr-4 flex-shrink-0 group-hover:bg-teal-600 group-hover:text-white transition-colors">
                             <i class="fas fa-layer-group text-lg"></i>
                         </div>
                         <div class="text-left flex-grow">
-                            <h4 class="font-bold text-slate-800 text-sm font-heading group-hover:text-teal-700">Struktur Bumi & Lempeng</h4>
-                            <p class="text-xs text-slate-500">Lapisan bumi & tektonik lempeng</p>
+                            <h4 class="font-bold text-slate-800 text-sm font-heading group-hover:text-teal-700">Struktur Bumi</h4>
+                            <p class="text-xs text-slate-500">Lapisan penyusun dari inti ke kerak</p>
                         </div>
                         <i class="fas fa-chevron-right text-slate-300 group-hover:text-teal-500 text-sm transition-colors"></i>
                     </div>
                 </a>
                 
-                <a href="https://ahmdd-zulfikar.github.io/IPA/gempabumi-gunungberapi" target="_blank" class="block w-full group">
+                <a href="https://ahmdd-zulfikar.github.io/mtsn6-demak/IPA/lempeng-tektonik" target="_blank" class="block w-full group">
+                    <div class="flex items-center p-4 border border-slate-200 rounded-2xl hover:border-teal-400 hover:bg-teal-50 transition duration-300 bg-white shadow-sm hover:shadow-md">
+                        <div class="bg-teal-50 text-teal-600 w-12 h-12 rounded-xl flex items-center justify-center mr-4 flex-shrink-0 group-hover:bg-teal-600 group-hover:text-white transition-colors">
+                            <i class="fas fa-puzzle-piece text-lg"></i>
+                        </div>
+                        <div class="text-left flex-grow">
+                            <h4 class="font-bold text-slate-800 text-sm font-heading group-hover:text-teal-700">Lempeng Tektonik</h4>
+                            <p class="text-xs text-slate-500">Pergerakan dan interaksi kerak bumi</p>
+                        </div>
+                        <i class="fas fa-chevron-right text-slate-300 group-hover:text-teal-500 text-sm transition-colors"></i>
+                    </div>
+                </a>
+
+                <a href="https://ahmdd-zulfikar.github.io/mtsn6-demak/IPA/gempa-bumi" target="_blank" class="block w-full group">
+                    <div class="flex items-center p-4 border border-slate-200 rounded-2xl hover:border-teal-400 hover:bg-teal-50 transition duration-300 bg-white shadow-sm hover:shadow-md">
+                        <div class="bg-teal-50 text-teal-600 w-12 h-12 rounded-xl flex items-center justify-center mr-4 flex-shrink-0 group-hover:bg-teal-600 group-hover:text-white transition-colors">
+                            <i class="fas fa-house-crack text-lg"></i>
+                        </div>
+                        <div class="text-left flex-grow">
+                            <h4 class="font-bold text-slate-800 text-sm font-heading group-hover:text-teal-700">Gempa Bumi</h4>
+                            <p class="text-xs text-slate-500">Gelombang seismik & mitigasi bencana</p>
+                        </div>
+                        <i class="fas fa-chevron-right text-slate-300 group-hover:text-teal-500 text-sm transition-colors"></i>
+                    </div>
+                </a>
+
+                <a href="https://ahmdd-zulfikar.github.io/mtsn6-demak/IPA/gunung-merapi" target="_blank" class="block w-full group">
                     <div class="flex items-center p-4 border border-slate-200 rounded-2xl hover:border-teal-400 hover:bg-teal-50 transition duration-300 bg-white shadow-sm hover:shadow-md">
                         <div class="bg-teal-50 text-teal-600 w-12 h-12 rounded-xl flex items-center justify-center mr-4 flex-shrink-0 group-hover:bg-teal-600 group-hover:text-white transition-colors">
                             <i class="fas fa-mountain text-lg"></i>
                         </div>
                         <div class="text-left flex-grow">
-                            <h4 class="font-bold text-slate-800 text-sm font-heading group-hover:text-teal-700">Gempa & Gunung Berapi</h4>
-                            <p class="text-xs text-slate-500">Seismik, mitigasi bencana & vulkanisme</p>
+                            <h4 class="font-bold text-slate-800 text-sm font-heading group-hover:text-teal-700">Gunung Merapi</h4>
+                            <p class="text-xs text-slate-500">Aktivitas vulkanik & fenomena letusan</p>
                         </div>
                         <i class="fas fa-chevron-right text-slate-300 group-hover:text-teal-500 text-sm transition-colors"></i>
                     </div>
@@ -371,7 +379,6 @@
         </div>
     </div>
 
-    <!-- JavaScript Logic -->
     <script>
         function openModal(modalId) {
             document.getElementById(modalId).classList.remove('hidden');
