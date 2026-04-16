@@ -88,8 +88,8 @@
                     <i data-lucide="book-open" class="w-6 h-6"></i>
                 </div>
                 <div>
-                    <h1 class="text-2xl font-bold tracking-tight font-heading leading-tight text-slate-800">Portal Data</h1>
-                    <p class="text-[10px] font-bold text-brand-600 tracking-widest uppercase">Akademik & Evaluasi</p>
+                    <h1 class="text-2xl font-bold tracking-tight font-heading leading-tight text-slate-800">Rekap Nilai</h1>
+                    <p class="text-[10px] font-bold text-brand-600 tracking-widest uppercase">Mata Pelajaran Fikih dan IPA</p>
                 </div>
             </div>
             <div class="flex flex-wrap justify-center gap-3 w-full md:w-auto">
@@ -214,7 +214,7 @@
                 </table>
             </div>
             <div class="p-4 bg-slate-50/50 text-[11px] font-semibold text-slate-400 text-center border-t border-slate-100 uppercase tracking-widest">
-                Akademik Dashboard • Versi 3.4 (Filter Ekspor Excel & PDF)
+                Rekap Nilai oleh Ahmad Zulfikar, S.Pd
             </div>
         </div>
     </main>
@@ -545,9 +545,27 @@
 
         // --- FILTER EXPORT ACTIONS ---
         
-        window.openExportModal = (type) => {
+        window.openExportModal = async (type) => {
             if (!globalData || globalData.length === 0) {
                 Swal.fire('Data Kosong', 'Belum ada data untuk diunduh.', 'info');
+                return;
+            }
+
+            // Otorisasi PIN untuk masuk ke modal unduhan
+            const { value: pin } = await Swal.fire({
+                title: 'Otorisasi Akses',
+                text: 'Masukkan PIN Admin untuk mengakses fitur unduhan',
+                input: 'password',
+                inputPlaceholder: 'Masukkan PIN',
+                icon: 'info',
+                showCancelButton: true,
+                confirmButtonColor: '#4f46e5',
+                cancelButtonText: 'Batal',
+                confirmButtonText: 'Lanjut'
+            });
+
+            if (pin !== "443588") {
+                if (pin) Swal.fire('Ditolak', 'PIN yang Anda masukkan salah.', 'error');
                 return;
             }
 
@@ -756,10 +774,28 @@
         }
 
         // --- ANALYSIS MODAL ACTIONS ---
-        window.showAnalysis = (id) => {
+        window.showAnalysis = async (id) => {
             const studentData = globalData.find(item => item.id === id);
             if (!studentData) return;
             
+            // Otorisasi PIN untuk melihat rincian
+            const { value: pin } = await Swal.fire({
+                title: 'Otorisasi Akses',
+                text: `Masukkan PIN untuk melihat analisis butir soal ${studentData.name}`,
+                input: 'password',
+                inputPlaceholder: 'Masukkan PIN',
+                icon: 'info',
+                showCancelButton: true,
+                confirmButtonColor: '#4f46e5',
+                cancelButtonText: 'Batal',
+                confirmButtonText: 'Lihat Analisis'
+            });
+
+            if (pin !== "443588") {
+                if (pin) Swal.fire('Ditolak', 'PIN yang Anda masukkan salah.', 'error');
+                return;
+            }
+
             const modal = document.getElementById('analysis-modal');
             const content = document.getElementById('analysis-content');
             
