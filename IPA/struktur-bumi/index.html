@@ -951,7 +951,7 @@
             try {
                 if(!currentUser) await signInAnonymously(auth);
                 await addDoc(collection(db, 'artifacts', appId, 'public', 'data', 'scores'), {
-                    name: name, kelas: cls, score: score, materi: 'LKS Struktur Bumi', 
+                    name: name, kelas: cls, score: score, materi: 'Lembar Kerja Materi Struktur Bumi', 
                     details: studentAnswers, 
                     date: new Date().toLocaleDateString('id-ID'), timestamp: Date.now()
                 });
@@ -1077,7 +1077,7 @@
                     name: document.getElementById('student-name').value, 
                     kelas: document.getElementById('student-class').value, 
                     score: score, 
-                    materi: 'Evaluasi Struktur Bumi',
+                    materi: 'Latihan Soal Materi Struktur Bumi',
                     details: studentAnswers, 
                     date: new Date().toLocaleDateString('id-ID'), timestamp: Date.now()
                 });
