@@ -10,6 +10,11 @@
     <script src="https://unpkg.com/lucide@latest"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     
+    <!-- Excel & PDF Libraries -->
+    <script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.31/jspdf.plugin.autotable.min.js"></script>
+
     <!-- Google Fonts (Modern Education Theme) -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
     
@@ -41,7 +46,6 @@
             }
         }
     </script>
-
     <style>
         body {
             /* Soft radial gradient for a modern, clean background */
@@ -88,11 +92,14 @@
                     <p class="text-[10px] font-bold text-brand-600 tracking-widest uppercase">Akademik & Evaluasi</p>
                 </div>
             </div>
-            <div class="flex gap-3 w-full md:w-auto">
-                <button onclick="downloadCSV()" class="flex-1 md:flex-none flex items-center justify-center gap-2 bg-white hover:bg-slate-50 border border-slate-200 text-slate-700 px-5 py-2.5 rounded-xl font-semibold text-sm transition-all shadow-sm">
-                    <i data-lucide="download" class="w-4 h-4 text-slate-400"></i> Unduh CSV
+            <div class="flex flex-wrap justify-center gap-3 w-full md:w-auto">
+                <button onclick="openExportModal('excel')" class="flex-1 md:flex-none flex items-center justify-center gap-2 bg-emerald-50 hover:bg-emerald-100 border border-emerald-200 text-emerald-700 px-4 py-2.5 rounded-xl font-semibold text-sm transition-all shadow-sm">
+                    <i data-lucide="file-spreadsheet" class="w-4 h-4"></i> Unduh Excel
                 </button>
-                <button onclick="clearData()" class="flex-1 md:flex-none flex items-center justify-center gap-2 bg-rose-500 hover:bg-rose-600 text-white px-5 py-2.5 rounded-xl font-semibold text-sm transition-all shadow-md shadow-rose-500/20">
+                <button onclick="openExportModal('pdf')" class="flex-1 md:flex-none flex items-center justify-center gap-2 bg-rose-50 hover:bg-rose-100 border border-rose-200 text-rose-700 px-4 py-2.5 rounded-xl font-semibold text-sm transition-all shadow-sm">
+                    <i data-lucide="file-text" class="w-4 h-4"></i> Unduh PDF
+                </button>
+                <button onclick="clearData()" class="flex-1 md:flex-none flex items-center justify-center gap-2 bg-slate-800 hover:bg-slate-900 text-white px-4 py-2.5 rounded-xl font-semibold text-sm transition-all shadow-md">
                     <i data-lucide="trash-2" class="w-4 h-4"></i> Kosongkan
                 </button>
             </div>
@@ -207,10 +214,55 @@
                 </table>
             </div>
             <div class="p-4 bg-slate-50/50 text-[11px] font-semibold text-slate-400 text-center border-t border-slate-100 uppercase tracking-widest">
-                Akademik Dashboard • Versi 3.2 (Analisis Terintegrasi)
+                Akademik Dashboard • Versi 3.4 (Filter Ekspor Excel & PDF)
             </div>
         </div>
     </main>
+
+    <!-- Modal Filter Unduhan -->
+    <div id="export-modal" class="fixed inset-0 z-[100] hidden flex items-center justify-center bg-slate-900/40 backdrop-blur-sm px-4">
+        <div class="bg-white rounded-3xl shadow-2xl w-full max-w-md overflow-hidden flex flex-col modal-enter border border-slate-100">
+            <div class="p-6 border-b border-slate-100 flex justify-between items-center bg-white">
+                <h3 class="text-xl font-bold text-slate-800 flex items-center gap-3 font-heading" id="export-modal-title">
+                    <div class="bg-brand-50 text-brand-600 p-2 rounded-xl border border-brand-100">
+                        <i data-lucide="filter" class="w-5 h-5"></i>
+                    </div>
+                    Filter Unduhan
+                </h3>
+                <button onclick="closeExportModal()" class="p-2.5 text-slate-400 hover:text-slate-700 hover:bg-slate-100 rounded-xl transition">
+                    <i data-lucide="x" class="w-5 h-5"></i>
+                </button>
+            </div>
+            
+            <div class="p-6 bg-slate-50/50 flex flex-col gap-5">
+                <div>
+                    <label class="block text-sm font-bold text-slate-700 mb-2 font-heading">Pilih Kelas</label>
+                    <div class="relative">
+                        <select id="export-kelas" class="w-full pl-4 pr-10 py-3 bg-white border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500 transition-all text-sm font-medium text-slate-700 appearance-none">
+                            <option value="ALL">Semua Kelas</option>
+                        </select>
+                        <i data-lucide="chevron-down" class="w-4 h-4 text-slate-400 absolute right-4 top-3.5 pointer-events-none"></i>
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-sm font-bold text-slate-700 mb-2 font-heading">Pilih Modul / Materi</label>
+                    <div class="relative">
+                        <select id="export-materi" class="w-full pl-4 pr-10 py-3 bg-white border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500 transition-all text-sm font-medium text-slate-700 appearance-none">
+                            <option value="ALL">Semua Modul</option>
+                        </select>
+                        <i data-lucide="chevron-down" class="w-4 h-4 text-slate-400 absolute right-4 top-3.5 pointer-events-none"></i>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="p-5 border-t border-slate-100 bg-white flex justify-end gap-3">
+                <button onclick="closeExportModal()" class="px-5 py-2.5 bg-slate-100 text-slate-700 rounded-xl text-sm font-bold hover:bg-slate-200 transition shadow-sm">Batal</button>
+                <button onclick="processExport()" class="px-6 py-2.5 bg-brand-600 text-white rounded-xl text-sm font-bold hover:bg-brand-700 transition shadow-sm flex items-center gap-2">
+                    <i data-lucide="download" class="w-4 h-4"></i> Lanjutkan Unduh
+                </button>
+            </div>
+        </div>
+    </div>
 
     <!-- Modal Analisis Butir Soal -->
     <div id="analysis-modal" class="fixed inset-0 z-[100] hidden flex items-center justify-center bg-slate-900/40 backdrop-blur-sm px-4">
@@ -261,6 +313,7 @@
         
         let globalData = [];
         let currentSort = { column: 'timestamp', direction: 'desc' };
+        let currentExportType = ''; // 'excel' or 'pdf'
 
         // --- HELPERS ---
         function normalizeClass(kelasInput) {
@@ -277,8 +330,8 @@
                 .replace(/KELAS|KLS|MTS|SMP/g, '')
                 .replace(/VIII|VII|IX|IV|V|VI/g, '')
                 .replace(/[0-9]/g, '')
-                .replace(/[^A-Z]/g, ''); 
-            
+                .replace(/[^A-Z]/g, '');
+             
             let suffix = cleanStr.charAt(0);
             return grade + (suffix || '');
         }
@@ -397,9 +450,9 @@
                 
                 const scoreDisplay = item.count > 1 
                     ? `<div class="flex flex-col items-center">
-                         <span class="text-base font-bold font-heading ${item.score >= 80 ? 'text-brand-600' : 'text-slate-700'}">${item.score}</span>
-                         <span class="text-[9px] text-slate-400 bg-slate-100 border border-slate-200 px-1.5 py-0.5 rounded mt-0.5 font-bold uppercase tracking-wider">Rata (${item.count}x)</span>
-                       </div>`
+                        <span class="text-base font-bold font-heading ${item.score >= 80 ? 'text-brand-600' : 'text-slate-700'}">${item.score}</span>
+                        <span class="text-[9px] text-slate-400 bg-slate-100 border border-slate-200 px-1.5 py-0.5 rounded mt-0.5 font-bold uppercase tracking-wider">Rata (${item.count}x)</span>
+                      </div>`
                     : `<span class="text-base font-bold font-heading ${item.score >= 80 ? 'text-brand-600' : 'text-slate-700'}">${item.score}</span>`;
 
                 html += `
@@ -488,6 +541,218 @@
             } else {
                 document.getElementById('avg-score').textContent = "0";
             }
+        }
+
+        // --- FILTER EXPORT ACTIONS ---
+        
+        window.openExportModal = (type) => {
+            if (!globalData || globalData.length === 0) {
+                Swal.fire('Data Kosong', 'Belum ada data untuk diunduh.', 'info');
+                return;
+            }
+
+            currentExportType = type;
+            const modalTitle = document.getElementById('export-modal-title');
+            
+            modalTitle.innerHTML = `
+                <div class="bg-brand-50 text-brand-600 p-2 rounded-xl border border-brand-100">
+                    <i data-lucide="${type === 'excel' ? 'file-spreadsheet' : 'file-text'}" class="w-5 h-5"></i>
+                </div>
+                Filter Unduhan ${type === 'excel' ? 'Excel' : 'PDF'}
+            `;
+            
+            // Generate list opsi yang unik
+            const kelasSet = new Set();
+            const materiSet = new Set();
+            
+            globalData.forEach(item => {
+                if(item.kelas && item.kelas !== '-') kelasSet.add(item.kelas);
+                if(item.materi && item.materi !== '-') materiSet.add(item.materi);
+            });
+
+            const selKelas = document.getElementById('export-kelas');
+            const selMateri = document.getElementById('export-materi');
+
+            selKelas.innerHTML = '<option value="ALL">Semua Kelas</option>';
+            Array.from(kelasSet).sort().forEach(k => {
+                selKelas.innerHTML += `<option value="${k}">Kelas ${k}</option>`;
+            });
+
+            selMateri.innerHTML = '<option value="ALL">Semua Modul</option>';
+            Array.from(materiSet).sort().forEach(m => {
+                selMateri.innerHTML += `<option value="${m}">${m}</option>`;
+            });
+
+            lucide.createIcons();
+            document.getElementById('export-modal').classList.remove('hidden');
+        };
+
+        window.closeExportModal = () => {
+            document.getElementById('export-modal').classList.add('hidden');
+        };
+
+        window.processExport = () => {
+            const selectedKelas = document.getElementById('export-kelas').value;
+            const selectedMateri = document.getElementById('export-materi').value;
+            
+            let dataToExport = globalData;
+
+            // Proses Penyaringan
+            if (selectedKelas !== 'ALL') {
+                dataToExport = dataToExport.filter(item => item.kelas === selectedKelas);
+            }
+            if (selectedMateri !== 'ALL') {
+                dataToExport = dataToExport.filter(item => item.materi === selectedMateri);
+            }
+
+            if (dataToExport.length === 0) {
+                Swal.fire('Data Kosong', 'Tidak ada data yang cocok dengan filter yang Anda pilih.', 'warning');
+                return;
+            }
+
+            closeExportModal();
+
+            // Panggil Fungsi Unduh yang Sesuai
+            if (currentExportType === 'excel') {
+                generateExcel(dataToExport, selectedKelas, selectedMateri);
+            } else {
+                generatePDF(dataToExport, selectedKelas, selectedMateri);
+            }
+        };
+
+        // --- EXPORT FUNCTIONS (EXCEL & PDF) ---
+        
+        function generateExcel(data, kelasFilter, materiFilter) {
+            // Cari jumlah soal maksimum untuk header dinamis
+            let maxQuestions = 0;
+            data.forEach(item => {
+                if (item.details && item.details.length > maxQuestions) {
+                    maxQuestions = item.details.length;
+                }
+            });
+
+            // Siapkan Header
+            const headers = ['No', 'Waktu Submit', 'Nama Peserta', 'Kelas', 'Modul Ujian', 'Skor Akhir', 'Status'];
+            for (let i = 1; i <= maxQuestions; i++) {
+                headers.push(`Soal ${i}`);
+            }
+
+            // Proses Baris Data
+            const dataRows = data.map((item, index) => {
+                const dateDisplay = item.timestamp ? new Date(item.timestamp).toLocaleString('id-ID') : (item.date || '-');
+                const isPass = item.score >= 75 ? 'Tuntas' : 'Remidi';
+                
+                const row = [
+                    index + 1,
+                    dateDisplay,
+                    item.name,
+                    item.kelas,
+                    item.materi,
+                    item.score,
+                    isPass
+                ];
+
+                // Tambahkan Rincian (1 = Benar, 0 = Salah) untuk memudahkan Sum(Total) di Excel guru
+                for (let i = 0; i < maxQuestions; i++) {
+                    if (item.details && i < item.details.length) {
+                        row.push(item.details[i] ? 1 : 0);
+                    } else {
+                        row.push('-'); 
+                    }
+                }
+                return row;
+            });
+
+            // Generate & Unduh Excel Menggunakan SheetJS
+            const wsData = [headers, ...dataRows];
+            const ws = XLSX.utils.aoa_to_sheet(wsData);
+            const wb = XLSX.utils.book_new();
+            XLSX.utils.book_append_sheet(wb, ws, "Rekap Nilai & Analisis");
+            
+            // Buat Nama File Dinamis
+            const kName = kelasFilter === 'ALL' ? 'SemuaKelas' : `Kls${kelasFilter}`;
+            const mName = materiFilter === 'ALL' ? 'SemuaModul' : materiFilter.replace(/\s+/g, '');
+            const filename = `Rekap_Nilai_${kName}_${mName}.xlsx`.replace(/[^a-z0-9_\.]/gi, '_');
+
+            XLSX.writeFile(wb, filename);
+        }
+
+        function generatePDF(data, kelasFilter, materiFilter) {
+            // Inisialisasi jsPDF mode Landscape (l)
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF('l', 'pt', 'a4'); 
+
+            // Cari jumlah soal maksimum
+            let maxQuestions = 0;
+            data.forEach(item => {
+                if (item.details && item.details.length > maxQuestions) {
+                    maxQuestions = item.details.length;
+                }
+            });
+
+            // Siapkan Header (1, 2 agar muat di PDF)
+            const headers = ['No', 'Waktu', 'Nama', 'Kelas', 'Modul', 'Skor', 'Status'];
+            for (let i = 1; i <= maxQuestions; i++) {
+                headers.push(`${i}`);
+            }
+
+            // Proses Baris Data
+            const dataRows = data.map((item, index) => {
+                const dateDisplay = item.timestamp ? new Date(item.timestamp).toLocaleString('id-ID') : (item.date || '-');
+                const isPass = item.score >= 75 ? 'Tuntas' : 'Remidi';
+                
+                const row = [
+                    (index + 1).toString(),
+                    dateDisplay,
+                    item.name,
+                    item.kelas,
+                    item.materi,
+                    item.score.toString(),
+                    isPass
+                ];
+
+                // Tambahkan Rincian (1 = Benar, 0 = Salah)
+                for (let i = 0; i < maxQuestions; i++) {
+                    if (item.details && i < item.details.length) {
+                        row.push(item.details[i] ? '1' : '0'); 
+                    } else {
+                        row.push('-');
+                    }
+                }
+                return row;
+            });
+
+            // Tambahkan Judul
+            doc.setFontSize(16);
+            doc.text("Rekap Nilai dan Analisis Butir Soal", 40, 40);
+            
+            // Tambah Teks Filter
+            doc.setFontSize(10);
+            doc.setTextColor(100);
+            const filterText = `${kelasFilter === 'ALL' ? 'Semua Kelas' : 'Kelas ' + kelasFilter} | ${materiFilter === 'ALL' ? 'Semua Modul' : materiFilter}`;
+            doc.text(filterText, 40, 55);
+
+            // Generate Tabel Otomatis
+            doc.autoTable({
+                head: [headers],
+                body: dataRows,
+                startY: 65,
+                styles: { fontSize: 7, cellPadding: 2, halign: 'center' },
+                headStyles: { fillColor: [79, 70, 229] }, // brand-600
+                columnStyles: {
+                    1: { halign: 'left', cellWidth: 80 }, // Waktu
+                    2: { halign: 'left', cellWidth: 100 }, // Nama
+                    3: { cellWidth: 40 }, // Kelas
+                    4: { halign: 'left', cellWidth: 80 } // Modul
+                }
+            });
+            
+            // Buat Nama File Dinamis
+            const kName = kelasFilter === 'ALL' ? 'SemuaKelas' : `Kls${kelasFilter}`;
+            const mName = materiFilter === 'ALL' ? 'SemuaModul' : materiFilter.replace(/\s+/g, '');
+            const filename = `Rekap_Nilai_${kName}_${mName}.pdf`.replace(/[^a-z0-9_\.]/gi, '_');
+
+            doc.save(filename);
         }
 
         // --- ANALYSIS MODAL ACTIONS ---
@@ -601,49 +866,47 @@
 
         window.clearData = async () => {
             const { value: pin } = await Swal.fire({
-                title: 'KOSONGKAN DATABASE',
-                text: 'Tindakan ini akan menghapus permanen seluruh data nilai. Lanjutkan?',
+                title: 'Kosongkan Seluruh Data?',
+                text: 'Tindakan ini akan menghapus semua nilai dari database. Tidak dapat dibatalkan.',
                 input: 'password',
-                inputPlaceholder: 'Masukkan PIN',
+                inputPlaceholder: 'Masukkan PIN Super Admin',
                 icon: 'error',
                 showCancelButton: true,
-                confirmButtonColor: '#e11d48',
+                confirmButtonColor: '#ef4444',
                 cancelButtonText: 'Batal',
-                confirmButtonText: 'Kosongkan'
+                confirmButtonText: 'Ya, Kosongkan'
             });
 
             if (pin === "443588") {
-                Swal.fire({title: 'Memproses...', didOpen: () => Swal.showLoading()});
                 try {
-                    const snapshot = await getDocs(collection(db, 'artifacts', appId, 'public', 'data', COLLECTION_NAME));
-                    const promises = snapshot.docs.map(d => deleteDoc(d.ref));
-                    await Promise.all(promises);
-                    Swal.fire('Selesai', 'Database telah dikosongkan.', 'success');
+                    const q = collection(db, 'artifacts', appId, 'public', 'data', COLLECTION_NAME);
+                    const snapshot = await getDocs(q);
+                    
+                    if (snapshot.empty) {
+                        Swal.fire('Info', 'Tidak ada data untuk dihapus.', 'info');
+                        return;
+                    }
+
+                    Swal.fire({
+                        title: 'Menghapus Data...',
+                        allowOutsideClick: false,
+                        didOpen: () => { Swal.showLoading(); }
+                    });
+
+                    const deletePromises = [];
+                    snapshot.forEach(document => {
+                        deletePromises.push(deleteDoc(doc(db, 'artifacts', appId, 'public', 'data', COLLECTION_NAME, document.id)));
+                    });
+
+                    await Promise.all(deletePromises);
+                    Swal.fire('Sukses', 'Semua data nilai telah dihapus dari sistem.', 'success');
                 } catch(e) {
                     Swal.fire('Gagal', e.message, 'error');
                 }
             } else if (pin) {
-                Swal.fire('Ditolak', 'PIN tidak sesuai.', 'error');
+                Swal.fire('Ditolak', 'PIN tidak valid.', 'error');
             }
         };
-
-        window.downloadCSV = () => {
-            if (globalData.length === 0) return;
-            let csv = "No,Waktu,Nama,Kelas,Materi,Nilai,Status\n";
-            globalData.forEach((item, i) => {
-                const time = item.timestamp ? new Date(item.timestamp).toLocaleString('id-ID') : item.date;
-                csv += `${i+1},"${time}","${item.name}","${item.kelas}","${item.materi}",${item.score},${item.score >= 75 ? 'Tuntas':'Remidi'}\n`;
-            });
-            const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
-            const link = document.createElement("a");
-            link.href = URL.createObjectURL(blob);
-            link.setAttribute("download", `Rekap_Nilai_Akademik_${new Date().toLocaleDateString('id-ID')}.csv`);
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-        };
-
-        lucide.createIcons();
     </script>
 </body>
 </html>
