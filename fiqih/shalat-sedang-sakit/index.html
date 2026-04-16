@@ -564,16 +564,16 @@
 
         // --- Quiz Logic ---
         const questionData = [
-            { q: "Pak Amir mengalami patah tulang kaki dan tidak bisa berdiri. Bagaimana cara Pak Amir melaksanakan shalat fardhu menurut urutan rukhshah?", options: ["Tidak wajib shalat sampai sembuh", "Shalat sambil duduk", "Shalat dengan isyarat mata", "Shalat berbaring telentang"], a: 1 },
-            { q: "Ibu Fatimah dirawat di ICU, tubuhnya lumpuh dan tidak bisa digerakkan sama sekali, namun otaknya masih sadar penuh merespon. Apa yang harus dilakukannya untuk shalat?", options: ["Shalat dalam hati/menggunakan isyarat", "Gugur kewajiban shalatnya", "Diwakilkan oleh anaknya", "Menunggu sampai bisa bergerak"], a: 0 },
-            { q: "Budi memiliki luka bakar di lengannya yang dilarang terkena air oleh dokter. Saat waktu shalat tiba, apa yang harus Budi lakukan untuk bersuci?", options: ["Langsung shalat tanpa bersuci", "Hanya mencuci muka dan kaki saja", "Membasuh yang sehat dan bertayammum/mengusap perban", "Menunda shalat sampai lukanya sembuh"], a: 2 },
-            { q: "Seorang pasien dipasang selang kateter urin sehingga tidak suci dari najis. Kondisinya medisnya tidak memungkinkan selang dilepas pasang. Bagaimana hukum shalatnya?", options: ["Tidak sah karena ada najis", "Sah karena dalam keadaan darurat medis (dimaafkan)", "Sah tetapi wajib diulang (qadha) setelah sembuh total", "Boleh ditinggalkan selagi di rumah sakit"], a: 1 },
-            { q: "Arah Kiblat saat shalat berbaring miring yang benar adalah...", options: ["Wajah dan dada dihadapkan ke arah Kiblat", "Telapak kaki dihadapkan lurus ke Kiblat", "Punggung dihadapkan ke Kiblat", "Bebas menghadap mana saja karena sedang sakit"], a: 0 },
-            { q: "Kondisi medis apakah yang dapat membuat kewajiban shalat fardhu seseorang benar-benar gugur (tidak wajib melaksanakannya saat itu)?", options: ["Lumpuh total seluruh tubuh", "Patah tulang punggung belakang", "Kehilangan kesadaran / Koma", "Diinfus dan dirawat di ruang ICU"], a: 2 },
-            { q: "Saat shalat sambil berbaring telentang, gerakan ruku' dan sujud dilakukan dengan cara...", options: ["Menggerakkan tangan ke atas dan bawah", "Isyarat anggukan kepala (anggukan sujud harus lebih dalam)", "Mengedipkan mata dua kali berturut-turut", "Membaca lafal takbir lebih keras dari biasanya"], a: 1 },
-            { q: "Jika seseorang sakit parah dan proses wudhu/pergerakan shalat sangat menyiksanya setiap kali masuk waktu, keringanan waktu apa yang diberikan fikih Islam?", options: ["Boleh menjamak (menggabung) waktu shalatnya", "Boleh meng-qashar (meringkas) jumlah rakaatnya", "Boleh menjamak sekaligus mengqashar rakaatnya", "Boleh mengganti shalat dengan membayar fidyah"], a: 0 },
-            { q: "Bila seorang pasien harus berbaring miring, posisi miring manakah yang paling disunnahkan untuk dilakukan saat shalat?", options: ["Miring ke sisi kiri tubuh", "Miring ke sisi kanan tubuh", "Miring dengan dada telungkup", "Bergantian sisi kanan dan kiri di setiap rakaat"], a: 1 },
-            { q: "Berikut ini adalah urutan prioritas tingkat kemampuan posisi shalat bagi orang sakit yang benar...", options: ["Duduk -> Isyarat -> Berbaring Miring", "Berbaring Miring -> Duduk -> Telentang", "Duduk -> Berbaring Miring -> Telentang -> Isyarat", "Telentang -> Duduk -> Isyarat"], a: 2 }
+            { q: "Pak Amir mengalami patah tulang kaki dan tidak bisa berdiri. Cara Pak Amir melaksanakan shalat fardhu menurut urutan rukhshah adalah....", options: ["Tidak wajib shalat sampai sembuh", "Shalat sambil duduk", "Shalat dengan isyarat mata", "Shalat berbaring telentang"], a: 1 },
+            { q: "Ibu Fatimah dirawat di ICU, tubuhnya lumpuh dan tidak bisa digerakkan sama sekali, namun otaknya masih sadar penuh merespon. Hal yang harus dilakukannya untuk shalat adalah....", options: ["Shalat dalam hati/menggunakan isyarat", "Gugur kewajiban shalatnya", "Diwakilkan oleh anaknya", "Menunggu sampai bisa bergerak"], a: 0 },
+            { q: "Budi memiliki luka bakar di lengannya yang dilarang terkena air oleh dokter. Saat waktu shalat tiba, cara yang harus Budi lakukan untuk bersuci adalah....", options: ["Langsung shalat tanpa bersuci", "Hanya mencuci muka dan kaki saja", "Membasuh yang sehat dan bertayammum/mengusap perban", "Menunda shalat sampai lukanya sembuh"], a: 2 },
+            { q: "Seorang pasien dipasang selang kateter urin sehingga tidak suci dari najis. Kondisi medisnya tidak memungkinkan selang dilepas pasang. Hukum shalat bagi pasien tersebut adalah....", options: ["Tidak sah karena ada najis", "Sah karena dalam keadaan darurat medis (dimaafkan)", "Sah tetapi wajib diulang (qadha) setelah sembuh total", "Boleh ditinggalkan selagi di rumah sakit"], a: 1 },
+            { q: "Arah Kiblat saat shalat berbaring miring yang benar adalah....", options: ["Wajah dan dada dihadapkan ke arah Kiblat", "Telapak kaki dihadapkan lurus ke Kiblat", "Punggung dihadapkan ke Kiblat", "Bebas menghadap mana saja karena sedang sakit"], a: 0 },
+            { q: "Kondisi medis yang dapat membuat kewajiban shalat fardhu seseorang benar-benar gugur (tidak wajib melaksanakannya saat itu) yaitu....", options: ["Lumpuh total seluruh tubuh", "Patah tulang punggung belakang", "Kehilangan kesadaran / Koma", "Diinfus dan dirawat di ruang ICU"], a: 2 },
+            { q: "Saat shalat sambil berbaring telentang, gerakan ruku' dan sujud dilakukan dengan cara....", options: ["Menggerakkan tangan ke atas dan bawah", "Isyarat anggukan kepala (anggukan sujud harus lebih dalam)", "Mengedipkan mata dua kali berturut-turut", "Membaca lafal takbir lebih keras dari biasanya"], a: 1 },
+            { q: "Jika seseorang sakit parah dan proses wudhu atau pergerakan shalat sangat menyiksanya setiap kali masuk waktu, maka keringanan waktu yang diberikan fikih Islam kepadanya berupa....", options: ["Boleh menjamak (menggabung) waktu shalatnya", "Boleh meng-qashar (meringkas) jumlah rakaatnya", "Boleh menjamak sekaligus mengqashar rakaatnya", "Boleh mengganti shalat dengan membayar fidyah"], a: 0 },
+            { q: "Bila seorang pasien harus berbaring miring, maka posisi miring yang paling disunnahkan untuk dilakukan saat shalat adalah....", options: ["Miring ke sisi kiri tubuh", "Miring ke sisi kanan tubuh", "Miring dengan dada telungkup", "Bergantian sisi kanan dan kiri di setiap rakaat"], a: 1 },
+            { q: "Urutan prioritas tingkat kemampuan posisi shalat bagi orang sakit yang benar adalah....", options: ["Duduk -> Isyarat -> Berbaring Miring", "Berbaring Miring -> Duduk -> Telentang", "Duduk -> Berbaring Miring -> Telentang -> Isyarat", "Telentang -> Duduk -> Isyarat"], a: 2 }
         ];
 
         let studentData = { name: "", class: "" };
@@ -626,23 +626,36 @@
         }
 
         async function submitQuizLogic() {
-            const correct = questionData.filter((item, i) => {
+            let correctCount = 0;
+            const details = []; // Array untuk menyimpan benar (true) atau salah (false) per soal
+
+            questionData.forEach((item, i) => {
                 const sel = document.querySelector(`input[name="q${i}"]:checked`);
-                return sel && parseInt(sel.value) === item.a;
-            }).length;
-            const score = Math.round((correct / questionData.length) * 100);
+                const isCorrect = sel ? parseInt(sel.value) === item.a : false;
+                details.push(isCorrect);
+                if (isCorrect) correctCount++;
+            });
+
+            const score = Math.round((correctCount / questionData.length) * 100);
 
             showModal({ title: "Memproses...", message: "Menyimpan datamu...", type: 'loading', buttons: [] });
 
             try {
                 if (!auth.currentUser) await signInAnonymously(auth);
                 await addDoc(collection(db, 'artifacts', appId, 'public', 'data', COLLECTION_NAME), {
-                    name: studentData.name, kelas: studentData.class, score, type: 'Shalat Bagi Orang Sakit', date: new Date().toLocaleDateString('id-ID'), timestamp: Date.now()
+                    name: studentData.name, 
+                    kelas: studentData.class, 
+                    score: score, 
+                    materi: 'Latihan Soal : Shalat Bagi Orang Sakit', 
+                    type: 'Latihan Soal : Shalat Bagi Orang Sakit', 
+                    date: new Date().toLocaleDateString('id-ID'), 
+                    timestamp: Date.now(),
+                    details: details // Mengirim rincian jawaban
                 });
 
                 showModal({
                     title: "Selesai!", type: 'success',
-                    message: `<div class="text-center"><span class="text-4xl font-bold text-teal-600 block mb-1">${score}</span><span class="text-sm text-slate-500">Nilai berhasil disimpan</span></div>`,
+                    message: `<div class="text-center"><span class="text-4xl font-bold text-teal-600 block mb-1">${score}</span><span class="text-sm text-slate-500">Nilai & Analisis berhasil disimpan</span></div>`,
                     buttons: [{ text: "Tutup & Selesai", class: "bg-teal-600 text-white hover:bg-teal-700" }]
                 });
 
