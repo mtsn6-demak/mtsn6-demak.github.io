@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -5,16 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SainsEdu: Struktur & Lapisan Bumi</title>
     
-    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     
-    <!-- Font Awesome untuk Ikon -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
-    <!-- Google Fonts (Sans-serif modern untuk Sains) -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
     
-    <!-- MathJax -->
     <script>
         window.MathJax = {
             tex: { inlineMath: [['$', '$']], displayMath: [['$$', '$$']] },
@@ -38,23 +35,20 @@
 
     <style>
         body {
-            background-color: #f8fafc; /* Slate 50 */
-            color: #334155; /* Slate 700 */
+            background-color: #f8fafc;
+            color: #334155;
         }
         
-        /* Custom Scrollbar */
         ::-webkit-scrollbar { width: 8px; }
         ::-webkit-scrollbar-track { background: #f1f5f9; }
         ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
         ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
 
-        /* Science Pattern Overlay (Dotted Grid) */
         .pattern-bg {
             background-image: radial-gradient(rgba(255, 255, 255, 0.15) 2px, transparent 2px);
             background-size: 24px 24px;
         }
 
-        /* Animations */
         .fade-in {
             animation: fadeIn 0.8s ease-out forwards;
             opacity: 0;
@@ -62,7 +56,6 @@
         }
         @keyframes fadeIn { to { opacity: 1; transform: translateY(0); } }
         
-        /* Card Hover */
         .menu-card {
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
@@ -71,7 +64,6 @@
             box-shadow: 0 12px 25px -8px rgba(14, 165, 233, 0.25);
         }
 
-        /* Table Styling Modernized */
         .materi-table th, .kegiatan-table th { 
             background-color: #f1f5f9; 
             color: #475569; 
@@ -88,7 +80,6 @@
         }
         .materi-table td.text-left { text-align: left; }
 
-        /* Quiz Styling Modernized */
         .option-label { 
             cursor: pointer; 
             transition: all 0.2s ease; 
@@ -109,7 +100,6 @@
             color: white;
         }
 
-        /* Modal */
         .modal-backdrop { 
             background-color: rgba(15, 23, 42, 0.7); 
             backdrop-filter: blur(4px); 
@@ -121,7 +111,6 @@
         }
         @keyframes slideUp { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
 
-        /* Kegiatan Checkbox */
         .kegiatan-checkbox {
             width: 1.5rem;
             height: 1.5rem;
@@ -154,7 +143,6 @@
 </head>
 <body class="min-h-screen flex flex-col font-sans antialiased selection:bg-sky-200 selection:text-sky-900">
 
-    <!-- Navigation -->
     <nav class="w-full bg-slate-900 text-white sticky top-0 z-50 border-b border-slate-800 backdrop-blur-md bg-opacity-95">
         <div class="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
             <div class="flex items-center space-x-3">
@@ -191,11 +179,9 @@
         </div>
     </nav>
 
-    <!-- Hero Section -->
     <header class="w-full bg-slate-900 relative pt-16 pb-32 overflow-hidden pattern-bg flex-shrink-0">
         <div class="absolute inset-0 bg-gradient-to-b from-transparent to-slate-900/90"></div>
         
-        <!-- Decorative Glowing Orbs -->
         <div class="absolute inset-0 overflow-hidden pointer-events-none">
             <div class="absolute top-0 right-1/4 w-96 h-96 bg-sky-500 opacity-10 rounded-full blur-3xl"></div>
             <div class="absolute bottom-0 left-1/4 w-64 h-64 bg-cyan-400 opacity-5 rounded-full blur-2xl"></div>
@@ -218,10 +204,8 @@
         </div>
     </header>
 
-    <!-- Content / Materi Section -->
     <section id="materi" class="flex-grow w-full max-w-5xl mx-auto px-6 pb-16 -mt-16 relative z-20 space-y-8">
         
-        <!-- 1 & 2. Karakteristik & Kerak Bumi -->
         <div class="bg-white p-8 md:p-10 rounded-3xl shadow-sm border border-slate-200 menu-card">
             <h2 class="text-2xl font-bold text-slate-800 mb-6 flex items-center font-heading">
                 <div class="bg-sky-50 text-sky-600 w-12 h-12 rounded-xl flex items-center justify-center mr-4 border border-sky-100 flex-shrink-0">
@@ -248,7 +232,6 @@
             </div>
         </div>
 
-        <!-- 3. Mantel Bumi -->
         <div class="bg-white p-8 md:p-10 rounded-3xl shadow-sm border border-slate-200 menu-card">
             <h2 class="text-2xl font-bold text-slate-800 mb-6 flex items-center font-heading">
                 <div class="bg-orange-50 text-orange-600 w-12 h-12 rounded-xl flex items-center justify-center mr-4 border border-orange-100 flex-shrink-0">
@@ -285,7 +268,6 @@
             </div>
         </div>
 
-        <!-- 4 & 5. Inti Luar & Inti Dalam -->
         <div class="bg-white p-8 md:p-10 rounded-3xl shadow-sm border border-slate-200 menu-card">
             <h2 class="text-2xl font-bold text-slate-800 mb-6 flex items-center font-heading">
                 <div class="bg-red-50 text-red-600 w-12 h-12 rounded-xl flex items-center justify-center mr-4 border border-red-100 flex-shrink-0">
@@ -296,7 +278,6 @@
             <p class="mb-6 text-slate-600 leading-relaxed">Pusat planet kita disebut Inti Bumi. Lapisan ini terbuat dari logam berat, terutama besi dan nikel. Inti bumi terbagi menjadi dua bagian dengan wujud yang berbeda:</p>
             
             <div class="grid md:grid-cols-2 gap-6">
-                <!-- Inti Luar -->
                 <div class="bg-slate-50 p-6 rounded-2xl border border-slate-200 relative overflow-hidden">
                     <div class="absolute top-0 left-0 w-1 h-full bg-red-400"></div>
                     <h3 class="text-lg font-bold text-slate-800 mb-3 font-heading">Inti Luar</h3>
@@ -308,7 +289,6 @@
                     </ul>
                 </div>
 
-                <!-- Inti Dalam -->
                 <div class="bg-slate-50 p-6 rounded-2xl border border-slate-200 relative overflow-hidden">
                     <div class="absolute top-0 left-0 w-1 h-full bg-amber-400"></div>
                     <h3 class="text-lg font-bold text-slate-800 mb-3 font-heading">Inti Dalam</h3>
@@ -321,7 +301,6 @@
             </div>
         </div>
 
-        <!-- 6 & 7. Atmosfer & Lapisan Ozon -->
         <div class="bg-white p-8 md:p-10 rounded-3xl shadow-sm border border-slate-200 menu-card">
             <h2 class="text-2xl font-bold text-slate-800 mb-6 flex items-center font-heading">
                 <div class="bg-cyan-50 text-cyan-600 w-12 h-12 rounded-xl flex items-center justify-center mr-4 border border-cyan-100 flex-shrink-0">
@@ -382,7 +361,6 @@
         </div>
     </section>
 
-    <!-- Simulation Section -->
     <section id="simulasi" class="w-full bg-slate-900 py-20 relative overflow-hidden pattern-bg border-t border-slate-800">
         <div class="container mx-auto px-6 max-w-5xl relative z-10">
             <div class="text-center mb-10">
@@ -422,9 +400,8 @@
         </div>
     </section>
 
-    <!-- Kegiatan Siswa Section -->
     <section id="kegiatan" class="py-20 w-full">
-        <div class="container mx-auto px-6 max-w-4xl">
+        <div class="container mx-auto px-6 max-w-5xl">
             <div class="text-center mb-12">
                 <span class="inline-block bg-sky-100 text-sky-700 px-5 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider mb-4 border border-sky-200">
                     <i class="fa-solid fa-list-check mr-2"></i>Kegiatan Siswa
@@ -435,7 +412,6 @@
 
             <div id="kegiatan-container" class="space-y-8">
                 
-                <!-- A. Tabel Ciri Lapisan Bumi -->
                 <div class="bg-white p-8 rounded-3xl shadow-sm border border-slate-200">
                     <h3 class="text-xl font-bold text-slate-800 mb-5 flex items-center font-heading">
                         <div class="bg-sky-50 text-sky-600 w-10 h-10 rounded-lg flex items-center justify-center mr-3 border border-sky-100 text-sm">
@@ -443,16 +419,16 @@
                         </div>
                         A. Identifikasi Lapisan Penyusun Bumi
                     </h3>
-                    <p class="mb-5 text-sm text-slate-500">Berilah tanda centang (v) pada lapisan yang sesuai dengan pernyataan karakteristik berikut.</p>
+                    <p class="mb-5 text-sm text-slate-500">Berilah tanda centang (✓) pada lapisan yang sesuai dengan pernyataan karakteristik berikut.</p>
                     <div class="overflow-x-auto rounded-xl border border-slate-200">
-                        <table class="w-full kegiatan-table border-collapse text-sm">
+                        <table class="w-full kegiatan-table border-collapse text-sm min-w-[500px]">
                             <thead>
                                 <tr>
                                     <th class="w-10">No</th>
                                     <th>Pernyataan / Karakteristik</th>
-                                    <th class="w-20">Kerak</th>
-                                    <th class="w-20">Mantel</th>
-                                    <th class="w-20">Inti</th>
+                                    <th class="w-24">Kerak</th>
+                                    <th class="w-24">Mantel</th>
+                                    <th class="w-24">Inti</th>
                                 </tr>
                             </thead>
                             <tbody class="text-slate-600">
@@ -461,22 +437,22 @@
                                     <td><input type="radio" name="kegA_1" value="mantel" class="kegiatan-checkbox"></td>
                                     <td><input type="radio" name="kegA_1" value="inti" class="kegiatan-checkbox"></td>
                                 </tr>
-                                <tr><td>2</td><td class="text-left pl-4 font-medium text-slate-700">Terdiri dari batuan yang sangat panas berbentuk kental/magma.</td>
+                                <tr><td>2</td><td class="text-left pl-4 font-medium text-slate-700">Terdiri dari batuan yang sangat panas berbentuk kental atau magma.</td>
                                     <td><input type="radio" name="kegA_2" value="kerak" class="kegiatan-checkbox"></td>
                                     <td><input type="radio" name="kegA_2" value="mantel" class="kegiatan-checkbox"></td>
                                     <td><input type="radio" name="kegA_2" value="inti" class="kegiatan-checkbox"></td>
                                 </tr>
-                                <tr><td>3</td><td class="text-left pl-4 font-medium text-slate-700">Mengandung besi dan nikel, pergerakan di luarnya menghasilkan magnet bumi.</td>
+                                <tr><td>3</td><td class="text-left pl-4 font-medium text-slate-700">Mengandung logam besi dan nikel, pergerakan di luarnya menghasilkan magnet bumi.</td>
                                     <td><input type="radio" name="kegA_3" value="kerak" class="kegiatan-checkbox"></td>
                                     <td><input type="radio" name="kegA_3" value="mantel" class="kegiatan-checkbox"></td>
                                     <td><input type="radio" name="kegA_3" value="inti" class="kegiatan-checkbox"></td>
                                 </tr>
-                                <tr><td>4</td><td class="text-left pl-4 font-medium text-slate-700">Lapisan paling tipis (hanya 5-70 km) dibandingkan lapisan lainnya.</td>
+                                <tr><td>4</td><td class="text-left pl-4 font-medium text-slate-700">Merupakan lapisan yang paling tipis dibandingkan dengan lapisan lainnya.</td>
                                     <td><input type="radio" name="kegA_4" value="kerak" class="kegiatan-checkbox"></td>
                                     <td><input type="radio" name="kegA_4" value="mantel" class="kegiatan-checkbox"></td>
                                     <td><input type="radio" name="kegA_4" value="inti" class="kegiatan-checkbox"></td>
                                 </tr>
-                                <tr><td>5</td><td class="text-left pl-4 font-medium text-slate-700">Memiliki suhu yang paling panas, mencapai $6000^\circ C$.</td>
+                                <tr><td>5</td><td class="text-left pl-4 font-medium text-slate-700">Memiliki suhu paling esktrem, mencapai $6000^\circ C$ di bagian dalamnya.</td>
                                     <td><input type="radio" name="kegA_5" value="kerak" class="kegiatan-checkbox"></td>
                                     <td><input type="radio" name="kegA_5" value="mantel" class="kegiatan-checkbox"></td>
                                     <td><input type="radio" name="kegA_5" value="inti" class="kegiatan-checkbox"></td>
@@ -486,129 +462,68 @@
                     </div>
                 </div>
 
-                <!-- B. Susunan Atmosfer -->
                 <div class="bg-white p-8 rounded-3xl shadow-sm border border-slate-200">
                     <h3 class="text-xl font-bold text-slate-800 mb-5 flex items-center font-heading">
                         <div class="bg-sky-50 text-sky-600 w-10 h-10 rounded-lg flex items-center justify-center mr-3 border border-sky-100 text-sm">
                             <i class="fa-solid fa-cloud"></i>
                         </div>
-                        B. Menjodohkan Lapisan Atmosfer
+                        B. Identifikasi Lapisan Atmosfer
                     </h3>
-                    <p class="mb-5 text-sm text-slate-500">Pilihlah nama lapisan atmosfer yang tepat untuk mengisi fungsi/kejadian berikut.</p>
-                    <div class="space-y-3">
-                        <!-- Soal -->
-                        <div class="flex flex-col md:flex-row md:items-center justify-between p-4 bg-slate-50 rounded-xl border border-slate-100">
-                            <div class="md:w-2/3 mb-3 md:mb-0 text-slate-700 text-sm font-medium">1. Lapisan tempat meteor atau benda angkasa terbakar habis.</div>
-                            <select name="kegB_1" class="md:w-1/3 p-2.5 border border-slate-300 rounded-lg outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500 bg-white cursor-pointer text-sm font-medium text-slate-700">
-                                <option value="">- Pilih Lapisan -</option>
-                                <option value="Troposfer">Troposfer</option>
-                                <option value="Stratosfer">Stratosfer</option>
-                                <option value="Mesosfer">Mesosfer</option>
-                                <option value="Termosfer">Termosfer</option>
-                                <option value="Eksosfer">Eksosfer</option>
-                            </select>
-                        </div>
-                        <div class="flex flex-col md:flex-row md:items-center justify-between p-4 bg-slate-50 rounded-xl border border-slate-100">
-                            <div class="md:w-2/3 mb-3 md:mb-0 text-slate-700 text-sm font-medium">2. Lapisan yang mengandung Ozon untuk menyerap radiasi UV.</div>
-                            <select name="kegB_2" class="md:w-1/3 p-2.5 border border-slate-300 rounded-lg outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500 bg-white cursor-pointer text-sm font-medium text-slate-700">
-                                <option value="">- Pilih Lapisan -</option>
-                                <option value="Troposfer">Troposfer</option>
-                                <option value="Stratosfer">Stratosfer</option>
-                                <option value="Mesosfer">Mesosfer</option>
-                                <option value="Termosfer">Termosfer</option>
-                                <option value="Eksosfer">Eksosfer</option>
-                            </select>
-                        </div>
-                        <div class="flex flex-col md:flex-row md:items-center justify-between p-4 bg-slate-50 rounded-xl border border-slate-100">
-                            <div class="md:w-2/3 mb-3 md:mb-0 text-slate-700 text-sm font-medium">3. Lapisan tempat pembentukan awan dan turunnya hujan (cuaca).</div>
-                            <select name="kegB_3" class="md:w-1/3 p-2.5 border border-slate-300 rounded-lg outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500 bg-white cursor-pointer text-sm font-medium text-slate-700">
-                                <option value="">- Pilih Lapisan -</option>
-                                <option value="Troposfer">Troposfer</option>
-                                <option value="Stratosfer">Stratosfer</option>
-                                <option value="Mesosfer">Mesosfer</option>
-                                <option value="Termosfer">Termosfer</option>
-                                <option value="Eksosfer">Eksosfer</option>
-                            </select>
-                        </div>
-                        <div class="flex flex-col md:flex-row md:items-center justify-between p-4 bg-slate-50 rounded-xl border border-slate-100">
-                            <div class="md:w-2/3 mb-3 md:mb-0 text-slate-700 text-sm font-medium">4. Terjadi pemantulan gelombang radio dan munculnya Aurora.</div>
-                            <select name="kegB_4" class="md:w-1/3 p-2.5 border border-slate-300 rounded-lg outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500 bg-white cursor-pointer text-sm font-medium text-slate-700">
-                                <option value="">- Pilih Lapisan -</option>
-                                <option value="Troposfer">Troposfer</option>
-                                <option value="Stratosfer">Stratosfer</option>
-                                <option value="Mesosfer">Mesosfer</option>
-                                <option value="Termosfer">Termosfer</option>
-                                <option value="Eksosfer">Eksosfer</option>
-                            </select>
-                        </div>
-                        <div class="flex flex-col md:flex-row md:items-center justify-between p-4 bg-slate-50 rounded-xl border border-slate-100">
-                            <div class="md:w-2/3 mb-3 md:mb-0 text-slate-700 text-sm font-medium">5. Lapisan terluar yang berbatasan langsung dengan luar angkasa.</div>
-                            <select name="kegB_5" class="md:w-1/3 p-2.5 border border-slate-300 rounded-lg outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500 bg-white cursor-pointer text-sm font-medium text-slate-700">
-                                <option value="">- Pilih Lapisan -</option>
-                                <option value="Troposfer">Troposfer</option>
-                                <option value="Stratosfer">Stratosfer</option>
-                                <option value="Mesosfer">Mesosfer</option>
-                                <option value="Termosfer">Termosfer</option>
-                                <option value="Eksosfer">Eksosfer</option>
-                            </select>
-                        </div>
+                    <p class="mb-5 text-sm text-slate-500">Berilah tanda centang (✓) pada lapisan atmosfer yang sesuai dengan fungsinya.</p>
+                    <div class="overflow-x-auto rounded-xl border border-slate-200">
+                        <table class="w-full kegiatan-table border-collapse text-sm min-w-[700px]">
+                            <thead>
+                                <tr>
+                                    <th class="w-10">No</th>
+                                    <th>Pernyataan / Karakteristik</th>
+                                    <th class="w-20">Troposfer</th>
+                                    <th class="w-20">Stratosfer</th>
+                                    <th class="w-20">Mesosfer</th>
+                                    <th class="w-20">Termosfer</th>
+                                    <th class="w-20">Eksosfer</th>
+                                </tr>
+                            </thead>
+                            <tbody class="text-slate-600">
+                                <tr><td>1</td><td class="text-left pl-4 font-medium text-slate-700">Tempat terjadinya pembentukan awan dan turunnya hujan.</td>
+                                    <td><input type="radio" name="kegB_1" value="troposfer" class="kegiatan-checkbox"></td>
+                                    <td><input type="radio" name="kegB_1" value="stratosfer" class="kegiatan-checkbox"></td>
+                                    <td><input type="radio" name="kegB_1" value="mesosfer" class="kegiatan-checkbox"></td>
+                                    <td><input type="radio" name="kegB_1" value="termosfer" class="kegiatan-checkbox"></td>
+                                    <td><input type="radio" name="kegB_1" value="eksosfer" class="kegiatan-checkbox"></td>
+                                </tr>
+                                <tr><td>2</td><td class="text-left pl-4 font-medium text-slate-700">Lapisan yang mengandung Ozon untuk menyerap radiasi sinar UV berbahaya.</td>
+                                    <td><input type="radio" name="kegB_2" value="troposfer" class="kegiatan-checkbox"></td>
+                                    <td><input type="radio" name="kegB_2" value="stratosfer" class="kegiatan-checkbox"></td>
+                                    <td><input type="radio" name="kegB_2" value="mesosfer" class="kegiatan-checkbox"></td>
+                                    <td><input type="radio" name="kegB_2" value="termosfer" class="kegiatan-checkbox"></td>
+                                    <td><input type="radio" name="kegB_2" value="eksosfer" class="kegiatan-checkbox"></td>
+                                </tr>
+                                <tr><td>3</td><td class="text-left pl-4 font-medium text-slate-700">Melindungi bumi dari ancaman luar dengan membakar habis benda angkasa/meteor.</td>
+                                    <td><input type="radio" name="kegB_3" value="troposfer" class="kegiatan-checkbox"></td>
+                                    <td><input type="radio" name="kegB_3" value="stratosfer" class="kegiatan-checkbox"></td>
+                                    <td><input type="radio" name="kegB_3" value="mesosfer" class="kegiatan-checkbox"></td>
+                                    <td><input type="radio" name="kegB_3" value="termosfer" class="kegiatan-checkbox"></td>
+                                    <td><input type="radio" name="kegB_3" value="eksosfer" class="kegiatan-checkbox"></td>
+                                </tr>
+                                <tr><td>4</td><td class="text-left pl-4 font-medium text-slate-700">Terdapat ionisasi sehingga terjadi pemantulan gelombang radio dan munculnya Aurora.</td>
+                                    <td><input type="radio" name="kegB_4" value="troposfer" class="kegiatan-checkbox"></td>
+                                    <td><input type="radio" name="kegB_4" value="stratosfer" class="kegiatan-checkbox"></td>
+                                    <td><input type="radio" name="kegB_4" value="mesosfer" class="kegiatan-checkbox"></td>
+                                    <td><input type="radio" name="kegB_4" value="termosfer" class="kegiatan-checkbox"></td>
+                                    <td><input type="radio" name="kegB_4" value="eksosfer" class="kegiatan-checkbox"></td>
+                                </tr>
+                                <tr><td>5</td><td class="text-left pl-4 font-medium text-slate-700">Lapisan terluar bumi yang berbatasan langsung dengan ruang angkasa hampa udara.</td>
+                                    <td><input type="radio" name="kegB_5" value="troposfer" class="kegiatan-checkbox"></td>
+                                    <td><input type="radio" name="kegB_5" value="stratosfer" class="kegiatan-checkbox"></td>
+                                    <td><input type="radio" name="kegB_5" value="mesosfer" class="kegiatan-checkbox"></td>
+                                    <td><input type="radio" name="kegB_5" value="termosfer" class="kegiatan-checkbox"></td>
+                                    <td><input type="radio" name="kegB_5" value="eksosfer" class="kegiatan-checkbox"></td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
 
-                <!-- C. Fakta Bumi (Lengkapi Kalimat) -->
-                <div class="bg-white p-8 rounded-3xl shadow-sm border border-slate-200">
-                    <h3 class="text-xl font-bold text-slate-800 mb-5 flex items-center font-heading">
-                        <div class="bg-sky-50 text-sky-600 w-10 h-10 rounded-lg flex items-center justify-center mr-3 border border-sky-100 text-sm">
-                            <i class="fa-solid fa-puzzle-piece"></i>
-                        </div>
-                        C. Fakta Unik Struktur Bumi
-                    </h3>
-                    <p class="mb-5 text-sm text-slate-500">Lengkapi kalimat di bawah ini dengan pilihan yang benar.</p>
-                    <div class="space-y-4">
-                        <div class="p-4 bg-slate-50 rounded-xl border border-slate-100 text-sm text-slate-700 leading-loose font-medium">
-                            1. Logam penyusun utama pada bagian Inti Bumi adalah <select name="kegC_1" class="mx-1 px-2 py-1 border border-slate-300 rounded bg-white focus:outline-none focus:ring-1 focus:ring-sky-500 text-sm font-semibold text-sky-700 cursor-pointer">
-                                <option value="">- Pilih -</option>
-                                <option value="emas_perak">Emas & Perak</option>
-                                <option value="besi_nikel">Besi & Nikel</option>
-                                <option value="tembaga_seng">Tembaga & Seng</option>
-                            </select>.
-                        </div>
-                        <div class="p-4 bg-slate-50 rounded-xl border border-slate-100 text-sm text-slate-700 leading-loose font-medium">
-                            2. Walaupun sangat panas, Inti Dalam Bumi tidak berwujud cair melainkan berwujud <select name="kegC_2" class="mx-1 px-2 py-1 border border-slate-300 rounded bg-white focus:outline-none focus:ring-1 focus:ring-sky-500 text-sm font-semibold text-sky-700 cursor-pointer">
-                                <option value="">- Pilih -</option>
-                                <option value="padat">Padat</option>
-                                <option value="gas">Gas</option>
-                                <option value="plasma">Plasma</option>
-                            </select> karena tekanannya yang sangat ekstrem.
-                        </div>
-                        <div class="p-4 bg-slate-50 rounded-xl border border-slate-100 text-sm text-slate-700 leading-loose font-medium">
-                            3. Pergerakan magma di dalam Mantel Bumi membentuk arus yang disebut arus <select name="kegC_3" class="mx-1 px-2 py-1 border border-slate-300 rounded bg-white focus:outline-none focus:ring-1 focus:ring-sky-500 text-sm font-semibold text-sky-700 cursor-pointer">
-                                <option value="">- Pilih -</option>
-                                <option value="konveksi">Konveksi</option>
-                                <option value="radiasi">Radiasi</option>
-                                <option value="konduksi">Konduksi</option>
-                            </select> yang menggerakkan lempeng benua.
-                        </div>
-                        <div class="p-4 bg-slate-50 rounded-xl border border-slate-100 text-sm text-slate-700 leading-loose font-medium">
-                            4. Kerak bumi bagian daratan (benua) sebagian besar tersusun atas batuan <select name="kegC_4" class="mx-1 px-2 py-1 border border-slate-300 rounded bg-white focus:outline-none focus:ring-1 focus:ring-sky-500 text-sm font-semibold text-sky-700 cursor-pointer">
-                                <option value="">- Pilih -</option>
-                                <option value="basalt">Basalt</option>
-                                <option value="kapur">Kapur</option>
-                                <option value="granit">Granit</option>
-                            </select>.
-                        </div>
-                        <div class="p-4 bg-slate-50 rounded-xl border border-slate-100 text-sm text-slate-700 leading-loose font-medium">
-                            5. Kerusakan Lapisan Ozon disebabkan oleh polusi gas buatan manusia, terutama gas <select name="kegC_5" class="mx-1 px-2 py-1 border border-slate-300 rounded bg-white focus:outline-none focus:ring-1 focus:ring-sky-500 text-sm font-semibold text-sky-700 cursor-pointer">
-                                <option value="">- Pilih -</option>
-                                <option value="oksigen">Oksigen ($O_2$)</option>
-                                <option value="cfc">CFC (Klorofluorokarbon)</option>
-                                <option value="uap_air">Uap Air</option>
-                            </select>.
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Submit Button for Kegiatan -->
                 <div class="text-center pt-6 pb-4">
                     <button type="button" id="btn-kirim-kegiatan" onclick="preSubmitKegiatanCheck()" class="bg-sky-600 hover:bg-sky-700 text-white font-semibold px-10 py-3.5 rounded-full shadow-md transition-all duration-200 transform hover:-translate-y-0.5">
                         <i class="fa-solid fa-paper-plane mr-2"></i> Kirim Lembar Kerja
@@ -618,7 +533,6 @@
         </div>
     </section>
 
-    <!-- Quiz Section -->
     <section id="latihan" class="py-20 bg-slate-100 border-t border-slate-200">
         <div class="container mx-auto px-6 max-w-3xl">
             <div class="text-center mb-12">
@@ -665,7 +579,6 @@
         </div>
     </section>
 
-    <!-- Footer -->
     <footer class="w-full bg-slate-900 text-slate-400 py-10 border-t border-slate-800 mt-auto">
         <div class="container mx-auto px-6 text-center">
             <p class="font-bold text-lg text-white font-heading mb-1">SainsEdu</p>
@@ -674,7 +587,6 @@
         </div>
     </footer>
 
-    <!-- Modal Base (Custom Alerts) -->
     <div id="custom-modal" class="hidden fixed inset-0 z-[100] flex items-center justify-center modal-backdrop px-4">
         <div class="bg-white rounded-3xl shadow-2xl p-8 max-w-sm w-full modal-content border border-slate-100 text-center relative flex flex-col items-center">
             <div id="modal-icon" class="w-16 h-16 bg-slate-50 rounded-full flex items-center justify-center mx-auto mb-4 text-3xl text-slate-400 border border-slate-100"></div>
@@ -684,13 +596,11 @@
         </div>
     </div>
 
-    <!-- Scripts -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
         import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
         import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
 
-        // Firebase Setup
         const firebaseConfig = {
             apiKey: "AIzaSyAkX8qAS-O_5m_qaGr8Aa9XME-lVyBMibw",
             authDomain: "belajaronline-b5512.firebaseapp.com",
@@ -708,11 +618,8 @@
         let currentUser = null;
 
         const initAuth = async () => {
-            try {
-                await signInAnonymously(auth);
-            } catch (err) { 
-                console.error("Auth error", err); 
-            }
+            try { await signInAnonymously(auth); } 
+            catch (err) { console.error("Auth error", err); }
         };
 
         initAuth();
@@ -762,7 +669,6 @@
 
             rotationAngle += 0.005;
 
-            // Draw layers
             earthLayers.forEach(layer => {
                 const radius = layer.rMultiplier * maxRadius * 2;
                 ctx.beginPath();
@@ -792,7 +698,6 @@
                 ctx.globalAlpha = 1.0;
             });
 
-            // Cross-section cut out visually
             ctx.beginPath();
             ctx.moveTo(cx, cy);
             ctx.lineTo(cx + Math.cos(-Math.PI/4) * maxRadius*0.8, cy + Math.sin(-Math.PI/4) * maxRadius*0.8);
@@ -806,66 +711,25 @@
 
         // --- QUIZ DATA ---
         const quizData = [
-            {
-                q: "Lapisan bumi terluar yang menjadi tempat tinggal bagi seluruh makhluk hidup adalah ...",
-                options: ["Mantel Bumi", "Inti Dalam", "Kerak Bumi", "Atmosfer"],
-                a: 2
-            },
-            {
-                q: "Sebagian besar penyusun mantel bumi berwujud kental seperti plastisin panas yang disebut ...",
-                options: ["Lava", "Magma", "Granit", "Basalt"],
-                a: 1
-            },
-            {
-                q: "Fungsi utama dari Inti Luar bumi yang berwujud cair adalah ...",
-                options: ["Menghasilkan medan magnet bumi", "Menyerap radiasi ultraviolet", "Membakar meteor yang jatuh", "Tempat terjadinya cuaca"],
-                a: 0
-            },
-            {
-                q: "Meskipun memiliki suhu mencapai $6000^\\circ C$, Inti Dalam bumi tetap berwujud padat. Hal ini disebabkan karena ...",
-                options: ["Kurangnya oksigen di dalam inti", "Tekanan yang sangat ekstrem dari lapisan di atasnya", "Campuran es dan batuan mendinginkan inti", "Inti dalam terbuat dari granit yang keras"],
-                a: 1
-            },
-            {
-                q: "Lapisan atmosfer paling bawah tempat terjadinya fenomena cuaca (hujan, angin, awan) dinamakan ...",
-                options: ["Eksosfer", "Mesosfer", "Stratosfer", "Troposfer"],
-                a: 3
-            },
-            {
-                q: "Jika ada benda angkasa atau meteor yang jatuh menuju bumi, sebagian besar akan terbakar habis dan hancur di lapisan ...",
-                options: ["Troposfer", "Mesosfer", "Stratosfer", "Eksosfer"],
-                a: 1
-            },
-            {
-                q: "Lapisan Ozon ($O_3$) sangat penting bagi kehidupan di bumi karena berfungsi menyerap radiasi sinar UV berbahaya. Lapisan ozon ini terdapat pada ...",
-                options: ["Troposfer", "Termosfer", "Mesosfer", "Stratosfer"],
-                a: 3
-            },
-            {
-                q: "Urutan struktur bumi dari bagian paling dalam ke bagian paling luar yang benar adalah ...",
-                options: ["Kerak -> Mantel -> Inti Luar -> Inti Dalam", "Inti Dalam -> Inti Luar -> Mantel -> Kerak", "Inti Luar -> Inti Dalam -> Kerak -> Mantel", "Mantel -> Kerak -> Inti Dalam -> Inti Luar"],
-                a: 1
-            },
-            {
-                q: "Zat logam utama yang menyusun lapisan inti bumi (baik luar maupun dalam) adalah ...",
-                options: ["Besi dan Nikel", "Emas dan Perak", "Tembaga dan Seng", "Aluminium dan Silikon"],
-                a: 0
-            },
-            {
-                q: "Gas yang dapat merusak dan membuat lubang pada lapisan ozon jika digunakan berlebihan adalah ...",
-                options: ["Oksigen ($O_2$)", "Karbondioksida ($CO_2$)", "CFC (Klorofluorokarbon)", "Nitrogen ($N_2$)"],
-                a: 2
-            }
+            { q: "Lapisan bumi terluar yang menjadi tempat tinggal bagi seluruh makhluk hidup adalah ...", options: ["Mantel Bumi", "Inti Dalam", "Kerak Bumi", "Atmosfer"], a: 2 },
+            { q: "Sebagian besar penyusun mantel bumi berwujud kental seperti plastisin panas yang disebut ...", options: ["Lava", "Magma", "Granit", "Basalt"], a: 1 },
+            { q: "Fungsi utama dari Inti Luar bumi yang berwujud cair adalah ...", options: ["Menghasilkan medan magnet bumi", "Menyerap radiasi ultraviolet", "Membakar meteor yang jatuh", "Tempat terjadinya cuaca"], a: 0 },
+            { q: "Meskipun memiliki suhu mencapai $6000^\\circ C$, Inti Dalam bumi tetap berwujud padat. Hal ini disebabkan karena ...", options: ["Kurangnya oksigen di dalam inti", "Tekanan yang sangat ekstrem dari lapisan di atasnya", "Campuran es dan batuan mendinginkan inti", "Inti dalam terbuat dari granit yang keras"], a: 1 },
+            { q: "Lapisan atmosfer paling bawah tempat terjadinya fenomena cuaca (hujan, angin, awan) dinamakan ...", options: ["Eksosfer", "Mesosfer", "Stratosfer", "Troposfer"], a: 3 },
+            { q: "Jika ada benda angkasa atau meteor yang jatuh menuju bumi, sebagian besar akan terbakar habis dan hancur di lapisan ...", options: ["Troposfer", "Mesosfer", "Stratosfer", "Eksosfer"], a: 1 },
+            { q: "Lapisan Ozon ($O_3$) sangat penting bagi kehidupan di bumi karena berfungsi menyerap radiasi sinar UV berbahaya. Lapisan ozon ini terdapat pada ...", options: ["Troposfer", "Termosfer", "Mesosfer", "Stratosfer"], a: 3 },
+            { q: "Urutan struktur bumi dari bagian paling dalam ke bagian paling luar yang benar adalah ...", options: ["Kerak -> Mantel -> Inti Luar -> Inti Dalam", "Inti Dalam -> Inti Luar -> Mantel -> Kerak", "Inti Luar -> Inti Dalam -> Kerak -> Mantel", "Mantel -> Kerak -> Inti Dalam -> Inti Luar"], a: 1 },
+            { q: "Zat logam utama yang menyusun lapisan inti bumi (baik luar maupun dalam) adalah ...", options: ["Besi dan Nikel", "Emas dan Perak", "Tembaga dan Seng", "Aluminium dan Silikon"], a: 0 },
+            { q: "Gas yang dapat merusak dan membuat lubang pada lapisan ozon jika digunakan berlebihan adalah ...", options: ["Oksigen ($O_2$)", "Karbondioksida ($CO_2$)", "CFC (Klorofluorokarbon)", "Nitrogen ($N_2$)"], a: 2 }
         ];
 
         // Kegiatan Logic
         window.preSubmitKegiatanCheck = () => {
             let answered = 0;
-            const total = 15; // 5(A) + 5(B) + 5(C)
+            const total = 10; // 5(A) + 5(B)
             
             for(let i=1; i<=5; i++) if(document.querySelector(`input[name="kegA_${i}"]:checked`)) answered++;
-            for(let i=1; i<=5; i++) if(document.querySelector(`select[name="kegB_${i}"]`).value !== "") answered++;
-            for(let i=1; i<=5; i++) if(document.querySelector(`select[name="kegC_${i}"]`).value !== "") answered++;
+            for(let i=1; i<=5; i++) if(document.querySelector(`input[name="kegB_${i}"]:checked`)) answered++;
             
             if(answered < total) {
                 showModal({
@@ -920,11 +784,10 @@
             });
             
             const answersA = { kegA_1: 'kerak', kegA_2: 'mantel', kegA_3: 'inti', kegA_4: 'kerak', kegA_5: 'inti' };
-            const answersB = { kegB_1: 'Mesosfer', kegB_2: 'Stratosfer', kegB_3: 'Troposfer', kegB_4: 'Termosfer', kegB_5: 'Eksosfer' };
-            const answersC = { kegC_1: 'besi_nikel', kegC_2: 'padat', kegC_3: 'konveksi', kegC_4: 'granit', kegC_5: 'cfc' };
+            const answersB = { kegB_1: 'troposfer', kegB_2: 'stratosfer', kegB_3: 'mesosfer', kegB_4: 'termosfer', kegB_5: 'eksosfer' };
 
             let correct = 0;
-            let total = 15;
+            let total = 10;
             let studentAnswers = []; 
 
             for(let key in answersA) {
@@ -934,14 +797,8 @@
                 studentAnswers.push(!!isCorrect);
             }
             for(let key in answersB) {
-                const sel = document.querySelector(`select[name="${key}"]`);
+                const sel = document.querySelector(`input[name="${key}"]:checked`);
                 const isCorrect = sel && sel.value === answersB[key];
-                if(isCorrect) correct++;
-                studentAnswers.push(!!isCorrect);
-            }
-            for(let key in answersC) {
-                const sel = document.querySelector(`select[name="${key}"]`);
-                const isCorrect = sel && sel.value === answersC[key];
                 if(isCorrect) correct++;
                 studentAnswers.push(!!isCorrect);
             }
@@ -964,7 +821,7 @@
                     buttons: [{text: "Tutup", primary: true}]
                 });
                 
-                document.querySelectorAll('.kegiatan-checkbox, select[name^="kegB_"], select[name^="kegC_"]').forEach(el => el.disabled = true);
+                document.querySelectorAll('.kegiatan-checkbox').forEach(el => el.disabled = true);
                 document.getElementById('btn-kirim-kegiatan').classList.add('hidden');
             } catch(e) {
                 hideModal();
@@ -1100,7 +957,6 @@
             }
         }
 
-        // Modal Logic
         const modal = document.getElementById('custom-modal');
         const mTitle = document.getElementById('modal-title');
         const mBody = document.getElementById('modal-body');
@@ -1136,7 +992,6 @@
         
         window.hideModal = () => modal.classList.add('hidden');
         
-        // Mobile Menu
         document.getElementById('mobile-menu-btn').onclick = () => {
             document.getElementById('mobile-menu').classList.toggle('hidden');
         };
