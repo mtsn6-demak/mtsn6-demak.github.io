@@ -57,6 +57,50 @@
             color: white;
             border-color: #0f766e;
         }
+
+        /* Lembar Kerja Table & Checkbox Styles */
+        .kegiatan-table th { 
+            background-color: #f1f5f9; 
+            color: #475569; 
+            padding: 14px; 
+            border: 1px solid #e2e8f0; 
+            font-family: 'Plus Jakarta Sans', sans-serif; 
+            font-weight: 600;
+        }
+        .kegiatan-table td { 
+            padding: 12px; 
+            border: 1px solid #e2e8f0; 
+            background-color: white; 
+            text-align: center; 
+        }
+        .kegiatan-checkbox {
+            width: 1.5rem;
+            height: 1.5rem;
+            border: 2px solid #cbd5e1;
+            border-radius: 0.375rem;
+            cursor: pointer;
+            appearance: none;
+            -webkit-appearance: none;
+            display: inline-block;
+            position: relative;
+            background-color: white;
+            transition: all 0.2s;
+        }
+        .kegiatan-checkbox:checked {
+            background-color: #0f766e; /* Teal 600 */
+            border-color: #0f766e;
+        }
+        .kegiatan-checkbox:checked::after {
+            content: '\f00c';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            font-size: 1rem;
+            color: white;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
         
         /* Islamic Pattern Overlay */
         .pattern-bg {
@@ -93,6 +137,7 @@
             <div class="hidden md:flex space-x-8 text-sm font-medium text-teal-100">
                 <a href="#materi" class="hover:text-white transition">Materi</a>
                 <a href="#simulasi" class="hover:text-white transition">Panduan Posisi</a>
+                <a href="#kegiatan" class="hover:text-white transition">Lembar Kerja</a>
                 <a href="#kalkulator" class="hover:text-white transition">Analisa Kondisi</a>
                 <a href="#latihan" class="hover:text-white transition">Uji Kompetensi</a>
             </div>
@@ -104,6 +149,7 @@
         <div id="mobile-menu" class="hidden md:hidden bg-teal-800 px-4 py-2 border-t border-teal-700">
             <a href="#materi" class="block py-3 text-sm text-teal-100 border-b border-teal-700">Materi</a>
             <a href="#simulasi" class="block py-3 text-sm text-teal-100 border-b border-teal-700">Panduan Posisi</a>
+            <a href="#kegiatan" class="block py-3 text-sm text-teal-100 border-b border-teal-700">Lembar Kerja</a>
             <a href="#kalkulator" class="block py-3 text-sm text-teal-100 border-b border-teal-700">Analisa Kondisi</a>
             <a href="#latihan" class="block py-3 text-sm text-teal-100">Uji Kompetensi</a>
         </div>
@@ -131,7 +177,6 @@
 
     <!-- Materi Section -->
     <section id="materi" class="py-12 container mx-auto px-4 -mt-16 relative z-20">
-        
         <!-- Definisi & Dasar Hukum -->
         <div class="bg-white p-8 rounded-2xl shadow-sm border border-slate-200 mb-8 hover:shadow-md transition-shadow">
             <div class="flex flex-col md:flex-row gap-6 items-start">
@@ -279,15 +324,139 @@
         </div>
     </section>
 
+    <!-- Kegiatan Siswa (Worksheet) Section -->
+    <section id="kegiatan" class="py-16 w-full">
+        <div class="container mx-auto px-4 max-w-5xl">
+            <div class="text-center mb-12">
+                <span class="inline-block bg-teal-50 text-teal-700 px-5 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider mb-4 border border-teal-200">
+                    <i class="fa-solid fa-list-check mr-2"></i>Kegiatan Siswa
+                </span>
+                <h2 class="text-3xl font-bold text-slate-800 font-heading">Lembar Kerja Pengamatan</h2>
+                <p class="text-slate-500 mt-3 text-sm max-w-xl mx-auto">Uji pemahamanmu mengenai tata cara shalat dan bersuci bagi orang sakit dengan melengkapi tabel interaktif di bawah ini.</p>
+            </div>
+
+            <div id="kegiatan-container" class="space-y-8">
+                
+                <!-- Bagian A -->
+                <div class="bg-white p-8 rounded-3xl shadow-sm border border-slate-200">
+                    <h3 class="text-xl font-bold text-slate-800 mb-5 flex items-center font-heading">
+                        <div class="bg-teal-50 text-teal-600 w-10 h-10 rounded-lg flex items-center justify-center mr-3 border border-teal-100 text-sm">
+                            <i class="fa-solid fa-person-praying"></i>
+                        </div>
+                        A. Identifikasi Posisi Shalat Orang Sakit
+                    </h3>
+                    <p class="mb-5 text-sm text-slate-500">Berilah tanda centang (✓) pada kolom posisi yang tepat sesuai dengan pernyataan karakteristik berikut.</p>
+                    <div class="overflow-x-auto rounded-xl border border-slate-200">
+                        <table class="w-full kegiatan-table border-collapse text-sm min-w-[500px]">
+                            <thead>
+                                <tr>
+                                    <th class="w-10">No</th>
+                                    <th>Pernyataan / Karakteristik</th>
+                                    <th class="w-24">Duduk</th>
+                                    <th class="w-24">Miring</th>
+                                    <th class="w-24">Telentang</th>
+                                </tr>
+                            </thead>
+                            <tbody class="text-slate-600">
+                                <tr><td>1</td><td class="text-left pl-4 font-medium text-slate-700">Dilakukan dengan menundukkan kepala dan badan ke depan saat posisi tubuh tegak tanpa berbaring.</td>
+                                    <td><input type="radio" name="kegA_1" value="duduk" class="kegiatan-checkbox"></td>
+                                    <td><input type="radio" name="kegA_1" value="miring" class="kegiatan-checkbox"></td>
+                                    <td><input type="radio" name="kegA_1" value="telentang" class="kegiatan-checkbox"></td>
+                                </tr>
+                                <tr><td>2</td><td class="text-left pl-4 font-medium text-slate-700">Berbaring pada sisi sebelah kanan, lalu wajah dan dada dihadapkan lurus ke arah Kiblat.</td>
+                                    <td><input type="radio" name="kegA_2" value="duduk" class="kegiatan-checkbox"></td>
+                                    <td><input type="radio" name="kegA_2" value="miring" class="kegiatan-checkbox"></td>
+                                    <td><input type="radio" name="kegA_2" value="telentang" class="kegiatan-checkbox"></td>
+                                </tr>
+                                <tr><td>3</td><td class="text-left pl-4 font-medium text-slate-700">Posisi ini disunnahkan untuk dipraktikkan dengan gaya bersila di atas alas.</td>
+                                    <td><input type="radio" name="kegA_3" value="duduk" class="kegiatan-checkbox"></td>
+                                    <td><input type="radio" name="kegA_3" value="miring" class="kegiatan-checkbox"></td>
+                                    <td><input type="radio" name="kegA_3" value="telentang" class="kegiatan-checkbox"></td>
+                                </tr>
+                                <tr><td>4</td><td class="text-left pl-4 font-medium text-slate-700">Kedua telapak kaki menghadap ke arah Kiblat, punggung menempel rata, dan kepala sedikit ditinggikan dengan bantal.</td>
+                                    <td><input type="radio" name="kegA_4" value="duduk" class="kegiatan-checkbox"></td>
+                                    <td><input type="radio" name="kegA_4" value="miring" class="kegiatan-checkbox"></td>
+                                    <td><input type="radio" name="kegA_4" value="telentang" class="kegiatan-checkbox"></td>
+                                </tr>
+                                <tr><td>5</td><td class="text-left pl-4 font-medium text-slate-700">Tingkatan atau rukhshah terakhir untuk dipraktikkan jika berbaring miring sudah sama sekali tidak sanggup.</td>
+                                    <td><input type="radio" name="kegA_5" value="duduk" class="kegiatan-checkbox"></td>
+                                    <td><input type="radio" name="kegA_5" value="miring" class="kegiatan-checkbox"></td>
+                                    <td><input type="radio" name="kegA_5" value="telentang" class="kegiatan-checkbox"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Bagian B -->
+                <div class="bg-white p-8 rounded-3xl shadow-sm border border-slate-200">
+                    <h3 class="text-xl font-bold text-slate-800 mb-5 flex items-center font-heading">
+                        <div class="bg-teal-50 text-teal-600 w-10 h-10 rounded-lg flex items-center justify-center mr-3 border border-teal-100 text-sm">
+                            <i class="fa-solid fa-hands-bubbles"></i>
+                        </div>
+                        B. Identifikasi Tata Cara Bersuci
+                    </h3>
+                    <p class="mb-5 text-sm text-slate-500">Berilah tanda centang (✓) pada tata cara bersuci yang paling tepat sesuai kondisi medis yang dialami pasien.</p>
+                    <div class="overflow-x-auto rounded-xl border border-slate-200">
+                        <table class="w-full kegiatan-table border-collapse text-sm min-w-[650px]">
+                            <thead>
+                                <tr>
+                                    <th class="w-10">No</th>
+                                    <th>Kondisi Medis Pasien</th>
+                                    <th class="w-28">Wudhu Normal / Dibantu</th>
+                                    <th class="w-28">Usap Perban & Wudhu</th>
+                                    <th class="w-28">Tayammum Debu</th>
+                                </tr>
+                            </thead>
+                            <tbody class="text-slate-600">
+                                <tr><td>1</td><td class="text-left pl-4 font-medium text-slate-700">Membasuh anggota tubuh yang sehat dengan air, lalu mengusapkan tangan yang basah ke atas area balutan gips.</td>
+                                    <td><input type="radio" name="kegB_1" value="wudhu" class="kegiatan-checkbox"></td>
+                                    <td><input type="radio" name="kegB_1" value="usap" class="kegiatan-checkbox"></td>
+                                    <td><input type="radio" name="kegB_1" value="tayammum" class="kegiatan-checkbox"></td>
+                                </tr>
+                                <tr><td>2</td><td class="text-left pl-4 font-medium text-slate-700">Pasien mengalami luka bakar sangat parah di sekujur tubuh, penggunaan air dapat membahayakan nyawa atau memperburuk luka.</td>
+                                    <td><input type="radio" name="kegB_2" value="wudhu" class="kegiatan-checkbox"></td>
+                                    <td><input type="radio" name="kegB_2" value="usap" class="kegiatan-checkbox"></td>
+                                    <td><input type="radio" name="kegB_2" value="tayammum" class="kegiatan-checkbox"></td>
+                                </tr>
+                                <tr><td>3</td><td class="text-left pl-4 font-medium text-slate-700">Pasien tidak memiliki luka atau pantangan air, ia merasa pusing dan lemas namun bisa dibantu perawat menuju ke keran air.</td>
+                                    <td><input type="radio" name="kegB_3" value="wudhu" class="kegiatan-checkbox"></td>
+                                    <td><input type="radio" name="kegB_3" value="usap" class="kegiatan-checkbox"></td>
+                                    <td><input type="radio" name="kegB_3" value="tayammum" class="kegiatan-checkbox"></td>
+                                </tr>
+                                <tr><td>4</td><td class="text-left pl-4 font-medium text-slate-700">Menggunakan debu yang suci lalu menepukkannya dan mengusapkan perlahan ke bagian wajah dan kedua tangan.</td>
+                                    <td><input type="radio" name="kegB_4" value="wudhu" class="kegiatan-checkbox"></td>
+                                    <td><input type="radio" name="kegB_4" value="usap" class="kegiatan-checkbox"></td>
+                                    <td><input type="radio" name="kegB_4" value="tayammum" class="kegiatan-checkbox"></td>
+                                </tr>
+                                <tr><td>5</td><td class="text-left pl-4 font-medium text-slate-700">Pasien mengalami patah tulang kaki yang di-gips, namun wajah, kedua tangan, dan kepala sepenuhnya sehat dan aman terkena air.</td>
+                                    <td><input type="radio" name="kegB_5" value="wudhu" class="kegiatan-checkbox"></td>
+                                    <td><input type="radio" name="kegB_5" value="usap" class="kegiatan-checkbox"></td>
+                                    <td><input type="radio" name="kegB_5" value="tayammum" class="kegiatan-checkbox"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="text-center pt-6 pb-4">
+                    <button type="button" id="btn-kirim-kegiatan" onclick="preSubmitKegiatanCheck()" class="bg-teal-600 hover:bg-teal-700 text-white font-semibold px-10 py-3.5 rounded-full shadow-md transition-all duration-200 transform hover:-translate-y-0.5">
+                        <i class="fa-solid fa-paper-plane mr-2"></i> Kirim Lembar Kerja
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Kalkulator Section -->
-    <section id="kalkulator" class="py-16 container mx-auto px-4">
+    <section id="kalkulator" class="py-16 container mx-auto px-4 bg-white border-t border-slate-200">
         <div class="max-w-4xl mx-auto">
             <div class="text-center mb-10">
                 <h2 class="text-3xl font-bold text-slate-800 font-heading mb-2">Analisa Kondisi Bersuci & Shalat</h2>
                 <p class="text-slate-500 text-sm">Pilih kendala medis yang dialami untuk mengecek solusi fikihnya.</p>
             </div>
             
-            <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-2 md:p-6">
+            <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-2 md:p-6 hover:shadow-md transition">
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center p-4">
                     <div class="space-y-5">
                         <div>
@@ -379,12 +548,12 @@
 
     <!-- Custom Modal -->
     <div id="custom-modal" class="hidden fixed inset-0 z-[100] flex items-center justify-center modal-backdrop px-4">
-        <div class="bg-white rounded-2xl shadow-xl p-8 max-w-sm w-full modal-content border border-slate-100 text-center">
+        <div class="bg-white rounded-2xl shadow-xl p-8 max-w-sm w-full modal-content border border-slate-100 text-center relative flex flex-col items-center">
             <div id="modal-icon-container" class="w-16 h-16 rounded-full mx-auto flex items-center justify-center mb-4 bg-slate-50 text-2xl">
                 <i class="fa-solid fa-bell text-slate-500"></i>
             </div>
             <h3 id="modal-title" class="text-xl font-bold text-slate-800 mb-2 font-heading">Judul Modal</h3>
-            <div id="modal-body" class="text-slate-600 text-sm mb-6 leading-relaxed">
+            <div id="modal-body" class="text-slate-600 w-full text-sm mb-6 leading-relaxed">
                 Pesan akan muncul di sini.
             </div>
             <div id="modal-actions" class="flex flex-col gap-2 w-full">
@@ -447,7 +616,7 @@
             }
         });
 
-        // --- Data Niat ---
+        // --- Data Panduan Simulasi ---
         window.posisiData = {
             duduk: {
                 title: "Posisi 1: Duduk",
@@ -495,7 +664,7 @@
             }, 200);
         }
 
-        // --- Modal Logic ---
+        // --- Modal Logic Universal ---
         const modal = document.getElementById('custom-modal');
         function showModal(config) {
             document.getElementById('modal-title').textContent = config.title;
@@ -506,7 +675,7 @@
             if (config.type === 'warning') { iconClass = 'fa-triangle-exclamation text-amber-500'; bgClass = 'bg-amber-50'; }
             if (config.type === 'success') { iconClass = 'fa-check text-teal-500'; bgClass = 'bg-teal-50'; }
             if (config.type === 'error') { iconClass = 'fa-xmark text-red-500'; bgClass = 'bg-red-50'; }
-            if (config.type === 'loading') { iconClass = 'fa-spinner fa-spin text-blue-500'; bgClass = 'bg-blue-50'; }
+            if (config.type === 'loading') { iconClass = 'fa-spinner fa-spin text-teal-500'; bgClass = 'bg-teal-50'; }
 
             document.getElementById('modal-icon-container').className = `w-16 h-16 rounded-full mx-auto flex items-center justify-center mb-4 text-2xl ${bgClass}`;
             document.getElementById('modal-icon-container').innerHTML = `<i class="fa-solid ${iconClass}"></i>`;
@@ -538,6 +707,118 @@
             document.getElementById('mobile-menu').classList.toggle('hidden'); 
         });
 
+        // --- Logic Lembar Kerja (Kegiatan Siswa) ---
+        window.preSubmitKegiatanCheck = () => {
+            let answered = 0;
+            const total = 10; // 5 (A) + 5 (B)
+            
+            for(let i=1; i<=5; i++) if(document.querySelector(`input[name="kegA_${i}"]:checked`)) answered++;
+            for(let i=1; i<=5; i++) if(document.querySelector(`input[name="kegB_${i}"]:checked`)) answered++;
+            
+            if(answered < total) {
+                showModal({
+                    title: "Belum Selesai", 
+                    message: `Baru dikerjakan <b class="text-amber-500">${answered}</b> dari <b>${total}</b> isian. Pastikan semua baris di Bagian A dan B sudah terisi!`, 
+                    type: 'warning',
+                    buttons: [
+                        {text: "Lanjut Mengisi", class: "bg-slate-100 text-slate-700 hover:bg-slate-200"}, 
+                        {text: "Kirim Tetap", class: "bg-amber-500 text-teal-950 hover:bg-amber-600", onClick: () => promptKegiatanIdentity()}
+                    ]
+                });
+            } else {
+                promptKegiatanIdentity();
+            }
+        };
+
+        window.promptKegiatanIdentity = () => {
+            showModal({
+                title: "Data Diri Siswa",
+                type: 'success',
+                message: `
+                    <p class="mb-4 text-xs text-slate-500 text-left">Silakan isi identitasmu untuk menyimpan nilai lembar kerja ke database.</p>
+                    <input type="text" id="popup-name" class="w-full p-3 border border-slate-300 rounded-lg outline-none focus:border-teal-500 focus:ring-1 focus:ring-teal-500 bg-white transition mb-3 text-sm text-slate-800" placeholder="Nama Lengkap">
+                    <input type="text" id="popup-class" class="w-full p-3 border border-slate-300 rounded-lg outline-none focus:border-teal-500 focus:ring-1 focus:ring-teal-500 bg-white transition text-sm text-slate-800" placeholder="Kelas">
+                    <p id="popup-error" class="text-red-500 text-xs mt-2 hidden font-semibold text-left"><i class="fa-solid fa-circle-xmark mr-1"></i> Nama dan Kelas wajib diisi!</p>
+                `,
+                buttons: [
+                    {text: "Batal", class: "bg-slate-100 text-slate-700 hover:bg-slate-200"},
+                    {text: "Simpan & Lihat Nilai", class: "bg-teal-600 text-white hover:bg-teal-700", close: false, onClick: () => validateAndSubmitKegiatan()}
+                ]
+            });
+        };
+
+        window.validateAndSubmitKegiatan = () => {
+            const name = document.getElementById('popup-name').value.trim();
+            const cls = document.getElementById('popup-class').value.trim();
+
+            if (!name || !cls) {
+                document.getElementById('popup-error').classList.remove('hidden');
+                return;
+            }
+            hideModal(); // hide identity modal
+            submitKegiatan(name, cls); // start submission
+        };
+
+        async function submitKegiatan(name, cls) {
+            showModal({
+                title: "Mengirim Data", 
+                message: "Sedang menyimpan nilai pengamatan Anda...", 
+                type: 'loading', 
+                buttons: []
+            });
+            
+            // Kunci Jawaban
+            const answersA = { kegA_1: 'duduk', kegA_2: 'miring', kegA_3: 'duduk', kegA_4: 'telentang', kegA_5: 'telentang' };
+            const answersB = { kegB_1: 'usap', kegB_2: 'tayammum', kegB_3: 'wudhu', kegB_4: 'tayammum', kegB_5: 'usap' };
+
+            let correct = 0;
+            let total = 10;
+            let studentAnswers = []; 
+
+            for(let key in answersA) {
+                const sel = document.querySelector(`input[name="${key}"]:checked`);
+                const isCorrect = sel && sel.value === answersA[key];
+                if(isCorrect) correct++;
+                studentAnswers.push(!!isCorrect);
+            }
+            for(let key in answersB) {
+                const sel = document.querySelector(`input[name="${key}"]:checked`);
+                const isCorrect = sel && sel.value === answersB[key];
+                if(isCorrect) correct++;
+                studentAnswers.push(!!isCorrect);
+            }
+            
+            const score = Math.round((correct / total) * 100);
+            
+            try {
+                if(!auth.currentUser) await signInAnonymously(auth);
+                await addDoc(collection(db, 'artifacts', appId, 'public', 'data', COLLECTION_NAME), {
+                    name: name, kelas: cls, score: score, materi: 'Lembar Kerja : Fikih Orang Sakit', 
+                    type: 'Lembar Kerja Pengamatan',
+                    details: studentAnswers, 
+                    date: new Date().toLocaleDateString('id-ID'), timestamp: Date.now()
+                });
+                
+                showModal({
+                    title: "Kerja yang Bagus!", 
+                    message: `<div class="text-center"><span class="text-4xl font-bold text-teal-600 block mb-1">${score} / 100</span><span class="text-sm text-slate-500">Nilai lembar pengamatan berhasil direkam.</span></div>`, 
+                    type: 'success',
+                    buttons: [{text: "Tutup", class: "bg-teal-600 text-white hover:bg-teal-700"}]
+                });
+                
+                document.querySelectorAll('.kegiatan-checkbox').forEach(el => el.disabled = true);
+                document.getElementById('btn-kirim-kegiatan').classList.add('hidden');
+            } catch(e) {
+                showModal({
+                    title: "Gagal Mengirim", 
+                    message: "Terjadi kesalahan koneksi, silakan coba lagi.", 
+                    type: 'error',
+                    buttons: [{text: "Tutup", class: "bg-red-600 text-white hover:bg-red-700"}]
+                });
+            }
+        }
+
+
         // --- Calculator Logic ---
         window.checkKondisi = function() {
             const cond = document.getElementById('input-condition').value;
@@ -562,7 +843,7 @@
             }
         }
 
-        // --- Quiz Logic ---
+        // --- Quiz Logic (Uji Kompetensi) ---
         const questionData = [
             { q: "Pak Amir mengalami patah tulang kaki dan tidak bisa berdiri. Cara Pak Amir melaksanakan shalat fardhu menurut urutan rukhshah adalah....", options: ["Tidak wajib shalat sampai sembuh", "Shalat sambil duduk", "Shalat dengan isyarat mata", "Shalat berbaring telentang"], a: 1 },
             { q: "Ibu Fatimah dirawat di ICU, tubuhnya lumpuh dan tidak bisa digerakkan sama sekali, namun otaknya masih sadar penuh merespon. Hal yang harus dilakukannya untuk shalat adalah....", options: ["Shalat dalam hati", "Gugur kewajiban shalatnya", "Diwakilkan oleh anaknya", "Menunggu sampai bisa bergerak"], a: 0 },
@@ -637,7 +918,7 @@
 
         async function submitQuizLogic() {
             let correctCount = 0;
-            const details = []; // Array untuk menyimpan benar (true) atau salah (false) per soal
+            const details = []; 
 
             questionData.forEach((item, i) => {
                 const sel = document.querySelector(`input[name="q${i}"]:checked`);
@@ -660,7 +941,7 @@
                     type: 'Latihan Soal : Shalat Bagi Orang Sakit', 
                     date: new Date().toLocaleDateString('id-ID'), 
                     timestamp: Date.now(),
-                    details: details // Mengirim rincian jawaban
+                    details: details 
                 });
 
                 showModal({
