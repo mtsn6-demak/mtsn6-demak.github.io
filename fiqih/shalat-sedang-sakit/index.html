@@ -20,6 +20,22 @@
             background-color: #f8fafc; /* Slate 50 */
             color: #334155; /* Slate 700 */
         }
+
+        /* --- ANTI CHEAT: Disable text selection --- */
+        .no-select {
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+        /* Allow selection only in specific input fields */
+        input, select, textarea {
+            -webkit-user-select: text;
+            -moz-user-select: text;
+            -ms-user-select: text;
+            user-select: text;
+        }
+        /* ------------------------------------------ */
         
         h1, h2, h3, h4, h5, .font-heading {
             font-family: 'Plus Jakarta Sans', sans-serif;
@@ -121,9 +137,20 @@
         }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
         @keyframes slideUp { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+        
+        /* Alert Banner */
+        #anti-cheat-banner {
+            transition: transform 0.3s ease-in-out;
+        }
     </style>
 </head>
-<body class="selection:bg-teal-200 selection:text-teal-900">
+<body class="no-select">
+
+    <!-- Anti Cheat Warning Banner (Hidden by default) -->
+    <div id="anti-cheat-banner" class="fixed top-0 left-0 w-full bg-red-600 text-white text-center py-2 z-[100] transform -translate-y-full flex items-center justify-center gap-2 text-sm font-semibold shadow-md">
+        <i class="fa-solid fa-triangle-exclamation"></i>
+        <span id="anti-cheat-msg">Sistem Pengawasan Aktif: Dilarang menyalin teks atau meninggalkan halaman ujian!</span>
+    </div>
 
     <!-- Navigation -->
     <nav class="bg-teal-900 text-white sticky top-0 z-50 border-b border-teal-800 backdrop-blur-md bg-opacity-95">
@@ -139,7 +166,7 @@
                 <a href="#simulasi" class="hover:text-white transition">Panduan Posisi</a>
                 <a href="#kegiatan" class="hover:text-white transition">Lembar Kerja</a>
                 <a href="#kalkulator" class="hover:text-white transition">Analisa Kondisi</a>
-                <a href="#latihan" class="hover:text-white transition">Uji Kompetensi</a>
+                <a href="#latihan" class="hover:text-white transition text-amber-400">Uji Kompetensi</a>
             </div>
             <button id="mobile-menu-btn" class="md:hidden text-teal-100 hover:text-white">
                 <i class="fa-solid fa-bars text-xl"></i>
@@ -151,7 +178,7 @@
             <a href="#simulasi" class="block py-3 text-sm text-teal-100 border-b border-teal-700">Panduan Posisi</a>
             <a href="#kegiatan" class="block py-3 text-sm text-teal-100 border-b border-teal-700">Lembar Kerja</a>
             <a href="#kalkulator" class="block py-3 text-sm text-teal-100 border-b border-teal-700">Analisa Kondisi</a>
-            <a href="#latihan" class="block py-3 text-sm text-teal-100">Uji Kompetensi</a>
+            <a href="#latihan" class="block py-3 text-sm text-amber-400 font-bold">Uji Kompetensi</a>
         </div>
     </nav>
 
@@ -487,11 +514,14 @@
     </section>
 
     <!-- Quiz Section -->
-    <section id="latihan" class="py-16 bg-slate-100 border-t border-slate-200">
+    <section id="latihan" class="py-16 bg-slate-100 border-t border-slate-200 relative">
         <div class="container mx-auto px-4 max-w-3xl">
             <div class="text-center mb-10">
                 <h2 class="text-3xl font-bold text-slate-800 font-heading mb-2">Uji Kompetensi</h2>
                 <p class="text-slate-500 text-sm">Analisis kasus berdasarkan modul fikih kelas 7.</p>
+                <div class="mt-4 inline-flex items-center gap-2 bg-red-100 text-red-700 px-4 py-2 rounded-lg text-xs font-bold border border-red-200">
+                    <i class="fa-solid fa-shield-halved"></i> JANGAN CURANG SAAT TES DIMULAI
+                </div>
             </div>
 
             <!-- Login Container -->
@@ -503,6 +533,15 @@
                 <div class="mb-8">
                     <h3 class="text-xl font-bold text-slate-800 font-heading">Data Siswa</h3>
                     <p class="text-sm text-slate-500">Lengkapi data diri sebelum memulai pengerjaan.</p>
+                </div>
+
+                <!-- Banned Alert (Muncul jika device diblokir) -->
+                <div id="banned-alert" class="hidden bg-red-50 border border-red-200 text-red-700 p-5 mb-6 rounded-xl text-sm relative">
+                    <div class="font-bold mb-2 flex items-center text-base"><i class="fa-solid fa-ban mr-2"></i> Akses Perangkat Diblokir</div>
+                    <p class="mb-4">Perangkat atau IP ini telah dikunci dari sistem karena terdeteksi melakukan pelanggaran ujian sebelumnya. Anda tidak dapat mengikuti ujian lagi.</p>
+                    <button onclick="promptUnblock()" class="w-full sm:w-auto bg-red-100 hover:bg-red-200 text-red-800 font-bold py-2 px-4 rounded-lg text-xs transition border border-red-300 flex justify-center items-center">
+                        <i class="fa-solid fa-unlock-keyhole mr-2"></i> Buka Blokir
+                    </button>
                 </div>
 
                 <div class="space-y-4">
@@ -522,14 +561,25 @@
             </div>
 
             <!-- Quiz Container -->
-            <div id="quiz-container" class="hidden space-y-6">
+            <div id="quiz-container" class="hidden space-y-6 relative">
+                <!-- Overlay lock jika di force submit -->
+                <div id="quiz-lock-overlay" class="hidden absolute inset-0 bg-white/80 backdrop-blur-sm z-50 flex flex-col items-center justify-center rounded-xl p-4 text-center">
+                    <div class="bg-red-600 text-white px-6 py-4 rounded-xl font-bold shadow-lg flex items-center gap-3 mb-6">
+                        <i class="fa-solid fa-lock text-2xl"></i> UJIAN DIKUNCI KARENA PELANGGARAN
+                    </div>
+                    <p class="text-slate-800 font-medium mb-4">Perangkat ini diblokir karena meninggalkan halaman ujian. <br>Harap hubungi guru pengawas untuk membuka akses.</p>
+                    <button onclick="promptUnblock()" class="bg-white text-red-600 hover:text-red-700 font-bold py-3 px-6 rounded-xl shadow-md border border-red-200 hover:bg-red-50 transition flex items-center gap-2">
+                        <i class="fa-solid fa-unlock-keyhole"></i> Buka Blokir
+                    </button>
+                </div>
+
                 <div class="bg-teal-700 text-white p-4 rounded-xl flex justify-between items-center shadow-sm">
                     <div class="font-medium text-sm flex items-center">
                         <i class="fa-solid fa-circle-user mr-2 text-teal-300 text-lg"></i>
                         <span><span id="display-name" class="font-bold">---</span> (<span id="display-class">---</span>)</span>
                     </div>
-                    <div class="bg-teal-800 px-3 py-1 rounded-md text-xs font-semibold border border-teal-600">
-                        20 Soal Analisa
+                    <div id="violation-counter" class="bg-red-500/20 px-3 py-1 rounded-md text-xs font-semibold border border-red-500 text-red-100 hidden">
+                        <i class="fa-solid fa-warning mr-1"></i> Pelanggaran: <span id="v-count">0</span>/3
                     </div>
                 </div>
 
@@ -547,7 +597,7 @@
     </section>
 
     <!-- Custom Modal -->
-    <div id="custom-modal" class="hidden fixed inset-0 z-[100] flex items-center justify-center modal-backdrop px-4">
+    <div id="custom-modal" class="hidden fixed inset-0 z-[150] flex items-center justify-center modal-backdrop px-4">
         <div class="bg-white rounded-2xl shadow-xl p-8 max-w-sm w-full modal-content border border-slate-100 text-center relative flex flex-col items-center">
             <div id="modal-icon-container" class="w-16 h-16 rounded-full mx-auto flex items-center justify-center mb-4 bg-slate-50 text-2xl">
                 <i class="fa-solid fa-bell text-slate-500"></i>
@@ -577,7 +627,7 @@
         import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
         import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
 
-        // Firebase Config sesuai yang diberikan
+        // Firebase Config
         const firebaseConfig = {
             apiKey: "AIzaSyAkX8qAS-O_5m_qaGr8Aa9XME-lVyBMibw",
             authDomain: "belajaronline-b5512.firebaseapp.com",
@@ -594,16 +644,113 @@
         const appId = 'belajaronline-b5512';
         const COLLECTION_NAME = 'scores';
 
-        // --- Auth Management ---
+        // --- SISTEM ANTI CHEAT LENGKAP ---
+        window.isExamActive = false;
+        let cheatWarnings = 0;
+        const MAX_WARNINGS = 3;
+        
+        // 1. Matikan Klik Kanan (Context Menu)
+        document.addEventListener('contextmenu', event => {
+            event.preventDefault();
+            showAntiCheatBanner("Klik Kanan dinonaktifkan!");
+        });
+
+        // 2. Matikan Copy, Cut, Paste
+        document.addEventListener('copy', e => { e.preventDefault(); showAntiCheatBanner("Dilarang melakukan Copy data!"); });
+        document.addEventListener('cut', e => { e.preventDefault(); showAntiCheatBanner("Dilarang melakukan Cut data!"); });
+        document.addEventListener('paste', e => { e.preventDefault(); showAntiCheatBanner("Dilarang melakukan Paste data!"); });
+
+        // 3. Matikan Keyboard Shortcuts (Inspect Element, Copy Paste shortcuts)
+        document.addEventListener('keydown', function(e) {
+            // F12, Ctrl+Shift+I, Ctrl+Shift+J, Ctrl+U, Ctrl+S, Ctrl+C, Ctrl+V, Ctrl+X
+            if (e.key === 'F12' || 
+                (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'i' || e.key === 'J' || e.key === 'j' || e.key === 'C' || e.key === 'c')) ||
+                (e.ctrlKey && (e.key === 'U' || e.key === 'u' || e.key === 'S' || e.key === 's' || e.key === 'C' || e.key === 'c' || e.key === 'V' || e.key === 'v' || e.key === 'X' || e.key === 'x'))) {
+                e.preventDefault();
+                showAntiCheatBanner("Pintasan Keyboard (Shortcuts) dimatikan untuk keamanan!");
+            }
+        });
+
+        // Tampilkan Banner Peringatan Kecil di atas
+        function showAntiCheatBanner(msg) {
+            const banner = document.getElementById('anti-cheat-banner');
+            document.getElementById('anti-cheat-msg').textContent = msg;
+            banner.classList.remove('-translate-y-full');
+            setTimeout(() => { banner.classList.add('-translate-y-full'); }, 2500);
+        }
+
+        // 4. Deteksi Pindah Tab / Pindah Aplikasi (Hanya aktif saat Ujian)
+        document.addEventListener('visibilitychange', function() {
+            if (document.hidden && window.isExamActive) {
+                handleTabViolation();
+            }
+        });
+
+        // Deteksi jika browser kehilangan fokus (alt-tab)
+        window.addEventListener('blur', function() {
+            if (window.isExamActive && document.activeElement !== document.getElementById('student-name') && document.activeElement !== document.getElementById('student-class')) {
+                handleTabViolation();
+            }
+        });
+
+        function handleTabViolation() {
+            if(!window.isExamActive) return;
+            cheatWarnings++;
+            
+            document.getElementById('violation-counter').classList.remove('hidden');
+            document.getElementById('v-count').textContent = cheatWarnings;
+
+            if (cheatWarnings >= MAX_WARNINGS) {
+                // Hentikan ujian
+                window.isExamActive = false;
+                
+                // BLOKIR DEVICE SECARA PERMANEN DI LOCALSTORAGE
+                localStorage.setItem('fikih_banned_device', 'true');
+                
+                document.getElementById('quiz-lock-overlay').classList.remove('hidden');
+                
+                showModal({
+                    title: "❌ Ujian Dihentikan Paksa",
+                    message: `<div class="text-red-600 font-semibold mb-2">Batas Pelanggaran Tercapai!</div>Anda telah terdeteksi meninggalkan halaman ujian sebanyak 3 kali. <b>Perangkat Anda kini diblokir permanen</b>, dan jawaban otomatis dikirimkan.`,
+                    type: 'error',
+                    buttons: [{ text: "Mengerti", class: "bg-red-600 text-white hover:bg-red-700", onClick: () => submitQuizLogic(true) }]
+                });
+            } else {
+                showModal({
+                    title: "🚨 Peringatan Kecurangan!",
+                    message: `<div class="text-amber-600 font-medium">Pelanggaran: ${cheatWarnings} / ${MAX_WARNINGS}</div><br>Sistem mendeteksi Anda meninggalkan tab/layar ujian! Mohon fokus pada layar ujian. Jika mencapai 3 kali, ujian akan dihentikan paksa.`,
+                    type: 'warning',
+                    buttons: [{ text: "Saya Paham", class: "bg-amber-500 text-white hover:bg-amber-600" }]
+                });
+            }
+        }
+        // --- END ANTI CHEAT ---
+
+
+        // --- Auth & Banned Management ---
         const startBtn = document.getElementById('start-btn');
         const authStatus = document.getElementById('auth-status');
         const authErrorMsg = document.getElementById('auth-error-msg');
 
+        // Cek status blokir device saat halaman dimuat
+        const isDeviceBanned = localStorage.getItem('fikih_banned_device') === 'true';
+
         onAuthStateChanged(auth, (user) => {
             if (user) {
-                startBtn.disabled = false;
-                startBtn.className = "w-full bg-teal-600 hover:bg-teal-700 text-white font-medium py-3.5 rounded-xl transition mt-4";
-                startBtn.innerHTML = 'Mulai Mengerjakan <i class="fa-solid fa-arrow-right ml-2 text-sm"></i>';
+                if (isDeviceBanned) {
+                    // Kunci UI jika device terdeteksi pernah curang
+                    startBtn.disabled = true;
+                    startBtn.className = "w-full bg-red-100 text-red-500 font-bold py-3.5 rounded-xl cursor-not-allowed mt-4 border border-red-200";
+                    startBtn.innerHTML = '<i class="fa-solid fa-lock mr-2"></i> Perangkat Diblokir';
+                    document.getElementById('banned-alert').classList.remove('hidden');
+                    document.getElementById('student-name').disabled = true;
+                    document.getElementById('student-class').disabled = true;
+                } else {
+                    startBtn.disabled = false;
+                    startBtn.className = "w-full bg-teal-600 hover:bg-teal-700 text-white font-medium py-3.5 rounded-xl transition mt-4";
+                    startBtn.innerHTML = 'Mulai Mengerjakan <i class="fa-solid fa-arrow-right ml-2 text-sm"></i>';
+                }
+
                 authStatus.innerHTML = '<i class="fa-solid fa-check text-teal-500 mr-1"></i> Terhubung';
                 authStatus.classList.replace('text-slate-400', 'text-teal-600');
                 authErrorMsg.classList.add('hidden');
@@ -615,6 +762,49 @@
                 });
             }
         });
+
+        // --- SISTEM BUKA BLOKIR (UNBLOCK) ---
+        // Fungsi ini bisa dipanggil dari tombol HTML manapun
+        window.promptUnblock = function() {
+            showModal({
+                title: "Otorisasi Guru",
+                type: 'warning',
+                message: `
+                    <p class="mb-3 text-sm text-slate-600 text-left">Masukkan PIN Rahasia untuk membuka blokir perangkat siswa ini.</p>
+                    <input type="password" id="unblock-pin" class="w-full p-3 border border-slate-300 rounded-lg outline-none focus:border-teal-500 focus:ring-1 focus:ring-teal-500 bg-white transition mb-2 text-sm text-slate-800" placeholder="Masukkan PIN" autocomplete="off">
+                    <p id="pin-error" class="text-red-500 text-xs font-semibold text-left hidden"><i class="fa-solid fa-circle-xmark mr-1"></i> PIN yang Anda masukkan salah!</p>
+                `,
+                buttons: [
+                    {text: "Batal", class: "bg-slate-100 text-slate-700 hover:bg-slate-200"},
+                    {text: "Buka Akses", class: "bg-teal-600 text-white hover:bg-teal-700", close: false, onClick: () => window.verifyPIN()}
+                ]
+            });
+        };
+
+        window.verifyPIN = function() {
+            const inputPin = document.getElementById('unblock-pin').value;
+            const SECRET_PIN = "443588"; // <-- GANTI PIN RAHASIA GURU DISINI
+
+            if (inputPin === SECRET_PIN) {
+                // Hapus status banned
+                localStorage.removeItem('fikih_banned_device');
+                
+                hideModal();
+                showModal({
+                    title: "Blokir Dibuka!",
+                    message: "Akses ujian untuk perangkat ini telah dikembalikan. Halaman akan dimuat ulang.",
+                    type: 'success',
+                    buttons: [{
+                        text: "Muat Ulang Halaman", 
+                        class: "bg-teal-600 text-white hover:bg-teal-700", 
+                        onClick: () => window.location.reload()
+                    }]
+                });
+            } else {
+                document.getElementById('pin-error').classList.remove('hidden');
+            }
+        };
+
 
         // --- Data Panduan Simulasi ---
         window.posisiData = {
@@ -687,7 +877,7 @@
                 config.buttons.forEach(btn => {
                     const b = document.createElement('button');
                     b.className = `w-full py-2.5 rounded-xl font-medium transition text-sm ${btn.class || 'bg-slate-100 text-slate-700 hover:bg-slate-200'}`;
-                    b.textContent = btn.text;
+                    b.innerHTML = btn.text;
                     b.onclick = () => { if (btn.close !== false) hideModal(); if (btn.onClick) btn.onClick(); };
                     actions.appendChild(b);
                 });
@@ -710,7 +900,7 @@
         // --- Logic Lembar Kerja (Kegiatan Siswa) ---
         window.preSubmitKegiatanCheck = () => {
             let answered = 0;
-            const total = 10; // 5 (A) + 5 (B)
+            const total = 10;
             
             for(let i=1; i<=5; i++) if(document.querySelector(`input[name="kegA_${i}"]:checked`)) answered++;
             for(let i=1; i<=5; i++) if(document.querySelector(`input[name="kegB_${i}"]:checked`)) answered++;
@@ -755,19 +945,13 @@
                 document.getElementById('popup-error').classList.remove('hidden');
                 return;
             }
-            hideModal(); // hide identity modal
-            submitKegiatan(name, cls); // start submission
+            hideModal(); 
+            submitKegiatan(name, cls); 
         };
 
         async function submitKegiatan(name, cls) {
-            showModal({
-                title: "Mengirim Data", 
-                message: "Sedang menyimpan nilai pengamatan Anda...", 
-                type: 'loading', 
-                buttons: []
-            });
+            showModal({ title: "Mengirim Data", message: "Sedang menyimpan nilai pengamatan Anda...", type: 'loading', buttons: [] });
             
-            // Kunci Jawaban
             const answersA = { kegA_1: 'duduk', kegA_2: 'miring', kegA_3: 'duduk', kegA_4: 'telentang', kegA_5: 'telentang' };
             const answersB = { kegB_1: 'usap', kegB_2: 'tayammum', kegB_3: 'wudhu', kegB_4: 'tayammum', kegB_5: 'usap' };
 
@@ -809,15 +993,9 @@
                 document.querySelectorAll('.kegiatan-checkbox').forEach(el => el.disabled = true);
                 document.getElementById('btn-kirim-kegiatan').classList.add('hidden');
             } catch(e) {
-                showModal({
-                    title: "Gagal Mengirim", 
-                    message: "Terjadi kesalahan koneksi, silakan coba lagi.", 
-                    type: 'error',
-                    buttons: [{text: "Tutup", class: "bg-red-600 text-white hover:bg-red-700"}]
-                });
+                showModal({ title: "Gagal Mengirim", message: "Terjadi kesalahan koneksi, silakan coba lagi.", type: 'error' });
             }
         }
-
 
         // --- Calculator Logic ---
         window.checkKondisi = function() {
@@ -870,10 +1048,19 @@
         let studentData = { name: "", class: "" };
 
         window.startQuiz = function() {
+            // Pengamanan Ganda: Cek ulang jika mencoba bypass tombol
+            if (localStorage.getItem('fikih_banned_device') === 'true') {
+                return showModal({ title: "Akses Ditolak", message: "Perangkat ini telah diblokir karena riwayat pelanggaran. Hubungi guru.", type: 'error' });
+            }
+
             const n = document.getElementById('student-name').value.trim();
             const c = document.getElementById('student-class').value.trim();
             if (!n || !c) return showModal({ title: "Perhatian", message: "Mohon isi Nama dan Kelas terlebih dahulu.", type: 'warning' });
             
+            // Activate Anti-Cheat Flag
+            window.isExamActive = true;
+            cheatWarnings = 0;
+
             studentData = { name: n, class: c };
             document.getElementById('display-name').textContent = n;
             document.getElementById('display-class').textContent = c;
@@ -901,6 +1088,9 @@
                     </div>
                 </div>
             `).join('');
+            
+            // Scroll to quiz
+            document.getElementById('latihan').scrollIntoView({ behavior: 'smooth' });
         }
 
         window.preSubmitCheck = function() {
@@ -910,13 +1100,16 @@
                     title: "Pengecekan", message: `Kamu baru menjawab <b class="text-amber-500">${answered}</b> dari <b>${questionData.length}</b> soal.<br>Yakin ingin mengirim?`, type: 'warning',
                     buttons: [
                         { text: "Cek Kembali", class: "bg-slate-100 text-slate-700 hover:bg-slate-200" },
-                        { text: "Kirim Sekarang", class: "bg-teal-600 text-white hover:bg-teal-700", onClick: () => submitQuizLogic() }
+                        { text: "Kirim Sekarang", class: "bg-teal-600 text-white hover:bg-teal-700", onClick: () => submitQuizLogic(false) }
                     ]
                 });
-            } else submitQuizLogic();
+            } else submitQuizLogic(false);
         }
 
-        async function submitQuizLogic() {
+        // Added parameter to track if it was force-submitted due to cheating
+        async function submitQuizLogic(isForcedCheat = false) {
+            window.isExamActive = false; // Turn off monitoring
+            
             let correctCount = 0;
             const details = []; 
 
@@ -928,8 +1121,20 @@
             });
 
             const score = Math.round((correctCount / questionData.length) * 100);
+            
+            const examTitle = isForcedCheat ? 'Latihan Soal (Dikumpul Paksa / Pelanggaran)' : 'Latihan Soal : Shalat Bagi Orang Sakit';
 
-            showModal({ title: "Memproses...", message: "Menyimpan datamu...", type: 'loading', buttons: [] });
+            if(!isForcedCheat) {
+                showModal({ title: "Memproses...", message: "Menyimpan datamu...", type: 'loading', buttons: [] });
+            }
+
+            // Ambil IP (Opsional untuk pelaporan ke database)
+            let userIP = "Unknown";
+            try {
+                const ipRes = await fetch('https://api.ipify.org?format=json');
+                const ipData = await ipRes.json();
+                userIP = ipData.ip;
+            } catch(e) {}
 
             try {
                 if (!auth.currentUser) await signInAnonymously(auth);
@@ -937,28 +1142,33 @@
                     name: studentData.name, 
                     kelas: studentData.class, 
                     score: score, 
-                    materi: 'Latihan Soal : Shalat Bagi Orang Sakit', 
-                    type: 'Latihan Soal : Shalat Bagi Orang Sakit', 
+                    materi: examTitle, 
+                    type: 'Latihan Soal', 
                     date: new Date().toLocaleDateString('id-ID'), 
                     timestamp: Date.now(),
-                    details: details 
+                    details: details,
+                    uid: auth.currentUser.uid, // Simpan ID Unik User
+                    ipAddress: userIP, // Simpan IP Address
+                    isBanned: isForcedCheat // Penanda apakah user ini curang
                 });
 
-                showModal({
-                    title: "Selesai!", type: 'success',
-                    message: `<div class="text-center"><span class="text-4xl font-bold text-teal-600 block mb-1">${score}</span><span class="text-sm text-slate-500">Nilai & Analisis berhasil disimpan</span></div>`,
-                    buttons: [{ text: "Tutup & Selesai", class: "bg-teal-600 text-white hover:bg-teal-700" }]
-                });
+                if(!isForcedCheat) {
+                    showModal({
+                        title: "Selesai!", type: 'success',
+                        message: `<div class="text-center"><span class="text-4xl font-bold text-teal-600 block mb-1">${score}</span><span class="text-sm text-slate-500">Nilai & Analisis berhasil disimpan</span></div>`,
+                        buttons: [{ text: "Tutup & Selesai", class: "bg-teal-600 text-white hover:bg-teal-700" }]
+                    });
+                }
 
                 document.getElementById('quiz-form').classList.add('pointer-events-none', 'opacity-50');
                 const btn = document.getElementById('submit-btn');
                 btn.disabled = true;
-                btn.innerHTML = '<i class="fa-solid fa-check"></i> Sudah Terkirim';
+                btn.innerHTML = isForcedCheat ? '<i class="fa-solid fa-lock"></i> Dikunci (Pelanggaran)' : '<i class="fa-solid fa-check"></i> Sudah Terkirim';
                 btn.className = "w-full bg-slate-300 text-slate-500 font-semibold py-4 rounded-xl cursor-not-allowed flex justify-center items-center gap-2";
 
             } catch (e) {
                 console.error(e);
-                showModal({ title: "Gagal Mengirim", message: "Error: " + e.message, type: 'error' });
+                showModal({ title: "Gagal Mengirim", message: "Error database: " + e.message, type: 'error' });
             }
         }
     </script>
