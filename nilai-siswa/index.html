@@ -122,7 +122,7 @@
                     <i data-lucide="users" class="w-7 h-7"></i>
                 </div>
                 <div>
-                    <p class="text-xs font-bold text-slate-400 uppercase tracking-wider font-heading">Total Peserta</p>
+                    <p class="text-xs font-bold text-slate-400 uppercase tracking-wider font-heading">Total Peserta Mengerjakan</p>
                     <h3 class="text-3xl font-extrabold text-slate-800 font-heading tracking-tight" id="total-students">0</h3>
                 </div>
             </div>
@@ -161,7 +161,7 @@
                 </h2>
                 <div class="flex gap-4 w-full md:w-auto">
                     <div class="relative w-full md:w-80">
-                        <input type="text" id="searchInput" onkeyup="window.filterTable()" placeholder="Cari Nama, Kelas, atau Modul..." class="w-full pl-11 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:bg-white focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500 transition-all text-sm font-medium text-slate-700">
+                        <input type="text" id="searchInput" onkeyup="window.filterTable()" placeholder="Cari Nama, Kelas, atau Tugas/Materi..." class="w-full pl-11 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:bg-white focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500 transition-all text-sm font-medium text-slate-700">
                         <i data-lucide="search" class="w-4 h-4 text-slate-400 absolute left-4 top-3.5"></i>
                     </div>
                 </div>
@@ -190,7 +190,7 @@
                                     <i id="icon-kelas" data-lucide="arrow-up-down" class="w-3.5 h-3.5 text-slate-300 group-hover:text-brand-600"></i>
                                 </div>
                             </th>
-                            <th class="p-5">Modul Ujian</th>
+                            <th class="p-5">Tugas/Materi</th>
                             <th class="p-5 text-center sortable group" onclick="window.sortTable('score')">
                                 <div class="flex items-center justify-center gap-1.5">
                                     Skor
@@ -245,10 +245,10 @@
                     </div>
                 </div>
                 <div>
-                    <label class="block text-sm font-bold text-slate-700 mb-2 font-heading">Pilih Modul / Materi</label>
+                    <label class="block text-sm font-bold text-slate-700 mb-2 font-heading">Pilih Tugas / Materi</label>
                     <div class="relative">
                         <select id="export-materi" class="w-full pl-4 pr-10 py-3 bg-white border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500 transition-all text-sm font-medium text-slate-700 appearance-none">
-                            <option value="ALL">Semua Modul</option>
+                            <option value="ALL">Semua Tugas/Materi</option>
                         </select>
                         <i data-lucide="chevron-down" class="w-4 h-4 text-slate-400 absolute right-4 top-3.5 pointer-events-none"></i>
                     </div>
@@ -313,7 +313,55 @@
         
         let globalData = [];
         let currentSort = { column: 'timestamp', direction: 'desc' };
-        let currentExportType = ''; // 'excel' or 'pdf'
+        let currentExportType = ''; 
+
+        // ========================================================
+        // MASTER STUDENTS LIST (Integrasi Absensi/Nilai Kosong)
+        // ========================================================
+        // Catatan Penting: Sesuaikan kunci ("7A", "7B", dll) dengan hasil output dari dropdown
+        // di aplikasi anda agar sistem sinkronisasi nilai otomatis terdeteksi.
+        const MASTER_STUDENTS = {
+            "7A": [
+                "Afika Desyifa Wijayanti", "Ahmad Fadil Syaputra", "Akila Azzahra", "Alicia Amira Ma'Ruf", "Anasha Fitriani",
+                "Arsyl Ibrahim Syahputra", "Chilma Hidayatul Ulya", "Chilmi Hidayatul Ulya", "Deshera Harlistianti", "Halimatuz Zahro",
+                "Hammam Mahardika Akhmad", "Hasan Al Banna", "Hasna Najla Ajwa", "Irsan Nauval Apriyanto", "Kayla Cheryl Aulia",
+                "Khaira Salsabil Firdausi", "Mohamad Aditya Tri Ardana", "Muhammad Azel Fabrizio", "Muhammad Rafa El Habibi", "Muhammad Rizki Saputra",
+                "Muhammad Zaqi Al Hafidz", "Muhammat David Prass Hardian", "Nauri Khoirotun Nisa'", "Nur Aida Faila Sufa Sugiyono", "Qaysila Bilqis",
+                "Rifqi Ra'Iful Nabil", "Sharena Rara Afriani", "Silvia Wahyu Aftriani", "Sumber Denis Saputra", "Vivi Sri Mulyani"
+            ],
+            "7B": [
+                "Achmad Fajar Tri Wijaya", "Adiansyah Putra", "Aina Aulia Ramadhani", "Aldiansyah Pratama", "Diandra Rasty Velovy Arika",
+                "Eny Wahyu Ningsih", "Fadilla Bilkis Premesti", "Faisal Dwi Santoso", "Faldzayrizka Alafiya Salsabila", "Fia Aulia Amanda",
+                "Hasna Galuh Hanifah", "Khirul Muhammad Izza", "Mahirza Mujahidia", "Maulida Zahwa Auliya", "Miftahul Nugraha Saputra",
+                "Muhammad Afandi Vernanda Nugraha", "Muhammad Akya Putra", "Muhammad Dwi Maulana Ibrahim", "Muhammad Latief Yudistyan Adam", "Muhammad Ravael Ajril",
+                "Nadin Saptia Anjani", "Niki Amarta", "Nur Alenta Putri Widiyanti", "Nur Zulva Elisa Putri", "Qurrota Aini Humaira",
+                "Sekar Ammelia Putri", "Tia Amelia Putri"
+            ],
+            "7C": [
+                "Ahmad Andika", "Ahmad Fahrizal Kusuma", "Akip Mansur Hanafi", "Alica Marwa Rahmaesta", "Annisa Fitri Kurnia Raya",
+                "Aryo Bimo Tejo", "Asifa Putri Klarasati", "Bagas Fajar Putra", "Barirotul Ainiyah", "Carissya Cahaya Ramadhani",
+                "Clarisa Diva Ariyani", "Eka Nurul Hidayah", "Fathra Nilatul Kamala", "Hengky Alfiyansyah", "Ilyas Winaryo",
+                "Kevin Adhanun Nizam", "Lydia Shafa Lutfiani", "Mahesa Beram Alfaro", "Muhamad Faizul Azzam", "Muhamad Ikhwan Hakimul Karim",
+                "Muhamad Ravaell Rahmadani", "Muhammad Agung Pratama", "Nadhin Aulia Rizkiana", "Nadin Naela Sari", "Shinta Amelia Pramesti",
+                "Tabriz Briona Iftinan Najwa", "Tiara Yuningtyas", "Yuliana Indah Ayu Dewi Afidta"
+            ],
+            "7D": [
+                "Aditya Rizqi", "Ahmad Farhan Lutfiyanto", "Ahmad Joko Widodo", "Ahmad Rizal Saputro", "Ahmad Rizki Aditya",
+                "Akifah Naila", "Chantika Dwi Marwah", "Deni Paryanto", "Dyana Shofia Kusuma", "Elsa Novi Anggraini",
+                "Emmy Sherene Aquila Afra", "Fadhilah Zafa Dwi Maharani", "Fiqri Tauwil Riadho", "Muhamad Abdullah Fandy S.", "Muhammad Agil Ridwan",
+                "Muhammad Revan Abdullah", "Nabila Mirabel Athalia", "Natalia Mustika Sari", "Raditya Naufal Dani Abiyyu", "Reisa Aulia Febrianti",
+                "Seftiani Putri Wijaya", "Saskya Zahra Putri", "Satria Nafis Ahmad Hanif", "Selfi Karnia Sari", "Sidqia Azzahra",
+                "Ulil Albab", "Wahyu Andra Saputra", "Yulfa Fifi Ardiana"
+            ],
+            "8B": [
+            "Ahmad Zainuri", "Arta Citra Laras", "Azzahra Sahafanna", "Belyana Lestari", "Clarisa Chiela Berliana Assyifa",
+            "Detaliana Sofia Hapsari", "Fairel Atharizz Calief", "Faris Wahyu Nabawi", "Febriyan Arya Lukmana", "Hafna Maulida Nihla Syifa",
+            "Hikmatul Fajriyah Ramadhani", "Linda Devi Septiyani", "Meisya Aluna Bintang Maharani", "Muhammad Bagus Satriyo", "Muhammad Iqbal Dwi Firmansyah",
+            "Muhammad Rizqi Ramadhani", "Nadia Fanesa Sari", "Naila Febriana Azzahra", "Natasya Adelia Putri", "Naumy Delvira Frada Andikma",
+            "Nijam Abdul Fajar", "Qurrota A'yun", "Raditya Bagas Anatomi Winata", "Rina Afriyani", "Rizqi Taba'ul Imam",
+            "Salwa Anastasya Putri Asyifa", "Syalwa Agustin Khairunia Asyifa", "Tasya Afifa Atha Salma", "Zahwa Meisya Setianingsih", "Zilda Aulia Fadhillah"
+            ]
+            };
 
         // --- HELPERS ---
         function normalizeClass(kelasInput) {
@@ -368,13 +416,66 @@
             }
         });
 
+        // --- TYPO CORRECTOR (Levenshtein Distance) ---
+        function getLevenshteinDistance(a, b) {
+            const matrix = [];
+            if (a.length === 0) return b.length;
+            if (b.length === 0) return a.length;
+            for (let i = 0; i <= b.length; i++) { matrix[i] = [i]; }
+            for (let j = 0; j <= a.length; j++) { matrix[0][j] = j; }
+            for (let i = 1; i <= b.length; i++) {
+                for (let j = 1; j <= a.length; j++) {
+                    if (b.charAt(i - 1) == a.charAt(j - 1)) {
+                        matrix[i][j] = matrix[i - 1][j - 1];
+                    } else {
+                        matrix[i][j] = Math.min(matrix[i - 1][j - 1] + 1, Math.min(matrix[i][j - 1] + 1, matrix[i - 1][j] + 1));
+                    }
+                }
+            }
+            return matrix[b.length][a.length];
+        }
+
+        function matchToMasterName(rawName, predictedClass) {
+            if (!rawName) return 'TANPA NAMA';
+            let upperName = rawName.toUpperCase().trim();
+
+            let candidates = [];
+            if (predictedClass && MASTER_STUDENTS[predictedClass]) {
+                candidates = MASTER_STUDENTS[predictedClass];
+            } else {
+                Object.values(MASTER_STUDENTS).forEach(arr => candidates.push(...arr));
+            }
+
+            let bestMatch = upperName;
+            let minDistance = Infinity;
+
+            for (let mName of candidates) {
+                let mNameUpper = mName.toUpperCase();
+                if (upperName === mNameUpper) return mNameUpper; // Cocok persis
+
+                let dist = getLevenshteinDistance(upperName, mNameUpper);
+                // Heuristik: toleransi typo (misal: max 2 karakter salah atau 15% dari panjang karakter total)
+                let threshold = Math.max(2, Math.floor(mNameUpper.length * 0.15));
+
+                if (dist < minDistance && dist <= threshold) {
+                    minDistance = dist;
+                    bestMatch = mNameUpper;
+                }
+            }
+            return bestMatch;
+        }
+
         // --- AGGREGATION LOGIC ---
         function processAndAggregateData(rawData) {
             const studentMap = {};
 
             rawData.forEach(item => {
-                const nameStr = item.name ? item.name.toUpperCase().trim() : 'TANPA NAMA';
+                const rawNameStr = item.name ? item.name.toUpperCase().trim() : 'TANPA NAMA';
                 const cleanClass = normalizeClass(item.kelas);
+                
+                // Panggil auto-koreksi nama (Merge typo name ke master name)
+                const nameStr = matchToMasterName(rawNameStr, cleanClass);
+                
                 const rawMateri = item.materi || item.mapel || item.type || '-';
                 const cleanMateri = normalizeMateri(rawMateri);
                 
@@ -546,11 +647,6 @@
         // --- FILTER EXPORT ACTIONS ---
         
         window.openExportModal = async (type) => {
-            if (!globalData || globalData.length === 0) {
-                Swal.fire('Data Kosong', 'Belum ada data untuk diunduh.', 'info');
-                return;
-            }
-
             // Otorisasi PIN untuk masuk ke modal unduhan
             const { value: pin } = await Swal.fire({
                 title: 'Otorisasi Akses',
@@ -579,8 +675,8 @@
                 Filter Unduhan ${type === 'excel' ? 'Excel' : 'PDF'}
             `;
             
-            // Generate list opsi yang unik
-            const kelasSet = new Set();
+            // Generate list opsi yang unik berdasarkan data & Master Students
+            const kelasSet = new Set(Object.keys(MASTER_STUDENTS));
             const materiSet = new Set();
             
             globalData.forEach(item => {
@@ -596,7 +692,7 @@
                 selKelas.innerHTML += `<option value="${k}">Kelas ${k}</option>`;
             });
 
-            selMateri.innerHTML = '<option value="ALL">Semua Modul</option>';
+            selMateri.innerHTML = '<option value="ALL">Semua Tugas/Materi</option>';
             Array.from(materiSet).sort().forEach(m => {
                 selMateri.innerHTML += `<option value="${m}">${m}</option>`;
             });
@@ -615,161 +711,207 @@
             
             let dataToExport = globalData;
 
-            // Proses Penyaringan
-            if (selectedKelas !== 'ALL') {
-                dataToExport = dataToExport.filter(item => item.kelas === selectedKelas);
-            }
-            if (selectedMateri !== 'ALL') {
-                dataToExport = dataToExport.filter(item => item.materi === selectedMateri);
-            }
-
-            if (dataToExport.length === 0) {
-                Swal.fire('Data Kosong', 'Tidak ada data yang cocok dengan filter yang Anda pilih.', 'warning');
-                return;
-            }
-
             closeExportModal();
+
+            // Bangun daftar Task (kombinasi Kelas dan Modul) agar saat unduh SEMUA, otomatis dipisah halamannya
+            let targetClasses = [];
+            if (selectedKelas === 'ALL') {
+                targetClasses = Object.keys(MASTER_STUDENTS);
+                globalData.forEach(d => {
+                    if (d.kelas && d.kelas !== '-' && !targetClasses.includes(d.kelas)) targetClasses.push(d.kelas);
+                });
+            } else {
+                targetClasses = [selectedKelas];
+            }
+
+            let targetModules = [];
+            if (selectedMateri === 'ALL') {
+                const modSet = new Set();
+                globalData.forEach(d => {
+                    if (d.materi && d.materi !== '-') modSet.add(d.materi);
+                });
+                targetModules = Array.from(modSet);
+                if (targetModules.length === 0) targetModules = ['Ujian']; 
+            } else {
+                targetModules = [selectedMateri];
+            }
+
+            let exportTasks = [];
+            targetClasses.forEach(c => {
+                targetModules.forEach(m => {
+                    // Jika 100% kelas belum mengerjakan materi ini, jangan masukkan ke daftar export tasks
+                    const hasData = globalData.some(d => d.kelas === c && d.materi === m);
+                    if (hasData) {
+                        exportTasks.push({ kelas: c, materi: m });
+                    }
+                });
+            });
 
             // Panggil Fungsi Unduh yang Sesuai
             if (currentExportType === 'excel') {
-                generateExcel(dataToExport, selectedKelas, selectedMateri);
+                generateExcel(dataToExport, exportTasks);
             } else {
-                generatePDF(dataToExport, selectedKelas, selectedMateri);
+                generatePDF(dataToExport, exportTasks);
             }
         };
 
-        // --- EXPORT FUNCTIONS (EXCEL & PDF) ---
-        
-        function generateExcel(data, kelasFilter, materiFilter) {
-            // Cari jumlah soal maksimum untuk header dinamis
+        // --- PREPARATION ENGINE EXPORT (Merge Master + Real Data) ---
+        function prepareExportData(data, kelasFilter, materiFilter) {
+            const classData = data.filter(d => 
+                d.kelas === kelasFilter && 
+                (materiFilter === 'ALL' || d.materi === materiFilter || d.materi === '-')
+            );
+
             let maxQuestions = 0;
-            data.forEach(item => {
+            classData.forEach(item => {
                 if (item.details && item.details.length > maxQuestions) {
                     maxQuestions = item.details.length;
                 }
             });
 
-            // Siapkan Header
-            const headers = ['No', 'Waktu Submit', 'Nama Peserta', 'Kelas', 'Modul Ujian', 'Skor Akhir', 'Status'];
-            for (let i = 1; i <= maxQuestions; i++) {
-                headers.push(`Soal ${i}`);
-            }
+            let mergedDataRows = [];
+            let indexCounter = 1;
 
-            // Proses Baris Data
-            const dataRows = data.map((item, index) => {
-                const dateDisplay = item.timestamp ? new Date(item.timestamp).toLocaleString('id-ID') : (item.date || '-');
-                const isPass = item.score >= 75 ? 'Tuntas' : 'Remidi';
-                
-                const row = [
-                    index + 1,
-                    dateDisplay,
-                    item.name,
-                    item.kelas,
-                    item.materi,
-                    item.score,
-                    isPass
-                ];
+            const masterNames = MASTER_STUDENTS[kelasFilter] || [];
+            const submittedNames = new Set();
 
-                // Tambahkan Rincian (1 = Benar, 0 = Salah) untuk memudahkan Sum(Total) di Excel guru
-                for (let i = 0; i < maxQuestions; i++) {
-                    if (item.details && i < item.details.length) {
-                        row.push(item.details[i] ? 1 : 0);
-                    } else {
-                        row.push('-'); 
-                    }
+            masterNames.forEach(masterName => {
+                const submission = classData.find(d => d.name.toUpperCase() === masterName.toUpperCase());
+                if (submission) {
+                    mergedDataRows.push(formatExportRow(indexCounter++, submission, maxQuestions));
+                    submittedNames.add(submission.name.toUpperCase());
+                } else {
+                    mergedDataRows.push(formatEmptyExportRow(indexCounter++, masterName, kelasFilter, materiFilter, maxQuestions));
                 }
-                return row;
             });
 
-            // Generate & Unduh Excel Menggunakan SheetJS
-            const wsData = [headers, ...dataRows];
-            const ws = XLSX.utils.aoa_to_sheet(wsData);
-            const wb = XLSX.utils.book_new();
-            XLSX.utils.book_append_sheet(wb, ws, "Rekap Nilai & Analisis");
-            
-            // Buat Nama File Dinamis
-            const kName = kelasFilter === 'ALL' ? 'SemuaKelas' : `Kls${kelasFilter}`;
-            const mName = materiFilter === 'ALL' ? 'SemuaModul' : materiFilter.replace(/\s+/g, '');
-            const filename = `Rekap_Nilai_${kName}_${mName}.xlsx`.replace(/[^a-z0-9_\.]/gi, '_');
+            classData.forEach(submission => {
+                if (!submittedNames.has(submission.name.toUpperCase())) {
+                    mergedDataRows.push(formatExportRow(indexCounter++, submission, maxQuestions));
+                }
+            });
 
+            return { mergedDataRows, maxQuestions };
+        }
+
+        function formatExportRow(index, item, maxQuestions) {
+            const dateDisplay = item.timestamp ? new Date(item.timestamp).toLocaleString('id-ID') : (item.date || '-');
+            const isPass = item.score >= 75 ? 'Tuntas' : 'Remidi';
+            
+            const row = [ index, dateDisplay, item.name.toUpperCase(), item.kelas, item.materi, item.score, isPass ];
+
+            for (let i = 0; i < maxQuestions; i++) {
+                if (item.details && i < item.details.length) {
+                    row.push(item.details[i] ? 1 : 0);
+                } else {
+                    row.push('-'); 
+                }
+            }
+            return row;
+        }
+
+        function formatEmptyExportRow(index, name, kelas, materi, maxQuestions) {
+            const row = [ index, '-', name.toUpperCase(), kelas, materi === 'ALL' ? '-' : materi, 0, '-' ];
+            for (let i = 0; i < maxQuestions; i++) { row.push('-'); }
+            return row;
+        }
+
+        // --- EXPORT FUNCTIONS (EXCEL & PDF) ---
+        
+        function generateExcel(data, tasks) {
+            const wb = XLSX.utils.book_new();
+
+            tasks.forEach(task => {
+                const { mergedDataRows, maxQuestions } = prepareExportData(data, task.kelas, task.materi);
+
+                // Lewati sheet jika benar-benar kosong agar file rapi
+                if (mergedDataRows.length === 0) return;
+
+                const headers = ['No', 'Waktu Submit', 'Nama Peserta', 'Kelas', 'Tugas/Materi', 'Skor Akhir', 'Status'];
+                for (let i = 1; i <= maxQuestions; i++) {
+                    headers.push(`Soal ${i}`);
+                }
+
+                const wsData = [headers, ...mergedDataRows];
+                const ws = XLSX.utils.aoa_to_sheet(wsData);
+                
+                const colWidths = wsData[0].map((_, colIndex) => {
+                    const maxLen = wsData.reduce((max, row) => {
+                        const cellValue = row[colIndex] ? row[colIndex].toString() : '';
+                        return Math.max(max, cellValue.length);
+                    }, 0);
+                    return { wch: Math.min(Math.max(maxLen + 2, 5), 45) }; 
+                });
+                ws['!cols'] = colWidths;
+
+                // Pastikan nama sheet unik & legal
+                let sheetName = `${task.kelas}_${task.materi}`.replace(/[^a-zA-Z0-9 -]/g, '').substring(0, 31);
+                if (wb.SheetNames.includes(sheetName)) {
+                    sheetName = sheetName.substring(0, 27) + '_' + Math.floor(Math.random()*100);
+                }
+
+                XLSX.utils.book_append_sheet(wb, ws, sheetName);
+            });
+            
+            if (wb.SheetNames.length === 0) {
+                const ws = XLSX.utils.aoa_to_sheet([["Tidak ada data yang tersedia"]]);
+                XLSX.utils.book_append_sheet(wb, ws, "Data Kosong");
+            }
+
+            const filename = `Rekap_Nilai_Lengkap.xlsx`;
             XLSX.writeFile(wb, filename);
         }
 
-        function generatePDF(data, kelasFilter, materiFilter) {
-            // Inisialisasi jsPDF mode Landscape (l)
+        function generatePDF(data, tasks) {
             const { jsPDF } = window.jspdf;
             const doc = new jsPDF('l', 'pt', 'a4'); 
+            let pagesAdded = 0;
 
-            // Cari jumlah soal maksimum
-            let maxQuestions = 0;
-            data.forEach(item => {
-                if (item.details && item.details.length > maxQuestions) {
-                    maxQuestions = item.details.length;
+            tasks.forEach((task) => {
+                const { mergedDataRows, maxQuestions } = prepareExportData(data, task.kelas, task.materi);
+                
+                if (mergedDataRows.length === 0) return;
+
+                // Tambahkan halaman baru jika ini bukan kelas/modul pertama
+                if (pagesAdded > 0) doc.addPage();
+                pagesAdded++;
+
+                const headers = ['No', 'Waktu', 'Nama', 'Kelas', 'Tugas/Materi', 'Skor', 'Status'];
+                for (let i = 1; i <= maxQuestions; i++) {
+                    headers.push(`${i}`);
                 }
-            });
 
-            // Siapkan Header (1, 2 agar muat di PDF)
-            const headers = ['No', 'Waktu', 'Nama', 'Kelas', 'Modul', 'Skor', 'Status'];
-            for (let i = 1; i <= maxQuestions; i++) {
-                headers.push(`${i}`);
+                doc.setFontSize(16);
+                doc.text("Rekap Nilai dan Analisis Butir Soal", 40, 40);
+                
+                doc.setFontSize(10);
+                doc.setTextColor(100);
+                doc.text(`Kelas: ${task.kelas} | Tugas/Materi: ${task.materi}`, 40, 55);
+
+                doc.autoTable({
+                    head: [headers],
+                    body: mergedDataRows,
+                    startY: 65,
+                    styles: { fontSize: 7, cellPadding: 3, halign: 'center', valign: 'middle' },
+                    headStyles: { fillColor: [79, 70, 229], textColor: 255 },
+                    columnStyles: {
+                        0: { cellWidth: 25, halign: 'center' }, // No
+                        1: { halign: 'left', cellWidth: 'wrap' }, // Waktu
+                        2: { halign: 'left', cellWidth: 'auto' }, // Nama
+                        3: { cellWidth: 40 }, // Kelas
+                        4: { halign: 'left', cellWidth: 'wrap' }, // Tugas/Materi
+                        5: { cellWidth: 35 }, // Skor
+                        6: { cellWidth: 45 }  // Status
+                    },
+                    margin: { top: 65, left: 20, right: 20 }
+                });
+            });
+            
+            if (pagesAdded === 0) {
+                doc.text("Tidak ada data untuk diekspor.", 40, 40);
             }
 
-            // Proses Baris Data
-            const dataRows = data.map((item, index) => {
-                const dateDisplay = item.timestamp ? new Date(item.timestamp).toLocaleString('id-ID') : (item.date || '-');
-                const isPass = item.score >= 75 ? 'Tuntas' : 'Remidi';
-                
-                const row = [
-                    (index + 1).toString(),
-                    dateDisplay,
-                    item.name,
-                    item.kelas,
-                    item.materi,
-                    item.score.toString(),
-                    isPass
-                ];
-
-                // Tambahkan Rincian (1 = Benar, 0 = Salah)
-                for (let i = 0; i < maxQuestions; i++) {
-                    if (item.details && i < item.details.length) {
-                        row.push(item.details[i] ? '1' : '0'); 
-                    } else {
-                        row.push('-');
-                    }
-                }
-                return row;
-            });
-
-            // Tambahkan Judul
-            doc.setFontSize(16);
-            doc.text("Rekap Nilai dan Analisis Butir Soal", 40, 40);
-            
-            // Tambah Teks Filter
-            doc.setFontSize(10);
-            doc.setTextColor(100);
-            const filterText = `${kelasFilter === 'ALL' ? 'Semua Kelas' : 'Kelas ' + kelasFilter} | ${materiFilter === 'ALL' ? 'Semua Modul' : materiFilter}`;
-            doc.text(filterText, 40, 55);
-
-            // Generate Tabel Otomatis
-            doc.autoTable({
-                head: [headers],
-                body: dataRows,
-                startY: 65,
-                styles: { fontSize: 7, cellPadding: 2, halign: 'center' },
-                headStyles: { fillColor: [79, 70, 229] }, // brand-600
-                columnStyles: {
-                    1: { halign: 'left', cellWidth: 80 }, // Waktu
-                    2: { halign: 'left', cellWidth: 100 }, // Nama
-                    3: { cellWidth: 40 }, // Kelas
-                    4: { halign: 'left', cellWidth: 80 } // Modul
-                }
-            });
-            
-            // Buat Nama File Dinamis
-            const kName = kelasFilter === 'ALL' ? 'SemuaKelas' : `Kls${kelasFilter}`;
-            const mName = materiFilter === 'ALL' ? 'SemuaModul' : materiFilter.replace(/\s+/g, '');
-            const filename = `Rekap_Nilai_${kName}_${mName}.pdf`.replace(/[^a-z0-9_\.]/gi, '_');
-
+            const filename = `Rekap_Nilai_Lengkap.pdf`;
             doc.save(filename);
         }
 
@@ -778,7 +920,6 @@
             const studentData = globalData.find(item => item.id === id);
             if (!studentData) return;
             
-            // Otorisasi PIN untuk melihat rincian
             const { value: pin } = await Swal.fire({
                 title: 'Otorisasi Akses',
                 text: `Masukkan PIN untuk melihat analisis butir soal ${studentData.name}`,
