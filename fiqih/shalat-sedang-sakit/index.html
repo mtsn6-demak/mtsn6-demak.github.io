@@ -134,23 +134,22 @@
             transition: transform 0.3s ease-in-out;
         }
 
-        /* Watermark identity text to prevent physical photos */
+        /* Watermark identity text - DIPERBARUI UNTUK MOBILE */
         .student-watermark {
-            position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
-            overflow: hidden;
-            pointer-events: none;
-            z-index: 0;
-            opacity: 0.04;
+            position: fixed; /* Fixed agar menutupi layar saat discroll */
+            top: -50%; left: -50%; width: 200vw; height: 200vh; /* Ekstra besar untuk menutupi sudut saat diputar */
+            pointer-events: none; /* Klik tembus ke belakang */
+            z-index: 9999; /* Z-index sangat tinggi agar berada DI ATAS soal */
+            opacity: 0.03; /* SANGAT SAMAR: Tidak mengganggu fokus, tapi muncul jika guru menurunkan kontras foto screenshot */
             display: flex;
             flex-wrap: wrap;
             align-content: flex-start;
             word-break: break-all;
-            font-size: 1.2rem;
-            font-weight: bold;
-            line-height: 1.5;
+            font-size: 1.3rem;
+            font-weight: 800;
+            line-height: 1.8;
             color: #000;
-            transform: rotate(-15deg) scale(1.5);
+            transform: rotate(-25deg); /* Sudut kemiringan */
             text-transform: uppercase;
         }
     </style>
@@ -158,17 +157,18 @@
 <body class="no-select">
 
     <!-- Anti Cheat Warning Banner -->
-    <div id="anti-cheat-banner" class="fixed top-0 left-0 w-full bg-red-600 text-white text-center py-2 z-[100] transform -translate-y-full flex items-center justify-center gap-2 text-sm font-semibold shadow-md">
+    <div id="anti-cheat-banner" class="fixed top-0 left-0 w-full bg-red-600 text-white text-center py-2 z-[10001] transform -translate-y-full flex items-center justify-center gap-2 text-sm font-semibold shadow-md">
         <i class="fa-solid fa-triangle-exclamation"></i>
         <span id="anti-cheat-msg">Sistem Pengawasan Aktif: Dilarang menyalin teks atau meninggalkan halaman ujian!</span>
     </div>
 
     <!-- Anti-Snipping / Blur Overlay (Muncul saat hilang fokus) -->
-    <div id="anti-snip-overlay" class="fixed inset-0 bg-slate-900/95 backdrop-blur-xl z-[200] hidden flex-col items-center justify-center text-white transition-opacity duration-200">
+    <div id="anti-snip-overlay" class="fixed inset-0 bg-slate-900/95 backdrop-blur-xl z-[10000] hidden flex-col items-center justify-center text-white transition-opacity duration-200">
         <i class="fa-solid fa-eye-slash text-7xl mb-6 text-red-500 animate-pulse"></i>
         <h2 class="text-3xl font-bold font-heading mb-2 text-center">Layar Ujian Disembunyikan</h2>
-        <p class="text-slate-300 text-center max-w-md px-4">Sistem mendeteksi Anda meninggalkan halaman ujian atau membuka aplikasi lain (Snipping Tool/Screenshot).</p>
-        <button onclick="regainFocus()" class="mt-8 bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-8 rounded-full shadow-lg transition transform hover:scale-105">
+        <p class="text-slate-300 text-center max-w-md px-4 mb-4">Sistem mendeteksi Anda meninggalkan halaman ujian atau membuka aplikasi lain.</p>
+        <div id="snip-identity" class="bg-red-900/50 border border-red-500 text-amber-400 font-bold text-xl px-6 py-3 rounded-xl mb-6 hidden uppercase tracking-wider text-center"></div>
+        <button onclick="regainFocus()" class="bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-8 rounded-full shadow-lg transition transform hover:scale-105">
             Kembali ke Ujian
         </button>
     </div>
@@ -519,7 +519,8 @@
 
     <!-- Quiz Section -->
     <section id="latihan" class="py-16 bg-slate-100 border-t border-slate-200 relative overflow-hidden">
-        <!-- Container Watermark (Muncul saat ujian mulai) -->
+        
+        <!-- Container Watermark yang Diperbarui (Akan menutupi seluruh halaman saat aktif) -->
         <div id="exam-watermark" class="student-watermark hidden"></div>
 
         <div class="container mx-auto px-4 max-w-3xl relative z-10">
@@ -642,7 +643,7 @@
         const appId = 'belajaronline-b5512';
         const COLLECTION_NAME = 'scores';
 
-        // --- SISTEM ANTI CHEAT (DIPERBARUI) ---
+        // --- SISTEM ANTI CHEAT (DIPERBARUI UNTUK MOBILE) ---
         window.isExamActive = false;
         let cheatWarnings = 0;
         const MAX_WARNINGS = 3;
@@ -655,7 +656,6 @@
 
         // Anti Screenshot Keys & Inspect Element Shortcuts
         document.addEventListener('keydown', function(e) {
-            // F12, Ctrl+Shift+I/J/C, Ctrl+U/S/C/V/X
             if (e.key === 'F12' || 
                 (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'i' || e.key === 'J' || e.key === 'j' || e.key === 'C' || e.key === 'c')) ||
                 (e.ctrlKey && (e.key === 'U' || e.key === 'u' || e.key === 'S' || e.key === 's' || e.key === 'C' || e.key === 'c' || e.key === 'V' || e.key === 'v' || e.key === 'X' || e.key === 'x'))) {
@@ -696,16 +696,25 @@
             if (document.hidden && window.isExamActive) {
                 document.getElementById('anti-snip-overlay').classList.remove('hidden');
                 document.getElementById('anti-snip-overlay').classList.add('flex');
-                handleTabViolation("Anda meninggalkan halaman ujian!");
+                handleTabViolation("Anda meninggalkan halaman ujian (Beralih Aplikasi/Tab)!");
+            }
+        });
+
+        // Menangkap event pagehide untuk mobile browser saat aplikasi diminimalkan
+        window.addEventListener('pagehide', function() {
+            if (window.isExamActive) {
+                document.getElementById('anti-snip-overlay').classList.remove('hidden');
+                document.getElementById('anti-snip-overlay').classList.add('flex');
+                handleTabViolation("Layar Ujian kehilangan fokus (Diminimalkan/Screenshot aktif)!");
             }
         });
 
         window.addEventListener('blur', function() {
+            // Pengecualian input field agar tidak memicu pelanggaran saat mengetik
             if (window.isExamActive && document.activeElement !== document.getElementById('student-name') && document.activeElement !== document.getElementById('student-class')) {
-                // Menampilkan layar hitam/blur sesaat sebelum alat screenshot menangkap layar
                 document.getElementById('anti-snip-overlay').classList.remove('hidden');
                 document.getElementById('anti-snip-overlay').classList.add('flex');
-                handleTabViolation("Kehilangan Fokus: Membuka aplikasi lain atau alat Screenshot!");
+                handleTabViolation("Kehilangan Fokus Layar!");
             }
         });
 
@@ -734,7 +743,7 @@
             } else {
                 showModal({
                     title: "🚨 Peringatan Kecurangan!",
-                    message: `<div class="text-amber-600 font-medium mb-1">Pelanggaran: ${cheatWarnings} / ${MAX_WARNINGS}</div><p class="text-xs font-bold text-slate-700">${reasonMsg}</p>`,
+                    message: `<div class="text-amber-600 font-medium mb-1">Pelanggaran: ${cheatWarnings} / ${MAX_WARNINGS}</div><p class="text-xs font-bold text-slate-700">${reasonMsg}</p><p class="text-xs text-slate-500 mt-2">Dilarang screenshot, berpindah tab, atau meminimalkan layar.</p>`,
                     type: 'warning',
                     buttons: [{ text: "Saya Paham", class: "bg-amber-500 text-white hover:bg-amber-600", onClick: () => regainFocus() }]
                 });
@@ -913,7 +922,7 @@
             res.className = "text-3xl font-bold text-teal-600 mb-4 font-heading";
         }
 
-        const encodedData = "W3sicSI6IlBhayBBbWlyIG1lbmdhbGFtaSBwYXRhaCB0dWxhbmcga2FraSBkYW4gdGlkYWsgYmlzYSBiZXJkaXJpLiBDYXJhIFBhayBBbWlyIG1lbGFrc2FuYWthbiBzaGFsYXQgZmFyZGh1IG1lbnVydXQgdXJ1dGFuIHJ1a2hzaGFoIGFkYWxhaC4uLi4iLCJvcHRpb25zIjpbIlRpZGFrIHdhamliIHNoYWxhdCBzYW1wYWkgc2VtYnVoIiwiU2hhbGF0IHNhbWJpbCBkdWR1ayIsIlNoYWxhdCBkZW5nYW4gaXN5YXJhdCBtYXRhIiwiU2hhbGF0IGJlcmJhcmluZyB0ZWxlbnRhbmciXSwiYSI6MX0seyJxIjoiSWJ1IEZhdGltYWggZGlyYXdhdCBkaSBJQ1UsIHR1YnVobnlhIGx1bXB1aCBkYW4gdGlkYWsgYmlzYSBkaWdlcmFra2FuIHNhbWEgc2VrYWxpLCBuYW11biBvdGFrbnlhIG1hc2loIHNhZGFyIHBlbnVoIG1lcmVzcG9uLiBIYWwgeWFuZyBoYXJ1cyBkaWxha3VrYW5ueWEgdW50dWsgc2hhbGF0IGFkYWxhaC4uLi4iLCJvcHRpb25zIjpbIlNoYWxhdCBkYWxhbSBoYXRpIiwiR3VndXIga2V3YWppYmFuIHNoYWxhdG55YSIsIkRpd2FraWxrYW4gb2xlaCBhbmFrbnlhIiwiTWVudW5nZ3Ugc2FtcGFpIGJpc2EgYmVyZ2VyYWsiXSwiYSI6MH0seyJxIjoiQnVkaSBtZW1pbGlraSBsdWthIGJha2FyIGRpIGxlbmdhbm55YSB5YW5nIGRpbGFyYW5nIHRlcmtlbmEgYWlyIG9sZWggZG9rdGVyLiBTYWF0IHdha3R1IHNoYWxhdCB0aWJhLCBjYXJhIHlhbmcgaGFydXMgQnVkaSBsYWt1a2FuIHVudHVrIGJlcnN1Y2kgYWRhbGFoLi4uLiIsIm9wdGlvbnMiOlsiTGFuZ3N1bmcgc2hhbGF0IHRhbnBhIGJlcnN1Y2kiLCJIYW55YSBtZW5jdWNpIG11a2EgZGFuIGtha2kgc2FqYSIsIk1lbWJhc3VoIHlhbmcgc2VoYXQgZGFuIG1lbmd1c2FwIHBlcmJhbiIsIk1lbnVuZGEgc2hhbGF0IHNhbXBhaSBsdWthbnlhIHNlbWJ1aCJdLCJhIjoyfSx7InEiOiJTZW9yYW5nIHBhc2llbiBkaXBhc2FuZyBzZWxhbmcga2F0ZXRlciB1cmluIHNlaGluZ2dhIHRpZGFrIHN1Y2kgZGFyaSBuYWppcy4gS29uZGlzaSBtZWRpc255YSB0aWRhayBtZW11bmdraW5rYW4gc2VsYW5nIGRpbGVwYXMgcGFzYW5nLiBIdWt1bSBzaGFsYXQgYmFnaSBwYXNpZW4gdGVyc2VidXQgYWRhbGFoLi4uLiIsIm9wdGlvbnMiOlsiVGlkYWsgc2FoIGthcmVuYSBhZGEgbmFqaXMiLCJTYWgga2FyZW5hIGRpbWFhZmthbiBkYWxhbSBrZWFkYWFuIGRhcnVyYXQiLCJTYWggdGV0YXBpIHdhamliIGRpdWxhbmcgc2V0ZWxhaCBzZW1idWggdG90YWwiLCJCb2xlaCBkaXRpbmdnYWxrYW4gc2VsYWdpIGRpIHJ1bWFoIHNha2l0Il0sImEiOjF9LHsicSI6IkFyYWggS2libGF0IHNhYXQgc2hhbGF0IGJlcmJhcmluZyBtaXJpbmcgeWFuZyBiZW5hciBhZGFsYWguLi4uIiwib3B0aW9ucyI6WyJXYWphaCBkYW4gZGFkYSBkaWhhZGFwa2FuIGtlIGFyYWggS2libGF0IiwiVGVsYXBhayBrYWtpIGRpaGFkYXBrYW4gbHVydXMga2UgS2libGF0IiwiUHVuZ2d1bmcgZGloYWRhcGthbiBrZSBLaWJsYXQiLCJCZWJhcyBtZW5naGFkYXAgbWFuYSBzYWphIGthcmVuYSBzZWRhbmcgc2FraXQiXSwiYSI6MH0seyJxIjoiS29uZGlzaSBtZWRpcyB5YW5nIGRhcGF0IG1lbWJ1YXQga2V3YWppYmFuIHNoYWxhdCBmYXJkaHUgc2VzZW9yYW5nIGJlbmFyLWJlbmFyIGd1Z3VyIGF0YXUgdGlkYWsgd2FqaWIgbWVsYWtzYW5ha2FubnlhIHNhYXQgaXR1IHlhaXR1Li4uLiIsIm9wdGlvbnMiOlsiTHVtcHVoIHRvdGFsIHNlbHVydWggdHVidWgiLCJQYXRhaCB0dWxhbmcgcHVuZ2d1bmcgYmVsYWthbmciLCJLZWhpbGFuZ2FuIGtlc2FkYXJhbiB5YW5nIHNhbmdhdCBiZXJhdCIsIkRpaW5mdXMgZGFuIGRpcmF3YXQgZGkgcnVhbmcgSUNVIl0sImEiOjJ9LHsicSI6IlNhYXQgc2hhbGF0IHNhbWJpbCBiZXJiYXJpbmcgdGVsZW50YW5nLCBnZXJha2FuIHJ1a3UnIGRhbiBzdWp1ZCBkaWxha3VrYW4gZGVuZ2FuIGNhcmEuLi4uIiwib3B0aW9ucyI6WyJNZW5nZ2VyYWtrYW4gdGFuZ2FuIGtlIGF0YXMgZGFuIGJhd2FoIiwiSXN5YXJhdCBhbmdndWthbiBrZXBhbGEgZGVuZ2FuIGFuZ2d1a2FuIHN1anVkIGxlYmloIGRhbGFtIiwiTWVuZ2VkaXBrYW4gbWF0YSBkdWEga2FsaSBiZXJ0dXJ1dC10dXJ1dCIsIk1lbWJhY2EgbGFmYWwgdGFrYmlyIGxlYmloIGtlcmFzIGRhcmkgYmlhc2FueWEiXSwiYSI6MX0seyJxIjoiSmlrYSBzZXNlb3Jhbmcgc2FraXQgcGFyYWggZGFuIHByb3NlcyB3dWRodSBhdGF1IHBlcmdlcmFrYW4gc2hhbGF0IHNhbmdhdCBtZW55aWtzYW55YSBzZXRpYXAga2FsaSBtYXN1ayB3YWt0dSwga2VyaW5nYW5hbiB3YWt0dSB5YW5nIGRpYmVyaWthbiBmaWtpaCBJc2xhbSBrZXBhZGFueWEgYmVydXBhLi4uLiIsIm9wdGlvbnMiOlsiQm9sZWggbWVuamFtYWsgd2FrdHUgc2hhbGF0bnlhIiwiQm9sZWggbWVuZ3Fhc2hhciBqdW1sYWggcmFrYWF0bnlhIiwiQm9sZWggbWVuamFtYWsgc2VrYWxpZ3VzIG1lbmdxYXNoYXIgcmFrYWF0bnlhIiwiQm9sZWggbWVuZ2dhbnRpIHNoYWxhdCBkZW5nYW4gbWVtYmF5YXIgZmlkeWFoIl0sImEiOjB9LHsicSI6IkJpbGEgc2VvcmFuZyBwYXNpZW4gaGFydXMgYmVyYmFyaW5nIG1pcmluZywgbWFrYSBwb3Npc2kgbWlyaW5nIHlhbmcgcGFsaW5nIGRpc3VubmFoa2FuIHVudHVrIGRpbGFrdWthbiBzYWF0IHNoYWxhdCBhZGFsYWguLi4uIiwib3B0aW9ucyI6WyJNaXJpbmcga2Ugc2lzaSBraXJpIHR1YnVoIiwiTWlyaW5nIGtlIHNpc2kga2FuYW4gdHVidWgiLCJNaXJpbmcgZGVuZ2FuIGRhZGEgdGVsdW5na3VwIiwiQmVyZ2FudGlhbiBzaXNpIGthbmFuIGRhbiBraXJpIGRpIHNldGlhcCByYWthYXQiXSwiYSI6MX0seyJxIjoiVXJ1dGFuIHByaW9yaXRhcyB0aW5na2F0IGtlbWFtcHVhbiBwb3Npc2kgc2hhbGF0IGJhZ2kgb3Jhbmcgc2FraXQgeWFuZyBiZW5hciBhZGFsYWguLi4uIiwib3B0aW9ucyI6WyJEdWR1ayAtPiBJc3lhcmF0IC0+IEJlcmJhcmluZyBNaXJpbmciLCJCZXJiYXJpbmcgTWlyaW5nIC0+IER1ZHVrIC0+IFRlbGVudGFuZyIsIkR1ZHVrIC0+IEJlcmJhcmluZyBNaXJpbmcgLT4gVGVsZW50YW5nIC0+IElzeWFyYXQiLCJUZWxlbnRhbmcgLT4gRHVkdWsgLT4gSXN5YXJhdCJdLCJhIjoyfV0=";
+        const encodedData = "W3sicSI6IlBhayBBbWlyIG1lbmdhbGFtaSBwYXRhaCB0dWxhbmcga2FraSBkYW4gdGlkYWsgYmlzYSBiZXJkaXJpLiBDYXJhIFBhayBBbWlyIG1lbGFrc2FuYWthbiBzaGFsYXQgZmFyZGh1IG1lbnVydXQgdXJ1dGFuIHJ1a2hzaGFoIGFkYWxhaC4uLiIsIm9wdGlvbnMiOlsiVGlkYWsgd2FqaWIgc2hhbGF0IHNhbXBhaSBzZW1idWgiLCJTaGFsYXQgc2FtYmlsIGR1ZHVrIiwiU2hhbGF0IGRlbmdhbiBpc3lhcmF0IG1hdGEiLCJTaGFsYXQgYmVyYmFyaW5nIHRlbGVudGFuZyJdLCJhIjoxfSx7InEiOiJJYnUgRmF0aW1haCBkaXJhd2F0IGRpIElDVSwgdHVidWhueWEgbHVtcHVoIGRhbiB0aWRhayBiaXNhIGRpZ2VyYWtrYW4gc2FtYSBzZWthbGksIG5hbXVuIG90YWtueWEgbWFzaWggc2FkYXIgcGVudWggbWVyZXNwb24uIEhhbCB5YW5nIGhhcnVzIGRpbGFrdWthbm55YSB1bnR1ayBzaGFsYXQgYWRhbGFoLi4uIiwib3B0aW9ucyI6WyJTaGFsYXQgZGFsYW0gaGF0aSIsIkd1Z3VyIGtld2FqaWJhbiBzaGFsYXRueWEiLCJEaXdha2lsa2FuIG9sZWggYW5ha255YSIsIk1lbnVuZ2d1IHNhbXBhaSBiaXNhIGJlcmdlcmFrIl0sImEiOjB9LHsicSI6IkJ1ZGkgbWVtaWxpa2kgbHVrYSBiYWthciBkaSBsZW5nYW5ueWEgeWFuZyBkaWxhcmFuZyB0ZXJrZW5hIGFpciBvbGVoIGRva3Rlci4gU2FhdCB3YWt0dSBzaGFsYXQgdGliYSwgY2FyYSB5YW5nIGhhcnVzIEJ1ZGkgbGFrdWthbiB1bnR1ayBiZXJzdWNpIGFkYWxhaC4uLiIsIm9wdGlvbnMiOlsiTGFuZ3N1bmcgc2hhbGF0IHRhbnBhIGJlcnN1Y2kiLCJIYW55YSBtZW5jdWNpIG11a2EgZGFuIGtha2kgc2FqYSIsIk1lbWJhc3VoIHlhbmcgc2VoYXQgZGFuIG1lbmd1c2FwIHBlcmJhbiIsIk1lbnVuZGEgc2hhbGF0IHNhbXBhaSBsdWthbnlhIHNlbWJ1aCJdLCJhIjoyfSx7InEiOiJTZW9yYW5nIHBhc2llbiBkaXBhc2FuZyBzZWxhbmcga2F0ZXRlciB1cmluIHNlaGluZ2dhIHRpZGFrIHN1Y2kgZGFyaSBuYWppcy4gS29uZGlzaSBtZWRpc255YSB0aWRhayBtZW11bmdraW5rYW4gc2VsYW5nIGRpbGVwYXMgcGFzYW5nLiBIdWt1bSBzaGFsYXQgYmFnaSBwYXNpZW4gdGVyc2VidXQgYWRhbGFoLi4uIiwib3B0aW9ucyI6WyJUaWRhayBzYWgga2FyZW5hIGFkYSBuYWppcyIsIlNhaCBrYXJlbmEgZGltYWFma2FuIGRhbGFtIGtlYWRhYW4gZGFydXJhdCIsIlNhaCB0ZXRhcGkgd2FqaWIgZGl1bGFuZyBzZXRlbGFoIHNlbWJ1aCB0b3RhbCIsIkJvbGVoIGRpdGluZ2dhbGthbiBzZWxhZ2kgZGkgcnVtYWggc2FraXQiXSwiYSI6MX0seyJxIjoiQXJhaCBLaWJsYXQgc2FhdCBzaGFsYXQgYmVyYmFyaW5nIG1pcmluZyB5YW5nIGJlbmFyIGFkYWxhaC4uLiIsIm9wdGlvbnMiOlsiV2FqYWggZGFuIGRhZGEgZGloYWRhcGthbiBrZSBhcmFoIEtpYmxhdCIsIlRlbGFwYWsga2FraSBkaWhhZGFwa2FuIGx1cnVzIGtlIEtpYmxhdCIsIlB1bmdndW5nIGRpaGFkYXBrYW4ga2UgS2libGF0IiwiQmViYXMgbWVuZ2hhZGFwIG1hbmEgc2FqYSBrYXJlbmEgc2VkYW5nIHNha2l0Il0sImEiOjB9LHsicSI6IktvbmRpc2kgbWVkaXMgeWFuZyBkYXBhdCBtZW1idWF0IGtld2FqaWJhbiBzaGFsYXQgZmFyZGh1IHNlc2VvcmFuZyBiZW5hci1iZW5hciBndWd1ciBhdGF1IHRpZGFrIHdhamliIG1lbGFrc2FuYWthbm55YSBzYWF0IGl0dSB5YWl0dS4uLiIsIm9wdGlvbnMiOlsiTHVtcHVoIHRvdGFsIHNlbHVydWggdHVidWgiLCJQYXRhaCB0dWxhbmcgcHVuZ2d1bmcgYmVsYWthbmciLCJLZWhpbGFuZ2FuIGtlc2FkYXJhbiB5YW5nIHNhbmdhdCBiZXJhdCIsIkRpaW5mdXMgZGFuIGRpcmF3YXQgZGkgcnVhbmcgSUNVIl0sImEiOjJ9LHsicSI6IlNhYXQgc2hhbGF0IHNhbWJpbCBiZXJiYXJpbmcgdGVsZW50YW5nLCBnZXJha2FuIHJ1a3UnIGRhbiBzdWp1ZCBkaWxha3VrYW4gZGVuZ2FuIGNhcmEuLi4iLCJvcHRpb25zIjpbIk1lbmdnZXJha2thbiB0YW5nYW4ga2UgYXRhcyBkYW4gYmF3YWgiLCJJc3lhcmF0IGFuZ2d1a2FuIGtlcGFsYSBkZW5nYW4gYW5nZ3VrYW4gc3VqdWQgbGViaWggZGFsYW0iLCJNZW5nZWRpcGthbiBtYXRhIGR1YSBrYWxpIGJlcnR1cnV0LXR1cnV0IiwiTWVtYmFjYSBsYWZhbCB0YWtiaXIgbGViaWgga2VyYXMgZGFyaSBiaWFzYW55YSJdLCJhIjoxfSx7InEiOiJKaWthIHNlc2VvcmFuZyBzYWtpdCBwYXJhaCBkYW4gcHJvc2VzIHd1ZGh1IGF0YXUgcGVyZ2VyYWthbiBzaGFsYXQgc2FuZ2F0IG1lbnlpa3NhbnlhIHNldGlhcCBrYWxpIG1hc3VrIHdha3R1LCBrZXJpbmdhbmFuIHdha3R1IHlhbmcgZGliZXJpa2FuIGZpa2loIElzbGFtIGtlcGFkYW55YSBiZXJ1cGEuLi4iLCJvcHRpb25zIjpbIkJvbGVoIG1lbmphbWFrIHdha3R1IHNoYWxhdG55YSIsIkJvbGVoIG1lbmdxYXNoYXIganVtbGFoIHJha2FhdG55YSIsIkJvbGVoIG1lbmphbWFrIHNla2FsaWd1cyBtZW5ncWFzaGFyIHJha2FhdG55YSIsIkJvbGVoIG1lbmdnYW50aSBzaGFsYXQgZGVuZ2FuIG1lbWJheWFyIGZpZHlhaCJdLCJhIjowfSx7InEiOiJCaWxhIHNlb3JhbmcgcGFzaWVuIGhhcnVzIGJlcmJhcmluZyBtaXJpbmcsIG1ha2EgcG9zaXNpIG1pcmluZyB5YW5nIHBhbGluZyBkaXN1bm5haGthbiB1bnR1ayBkaWxha3VrYW4gc2FhdCBzaGFsYXQgYWRhbGFoLi4uIiwib3B0aW9ucyI6WyJNaXJpbmcga2Ugc2lzaSBraXJpIHR1YnVoIiwiTWlyaW5nIGtlIHNpc2kga2FuYW4gdHVidWgiLCJNaXJpbmcgZGVuZ2FuIGRhZGEgdGVsdW5na3VwIiwiQmVyZ2FudGlhbiBzaXNpIGthbmFuIGRhbiBraXJpIGRpIHNldGlhcCByYWthYXQiXSwiYSI6MX0seyJxIjoiVXJ1dGFuIHByaW9yaXRhcyB0aW5na2F0IGtlbWFtcHVhbiBwb3Npc2kgc2hhbGF0IGJhZ2kgb3Jhbmcgc2FraXQgeWFuZyBiZW5hciBhZGFsYWguLi4iLCJvcHRpb25zIjpbIkR1ZHVrIC0+IElzeWFyYXQgLT4gQmVyYmFyaW5nIE1pcmluZyIsIkJlcmJhcmluZyBNaXJpbmcgLT4gRHVkdWsgLT4gVGVsZW50YW5nIiwiRHVkdWsgLT4gQmVyYmFyaW5nIE1pcmluZyAtPiBUZWxlbnRhbmcgLT4gSXN5YXJhdCIsIlRlbGVudGFuZyAtPiBEdWR1ayAtPiBJc3lhcmF0Il0sImEiOjJ9XQ==";
         
         let questionData = [];
         try {
@@ -935,10 +944,16 @@
             document.getElementById('display-name').textContent = n;
             document.getElementById('display-class').textContent = c;
             
-            // Terapkan Watermark Identitas
+            // Set identitas di layar peringatan anti-snip
+            const snipIdentity = document.getElementById('snip-identity');
+            snipIdentity.innerHTML = `<i class="fa-solid fa-user-xmark mr-2"></i> PELANGGAR: <br>${n} (${c})`;
+            snipIdentity.classList.remove('hidden');
+            
+            // Terapkan Watermark Identitas yang Diperkuat untuk Mobile
             const watermark = document.getElementById('exam-watermark');
-            const watermarkText = `${n} | Kelas ${c} | `;
-            watermark.innerText = watermarkText.repeat(800); // Mengulang teks hingga menutupi layar
+            const watermarkText = ` ${n} • KELAS ${c} • `;
+            // Memperbanyak iterasi text karena ukuran area watermark sekarang diperbesar hingga 200vw/vh
+            watermark.innerText = watermarkText.repeat(1500); 
             watermark.classList.remove('hidden');
 
             document.getElementById('quiz-login').classList.add('hidden');
