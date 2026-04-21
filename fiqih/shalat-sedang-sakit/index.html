@@ -133,6 +133,26 @@
         #anti-cheat-banner {
             transition: transform 0.3s ease-in-out;
         }
+
+        /* Watermark identity text to prevent physical photos */
+        .student-watermark {
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            overflow: hidden;
+            pointer-events: none;
+            z-index: 0;
+            opacity: 0.04;
+            display: flex;
+            flex-wrap: wrap;
+            align-content: flex-start;
+            word-break: break-all;
+            font-size: 1.2rem;
+            font-weight: bold;
+            line-height: 1.5;
+            color: #000;
+            transform: rotate(-15deg) scale(1.5);
+            text-transform: uppercase;
+        }
     </style>
 </head>
 <body class="no-select">
@@ -141,6 +161,16 @@
     <div id="anti-cheat-banner" class="fixed top-0 left-0 w-full bg-red-600 text-white text-center py-2 z-[100] transform -translate-y-full flex items-center justify-center gap-2 text-sm font-semibold shadow-md">
         <i class="fa-solid fa-triangle-exclamation"></i>
         <span id="anti-cheat-msg">Sistem Pengawasan Aktif: Dilarang menyalin teks atau meninggalkan halaman ujian!</span>
+    </div>
+
+    <!-- Anti-Snipping / Blur Overlay (Muncul saat hilang fokus) -->
+    <div id="anti-snip-overlay" class="fixed inset-0 bg-slate-900/95 backdrop-blur-xl z-[200] hidden flex-col items-center justify-center text-white transition-opacity duration-200">
+        <i class="fa-solid fa-eye-slash text-7xl mb-6 text-red-500 animate-pulse"></i>
+        <h2 class="text-3xl font-bold font-heading mb-2 text-center">Layar Ujian Disembunyikan</h2>
+        <p class="text-slate-300 text-center max-w-md px-4">Sistem mendeteksi Anda meninggalkan halaman ujian atau membuka aplikasi lain (Snipping Tool/Screenshot).</p>
+        <button onclick="regainFocus()" class="mt-8 bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-8 rounded-full shadow-lg transition transform hover:scale-105">
+            Kembali ke Ujian
+        </button>
     </div>
 
     <!-- Navigation -->
@@ -341,6 +371,7 @@
             </div>
 
             <div id="kegiatan-container" class="space-y-8">
+                <!-- Konten Lembar Kerja Sama -->
                 <div class="bg-white p-8 rounded-3xl shadow-sm border border-slate-200">
                     <h3 class="text-xl font-bold text-slate-800 mb-5 flex items-center font-heading">
                         <div class="bg-teal-50 text-teal-600 w-10 h-10 rounded-lg flex items-center justify-center mr-3 border border-teal-100 text-sm">
@@ -487,12 +518,15 @@
     </section>
 
     <!-- Quiz Section -->
-    <section id="latihan" class="py-16 bg-slate-100 border-t border-slate-200 relative">
-        <div class="container mx-auto px-4 max-w-3xl">
+    <section id="latihan" class="py-16 bg-slate-100 border-t border-slate-200 relative overflow-hidden">
+        <!-- Container Watermark (Muncul saat ujian mulai) -->
+        <div id="exam-watermark" class="student-watermark hidden"></div>
+
+        <div class="container mx-auto px-4 max-w-3xl relative z-10">
             <div class="text-center mb-10">
                 <h2 class="text-3xl font-bold text-slate-800 font-heading mb-2">Latihan Soal</h2>
-                <div class="mt-4 inline-flex items-center gap-2 bg-red-100 text-red-700 px-4 py-2 rounded-lg text-xs font-bold border border-red-200">
-                    <i class="fa-solid fa-shield-halved"></i> UJIAN DIAWASI SISTEM
+                <div class="mt-4 inline-flex items-center gap-2 bg-red-100 text-red-700 px-4 py-2 rounded-lg text-xs font-bold border border-red-200 shadow-sm">
+                    <i class="fa-solid fa-shield-halved"></i> UJIAN DIAWASI SISTEM KETAT
                 </div>
             </div>
 
@@ -518,13 +552,13 @@
                 <div class="space-y-4">
                     <div>
                         <label class="block text-slate-700 text-sm font-semibold mb-1">Nama Lengkap</label>
-                        <input type="text" id="student-name" class="w-full p-3.5 border border-slate-300 rounded-xl outline-none focus:border-teal-500 focus:ring-1 focus:ring-teal-500 bg-white" placeholder="Contoh: Ahmad Santoso">
+                        <input type="text" id="student-name" class="w-full p-3.5 border border-slate-300 rounded-xl outline-none focus:border-teal-500 focus:ring-1 focus:ring-teal-500 bg-white relative z-20" placeholder="Contoh: Ahmad Santoso">
                     </div>
                     <div>
                         <label class="block text-slate-700 text-sm font-semibold mb-1">Kelas</label>
-                        <input type="text" id="student-class" class="w-full p-3.5 border border-slate-300 rounded-xl outline-none focus:border-teal-500 focus:ring-1 focus:ring-teal-500 bg-white" placeholder="Contoh: 7A">
+                        <input type="text" id="student-class" class="w-full p-3.5 border border-slate-300 rounded-xl outline-none focus:border-teal-500 focus:ring-1 focus:ring-teal-500 bg-white relative z-20" placeholder="Contoh: 7A">
                     </div>
-                    <button id="start-btn" onclick="startQuiz()" disabled class="w-full bg-slate-300 text-slate-500 font-medium py-3.5 rounded-xl cursor-not-allowed transition mt-4">
+                    <button id="start-btn" onclick="startQuiz()" disabled class="w-full bg-slate-300 text-slate-500 font-medium py-3.5 rounded-xl cursor-not-allowed transition mt-4 relative z-20">
                         Memuat Sistem...
                     </button>
                     <p id="auth-error-msg" class="text-red-500 text-xs text-center hidden">Gagal terhubung ke database.</p>
@@ -533,17 +567,17 @@
 
             <!-- Quiz Container -->
             <div id="quiz-container" class="hidden space-y-6 relative">
-                <div id="quiz-lock-overlay" class="hidden absolute inset-0 bg-white/80 backdrop-blur-sm z-50 flex flex-col items-center justify-center rounded-xl p-4 text-center">
+                <div id="quiz-lock-overlay" class="hidden absolute inset-0 bg-white/90 backdrop-blur-sm z-50 flex flex-col items-center justify-center rounded-xl p-4 text-center">
                     <div class="bg-red-600 text-white px-6 py-4 rounded-xl font-bold shadow-lg flex items-center gap-3 mb-6">
-                        <i class="fa-solid fa-lock text-2xl"></i> UJIAN DIKUNCI KARENA PELANGGARAN
+                        <i class="fa-solid fa-lock text-2xl"></i> UJIAN DIKUNCI
                     </div>
-                    <p class="text-slate-800 font-medium mb-4">Perangkat ini diblokir. Hubungi guru pengawas.</p>
+                    <p class="text-slate-800 font-medium mb-4">Perangkat ini diblokir karena melakukan pelanggaran berkali-kali.</p>
                     <button onclick="promptUnblock()" class="bg-white text-red-600 hover:text-red-700 font-bold py-3 px-6 rounded-xl shadow-md border border-red-200 hover:bg-red-50 transition flex items-center gap-2">
-                        <i class="fa-solid fa-unlock-keyhole"></i> Buka Blokir
+                        <i class="fa-solid fa-unlock-keyhole"></i> Buka Blokir (Guru)
                     </button>
                 </div>
 
-                <div class="bg-teal-700 text-white p-4 rounded-xl flex justify-between items-center shadow-sm">
+                <div class="bg-teal-700 text-white p-4 rounded-xl flex justify-between items-center shadow-sm relative z-20">
                     <div class="font-medium text-sm flex items-center">
                         <i class="fa-solid fa-circle-user mr-2 text-teal-300 text-lg"></i>
                         <span><span id="display-name" class="font-bold">---</span> (<span id="display-class">---</span>)</span>
@@ -553,11 +587,11 @@
                     </div>
                 </div>
 
-                <form id="quiz-form" class="space-y-6">
+                <form id="quiz-form" class="space-y-6 relative z-20">
                     <!-- Questions injected by JS -->
                 </form>
 
-                <div class="pt-6">
+                <div class="pt-6 relative z-20">
                     <button type="button" id="submit-btn" onclick="preSubmitCheck()" class="w-full bg-amber-500 hover:bg-amber-600 text-teal-950 font-semibold py-4 rounded-xl shadow-sm transition flex justify-center items-center gap-2">
                         <i class="fa-solid fa-paper-plane text-sm"></i> Kirim Jawaban
                     </button>
@@ -567,7 +601,7 @@
     </section>
 
     <!-- Custom Modal -->
-    <div id="custom-modal" class="hidden fixed inset-0 z-[150] flex items-center justify-center modal-backdrop px-4">
+    <div id="custom-modal" class="hidden fixed inset-0 z-[300] flex items-center justify-center modal-backdrop px-4">
         <div class="bg-white rounded-2xl shadow-xl p-8 max-w-sm w-full modal-content border border-slate-100 text-center relative flex flex-col items-center">
             <div id="modal-icon-container" class="w-16 h-16 rounded-full mx-auto flex items-center justify-center mb-4 bg-slate-50 text-2xl">
                 <i class="fa-solid fa-bell text-slate-500"></i>
@@ -608,24 +642,45 @@
         const appId = 'belajaronline-b5512';
         const COLLECTION_NAME = 'scores';
 
-        // --- SISTEM ANTI CHEAT ---
+        // --- SISTEM ANTI CHEAT (DIPERBARUI) ---
         window.isExamActive = false;
         let cheatWarnings = 0;
         const MAX_WARNINGS = 3;
-
-        // Note: Skrip jebakan console setInterval telah dihapus untuk mencegah false-positive.
         
+        // Disable Right Click, Copy, Cut, Paste
         document.addEventListener('contextmenu', event => { event.preventDefault(); showAntiCheatBanner("Klik Kanan dinonaktifkan!"); });
         document.addEventListener('copy', e => { e.preventDefault(); showAntiCheatBanner("Dilarang melakukan Copy data!"); });
         document.addEventListener('cut', e => { e.preventDefault(); showAntiCheatBanner("Dilarang melakukan Cut data!"); });
         document.addEventListener('paste', e => { e.preventDefault(); showAntiCheatBanner("Dilarang melakukan Paste data!"); });
 
+        // Anti Screenshot Keys & Inspect Element Shortcuts
         document.addEventListener('keydown', function(e) {
+            // F12, Ctrl+Shift+I/J/C, Ctrl+U/S/C/V/X
             if (e.key === 'F12' || 
                 (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'i' || e.key === 'J' || e.key === 'j' || e.key === 'C' || e.key === 'c')) ||
                 (e.ctrlKey && (e.key === 'U' || e.key === 'u' || e.key === 'S' || e.key === 's' || e.key === 'C' || e.key === 'c' || e.key === 'V' || e.key === 'v' || e.key === 'X' || e.key === 'x'))) {
                 e.preventDefault();
                 showAntiCheatBanner("Pintasan Keyboard dimatikan untuk keamanan!");
+            }
+
+            // Anti Screenshot Shortcuts: Windows (Win+Shift+S) & Mac (Cmd+Shift+3/4/5)
+            if ((e.metaKey && e.shiftKey && (e.key === 's' || e.key === 'S')) || 
+                (e.metaKey && e.shiftKey && (e.key === '3' || e.key === '4' || e.key === '5'))) {
+                e.preventDefault();
+                if (window.isExamActive) {
+                    navigator.clipboard.writeText(''); // Clear clipboard attempt
+                    handleTabViolation("Sistem mendeteksi upaya Screenshot / Snipping Tool!");
+                }
+            }
+        });
+
+        // Anti PrintScreen Button
+        document.addEventListener('keyup', (e) => {
+            if (e.key === 'PrintScreen' || e.keyCode === 44) {
+                if (window.isExamActive) {
+                    navigator.clipboard.writeText(''); // Clear clipboard attempt
+                    handleTabViolation("Sistem mendeteksi upaya Screenshot (PrintScreen)!");
+                }
             }
         });
 
@@ -636,14 +691,30 @@
             setTimeout(() => { banner.classList.add('-translate-y-full'); }, 2500);
         }
 
-        document.addEventListener('visibilitychange', function() { if (document.hidden && window.isExamActive) handleTabViolation(); });
-        window.addEventListener('blur', function() {
-            if (window.isExamActive && document.activeElement !== document.getElementById('student-name') && document.activeElement !== document.getElementById('student-class')) {
-                handleTabViolation();
+        // Anti-Tab Change & Anti-Snipping Tool Blur 
+        document.addEventListener('visibilitychange', function() { 
+            if (document.hidden && window.isExamActive) {
+                document.getElementById('anti-snip-overlay').classList.remove('hidden');
+                document.getElementById('anti-snip-overlay').classList.add('flex');
+                handleTabViolation("Anda meninggalkan halaman ujian!");
             }
         });
 
-        function handleTabViolation() {
+        window.addEventListener('blur', function() {
+            if (window.isExamActive && document.activeElement !== document.getElementById('student-name') && document.activeElement !== document.getElementById('student-class')) {
+                // Menampilkan layar hitam/blur sesaat sebelum alat screenshot menangkap layar
+                document.getElementById('anti-snip-overlay').classList.remove('hidden');
+                document.getElementById('anti-snip-overlay').classList.add('flex');
+                handleTabViolation("Kehilangan Fokus: Membuka aplikasi lain atau alat Screenshot!");
+            }
+        });
+
+        window.regainFocus = function() {
+            document.getElementById('anti-snip-overlay').classList.add('hidden');
+            document.getElementById('anti-snip-overlay').classList.remove('flex');
+        }
+
+        function handleTabViolation(reasonMsg) {
             if(!window.isExamActive) return;
             cheatWarnings++;
             document.getElementById('violation-counter').classList.remove('hidden');
@@ -652,19 +723,20 @@
             if (cheatWarnings >= MAX_WARNINGS) {
                 window.isExamActive = false;
                 localStorage.setItem('fikih_banned_device', 'true');
+                document.getElementById('anti-snip-overlay').classList.add('hidden'); // Hide overlay to show modal clearly
                 document.getElementById('quiz-lock-overlay').classList.remove('hidden');
                 showModal({
                     title: "❌ Ujian Dihentikan Paksa",
-                    message: `<div class="text-red-600 font-semibold mb-2">Batas Pelanggaran Tercapai!</div>Perangkat diblokir permanen.`,
+                    message: `<div class="text-red-600 font-semibold mb-2">Batas Pelanggaran Tercapai!</div><p class="text-xs text-slate-500 mb-2">Alasan: ${reasonMsg}</p>Perangkat diblokir permanen. Jawaban otomatis dikirim.`,
                     type: 'error',
                     buttons: [{ text: "Mengerti", class: "bg-red-600 text-white hover:bg-red-700", onClick: () => submitQuizLogic(true) }]
                 });
             } else {
                 showModal({
                     title: "🚨 Peringatan Kecurangan!",
-                    message: `<div class="text-amber-600 font-medium">Pelanggaran: ${cheatWarnings} / ${MAX_WARNINGS}</div>Sistem mendeteksi Anda meninggalkan layar ujian!`,
+                    message: `<div class="text-amber-600 font-medium mb-1">Pelanggaran: ${cheatWarnings} / ${MAX_WARNINGS}</div><p class="text-xs font-bold text-slate-700">${reasonMsg}</p>`,
                     type: 'warning',
-                    buttons: [{ text: "Saya Paham", class: "bg-amber-500 text-white hover:bg-amber-600" }]
+                    buttons: [{ text: "Saya Paham", class: "bg-amber-500 text-white hover:bg-amber-600", onClick: () => regainFocus() }]
                 });
             }
         }
@@ -678,14 +750,14 @@
             if (user) {
                 if (isDeviceBanned) {
                     startBtn.disabled = true;
-                    startBtn.className = "w-full bg-red-100 text-red-500 font-bold py-3.5 rounded-xl cursor-not-allowed mt-4 border border-red-200";
+                    startBtn.className = "w-full bg-red-100 text-red-500 font-bold py-3.5 rounded-xl cursor-not-allowed mt-4 border border-red-200 relative z-20";
                     startBtn.innerHTML = '<i class="fa-solid fa-lock mr-2"></i> Perangkat Diblokir';
                     document.getElementById('banned-alert').classList.remove('hidden');
                     document.getElementById('student-name').disabled = true;
                     document.getElementById('student-class').disabled = true;
                 } else {
                     startBtn.disabled = false;
-                    startBtn.className = "w-full bg-teal-600 hover:bg-teal-700 text-white font-medium py-3.5 rounded-xl transition mt-4";
+                    startBtn.className = "w-full bg-teal-600 hover:bg-teal-700 text-white font-medium py-3.5 rounded-xl transition mt-4 relative z-20";
                     startBtn.innerHTML = 'Mulai Mengerjakan <i class="fa-solid fa-arrow-right ml-2 text-sm"></i>';
                 }
                 authStatus.innerHTML = '<i class="fa-solid fa-check text-teal-500 mr-1"></i> Terhubung';
@@ -841,9 +913,7 @@
             res.className = "text-3xl font-bold text-teal-600 mb-4 font-heading";
         }
 
-        // --- ENKRIPSI DATA JAWABAN BASE64 ---
-        // Data tidak lagi ditulis mentah (a: 1, a: 0). Siswa yang melihat view-source hanya akan melihat huruf acak.
-        const encodedData = "W3sicSI6IlBhayBBbWlyIG1lbmdhbGFtaSBwYXRhaCB0dWxhbmcga2FraSBkYW4gdGlkYWsgYmlzYSBiZXJkaXJpLiBDYXJhIFBhayBBbWlyIG1lbGFrc2FuYWthbiBzaGFsYXQgZmFyZGh1IG1lbnVydXQgdXJ1dGFuIHJ1a2hzaGFoIGFkYWxhaC4uLi4iLCJvcHRpb25zIjpbIlRpZGFrIHdhamliIHNoYWxhdCBzYW1wYWkgc2VtYnVoIiwiU2hhbGF0IHNhbWJpbCBkdWR1ayIsIlNoYWxhdCBkZW5nYW4gaXN5YXJhdCBtYXRhIiwiU2hhbGF0IGJlcmJhcmluZyB0ZWxlbnRhbmciXSwiYSI6MX0seyJxIjoiSWJ1IEZhdGltYWggZGlyYXdhdCBkaSBJQ1UsIHR1YnVobnlhIGx1bXB1aCBkYW4gdGlkYWsgYmlzYSBkaWdlcmFra2FuIHNhbWEgc2VrYWxpLCBuYW11biBvdGFrbnlhIG1hc2loIHNhZGFyIHBlbnVoIG1lcmVzcG9uLiBIYWwgeWFuZyBoYXJ1cyBkaWxha3VrYW5ueWEgdW50dWsgc2hhbGF0IGFkYWxhaC4uLi4iLCJvcHRpb25zIjpbIlNoYWxhdCBkYWxhbSBoYXRpIiwiR3VndXIga2V3YWppYmFuIHNoYWxhdG55YSIsIkRpd2FraWxrYW4gb2xlaCBhbmFrbnlhIiwiTWVudW5nZ3Ugc2FtcGFpIGJpc2EgYmVyZ2VyYWsiXSwiYSI6MH0seyJxIjoiQnVkaSBtZW1pbGlraSBsdWthIGJha2FyIGRpIGxlbmdhbm55YSB5YW5nIGRpbGFyYW5nIHRlcmtlbmEgYWlyIG9sZWggZG9rdGVyLiBTYWF0IHdha3R1IHNoYWxhdCB0aWJhLCBjYXJhIHlhbmcgaGFydXMgQnVkaSBsYWt1a2FuIHVudHVrIGJlcnN1Y2kgYWRhbGFoLi4uLiIsIm9wdGlvbnMiOlsiTGFuZ3N1bmcgc2hhbGF0IHRhbnBhIGJlcnN1Y2kiLCJIYW55YSBtZW5jdWNpIG11a2EgZGFuIGtha2kgc2FqYSIsIk1lbWJhc3VoIHlhbmcgc2VoYXQgZGFuIG1lbmd1c2FwIHBlcmJhbiIsIk1lbnVuZGEgc2hhbGF0IHNhbXBhaSBsdWthbnlhIHNlbWJ1aCJdLCJhIjoyfSx7InEiOiJTZW9yYW5nIHBhc2llbiBkaXBhc2FuZyBzZWxhbmcga2F0ZXRlciB1cmluIHNlaGluZ2dhIHRpZGFrIHN1Y2kgZGFyaSBuYWppcy4gS29uZGlzaSBtZWRpc255YSB0aWRhayBtZW11bmdraW5rYW4gc2VsYW5n dilmZXBhcyBwYXNhbmcuIEh1a3VtIHNoYWxhdCBiYWdpIHBhc2llbiB0ZXJzZWJ1dCBhZGFsYWguLi4uIiwib3B0aW9ucyI6WyJUaWRhayBzYWgga2FyZW5hIGFkYSBuYWppcyIsIlNhaCBrYXJlbmEgZGltYWFma2FuIGRhbGFtIGtlYWRhYW4gZGFydXJhdCIsIlNhaCB0ZXRhcGkgd2FqaWIgZGl1bGFuZyBzZXRlbGFoIHNlbWJ1aCB0b3RhbCIsIkJvbGVoIGRpdGluZ2dhbGthbiBzZWxhZ2kgZGkgcnVtYWggc2FraXQiXSwiYSI6MX0seyJxIjoiQXJhaCBLaWJsYXQgc2FhdCBzaGFsYXQgYmVyYmFyaW5nIG1pcmluZyB5YW5nIGJlbmFyIGFkYWxhaC4uLi4iLCJvcHRpb25zIjpbIldhamFoIGRhbiBkYWRhIGRpaGFkYXBrYW4ga2UgYXJhaCBLaWJsYXQiLCJUZWxhcGFrIGtha2kgZGloYWRhcGthbiBsdXJ1cyBrZSBLaWJsYXQiLCJQdW5nZ3VuZyBkaWhhZGFwa2FuIGtlIEtpYmxhdCIsIkJlYmFzIG1lbmdoYWRhcCBtYW5hIHNhamEga2FyZW5hIHNlZGFuZyBzYWtpdCJdLCJhIjowfSx7InEiOiJLb25kaXNpIG1lZGlzIHlhbmcgZGFwYXQgbWVtYnVhdCBrZXdhamliYW4gc2hhbGF0IGZhcmRodSBzZXNlb3JhbmcgYmVuYXItYmVuYXIgZ3VndXIgYXRhdSB0aWRhayB3YWppYiBtZWxha3NhbmFrYW5ueWEgc2FhdCBpdHUgeWFpdHUuLi4uIiwib3B0aW9ucyI6WyJMdW1wdWggdG90YWwgc2VsdXJ1aCB0dWJ1aCIsIlBhdGFoIHR1bGFuZyBwdW5nZ3VuZyBiZWxha2FuZyIsIktlaGlsYW5nYW4ga2VzYWRhcmFuIHlhbmcgc2FuZ2F0IGJlcmF0IiwiRGlpbmZ1cyBkYW4gZGlyYXdhdCBkaSBydWFuZyBJQ1UiXSwiYSI6Mn0seyJxIjoiU2FhdCBzaGFsYXQgc2FtYmlsIGJlcmJhcmluZyB0ZWxlbnRhbmcsIGdlcmFrYW4gcnVrdScgZGFuIHN1anVkIGRpbGFrdWthbiBkZW5nYW4gY2FyYS4uLi4iLCJvcHRpb25zIjpbIk1lbmdnZXJha2thbiB0YW5nYW4ga2UgYXRhcyBkYW4gYmF3YWgiLCJJc3lhcmF0IGFuZ2d1a2FuIGtlcGFsYSBkZW5nYW4gYW5nZ3VrYW4gc3VqdWQgbGViaWggZGFsYW0iLCJNZW5nZWRpcGthbiBtYXRhIGR1YSBrYWxpIGJlcnR1cnV0LXR1cnV0IiwiTWVtYmFjYSBsYWZhbCB0YWtiaXIgbGViaWgga2VyYXMgZGFyaSBiaWFzYW55YSJdLCJhIjoxfSx7InEiOiJKaWthIHNlc2VvcmFuZyBzYWtpdCBwYXJhaCBkYW4gcHJvc2VzIHd1ZGh1IGF0YXUgcGVyZ2VyYWthbiBzaGFsYXQgc2FuZ2F0IG1lbnlpa3NhbnlhIHNldGlhcCBrYWxpIG1hc3VrIHdha3R1LCBrZXJpbmdhbmFuIHdha3R1IHlhbmcgZGliZXJpa2FuIGZpa2loIElzbGFtIGtlcGFkYW55YSBiZXJ1cGEuLi4uIiwib3B0aW9ucyI6WyJCb2xlaCBtZW5qYW1hayB3YWt0dSBzaGFsYXRueWEiLCJCb2xlaCBtZW5ncWFzaGFyIGp1bWxhaCByYWthYXRueWEiLCJCb2xlaCBtZW5qYW1hayBzZWthbGlndXMgbWVuZ3Fhc2hhciByYWthYXRueWEiLCJCb2xlaCBtZW5nZ2FudGkgc2hhbGF0IGRlbmdhbiBtZW1iYXlhciBmaWR5YWgiXSwiYSI6MH0seyJxIjoiQmlsYSBzZW9yYW5nIHBhc2llbiBoYXJ1cyBiZXJiYXJpbmcgbWlyaW5nLCBtYWthIHBvc2lzaSBtaXJpbmcgeWFuZyBwYWxpbmcgdGlzdW5uYWhrYW4gdW50dWsgZGlsYWt1a2FuIHNhYXQgc2hhbGF0IGFkYWxhaC4uLi4iLCJvcHRpb25zIjpbIk1pcmluZyBrZSBzaXNpIGtpcmkgdHVidWgiLCJNaXJpbmcga2Ugc2lzaSBrYW5hbiB0dWJ1aCIsIk1pcmluZyBkZW5nYW4gZGFkYSB0ZWx1bmdrdXAiLCJCZXJnYW50aWFuIHNpc2kga2FuYW4gZGFuIGtpcmkgZGkgc2V0aWFwIHJha2FhdCJdLCJhIjoxfSx7InEiOiJVcnV0YW4gcHJpb3JpdGFzIHRpbmdrYXQga2VtYW1wdWFuIHBvc2lzaSBzaGFsYXQgYmFnaSBvcmFuZyBzYWtpdCB5YW5nIGJlbmFyIGFkYWxhaC4uLi4iLCJvcHRpb25zIjpbIkR1ZHVrIC0+IElzeWFyYXQgLT4gQmVyYmFyaW5nIE1pcmluZyIsIkJlcmJhcmluZyBNaXJpbmcgLT4gRHVkdWsgLT4gVGVsZW50YW5nIiwiRHVkdWsgLT4gQmVyYmFyaW5nIE1pcmluZyAtPiBUZWxlbnRhbmcgLT4gSXN5YXJhdCIsIlRlbGVudGFuZyAtPiBEdWR1ayAtPiBJc3lhcmF0Il0sImEiOjJ9LHsicSI6IkJpbGEgc2VvcmFuZyBwYXNpZW4gaGFueWEgYmlzYSBiZXJiYXJpbmcgdGVsZW50YW5nIGRhbiBzYW1hIHNla2FsaSB0aWRhayBiaXNhIG1lbmdnZXJha2thbiBrZXBhbGFueWEsIG1ha2EgY2FyYSBpYSBtZWxha3VrYW4gcnVrdScgZGFuIHN1anVkIGFkYWxhaCBkZW5nYW4uLi4uIiwib3B0aW9ucyI6WyJNZW5nZ3VuYWthbiBpc3lhcmF0IGphcmkgdGFuZ2FuIiwiTWVuZ3d1bmFrYW4gaXN5YXJhdCBrZWRpcGFuIG1hdGEiLCJNZW5nZ2VyYWtrYW4ga2VkdWEga2FraSBwZXJsYWhhbiIsIk1lbmluZ2dhbGthbiBzaGFsYXQgdGVyc2VidXQiXSwiYSI6MX0seyJxIjoiU2VzZW9yYW5nIHlhbmcgc2hhbGF0IHNhbWJpbCBkdWR1ayBkaSBhdGFzIGt1cnNpIGthcmVuYSBzYWtpdCBsdXR1dCwgY2FyYSBpYSBtZWxha3VrYW4gZ2VyYWthbiBzdWp1ZCB5YW5nIGJlbmFyIGFkYWxhaC4uLi4iLCJvcHRpb25zIjpbIkJlcmRpcmkgc2VqZW5hayBsYWx1IGR1ZHVrIGtlbWJhbGkiLCJNZW51bmR1a2thbiBiYWRhbiBzYW1hIHNlamFqYXIgZGVuZ2FuIHJ1a3UnIiwiTWVudW5kdWtrYW4gYmFkYW4gZGFuIGtlcGFsYSBsZWJpaCByZW5kYWggZGFyaXBhZGEgcnVrdSciLCJTdWp1ZCBtZW5lbXBlbCBkaSBsYW50YWkgbWVza2kgaGFydXMgdGVyamF0dWgiXSwiYSI6Mn0seyJxIjoiSXNsYW0gbWVtYmVyaWthbiBrZXJpbmdhbmFuIGF0YXUgcnVraHNoYWgga2VwYWRhIG9yYW5nIHNha2l0IGFnYXIgdGV0YXAgYmlzYSBiZXJpYmFkYWguIEhhbCBpbmkgbWVudW5qdWtrYW4gcHJpbnNpcCBhamFyYW4gSXNsYW0geWFpdHUuLi4uIiwib3B0aW9ucyI6WyJUaWRhayBtZW1iZXJhdGthbiBkYW4gc2VzdWFpIGtlc2FuZ2d1cGFuIGhhbWJhIiwiQm9sZWggbWVuaW5nZ2Fsa2FuIGliYWRhaCBiaWxhIHJlcG90IiwiSWJhZGFoIGhhbnlhIHVudHVrIG9yYW5nIHlhbmcgc2VoYXQgZGFuIGt1YXQiLCJNZW1ha3NhIHVtYXRueWEgZGFsYW0ga29uZGlzaSBhcGFwdW4iXSwiYSI6MH0seyJxIjoiUGFuZGFuZ2FuIHN5YXJpYXQgdGVyaGFkYXAgcGFoYWxhIHNoYWxhdCBmYXJkaHUgb3Jhbmcgc2FraXQgeWFuZyB0ZXJwYWtzYSBtZW5nZXJqYWthbm55YSBzYW1iaWwgZHVkdWsga2FyZW5hIHRpZGFrIG1hbXB1IGJlcmRpcmkgYWRhbGFoLi4uLiIsIm9wdGlvbnMiOlsiUGFoYWxhbnlhIHNldGVuZ2FoIGRhcmkgb3JhbmcgeWFuZyBzaGFsYXQgYmVyZGlyaSIsIlBhaGFsYW55YSB0aWRhayBzYWggc2FtcGFpIGlhIHNlbWJ1aCIsIlBhaGFsYW55YSB1dHVoIGRhbiBzZW1wdXJuYSBzZWJhZ2FpbWFuYSBzaGFsYXQgYmVyZGlyaSBzYWF0IHNlaGF0IiwiUGFoYWxhbnlhIGhhbnlhIHNlcGVyZW1wYXQgZGFyaSBzaGFsYXQgbm9ybWFsIl0sImEiOjJ9LHsicSI6IklidSBBbmkgdGVyYmFyaW5nIGRpIHJhbmphbmcgcnVtYWggc2FraXQgZGVuZ2FuIHBvc2lzaSB0ZWxlbnRhbmcuIEFnYXIgc2hhbGF0bnlhIHNlbXB1cm5hIHNlc3VhaSBzdW5uYWgsIGtlcGFsYSBJYnUgQW5pIHNlYmFpa255YSBkaXRpbmdnaWthbiBtZW5nZ3VuYWthbiBiYW50YWwgZGVuZ2FuIHR1anVhbi4uLi4iLCJvcHRpb25zIjpbIkFnYXIgcGVybmFmYXNhbm55YSBtZW5qYWRpIGxlYmloIGxlZ2EiLCJBZ2FyIHdhamFobnlhIGRhcGF0IHNlZGlraXQgdGVyYW5na2F0IG1lbmdoYWRhcCBrZSBhcmFoIEtpYmxhdCIsIkFnYXIgbXVkYWggbWVsaWhhdCBvcmFuZyB5YW5nIG1lbmplbmd1ayIsIkFnYXIgc3VhcmFueWEgdGVyZGVuZ2FyIGplbGFzIHNhYXQgbWVtYmFjYSBzdXJhdCJdLCJhIjoxfSx7InEiOiJTZXNlb3JhbmcgbWVuZGVyaXRhIHNha2l0IHlhbmcgbWVuaGFydXNrYW5ueWEgbWVuZ3d1bmFrYW4ga2FudG9uZyBwZW1idWFuZ2FuIGZlc2VzIHlhbmcgbWVuZW1wZWwgdGVydXMgZGkgcGVydXQsIGh1a3VtIHBlbGFrc2FuYWFuIHNoYWxhdG55YSBhZGFsYWguLi4uIiwib3B0aW9ucyI6WyJTYWgga2FyZW5hIGtvbmRpc2kgZGFydXJhdCBtZWRpcyBuYWppcyBkaW1hYWZrYW4iLCJUaWRhayBzYWggZGFuIGhhcnVzIG1lbnVuZ2d1IHNhbXBhaSBzZW1idWgiLCJCb2xlaCBzaGFsYXQgdGFwaSBoYXJ1cyBkaWdhbnRpIHB1YXNhIiwiV2FqaWIgZGlnYW50aSBkZW5nYW4gbWVtYmF5YXIgZmlkeWFoIGhhcmlhbiJdLCJhIjowfSx7InEiOiJTZW9yYW5nIHBhc2llbiBsdWthIGJha2FyIHBhcmFoIHRpZGFrIGJvbGVoIHRlcmtlbmEgYWlyIHd1ZGh1IHNlZGlraXRwdW4gZGFuIHRpZGFrIGJpc2EgYmVydGF5YW1tdW0ga2FyZW5hIGRpYmFsdXQgcGVyYmFuIHRvdGFsLiBDYXJhIGlhIG1lbnlpa2FwaSBrZXdhamliYW4gc2hhbGF0bnlhIGFkYWxhaC4uLi4iLCJvcHRpb25zIjpbIkd1Z3VyIGtld2FqaWJhbiBzaGFsYXRueWEgc2VsYW1hbnlhIiwiU2hhbGF0IGRhbGFtIGtlYWRhYW4gc2VhZGFueWEgdW50dWsgbWVuZ2hvcm1hdGkgd2FrdHUiLCJNZW1iYXlhciBvcmFuZyBsYWluIHVudHVrIHNoYWxhdCBhdGFzIG5hbWFueWEiLCJUaWRhayBwZXJsdSBzaGFsYXQgZmFyZGh1IHRhcGkgbWVtcGVyYmFueWFrIGR6aWtpciBzYWphIl0sImEiOjF9LHsicSI6IkFwYWJpbGEgb3JhbmcgeWFuZyBzZWRhbmcgc2FraXQgdGliYS10aWJhIGx1cGEgYXRhdSByYWd1IGp1bWxhaCByYWthYXQgc2hhbGF0IHlhbmcgc2VkYW5nIGRpa2VyamFrYW4ga2FyZW5hIG1lbmFoYW4gbnllcmksIGhhbCB5YW5nIHNlYmFpa255YSBpYSBsYWt1a2FuIGFkYWxhaC4uLi4iLCJvcHRpb25zIjpbIk1lbmdoZW50aWthbiBzaGFsYXQgZGFuIGJlcmlzdGlyYWhhdCB0b3RhbCIsIk1leWFraW5pIGp1bWxhaCByYWthYXQgeWFuZyBsZWJpaCBzZWRpa2l0IGRhbiBtZW5lcnVza2FubnlhIiwiTWVtaW50YSBrZWx1YXJnYSB1bnR1ayBtZW5naGl0dW5nIHJha2FhdCBzZWNhcmEga2VyYXMiLCJNZW1iYXRhbGthbiBkYW4gbWVuZ3VsYW5naW55YSBkYXJpIGF3YWwgbmFudGkgc2FqYSJdLCJhIjoxfSx7InEiOiJNZW5nZ2FidW5na2FuIGR1YSB3YWt0dSBzaGFsYXQgYmFnaSBvcmFuZyBzYWtpdCB5YW5nIHNhbmdhdCBrZXBheWFoYW4gZGlwZXJib2xlaGthbiBvbGVoIHNlYmFnaWFuIGJlc2FyIHVsYW1hLiBEaSBhbnRhcmEgcGFzYW5nYW4gc2hhbGF0IGJlcmlrdXQgeWFuZyBib2xlaCBkaWdhYnVuZ2thbiBhZGFsYWguLi4uIiwib3B0aW9ucyI6WyJTdWJ1aCBkYW4gRHp1aHVyIiwiQXNoYXIgZGFuIE1hZ2hyaWIiLCJEenVodXIgZGFuIEFzaGFyIiwiSXN5YSBkYW4gU3VidWgiXSwiYSI6Mn0seyJxIjoiQmlsYSBtZW5nZWRpcGthbiBtYXRhIGp1Z2Egc3VkYWggdGlkYWsgbWFtcHUgZGlrYXJlbmFrYW4ga29tcGxpa2FzaSBwZW55YWtpdCBiZXJhdCBuYW11biBha2FsIGRhbiBvdGFrbnlhIG1hc2loIHNhZGFyLCBsYW5na2FoIHRlcmFraGlyIHVudHVrIG1lbGFrc2FuYWthbiBzaGFsYXQgYWRhbGFoLi4uLiIsIm9wdGlvbnMiOlsiRGVuZ2FuIGlzeWFyYXQgdGVsdW5qdWsgdGFuZ2FuIGthbmFuIiwiRGl3YWtpbGthbiBvbGVoIGFobGkgd2FyaXMgYXRhdSBhbmFrIHN1bHVuZ255YSIsIlJ1a3VuIGRhbiBiYWNhYW4gc2hhbGF0IGRpamFsYW5rYW4gZGFuIGRpYmF5YW5na2FuIGRpIGRhbGFtIGhhdGkiLCJMYW5nc3VuZyBkaWd1Z3Vya2FuIGtld2FqaWJhbiBzaGFsYXRueWEiXSwiYSI6Mn1d";
+        const encodedData = "W3sicSI6IlBhayBBbWlyIG1lbmdhbGFtaSBwYXRhaCB0dWxhbmcga2FraSBkYW4gdGlkYWsgYmlzYSBiZXJkaXJpLiBDYXJhIFBhayBBbWlyIG1lbGFrc2FuYWthbiBzaGFsYXQgZmFyZGh1IG1lbnVydXQgdXJ1dGFuIHJ1a2hzaGFoIGFkYWxhaC4uLi4iLCJvcHRpb25zIjpbIlRpZGFrIHdhamliIHNoYWxhdCBzYW1wYWkgc2VtYnVoIiwiU2hhbGF0IHNhbWJpbCBkdWR1ayIsIlNoYWxhdCBkZW5nYW4gaXN5YXJhdCBtYXRhIiwiU2hhbGF0IGJlcmJhcmluZyB0ZWxlbnRhbmciXSwiYSI6MX0seyJxIjoiSWJ1IEZhdGltYWggZGlyYXdhdCBkaSBJQ1UsIHR1YnVobnlhIGx1bXB1aCBkYW4gdGlkYWsgYmlzYSBkaWdlcmFra2FuIHNhbWEgc2VrYWxpLCBuYW11biBvdGFrbnlhIG1hc2loIHNhZGFyIHBlbnVoIG1lcmVzcG9uLiBIYWwgeWFuZyBoYXJ1cyBkaWxha3VrYW5ueWEgdW50dWsgc2hhbGF0IGFkYWxhaC4uLi4iLCJvcHRpb25zIjpbIlNoYWxhdCBkYWxhbSBoYXRpIiwiR3VndXIga2V3YWppYmFuIHNoYWxhdG55YSIsIkRpd2FraWxrYW4gb2xlaCBhbmFrbnlhIiwiTWVudW5nZ3Ugc2FtcGFpIGJpc2EgYmVyZ2VyYWsiXSwiYSI6MH0seyJxIjoiQnVkaSBtZW1pbGlraSBsdWthIGJha2FyIGRpIGxlbmdhbm55YSB5YW5nIGRpbGFyYW5nIHRlcmtlbmEgYWlyIG9sZWggZG9rdGVyLiBTYWF0IHdha3R1IHNoYWxhdCB0aWJhLCBjYXJhIHlhbmcgaGFydXMgQnVkaSBsYWt1a2FuIHVudHVrIGJlcnN1Y2kgYWRhbGFoLi4uLiIsIm9wdGlvbnMiOlsiTGFuZ3N1bmcgc2hhbGF0IHRhbnBhIGJlcnN1Y2kiLCJIYW55YSBtZW5jdWNpIG11a2EgZGFuIGtha2kgc2FqYSIsIk1lbWJhc3VoIHlhbmcgc2VoYXQgZGFuIG1lbmd1c2FwIHBlcmJhbiIsIk1lbnVuZGEgc2hhbGF0IHNhbXBhaSBsdWthbnlhIHNlbWJ1aCJdLCJhIjoyfSx7InEiOiJTZW9yYW5nIHBhc2llbiBkaXBhc2FuZyBzZWxhbmcga2F0ZXRlciB1cmluIHNlaGluZ2dhIHRpZGFrIHN1Y2kgZGFyaSBuYWppcy4gS29uZGlzaSBtZWRpc255YSB0aWRhayBtZW11bmdraW5rYW4gc2VsYW5nIGRpbGVwYXMgcGFzYW5nLiBIdWt1bSBzaGFsYXQgYmFnaSBwYXNpZW4gdGVyc2VidXQgYWRhbGFoLi4uLiIsIm9wdGlvbnMiOlsiVGlkYWsgc2FoIGthcmVuYSBhZGEgbmFqaXMiLCJTYWgga2FyZW5hIGRpbWFhZmthbiBkYWxhbSBrZWFkYWFuIGRhcnVyYXQiLCJTYWggdGV0YXBpIHdhamliIGRpdWxhbmcgc2V0ZWxhaCBzZW1idWggdG90YWwiLCJCb2xlaCBkaXRpbmdnYWxrYW4gc2VsYWdpIGRpIHJ1bWFoIHNha2l0Il0sImEiOjF9LHsicSI6IkFyYWggS2libGF0IHNhYXQgc2hhbGF0IGJlcmJhcmluZyBtaXJpbmcgeWFuZyBiZW5hciBhZGFsYWguLi4uIiwib3B0aW9ucyI6WyJXYWphaCBkYW4gZGFkYSBkaWhhZGFwa2FuIGtlIGFyYWggS2libGF0IiwiVGVsYXBhayBrYWtpIGRpaGFkYXBrYW4gbHVydXMga2UgS2libGF0IiwiUHVuZ2d1bmcgZGloYWRhcGthbiBrZSBLaWJsYXQiLCJCZWJhcyBtZW5naGFkYXAgbWFuYSBzYWphIGthcmVuYSBzZWRhbmcgc2FraXQiXSwiYSI6MH0seyJxIjoiS29uZGlzaSBtZWRpcyB5YW5nIGRhcGF0IG1lbWJ1YXQga2V3YWppYmFuIHNoYWxhdCBmYXJkaHUgc2VzZW9yYW5nIGJlbmFyLWJlbmFyIGd1Z3VyIGF0YXUgdGlkYWsgd2FqaWIgbWVsYWtzYW5ha2FubnlhIHNhYXQgaXR1IHlhaXR1Li4uLiIsIm9wdGlvbnMiOlsiTHVtcHVoIHRvdGFsIHNlbHVydWggdHVidWgiLCJQYXRhaCB0dWxhbmcgcHVuZ2d1bmcgYmVsYWthbmciLCJLZWhpbGFuZ2FuIGtlc2FkYXJhbiB5YW5nIHNhbmdhdCBiZXJhdCIsIkRpaW5mdXMgZGFuIGRpcmF3YXQgZGkgcnVhbmcgSUNVIl0sImEiOjJ9LHsicSI6IlNhYXQgc2hhbGF0IHNhbWJpbCBiZXJiYXJpbmcgdGVsZW50YW5nLCBnZXJha2FuIHJ1a3UnIGRhbiBzdWp1ZCBkaWxha3VrYW4gZGVuZ2FuIGNhcmEuLi4uIiwib3B0aW9ucyI6WyJNZW5nZ2VyYWtrYW4gdGFuZ2FuIGtlIGF0YXMgZGFuIGJhd2FoIiwiSXN5YXJhdCBhbmdndWthbiBrZXBhbGEgZGVuZ2FuIGFuZ2d1a2FuIHN1anVkIGxlYmloIGRhbGFtIiwiTWVuZ2VkaXBrYW4gbWF0YSBkdWEga2FsaSBiZXJ0dXJ1dC10dXJ1dCIsIk1lbWJhY2EgbGFmYWwgdGFrYmlyIGxlYmloIGtlcmFzIGRhcmkgYmlhc2FueWEiXSwiYSI6MX0seyJxIjoiSmlrYSBzZXNlb3Jhbmcgc2FraXQgcGFyYWggZGFuIHByb3NlcyB3dWRodSBhdGF1IHBlcmdlcmFrYW4gc2hhbGF0IHNhbmdhdCBtZW55aWtzYW55YSBzZXRpYXAga2FsaSBtYXN1ayB3YWt0dSwga2VyaW5nYW5hbiB3YWt0dSB5YW5nIGRpYmVyaWthbiBmaWtpaCBJc2xhbSBrZXBhZGFueWEgYmVydXBhLi4uLiIsIm9wdGlvbnMiOlsiQm9sZWggbWVuamFtYWsgd2FrdHUgc2hhbGF0bnlhIiwiQm9sZWggbWVuZ3Fhc2hhciBqdW1sYWggcmFrYWF0bnlhIiwiQm9sZWggbWVuamFtYWsgc2VrYWxpZ3VzIG1lbmdxYXNoYXIgcmFrYWF0bnlhIiwiQm9sZWggbWVuZ2dhbnRpIHNoYWxhdCBkZW5nYW4gbWVtYmF5YXIgZmlkeWFoIl0sImEiOjB9LHsicSI6IkJpbGEgc2VvcmFuZyBwYXNpZW4gaGFydXMgYmVyYmFyaW5nIG1pcmluZywgbWFrYSBwb3Npc2kgbWlyaW5nIHlhbmcgcGFsaW5nIGRpc3VubmFoa2FuIHVudHVrIGRpbGFrdWthbiBzYWF0IHNoYWxhdCBhZGFsYWguLi4uIiwib3B0aW9ucyI6WyJNaXJpbmcga2Ugc2lzaSBraXJpIHR1YnVoIiwiTWlyaW5nIGtlIHNpc2kga2FuYW4gdHVidWgiLCJNaXJpbmcgZGVuZ2FuIGRhZGEgdGVsdW5na3VwIiwiQmVyZ2FudGlhbiBzaXNpIGthbmFuIGRhbiBraXJpIGRpIHNldGlhcCByYWthYXQiXSwiYSI6MX0seyJxIjoiVXJ1dGFuIHByaW9yaXRhcyB0aW5na2F0IGtlbWFtcHVhbiBwb3Npc2kgc2hhbGF0IGJhZ2kgb3Jhbmcgc2FraXQgeWFuZyBiZW5hciBhZGFsYWguLi4uIiwib3B0aW9ucyI6WyJEdWR1ayAtPiBJc3lhcmF0IC0+IEJlcmJhcmluZyBNaXJpbmciLCJCZXJiYXJpbmcgTWlyaW5nIC0+IER1ZHVrIC0+IFRlbGVudGFuZyIsIkR1ZHVrIC0+IEJlcmJhcmluZyBNaXJpbmcgLT4gVGVsZW50YW5nIC0+IElzeWFyYXQiLCJUZWxlbnRhbmcgLT4gRHVkdWsgLT4gSXN5YXJhdCJdLCJhIjoyfV0=";
         
         let questionData = [];
         try {
@@ -864,6 +934,13 @@
             studentData = { name: n, class: c };
             document.getElementById('display-name').textContent = n;
             document.getElementById('display-class').textContent = c;
+            
+            // Terapkan Watermark Identitas
+            const watermark = document.getElementById('exam-watermark');
+            const watermarkText = `${n} | Kelas ${c} | `;
+            watermark.innerText = watermarkText.repeat(800); // Mengulang teks hingga menutupi layar
+            watermark.classList.remove('hidden');
+
             document.getElementById('quiz-login').classList.add('hidden');
             document.getElementById('quiz-container').classList.remove('hidden');
             
@@ -899,6 +976,7 @@
 
         async function submitQuizLogic(isForcedCheat = false) {
             window.isExamActive = false; 
+            document.getElementById('exam-watermark').classList.add('hidden'); // Sembunyikan watermark setelah selesai
             let correctCount = 0; const details = []; 
 
             questionData.forEach((item, i) => {
@@ -934,7 +1012,7 @@
                 const btn = document.getElementById('submit-btn');
                 btn.disabled = true;
                 btn.innerHTML = isForcedCheat ? '<i class="fa-solid fa-lock"></i> Dikunci (Pelanggaran)' : '<i class="fa-solid fa-check"></i> Sudah Terkirim';
-                btn.className = "w-full bg-slate-300 text-slate-500 font-semibold py-4 rounded-xl cursor-not-allowed flex justify-center items-center gap-2";
+                btn.className = "w-full bg-slate-300 text-slate-500 font-semibold py-4 rounded-xl cursor-not-allowed flex justify-center items-center gap-2 relative z-20";
             } catch (e) { showModal({ title: "Gagal Mengirim", message: "Error: " + e.message, type: 'error' }); }
         }
     </script>
