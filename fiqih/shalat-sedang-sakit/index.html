@@ -17,8 +17,8 @@
     <style>
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #f8fafc; /* Slate 50 */
-            color: #334155; /* Slate 700 */
+            background-color: #f8fafc;
+            color: #334155;
         }
 
         /* --- ANTI CHEAT: Disable text selection --- */
@@ -28,14 +28,12 @@
             -ms-user-select: none;
             user-select: none;
         }
-        /* Allow selection only in specific input fields */
         input, select, textarea {
             -webkit-user-select: text;
             -moz-user-select: text;
             -ms-user-select: text;
             user-select: text;
         }
-        /* ------------------------------------------ */
         
         h1, h2, h3, h4, h5, .font-heading {
             font-family: 'Plus Jakarta Sans', sans-serif;
@@ -47,21 +45,19 @@
             line-height: 2.2;
         }
         
-        /* Custom Scrollbar Modern */
         ::-webkit-scrollbar { width: 8px; }
         ::-webkit-scrollbar-track { background: #f1f5f9; }
         ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
         ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
 
-        /* Modern Radio Options */
         .option-label {
             cursor: pointer;
             transition: all 0.2s ease-in-out;
             border: 1px solid #e2e8f0;
         }
         .option-label:hover {
-            border-color: #0f766e; /* Teal 700 */
-            background-color: #f0fdfa; /* Teal 50 */
+            border-color: #0f766e;
+            background-color: #f0fdfa;
         }
         .option-input:checked + .option-content {
             background-color: #f0fdfa;
@@ -74,7 +70,6 @@
             border-color: #0f766e;
         }
 
-        /* Lembar Kerja Table & Checkbox Styles */
         .kegiatan-table th { 
             background-color: #f1f5f9; 
             color: #475569; 
@@ -103,7 +98,7 @@
             transition: all 0.2s;
         }
         .kegiatan-checkbox:checked {
-            background-color: #0f766e; /* Teal 600 */
+            background-color: #0f766e;
             border-color: #0f766e;
         }
         .kegiatan-checkbox:checked::after {
@@ -118,15 +113,12 @@
             transform: translate(-50%, -50%);
         }
         
-        /* Islamic Pattern Overlay */
         .pattern-bg {
             background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
         }
 
-        /* Fade Animation */
         .fade-text { transition: opacity 0.3s ease-in-out; }
         
-        /* Modal Animation */
         .modal-backdrop {
             background-color: rgba(15, 23, 42, 0.7);
             backdrop-filter: blur(4px);
@@ -138,7 +130,6 @@
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
         @keyframes slideUp { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
         
-        /* Alert Banner */
         #anti-cheat-banner {
             transition: transform 0.3s ease-in-out;
         }
@@ -146,7 +137,7 @@
 </head>
 <body class="no-select">
 
-    <!-- Anti Cheat Warning Banner (Hidden by default) -->
+    <!-- Anti Cheat Warning Banner -->
     <div id="anti-cheat-banner" class="fixed top-0 left-0 w-full bg-red-600 text-white text-center py-2 z-[100] transform -translate-y-full flex items-center justify-center gap-2 text-sm font-semibold shadow-md">
         <i class="fa-solid fa-triangle-exclamation"></i>
         <span id="anti-cheat-msg">Sistem Pengawasan Aktif: Dilarang menyalin teks atau meninggalkan halaman ujian!</span>
@@ -172,7 +163,6 @@
                 <i class="fa-solid fa-bars text-xl"></i>
             </button>
         </div>
-        <!-- Mobile Menu -->
         <div id="mobile-menu" class="hidden md:hidden bg-teal-800 px-4 py-2 border-t border-teal-700">
             <a href="#materi" class="block py-3 text-sm text-teal-100 border-b border-teal-700">Materi</a>
             <a href="#simulasi" class="block py-3 text-sm text-teal-100 border-b border-teal-700">Panduan Posisi</a>
@@ -185,7 +175,6 @@
     <!-- Hero Section -->
     <header class="bg-teal-900 relative pt-20 pb-32 overflow-hidden pattern-bg">
         <div class="absolute inset-0 bg-gradient-to-b from-transparent to-teal-900/90"></div>
-        
         <div class="container mx-auto px-4 relative z-10 max-w-4xl text-center">
             <span class="inline-flex items-center gap-2 bg-teal-800/80 border border-teal-700 text-teal-100 px-4 py-1.5 rounded-full text-xs font-semibold tracking-wider uppercase mb-6 shadow-sm">
                 <i class="fa-solid fa-book-bookmark text-amber-400"></i> Materi Fikih
@@ -196,7 +185,7 @@
             <p class="text-lg text-teal-100/90 max-w-2xl mx-auto font-light leading-relaxed mb-10">
                 "Agama Islam itu mudah. Allah tidak membebani seseorang melainkan sesuai dengan kesanggupannya." <br><span class="text-sm opacity-75">(QS. Al-Baqarah: 286)</span>
             </p>
-            <a href="#materi" class="bg-amber-500 hover:bg-amber-400 text-teal-950 px-8 py-3.5 rounded-xl font-semibold transition inline-flex items-center gap-2 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5">
+            <a href="#materi" class="bg-amber-500 hover:bg-amber-400 text-teal-950 px-8 py-3.5 rounded-xl font-semibold transition inline-flex items-center gap-2 shadow-lg transform hover:-translate-y-0.5">
                 Mulai Belajar <i class="fa-solid fa-arrow-right text-sm"></i>
             </a>
         </div>
@@ -204,7 +193,6 @@
 
     <!-- Materi Section -->
     <section id="materi" class="py-12 container mx-auto px-4 -mt-16 relative z-20">
-        <!-- Definisi & Dasar Hukum -->
         <div class="bg-white p-8 rounded-2xl shadow-sm border border-slate-200 mb-8 hover:shadow-md transition-shadow">
             <div class="flex flex-col md:flex-row gap-6 items-start">
                 <div class="bg-teal-50 p-4 rounded-xl shrink-0 text-teal-700">
@@ -213,12 +201,12 @@
                 <div>
                     <h3 class="text-xl font-bold mb-3 text-slate-800 font-heading">A. Hukum Shalat Saat Sakit</h3>
                     <p class="text-slate-600 leading-relaxed mb-5 text-sm md:text-base">
-                        Shalat fardhu lima waktu adalah kewajiban mutlak dalam kondisi apapun. Namun, Islam memberikan <strong>rukhshah (keringanan)</strong> yang luar biasa bagi orang sakit. Prinsip utamanya adalah: Lakukan apa yang mampu dilakukan, dan tinggalkan atau ganti yang tidak mampu dilakukan.
+                        Shalat fardhu lima waktu adalah kewajiban mutlak dalam kondisi apapun. Namun, Islam memberikan <strong>rukhshah (keringanan)</strong>. Lakukan apa yang mampu dilakukan, dan tinggalkan atau ganti yang tidak mampu dilakukan.
                     </p>
                     <div class="bg-slate-50 p-5 rounded-xl border-l-4 border-teal-600">
                         <strong class="block text-slate-800 mb-1 text-sm font-semibold">Dalil (HR. Bukhari)</strong>
                         <p class="italic text-slate-600 text-sm leading-relaxed">
-                            Rasulullah ﷺ bersabda kepada Imran bin Husain: "Shalatlah sambil berdiri. Jika kamu tidak mampu, maka shalatlah sambil duduk. Jika kamu tidak mampu (juga), maka shalatlah sambil berbaring ke samping."
+                            Rasulullah ﷺ bersabda: "Shalatlah sambil berdiri. Jika kamu tidak mampu, maka shalatlah sambil duduk. Jika kamu tidak mampu (juga), maka shalatlah sambil berbaring ke samping."
                         </p>
                     </div>
                 </div>
@@ -226,13 +214,11 @@
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <!-- Macam-Macam -->
             <div class="bg-white p-8 rounded-2xl shadow-sm border border-slate-200 hover:shadow-md transition-shadow flex flex-col">
                 <h3 class="text-xl font-bold mb-6 text-slate-800 font-heading flex items-center">
                     <div class="bg-blue-50 text-blue-600 p-2 rounded-lg mr-3 text-sm"><i class="fa-solid fa-bed-pulse"></i></div>
                     B. Tata Cara Gerakan
                 </h3>
-                
                 <div class="space-y-4 flex-grow">
                     <div class="border border-slate-100 p-5 rounded-xl bg-slate-50/50 relative overflow-hidden">
                         <div class="absolute top-0 left-0 w-1 h-full bg-blue-500"></div>
@@ -243,20 +229,18 @@
                             <li><strong>Sujud:</strong> Sujud di lantai jika mampu, atau menunduk lebih rendah dari ruku'.</li>
                         </ul>
                     </div>
-                    
                     <div class="border border-slate-100 p-5 rounded-xl bg-slate-50/50 relative overflow-hidden">
                         <div class="absolute top-0 left-0 w-1 h-full bg-indigo-500"></div>
                         <strong class="text-slate-800 text-base block mb-1">2. Berbaring Miring & Telentang</strong>
                         <p class="text-slate-600 text-sm mb-2">Bagi yang tidak sanggup duduk sama sekali.</p>
                         <ul class="list-disc pl-4 text-sm text-slate-600 space-y-1">
-                            <li><strong>Miring:</strong> Disunnahkan sisi kanan, tubuh menghadap Kiblat. Isyarat dengan anggukan.</li>
-                            <li><strong>Telentang:</strong> Kaki ke arah Kiblat, kepala diganjal bantal. Isyarat ruku/sujud dengan kepala.</li>
+                            <li><strong>Miring:</strong> Disunnahkan sisi kanan, menghadap Kiblat. Isyarat anggukan.</li>
+                            <li><strong>Telentang:</strong> Kaki ke arah Kiblat, kepala diganjal bantal. Isyarat dengan kepala.</li>
                         </ul>
                     </div>
                 </div>
             </div>
 
-            <!-- Syarat Sah -->
             <div class="bg-white p-8 rounded-2xl shadow-sm border border-slate-200 hover:shadow-md transition-shadow">
                 <h3 class="text-xl font-bold mb-6 text-slate-800 font-heading flex items-center">
                     <div class="bg-amber-50 text-amber-600 p-2 rounded-lg mr-3 text-sm"><i class="fa-solid fa-hands-bubbles"></i></div>
@@ -267,28 +251,28 @@
                         <i class="fa-solid fa-circle-check text-teal-600 mt-0.5 mr-3"></i>
                         <div>
                             <strong class="text-slate-800 text-sm block">Wudhu Mandiri / Dibantu</strong>
-                            <span class="text-slate-600 text-sm">Jika masih aman terkena air, wajib berwudhu secara normal atau dibantu orang lain.</span>
+                            <span class="text-slate-600 text-sm">Jika masih aman terkena air, wajib berwudhu normal atau dibantu.</span>
                         </div>
                     </div>
                     <div class="flex items-start p-3 bg-slate-50 rounded-lg">
                         <i class="fa-solid fa-circle-check text-teal-600 mt-0.5 mr-3"></i>
                         <div>
                             <strong class="text-slate-800 text-sm block">Mengusap Luka & Perban</strong>
-                            <span class="text-slate-600 text-sm">Bagian tubuh yang sehat tetap dicuci, sedangkan bagian yang diperban cukup diusap (dengan tangan basah) di atas perbannya.</span>
+                            <span class="text-slate-600 text-sm">Bagian sehat dicuci, bagian diperban diusap tangan basah.</span>
                         </div>
                     </div>
                     <div class="flex items-start p-3 bg-slate-50 rounded-lg">
                         <i class="fa-solid fa-circle-check text-teal-600 mt-0.5 mr-3"></i>
                         <div>
                             <strong class="text-slate-800 text-sm block">Tayammum</strong>
-                            <span class="text-slate-600 text-sm">Diperbolehkan tayammum dengan debu bersih jika penggunaan air dapat membahayakan luka atau memperlambat kesembuhan.</span>
+                            <span class="text-slate-600 text-sm">Jika air membahayakan luka, diperbolehkan tayammum.</span>
                         </div>
                     </div>
                     <div class="flex items-start p-3 bg-slate-50 rounded-lg">
                         <i class="fa-solid fa-circle-check text-teal-600 mt-0.5 mr-3"></i>
                         <div>
                             <strong class="text-slate-800 text-sm block">Najis yang Dimaafkan</strong>
-                            <span class="text-slate-600 text-sm">Pasien medis dengan selang kateter atau pampers yang menyulitkan diganti dimaafkan dan shalatnya tetap sah.</span>
+                            <span class="text-slate-600 text-sm">Pasien dengan kateter atau pampers dimaafkan, shalat sah.</span>
                         </div>
                     </div>
                 </div>
@@ -296,7 +280,7 @@
         </div>
     </section>
 
-    <!-- Simulasi Section (Panduan) -->
+    <!-- Simulasi Section -->
     <section id="simulasi" class="bg-teal-900 py-16 relative pattern-bg">
         <div class="container mx-auto px-4 relative z-10">
             <div class="text-center mb-12">
@@ -305,7 +289,6 @@
             </div>
             
             <div class="flex flex-col lg:flex-row gap-6 max-w-5xl mx-auto">
-                <!-- Controls -->
                 <div class="w-full lg:w-1/3 bg-white p-6 rounded-2xl shadow-lg flex flex-col">
                     <label class="block text-slate-700 font-semibold mb-2 text-sm">Pilih Kondisi Pasien</label>
                     <select id="intent-selector" onchange="updatePosisi()" class="w-full p-3.5 border border-slate-200 rounded-xl outline-none focus:border-teal-500 focus:ring-1 focus:ring-teal-500 bg-slate-50 text-slate-800 text-sm mb-6 cursor-pointer">
@@ -325,23 +308,18 @@
                     </div>
                 </div>
 
-                <!-- Display Area -->
                 <div class="w-full lg:w-2/3 bg-white rounded-2xl shadow-lg p-8 flex flex-col justify-center items-center min-h-[350px]">
                     <div id="posisi-content" class="fade-text text-center w-full">
                         <span id="posisi-title" class="inline-block text-xs font-bold text-teal-700 bg-teal-50 px-3 py-1 rounded-md mb-6 uppercase tracking-wider">
                             Posisi 1: Duduk
                         </span>
-                        
                         <div id="posisi-icon" class="text-7xl text-teal-600 mb-6 py-2">
                             <i class="fa-solid fa-chair"></i>
                         </div>
-                        
                         <h3 id="posisi-heading" class="text-2xl font-bold text-slate-800 mb-4 font-heading">
                             Shalat Sambil Duduk
                         </h3>
-                        
                         <div class="w-12 h-px bg-slate-200 mx-auto my-5"></div>
-                        
                         <p id="posisi-desc" class="text-slate-600 text-base leading-relaxed max-w-lg mx-auto">
                             Ruku' dilakukan dengan menundukkan kepala dan badan sedikit ke depan. Sujud dilakukan di lantai jika mampu, atau menunduk lebih rendah dari ruku' jika tidak mampu.
                         </p>
@@ -351,7 +329,7 @@
         </div>
     </section>
 
-    <!-- Kegiatan Siswa (Worksheet) Section -->
+    <!-- Kegiatan Siswa Section -->
     <section id="kegiatan" class="py-16 w-full">
         <div class="container mx-auto px-4 max-w-5xl">
             <div class="text-center mb-12">
@@ -359,12 +337,10 @@
                     <i class="fa-solid fa-list-check mr-2"></i>Kegiatan Siswa
                 </span>
                 <h2 class="text-3xl font-bold text-slate-800 font-heading">Lembar Kerja Pengamatan</h2>
-                <p class="text-slate-500 mt-3 text-sm max-w-xl mx-auto">Uji pemahamanmu mengenai tata cara shalat dan bersuci bagi orang sakit dengan melengkapi tabel interaktif di bawah ini.</p>
+                <p class="text-slate-500 mt-3 text-sm max-w-xl mx-auto">Uji pemahamanmu mengenai tata cara shalat dan bersuci bagi orang sakit.</p>
             </div>
 
             <div id="kegiatan-container" class="space-y-8">
-                
-                <!-- Bagian A -->
                 <div class="bg-white p-8 rounded-3xl shadow-sm border border-slate-200">
                     <h3 class="text-xl font-bold text-slate-800 mb-5 flex items-center font-heading">
                         <div class="bg-teal-50 text-teal-600 w-10 h-10 rounded-lg flex items-center justify-center mr-3 border border-teal-100 text-sm">
@@ -372,7 +348,6 @@
                         </div>
                         A. Identifikasi Posisi Shalat Orang Sakit
                     </h3>
-                    <p class="mb-5 text-sm text-slate-500">Berilah tanda centang (✓) pada kolom posisi yang tepat sesuai dengan pernyataan karakteristik berikut.</p>
                     <div class="overflow-x-auto rounded-xl border border-slate-200">
                         <table class="w-full kegiatan-table border-collapse text-sm min-w-[500px]">
                             <thead>
@@ -400,12 +375,12 @@
                                     <td><input type="radio" name="kegA_3" value="miring" class="kegiatan-checkbox"></td>
                                     <td><input type="radio" name="kegA_3" value="telentang" class="kegiatan-checkbox"></td>
                                 </tr>
-                                <tr><td>4</td><td class="text-left pl-4 font-medium text-slate-700">Kedua telapak kaki menghadap ke arah Kiblat, punggung menempel rata, dan kepala sedikit ditinggikan dengan bantal.</td>
+                                <tr><td>4</td><td class="text-left pl-4 font-medium text-slate-700">Kedua telapak kaki menghadap ke arah Kiblat, punggung menempel rata, kepala sedikit ditinggikan.</td>
                                     <td><input type="radio" name="kegA_4" value="duduk" class="kegiatan-checkbox"></td>
                                     <td><input type="radio" name="kegA_4" value="miring" class="kegiatan-checkbox"></td>
                                     <td><input type="radio" name="kegA_4" value="telentang" class="kegiatan-checkbox"></td>
                                 </tr>
-                                <tr><td>5</td><td class="text-left pl-4 font-medium text-slate-700">Tingkatan atau rukhshah terakhir untuk dipraktikkan jika berbaring miring sudah sama sekali tidak sanggup.</td>
+                                <tr><td>5</td><td class="text-left pl-4 font-medium text-slate-700">Tingkatan terakhir jika berbaring miring sudah sama sekali tidak sanggup.</td>
                                     <td><input type="radio" name="kegA_5" value="duduk" class="kegiatan-checkbox"></td>
                                     <td><input type="radio" name="kegA_5" value="miring" class="kegiatan-checkbox"></td>
                                     <td><input type="radio" name="kegA_5" value="telentang" class="kegiatan-checkbox"></td>
@@ -415,7 +390,6 @@
                     </div>
                 </div>
 
-                <!-- Bagian B -->
                 <div class="bg-white p-8 rounded-3xl shadow-sm border border-slate-200">
                     <h3 class="text-xl font-bold text-slate-800 mb-5 flex items-center font-heading">
                         <div class="bg-teal-50 text-teal-600 w-10 h-10 rounded-lg flex items-center justify-center mr-3 border border-teal-100 text-sm">
@@ -423,40 +397,39 @@
                         </div>
                         B. Identifikasi Tata Cara Bersuci
                     </h3>
-                    <p class="mb-5 text-sm text-slate-500">Berilah tanda centang (✓) pada tata cara bersuci yang paling tepat sesuai kondisi medis yang dialami pasien.</p>
                     <div class="overflow-x-auto rounded-xl border border-slate-200">
                         <table class="w-full kegiatan-table border-collapse text-sm min-w-[650px]">
                             <thead>
                                 <tr>
                                     <th class="w-10">No</th>
                                     <th>Kondisi Medis Pasien</th>
-                                    <th class="w-28">Wudhu Normal / Dibantu</th>
-                                    <th class="w-28">Usap Perban & Wudhu</th>
-                                    <th class="w-28">Tayammum Debu</th>
+                                    <th class="w-28">Wudhu / Dibantu</th>
+                                    <th class="w-28">Usap Perban</th>
+                                    <th class="w-28">Tayammum</th>
                                 </tr>
                             </thead>
                             <tbody class="text-slate-600">
-                                <tr><td>1</td><td class="text-left pl-4 font-medium text-slate-700">Membasuh anggota tubuh yang sehat dengan air, lalu mengusapkan tangan yang basah ke atas area balutan gips.</td>
+                                <tr><td>1</td><td class="text-left pl-4 font-medium text-slate-700">Membasuh anggota yang sehat dengan air, lalu mengusapkan tangan basah ke atas area balutan gips.</td>
                                     <td><input type="radio" name="kegB_1" value="wudhu" class="kegiatan-checkbox"></td>
                                     <td><input type="radio" name="kegB_1" value="usap" class="kegiatan-checkbox"></td>
                                     <td><input type="radio" name="kegB_1" value="tayammum" class="kegiatan-checkbox"></td>
                                 </tr>
-                                <tr><td>2</td><td class="text-left pl-4 font-medium text-slate-700">Pasien mengalami luka bakar sangat parah di sekujur tubuh, penggunaan air dapat membahayakan nyawa atau memperburuk luka.</td>
+                                <tr><td>2</td><td class="text-left pl-4 font-medium text-slate-700">Luka bakar parah di sekujur tubuh, air dapat membahayakan nyawa atau memperburuk luka.</td>
                                     <td><input type="radio" name="kegB_2" value="wudhu" class="kegiatan-checkbox"></td>
                                     <td><input type="radio" name="kegB_2" value="usap" class="kegiatan-checkbox"></td>
                                     <td><input type="radio" name="kegB_2" value="tayammum" class="kegiatan-checkbox"></td>
                                 </tr>
-                                <tr><td>3</td><td class="text-left pl-4 font-medium text-slate-700">Pasien tidak memiliki luka atau pantangan air, ia merasa pusing dan lemas namun bisa dibantu perawat menuju ke keran air.</td>
+                                <tr><td>3</td><td class="text-left pl-4 font-medium text-slate-700">Pasien merasa pusing lemas, tidak ada pantangan air, bisa dibantu perawat menuju keran.</td>
                                     <td><input type="radio" name="kegB_3" value="wudhu" class="kegiatan-checkbox"></td>
                                     <td><input type="radio" name="kegB_3" value="usap" class="kegiatan-checkbox"></td>
                                     <td><input type="radio" name="kegB_3" value="tayammum" class="kegiatan-checkbox"></td>
                                 </tr>
-                                <tr><td>4</td><td class="text-left pl-4 font-medium text-slate-700">Menggunakan debu yang suci lalu menepukkannya dan mengusapkan perlahan ke bagian wajah dan kedua tangan.</td>
+                                <tr><td>4</td><td class="text-left pl-4 font-medium text-slate-700">Menggunakan debu yang suci lalu menepukkannya dan mengusapkan perlahan ke wajah dan tangan.</td>
                                     <td><input type="radio" name="kegB_4" value="wudhu" class="kegiatan-checkbox"></td>
                                     <td><input type="radio" name="kegB_4" value="usap" class="kegiatan-checkbox"></td>
                                     <td><input type="radio" name="kegB_4" value="tayammum" class="kegiatan-checkbox"></td>
                                 </tr>
-                                <tr><td>5</td><td class="text-left pl-4 font-medium text-slate-700">Pasien mengalami patah tulang kaki yang di-gips, namun wajah, kedua tangan, dan kepala sepenuhnya sehat dan aman terkena air.</td>
+                                <tr><td>5</td><td class="text-left pl-4 font-medium text-slate-700">Patah kaki di-gips, wajah, kedua tangan, dan kepala sepenuhnya sehat dan aman terkena air.</td>
                                     <td><input type="radio" name="kegB_5" value="wudhu" class="kegiatan-checkbox"></td>
                                     <td><input type="radio" name="kegB_5" value="usap" class="kegiatan-checkbox"></td>
                                     <td><input type="radio" name="kegB_5" value="tayammum" class="kegiatan-checkbox"></td>
@@ -518,9 +491,8 @@
         <div class="container mx-auto px-4 max-w-3xl">
             <div class="text-center mb-10">
                 <h2 class="text-3xl font-bold text-slate-800 font-heading mb-2">Latihan Soal</h2>
-                <p class="text-slate-500 text-sm">Berdasarkan Materi Fikih Kelas 7.</p>
                 <div class="mt-4 inline-flex items-center gap-2 bg-red-100 text-red-700 px-4 py-2 rounded-lg text-xs font-bold border border-red-200">
-                    <i class="fa-solid fa-shield-halved"></i> JAWAB SOAL DENGAN JUJUR
+                    <i class="fa-solid fa-shield-halved"></i> UJIAN DIAWASI SISTEM
                 </div>
             </div>
 
@@ -535,10 +507,9 @@
                     <p class="text-sm text-slate-500">Lengkapi data diri sebelum memulai pengerjaan.</p>
                 </div>
 
-                <!-- Banned Alert (Muncul jika device diblokir) -->
                 <div id="banned-alert" class="hidden bg-red-50 border border-red-200 text-red-700 p-5 mb-6 rounded-xl text-sm relative">
                     <div class="font-bold mb-2 flex items-center text-base"><i class="fa-solid fa-ban mr-2"></i> Akses Perangkat Diblokir</div>
-                    <p class="mb-4">Perangkat atau IP ini telah dikunci dari sistem karena terdeteksi melakukan pelanggaran ujian sebelumnya. Anda tidak dapat mengikuti ujian lagi.</p>
+                    <p class="mb-4">Perangkat ini dikunci karena terdeteksi kecurangan. Hubungi pengawas.</p>
                     <button onclick="promptUnblock()" class="w-full sm:w-auto bg-red-100 hover:bg-red-200 text-red-800 font-bold py-2 px-4 rounded-lg text-xs transition border border-red-300 flex justify-center items-center">
                         <i class="fa-solid fa-unlock-keyhole mr-2"></i> Buka Blokir
                     </button>
@@ -562,12 +533,11 @@
 
             <!-- Quiz Container -->
             <div id="quiz-container" class="hidden space-y-6 relative">
-                <!-- Overlay lock jika di force submit -->
                 <div id="quiz-lock-overlay" class="hidden absolute inset-0 bg-white/80 backdrop-blur-sm z-50 flex flex-col items-center justify-center rounded-xl p-4 text-center">
                     <div class="bg-red-600 text-white px-6 py-4 rounded-xl font-bold shadow-lg flex items-center gap-3 mb-6">
                         <i class="fa-solid fa-lock text-2xl"></i> UJIAN DIKUNCI KARENA PELANGGARAN
                     </div>
-                    <p class="text-slate-800 font-medium mb-4">Perangkat ini diblokir karena meninggalkan halaman ujian. <br>Harap hubungi guru pengawas untuk membuka akses.</p>
+                    <p class="text-slate-800 font-medium mb-4">Perangkat ini diblokir. Hubungi guru pengawas.</p>
                     <button onclick="promptUnblock()" class="bg-white text-red-600 hover:text-red-700 font-bold py-3 px-6 rounded-xl shadow-md border border-red-200 hover:bg-red-50 transition flex items-center gap-2">
                         <i class="fa-solid fa-unlock-keyhole"></i> Buka Blokir
                     </button>
@@ -603,12 +573,8 @@
                 <i class="fa-solid fa-bell text-slate-500"></i>
             </div>
             <h3 id="modal-title" class="text-xl font-bold text-slate-800 mb-2 font-heading">Judul Modal</h3>
-            <div id="modal-body" class="text-slate-600 w-full text-sm mb-6 leading-relaxed">
-                Pesan akan muncul di sini.
-            </div>
-            <div id="modal-actions" class="flex flex-col gap-2 w-full">
-                <!-- Buttons injected via JS -->
-            </div>
+            <div id="modal-body" class="text-slate-600 w-full text-sm mb-6 leading-relaxed"></div>
+            <div id="modal-actions" class="flex flex-col gap-2 w-full"></div>
         </div>
     </div>
 
@@ -616,7 +582,6 @@
     <footer class="bg-slate-900 text-slate-400 py-10 border-t border-slate-800">
         <div class="container mx-auto px-4 text-center">
             <p class="font-bold text-lg text-white font-heading mb-1">FikihEdu</p>
-            <p class="text-sm"> FIQIH / MTs / Kelas 7 / Semester Genap</p>
             <p class="text-xs mt-6 opacity-60">&copy; 2026 EduFikih. All rights reserved.</p>
         </div>
     </footer>
@@ -627,7 +592,6 @@
         import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
         import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
 
-        // Firebase Config
         const firebaseConfig = {
             apiKey: "AIzaSyAkX8qAS-O_5m_qaGr8Aa9XME-lVyBMibw",
             authDomain: "belajaronline-b5512.firebaseapp.com",
@@ -644,34 +608,27 @@
         const appId = 'belajaronline-b5512';
         const COLLECTION_NAME = 'scores';
 
-        // --- SISTEM ANTI CHEAT LENGKAP ---
+        // --- SISTEM ANTI CHEAT ---
         window.isExamActive = false;
         let cheatWarnings = 0;
         const MAX_WARNINGS = 3;
-        
-        // 1. Matikan Klik Kanan (Context Menu)
-        document.addEventListener('contextmenu', event => {
-            event.preventDefault();
-            showAntiCheatBanner("Klik Kanan dinonaktifkan!");
-        });
 
-        // 2. Matikan Copy, Cut, Paste
+        // Note: Skrip jebakan console setInterval telah dihapus untuk mencegah false-positive.
+        
+        document.addEventListener('contextmenu', event => { event.preventDefault(); showAntiCheatBanner("Klik Kanan dinonaktifkan!"); });
         document.addEventListener('copy', e => { e.preventDefault(); showAntiCheatBanner("Dilarang melakukan Copy data!"); });
         document.addEventListener('cut', e => { e.preventDefault(); showAntiCheatBanner("Dilarang melakukan Cut data!"); });
         document.addEventListener('paste', e => { e.preventDefault(); showAntiCheatBanner("Dilarang melakukan Paste data!"); });
 
-        // 3. Matikan Keyboard Shortcuts (Inspect Element, Copy Paste shortcuts)
         document.addEventListener('keydown', function(e) {
-            // F12, Ctrl+Shift+I, Ctrl+Shift+J, Ctrl+U, Ctrl+S, Ctrl+C, Ctrl+V, Ctrl+X
             if (e.key === 'F12' || 
                 (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'i' || e.key === 'J' || e.key === 'j' || e.key === 'C' || e.key === 'c')) ||
                 (e.ctrlKey && (e.key === 'U' || e.key === 'u' || e.key === 'S' || e.key === 's' || e.key === 'C' || e.key === 'c' || e.key === 'V' || e.key === 'v' || e.key === 'X' || e.key === 'x'))) {
                 e.preventDefault();
-                showAntiCheatBanner("Pintasan Keyboard (Shortcuts) dimatikan untuk keamanan!");
+                showAntiCheatBanner("Pintasan Keyboard dimatikan untuk keamanan!");
             }
         });
 
-        // Tampilkan Banner Peringatan Kecil di atas
         function showAntiCheatBanner(msg) {
             const banner = document.getElementById('anti-cheat-banner');
             document.getElementById('anti-cheat-msg').textContent = msg;
@@ -679,14 +636,7 @@
             setTimeout(() => { banner.classList.add('-translate-y-full'); }, 2500);
         }
 
-        // 4. Deteksi Pindah Tab / Pindah Aplikasi (Hanya aktif saat Ujian)
-        document.addEventListener('visibilitychange', function() {
-            if (document.hidden && window.isExamActive) {
-                handleTabViolation();
-            }
-        });
-
-        // Deteksi jika browser kehilangan fokus (alt-tab)
+        document.addEventListener('visibilitychange', function() { if (document.hidden && window.isExamActive) handleTabViolation(); });
         window.addEventListener('blur', function() {
             if (window.isExamActive && document.activeElement !== document.getElementById('student-name') && document.activeElement !== document.getElementById('student-class')) {
                 handleTabViolation();
@@ -696,49 +646,37 @@
         function handleTabViolation() {
             if(!window.isExamActive) return;
             cheatWarnings++;
-            
             document.getElementById('violation-counter').classList.remove('hidden');
             document.getElementById('v-count').textContent = cheatWarnings;
 
             if (cheatWarnings >= MAX_WARNINGS) {
-                // Hentikan ujian
                 window.isExamActive = false;
-                
-                // BLOKIR DEVICE SECARA PERMANEN DI LOCALSTORAGE
                 localStorage.setItem('fikih_banned_device', 'true');
-                
                 document.getElementById('quiz-lock-overlay').classList.remove('hidden');
-                
                 showModal({
                     title: "❌ Ujian Dihentikan Paksa",
-                    message: `<div class="text-red-600 font-semibold mb-2">Batas Pelanggaran Tercapai!</div>Anda telah terdeteksi meninggalkan halaman ujian sebanyak 3 kali. <b>Perangkat Anda kini diblokir permanen</b>, dan jawaban otomatis dikirimkan.`,
+                    message: `<div class="text-red-600 font-semibold mb-2">Batas Pelanggaran Tercapai!</div>Perangkat diblokir permanen.`,
                     type: 'error',
                     buttons: [{ text: "Mengerti", class: "bg-red-600 text-white hover:bg-red-700", onClick: () => submitQuizLogic(true) }]
                 });
             } else {
                 showModal({
                     title: "🚨 Peringatan Kecurangan!",
-                    message: `<div class="text-amber-600 font-medium">Pelanggaran: ${cheatWarnings} / ${MAX_WARNINGS}</div><br>Sistem mendeteksi Anda meninggalkan tab/layar ujian! Mohon fokus pada layar ujian. Jika mencapai 3 kali, ujian akan dihentikan paksa.`,
+                    message: `<div class="text-amber-600 font-medium">Pelanggaran: ${cheatWarnings} / ${MAX_WARNINGS}</div>Sistem mendeteksi Anda meninggalkan layar ujian!`,
                     type: 'warning',
                     buttons: [{ text: "Saya Paham", class: "bg-amber-500 text-white hover:bg-amber-600" }]
                 });
             }
         }
-        // --- END ANTI CHEAT ---
 
-
-        // --- Auth & Banned Management ---
         const startBtn = document.getElementById('start-btn');
         const authStatus = document.getElementById('auth-status');
         const authErrorMsg = document.getElementById('auth-error-msg');
-
-        // Cek status blokir device saat halaman dimuat
         const isDeviceBanned = localStorage.getItem('fikih_banned_device') === 'true';
 
         onAuthStateChanged(auth, (user) => {
             if (user) {
                 if (isDeviceBanned) {
-                    // Kunci UI jika device terdeteksi pernah curang
                     startBtn.disabled = true;
                     startBtn.className = "w-full bg-red-100 text-red-500 font-bold py-3.5 rounded-xl cursor-not-allowed mt-4 border border-red-200";
                     startBtn.innerHTML = '<i class="fa-solid fa-lock mr-2"></i> Perangkat Diblokir';
@@ -750,7 +688,6 @@
                     startBtn.className = "w-full bg-teal-600 hover:bg-teal-700 text-white font-medium py-3.5 rounded-xl transition mt-4";
                     startBtn.innerHTML = 'Mulai Mengerjakan <i class="fa-solid fa-arrow-right ml-2 text-sm"></i>';
                 }
-
                 authStatus.innerHTML = '<i class="fa-solid fa-check text-teal-500 mr-1"></i> Terhubung';
                 authStatus.classList.replace('text-slate-400', 'text-teal-600');
                 authErrorMsg.classList.add('hidden');
@@ -763,17 +700,10 @@
             }
         });
 
-        // --- SISTEM BUKA BLOKIR (UNBLOCK) ---
-        // Fungsi ini bisa dipanggil dari tombol HTML manapun
         window.promptUnblock = function() {
             showModal({
-                title: "Otorisasi Guru",
-                type: 'warning',
-                message: `
-                    <p class="mb-3 text-sm text-slate-600 text-left">Masukkan PIN Rahasia untuk membuka blokir perangkat siswa ini.</p>
-                    <input type="password" id="unblock-pin" class="w-full p-3 border border-slate-300 rounded-lg outline-none focus:border-teal-500 focus:ring-1 focus:ring-teal-500 bg-white transition mb-2 text-sm text-slate-800" placeholder="Masukkan PIN" autocomplete="off">
-                    <p id="pin-error" class="text-red-500 text-xs font-semibold text-left hidden"><i class="fa-solid fa-circle-xmark mr-1"></i> PIN yang Anda masukkan salah!</p>
-                `,
+                title: "Otorisasi Guru", type: 'warning',
+                message: `<p class="mb-3 text-sm text-slate-600 text-left">Masukkan PIN Rahasia untuk membuka blokir.</p><input type="password" id="unblock-pin" class="w-full p-3 border border-slate-300 rounded-lg outline-none focus:border-teal-500 focus:ring-1 focus:ring-teal-500 bg-white transition mb-2 text-sm text-slate-800" placeholder="Masukkan PIN" autocomplete="off"><p id="pin-error" class="text-red-500 text-xs font-semibold text-left hidden"><i class="fa-solid fa-circle-xmark mr-1"></i> PIN salah!</p>`,
                 buttons: [
                     {text: "Batal", class: "bg-slate-100 text-slate-700 hover:bg-slate-200"},
                     {text: "Buka Akses", class: "bg-teal-600 text-white hover:bg-teal-700", close: false, onClick: () => window.verifyPIN()}
@@ -783,66 +713,28 @@
 
         window.verifyPIN = function() {
             const inputPin = document.getElementById('unblock-pin').value;
-            const SECRET_PIN = "443588"; // <-- GANTI PIN RAHASIA GURU DISINI
-
+            const SECRET_PIN = "443588"; 
             if (inputPin === SECRET_PIN) {
-                // Hapus status banned
                 localStorage.removeItem('fikih_banned_device');
-                
                 hideModal();
                 showModal({
-                    title: "Blokir Dibuka!",
-                    message: "Akses ujian untuk perangkat ini telah dikembalikan. Halaman akan dimuat ulang.",
-                    type: 'success',
-                    buttons: [{
-                        text: "Muat Ulang Halaman", 
-                        class: "bg-teal-600 text-white hover:bg-teal-700", 
-                        onClick: () => window.location.reload()
-                    }]
+                    title: "Blokir Dibuka!", message: "Akses ujian dikembalikan. Halaman akan dimuat ulang.", type: 'success',
+                    buttons: [{ text: "Muat Ulang Halaman", class: "bg-teal-600 text-white hover:bg-teal-700", onClick: () => window.location.reload() }]
                 });
-            } else {
-                document.getElementById('pin-error').classList.remove('hidden');
-            }
+            } else { document.getElementById('pin-error').classList.remove('hidden'); }
         };
 
-
-        // --- Data Panduan Simulasi ---
         window.posisiData = {
-            duduk: {
-                title: "Posisi 1: Duduk",
-                icon: "fa-chair",
-                heading: "Shalat Sambil Duduk",
-                desc: "Ruku' dilakukan dengan menundukkan kepala dan badan sedikit ke depan. Sujud dilakukan di lantai jika mampu, atau menunduk lebih rendah dari ruku' jika tidak mampu.",
-                note: "Posisi duduk bebas, namun disunnahkan duduk bersila seperti biasa."
-            },
-            miring: {
-                title: "Posisi 2: Berbaring Miring",
-                icon: "fa-bed",
-                heading: "Berbaring Miring ke Kanan",
-                desc: "Wajah dan dada dihadapkan ke arah Kiblat. Ruku' dan Sujud dilakukan dengan isyarat anggukan kepala. Anggukan sujud lebih dalam daripada ruku'.",
-                note: "Disunnahkan berbaring di atas sisi badan sebelah kanan."
-            },
-            telentang: { 
-                 title: "Posisi 3: Telentang",
-                 icon: "fa-bed-pulse",
-                 heading: "Shalat Sambil Telentang",
-                 desc: "Kedua kaki dihadapkan ke arah Kiblat (jika mungkin). Kepala ditinggikan sedikit dengan bantal agar wajah menghadap Kiblat. Ruku' dan sujud dengan isyarat.",
-                 note: "Dilakukan jika berbaring miring sudah tidak sanggup dilakukan."
-            },
-            isyarat: { 
-                 title: "Posisi 4: Isyarat Mata / Hati",
-                 icon: "fa-eye",
-                 heading: "Isyarat Mata atau Hati",
-                 desc: "Jika tubuh lumpuh total, gunakan isyarat kedipan mata untuk pergerakan. Jika mata terpejam, jalankan rukun shalat dan bacaan di dalam hati.",
-                 note: "Selama akal dan kesadaran masih ada, kewajiban shalat fardhu tidak gugur."
-            }
+            duduk: { title: "Posisi 1: Duduk", icon: "fa-chair", heading: "Shalat Sambil Duduk", desc: "Ruku' dilakukan dengan menundukkan kepala dan badan sedikit ke depan.", note: "Posisi duduk bebas, namun disunnahkan duduk bersila seperti biasa." },
+            miring: { title: "Posisi 2: Berbaring Miring", icon: "fa-bed", heading: "Berbaring Miring ke Kanan", desc: "Wajah dan dada dihadapkan ke arah Kiblat. Ruku' dan Sujud dengan isyarat.", note: "Disunnahkan berbaring di atas sisi badan sebelah kanan." },
+            telentang: { title: "Posisi 3: Telentang", icon: "fa-bed-pulse", heading: "Shalat Sambil Telentang", desc: "Kedua kaki dihadapkan ke arah Kiblat. Kepala ditinggikan sedikit.", note: "Dilakukan jika berbaring miring sudah tidak sanggup dilakukan." },
+            isyarat: { title: "Posisi 4: Isyarat Mata / Hati", icon: "fa-eye", heading: "Isyarat Mata atau Hati", desc: "Jika lumpuh total, gunakan isyarat kedipan mata atau jalankan dalam hati.", note: "Selama akal masih ada, kewajiban shalat fardhu tidak gugur." }
         };
 
         window.updatePosisi = function() {
             const key = document.getElementById('intent-selector').value;
             const data = window.posisiData[key];
             const contentDiv = document.getElementById('posisi-content');
-            
             contentDiv.style.opacity = '0';
             setTimeout(() => {
                 document.getElementById('posisi-title').textContent = data.title;
@@ -854,14 +746,11 @@
             }, 200);
         }
 
-        // --- Modal Logic Universal ---
         const modal = document.getElementById('custom-modal');
         function showModal(config) {
             document.getElementById('modal-title').textContent = config.title;
             document.getElementById('modal-body').innerHTML = config.message;
-            
-            let iconClass = 'fa-bell text-slate-500';
-            let bgClass = 'bg-slate-100';
+            let iconClass = 'fa-bell text-slate-500'; let bgClass = 'bg-slate-100';
             if (config.type === 'warning') { iconClass = 'fa-triangle-exclamation text-amber-500'; bgClass = 'bg-amber-50'; }
             if (config.type === 'success') { iconClass = 'fa-check text-teal-500'; bgClass = 'bg-teal-50'; }
             if (config.type === 'error') { iconClass = 'fa-xmark text-red-500'; bgClass = 'bg-red-50'; }
@@ -884,183 +773,94 @@
             } else if (config.type !== 'loading') {
                 const b = document.createElement('button');
                 b.className = "w-full bg-teal-600 text-white py-2.5 rounded-xl font-medium hover:bg-teal-700 transition text-sm";
-                b.textContent = "Tutup";
-                b.onclick = hideModal;
+                b.textContent = "Tutup"; b.onclick = hideModal;
                 actions.appendChild(b);
             }
             modal.classList.remove('hidden');
         }
         function hideModal() { modal.classList.add('hidden'); }
 
-        // Mobile Nav
-        document.getElementById('mobile-menu-btn').addEventListener('click', () => { 
-            document.getElementById('mobile-menu').classList.toggle('hidden'); 
-        });
+        document.getElementById('mobile-menu-btn').addEventListener('click', () => { document.getElementById('mobile-menu').classList.toggle('hidden'); });
 
-        // --- Logic Lembar Kerja (Kegiatan Siswa) ---
         window.preSubmitKegiatanCheck = () => {
             let answered = 0;
-            const total = 10;
-            
             for(let i=1; i<=5; i++) if(document.querySelector(`input[name="kegA_${i}"]:checked`)) answered++;
             for(let i=1; i<=5; i++) if(document.querySelector(`input[name="kegB_${i}"]:checked`)) answered++;
             
-            if(answered < total) {
+            if(answered < 10) {
                 showModal({
-                    title: "Belum Selesai", 
-                    message: `Baru dikerjakan <b class="text-amber-500">${answered}</b> dari <b>${total}</b> isian. Pastikan semua baris di Bagian A dan B sudah terisi!`, 
-                    type: 'warning',
-                    buttons: [
-                        {text: "Lanjut Mengisi", class: "bg-slate-100 text-slate-700 hover:bg-slate-200"}, 
-                        {text: "Kirim Tetap", class: "bg-amber-500 text-teal-950 hover:bg-amber-600", onClick: () => promptKegiatanIdentity()}
-                    ]
+                    title: "Belum Selesai", message: `Baru dikerjakan <b class="text-amber-500">${answered}</b> dari <b>10</b> isian.`, type: 'warning',
+                    buttons: [{text: "Lanjut", class: "bg-slate-100"}, {text: "Kirim", class: "bg-amber-500 text-teal-950", onClick: () => promptKegiatanIdentity()}]
                 });
-            } else {
-                promptKegiatanIdentity();
-            }
+            } else { promptKegiatanIdentity(); }
         };
 
         window.promptKegiatanIdentity = () => {
             showModal({
-                title: "Data Diri Siswa",
-                type: 'success',
-                message: `
-                    <p class="mb-4 text-xs text-slate-500 text-left">Silakan isi identitasmu untuk menyimpan nilai lembar kerja ke database.</p>
-                    <input type="text" id="popup-name" class="w-full p-3 border border-slate-300 rounded-lg outline-none focus:border-teal-500 focus:ring-1 focus:ring-teal-500 bg-white transition mb-3 text-sm text-slate-800" placeholder="Nama Lengkap">
-                    <input type="text" id="popup-class" class="w-full p-3 border border-slate-300 rounded-lg outline-none focus:border-teal-500 focus:ring-1 focus:ring-teal-500 bg-white transition text-sm text-slate-800" placeholder="Kelas">
-                    <p id="popup-error" class="text-red-500 text-xs mt-2 hidden font-semibold text-left"><i class="fa-solid fa-circle-xmark mr-1"></i> Nama dan Kelas wajib diisi!</p>
-                `,
-                buttons: [
-                    {text: "Batal", class: "bg-slate-100 text-slate-700 hover:bg-slate-200"},
-                    {text: "Simpan & Lihat Nilai", class: "bg-teal-600 text-white hover:bg-teal-700", close: false, onClick: () => validateAndSubmitKegiatan()}
-                ]
+                title: "Data Diri Siswa", type: 'success',
+                message: `<input type="text" id="popup-name" class="w-full p-3 border border-slate-300 rounded-lg mb-3" placeholder="Nama Lengkap"><input type="text" id="popup-class" class="w-full p-3 border border-slate-300 rounded-lg" placeholder="Kelas"><p id="popup-error" class="text-red-500 text-xs mt-2 hidden">Wajib diisi!</p>`,
+                buttons: [{text: "Batal", class: "bg-slate-100"}, {text: "Simpan Nilai", class: "bg-teal-600 text-white", close: false, onClick: () => validateAndSubmitKegiatan()}]
             });
         };
 
         window.validateAndSubmitKegiatan = () => {
             const name = document.getElementById('popup-name').value.trim();
             const cls = document.getElementById('popup-class').value.trim();
-
-            if (!name || !cls) {
-                document.getElementById('popup-error').classList.remove('hidden');
-                return;
-            }
-            hideModal(); 
-            submitKegiatan(name, cls); 
+            if (!name || !cls) { document.getElementById('popup-error').classList.remove('hidden'); return; }
+            hideModal(); submitKegiatan(name, cls); 
         };
 
         async function submitKegiatan(name, cls) {
-            showModal({ title: "Mengirim Data", message: "Sedang menyimpan nilai pengamatan Anda...", type: 'loading', buttons: [] });
-            
-            const answersA = { kegA_1: 'duduk', kegA_2: 'miring', kegA_3: 'duduk', kegA_4: 'telentang', kegA_5: 'telentang' };
-            const answersB = { kegB_1: 'usap', kegB_2: 'tayammum', kegB_3: 'wudhu', kegB_4: 'tayammum', kegB_5: 'usap' };
-
-            let correct = 0;
-            let total = 10;
-            let studentAnswers = []; 
-
-            for(let key in answersA) {
-                const sel = document.querySelector(`input[name="${key}"]:checked`);
-                const isCorrect = sel && sel.value === answersA[key];
-                if(isCorrect) correct++;
-                studentAnswers.push(!!isCorrect);
-            }
-            for(let key in answersB) {
-                const sel = document.querySelector(`input[name="${key}"]:checked`);
-                const isCorrect = sel && sel.value === answersB[key];
-                if(isCorrect) correct++;
-                studentAnswers.push(!!isCorrect);
-            }
-            
-            const score = Math.round((correct / total) * 100);
-            
+            showModal({ title: "Mengirim Data", message: "Menyimpan nilai...", type: 'loading', buttons: [] });
+            const ansA = { kegA_1: 'duduk', kegA_2: 'miring', kegA_3: 'duduk', kegA_4: 'telentang', kegA_5: 'telentang' };
+            const ansB = { kegB_1: 'usap', kegB_2: 'tayammum', kegB_3: 'wudhu', kegB_4: 'tayammum', kegB_5: 'usap' };
+            let correct = 0; let studentAnswers = []; 
+            for(let key in ansA) { const s = document.querySelector(`input[name="${key}"]:checked`); const c = s && s.value === ansA[key]; if(c) correct++; studentAnswers.push(!!c); }
+            for(let key in ansB) { const s = document.querySelector(`input[name="${key}"]:checked`); const c = s && s.value === ansB[key]; if(c) correct++; studentAnswers.push(!!c); }
+            const score = Math.round((correct / 10) * 100);
             try {
                 if(!auth.currentUser) await signInAnonymously(auth);
                 await addDoc(collection(db, 'artifacts', appId, 'public', 'data', COLLECTION_NAME), {
-                    name: name, kelas: cls, score: score, materi: 'Lembar Kerja : Fikih Orang Sakit', 
-                    type: 'Lembar Kerja Pengamatan',
-                    details: studentAnswers, 
-                    date: new Date().toLocaleDateString('id-ID'), timestamp: Date.now()
+                    name: name, kelas: cls, score: score, materi: 'Lembar Kerja : Fikih', type: 'Lembar Kerja', details: studentAnswers, date: new Date().toLocaleDateString('id-ID'), timestamp: Date.now()
                 });
-                
-                showModal({
-                    title: "Kerja yang Bagus!", 
-                    message: `<div class="text-center"><span class="text-4xl font-bold text-teal-600 block mb-1">${score} / 100</span><span class="text-sm text-slate-500">Nilai lembar pengamatan berhasil direkam.</span></div>`, 
-                    type: 'success',
-                    buttons: [{text: "Tutup", class: "bg-teal-600 text-white hover:bg-teal-700"}]
-                });
-                
+                showModal({ title: "Bagus!", message: `<div class="text-center"><span class="text-4xl font-bold text-teal-600 block">${score} / 100</span></div>`, type: 'success', buttons: [{text: "Tutup", class: "bg-teal-600 text-white"}] });
                 document.querySelectorAll('.kegiatan-checkbox').forEach(el => el.disabled = true);
                 document.getElementById('btn-kirim-kegiatan').classList.add('hidden');
-            } catch(e) {
-                showModal({ title: "Gagal Mengirim", message: "Terjadi kesalahan koneksi, silakan coba lagi.", type: 'error' });
-            }
+            } catch(e) { showModal({ title: "Gagal", message: "Kesalahan jaringan.", type: 'error' }); }
         }
 
-        // --- Calculator Logic ---
         window.checkKondisi = function() {
             const cond = document.getElementById('input-condition').value;
             const res = document.getElementById('check-result');
             const reason = document.getElementById('check-reason');
-
-            if (cond === 'luka_air') {
-                res.textContent = "USAP / TAYAMMUM"; res.className = "text-3xl font-bold text-teal-600 mb-4 font-heading";
-                reason.innerHTML = "Wudhu bagian tubuh yang sehat. Usap lembut bagian atas perban dengan air. Jika total tak bisa kena air, ganti dengan Tayammum menggunakan debu.";
-            } else if (cond === 'pusing_berat') {
-                res.textContent = "SHALAT DUDUK"; res.className = "text-3xl font-bold text-teal-600 mb-4 font-heading";
-                reason.innerHTML = "Gugur kewajiban berdiri untuk Anda. Silakan shalat sambil duduk. Jika pusing bertambah, diperbolehkan sambil berbaring.";
-            } else if (cond === 'koma') {
-                res.textContent = "GUGUR SEMENTARA"; res.className = "text-3xl font-bold text-amber-500 mb-4 font-heading";
-                reason.innerHTML = "Syarat wajib shalat adalah berakal/sadar. Saat koma, kewajiban shalat gugur sementara dan menurut jumhur ulama tidak perlu diqadha saat sadar.";
-            } else if (cond === 'infus_najis') {
-                res.textContent = "DIMAAFKAN (SAH)"; res.className = "text-3xl font-bold text-teal-600 mb-4 font-heading";
-                reason.innerHTML = "Lakukan shalat sebisa mungkin. Jika najis tidak mungkin dibersihkan karena kondisi alat medis darurat, shalat tetap sah dan tak perlu diulang.";
-            } else if (cond === 'sulit_waktu') {
-                res.textContent = "BOLEH DI-JAMA'"; res.className = "text-3xl font-bold text-teal-600 mb-4 font-heading";
-                reason.innerHTML = "Mayoritas ulama membolehkan pasien menjamak (menggabung) shalatnya jika sulit bergerak di setiap waktu, <strong>namun TIDAK BOLEH diqashar</strong>.";
-            }
+            if (cond === 'luka_air') { res.textContent = "USAP / TAYAMMUM"; reason.innerHTML = "Wudhu yang sehat, usap perban."; } 
+            else if (cond === 'pusing_berat') { res.textContent = "SHALAT DUDUK"; reason.innerHTML = "Gugur berdiri, shalat duduk."; } 
+            else if (cond === 'koma') { res.textContent = "GUGUR SEMENTARA"; reason.innerHTML = "Syarat wajib berakal, gugur saat koma."; } 
+            else if (cond === 'infus_najis') { res.textContent = "DIMAAFKAN"; reason.innerHTML = "Shalat sah darurat medis."; } 
+            else if (cond === 'sulit_waktu') { res.textContent = "BOLEH DI-JAMA'"; reason.innerHTML = "Boleh dijama', dilarang diqashar."; }
+            res.className = "text-3xl font-bold text-teal-600 mb-4 font-heading";
         }
 
-        // --- Quiz Logic (Uji Kompetensi) ---
-        const questionData = [
-            { q: "Pak Amir mengalami patah tulang kaki dan tidak bisa berdiri. Cara Pak Amir melaksanakan shalat fardhu menurut urutan rukhshah adalah....", options: ["Tidak wajib shalat sampai sembuh", "Shalat sambil duduk", "Shalat dengan isyarat mata", "Shalat berbaring telentang"], a: 1 },
-            { q: "Ibu Fatimah dirawat di ICU, tubuhnya lumpuh dan tidak bisa digerakkan sama sekali, namun otaknya masih sadar penuh merespon. Hal yang harus dilakukannya untuk shalat adalah....", options: ["Shalat dalam hati", "Gugur kewajiban shalatnya", "Diwakilkan oleh anaknya", "Menunggu sampai bisa bergerak"], a: 0 },
-            { q: "Budi memiliki luka bakar di lengannya yang dilarang terkena air oleh dokter. Saat waktu shalat tiba, cara yang harus Budi lakukan untuk bersuci adalah....", options: ["Langsung shalat tanpa bersuci", "Hanya mencuci muka dan kaki saja", "Membasuh yang sehat dan mengusap perban", "Menunda shalat sampai lukanya sembuh"], a: 2 },
-            { q: "Seorang pasien dipasang selang kateter urin sehingga tidak suci dari najis. Kondisi medisnya tidak memungkinkan selang dilepas pasang. Hukum shalat bagi pasien tersebut adalah....", options: ["Tidak sah karena ada najis", "Sah karena dimaafkan dalam keadaan darurat", "Sah tetapi wajib diulang setelah sembuh total", "Boleh ditinggalkan selagi di rumah sakit"], a: 1 },
-            { q: "Arah Kiblat saat shalat berbaring miring yang benar adalah....", options: ["Wajah dan dada dihadapkan ke arah Kiblat", "Telapak kaki dihadapkan lurus ke Kiblat", "Punggung dihadapkan ke Kiblat", "Bebas menghadap mana saja karena sedang sakit"], a: 0 },
-            { q: "Kondisi medis yang dapat membuat kewajiban shalat fardhu seseorang benar-benar gugur atau tidak wajib melaksanakannya saat itu yaitu....", options: ["Lumpuh total seluruh tubuh", "Patah tulang punggung belakang", "Kehilangan kesadaran yang sangat berat", "Diinfus dan dirawat di ruang ICU"], a: 2 },
-            { q: "Saat shalat sambil berbaring telentang, gerakan ruku' dan sujud dilakukan dengan cara....", options: ["Menggerakkan tangan ke atas dan bawah", "Isyarat anggukan kepala dengan anggukan sujud lebih dalam", "Mengedipkan mata dua kali berturut-turut", "Membaca lafal takbir lebih keras dari biasanya"], a: 1 },
-            { q: "Jika seseorang sakit parah dan proses wudhu atau pergerakan shalat sangat menyiksanya setiap kali masuk waktu, maka keringanan waktu yang diberikan fikih Islam kepadanya berupa....", options: ["Boleh menjamak waktu shalatnya", "Boleh mengqashar jumlah rakaatnya", "Boleh menjamak sekaligus mengqashar rakaatnya", "Boleh mengganti shalat dengan membayar fidyah"], a: 0 },
-            { q: "Bila seorang pasien harus berbaring miring, maka posisi miring yang paling disunnahkan untuk dilakukan saat shalat adalah....", options: ["Miring ke sisi kiri tubuh", "Miring ke sisi kanan tubuh", "Miring dengan dada telungkup", "Bergantian sisi kanan dan kiri di setiap rakaat"], a: 1 },
-            { q: "Urutan prioritas tingkat kemampuan posisi shalat bagi orang sakit yang benar adalah....", options: ["Duduk -> Isyarat -> Berbaring Miring", "Berbaring Miring -> Duduk -> Telentang", "Duduk -> Berbaring Miring -> Telentang -> Isyarat", "Telentang -> Duduk -> Isyarat"], a: 2 },
-            { q: "Bila seorang pasien hanya bisa berbaring telentang dan sama sekali tidak bisa menggerakkan kepalanya, maka cara ia melakukan ruku' dan sujud adalah dengan....", options: ["Menggunakan isyarat jari tangan", "Menggunakan isyarat kedipan mata", "Menggerakkan kedua kaki perlahan", "Meninggalkan shalat tersebut"], a: 1 },
-            { q: "Seseorang yang shalat sambil duduk di atas kursi karena sakit lutut, cara ia melakukan gerakan sujud yang benar adalah....", options: ["Berdiri sejenak lalu duduk kembali", "Menundukkan badan sama sejajar dengan ruku'", "Menundukkan badan dan kepala lebih rendah daripada ruku'", "Sujud menempel di lantai meski harus terjatuh"], a: 2 },
-            { q: "Islam memberikan keringanan atau rukhshah kepada orang sakit agar tetap bisa beribadah. Hal ini menunjukkan prinsip ajaran Islam yaitu....", options: ["Tidak memberatkan dan sesuai kesanggupan hamba", "Boleh meninggalkan ibadah bila repot", "Ibadah hanya untuk orang yang sehat dan kuat", "Memaksa umatnya dalam kondisi apapun"], a: 0 },
-            { q: "Pandangan syariat terhadap pahala shalat fardhu orang sakit yang terpaksa mengerjakannya sambil duduk karena tidak mampu berdiri adalah....", options: ["Pahalanya setengah dari orang yang shalat berdiri", "Pahalanya tidak sah sampai ia sembuh", "Pahalanya utuh dan sempurna sebagaimana shalat berdiri saat sehat", "Pahalanya hanya seperempat dari shalat normal"], a: 2 },
-            { q: "Ibu Ani terbaring di ranjang rumah sakit dengan posisi telentang. Agar shalatnya sempurna sesuai sunnah, kepala Ibu Ani sebaiknya ditinggikan menggunakan bantal dengan tujuan....", options: ["Agar pernafasannya menjadi lebih lega", "Agar wajahnya dapat sedikit terangkat menghadap ke arah Kiblat", "Agar mudah melihat orang yang menjenguk", "Agar suaranya terdengar jelas saat membaca surat"], a: 1 },
-            { q: "Seseorang menderita sakit yang mengharuskannya menggunakan kantong pembuangan feses yang menempel terus di perut, hukum pelaksanaan shalatnya adalah....", options: ["Sah karena kondisi darurat medis najis dimaafkan", "Tidak sah dan harus menunggu sampai sembuh", "Boleh shalat tapi harus diganti puasa", "Wajib diganti dengan membayar fidyah harian"], a: 0 },
-            { q: "Seorang pasien luka bakar parah tidak boleh terkena air wudhu sedikitpun dan tidak bisa bertayammum karena dibalut perban total. Cara ia menyikapi kewajiban shalatnya adalah....", options: ["Gugur kewajiban shalatnya selamanya", "Shalat dalam keadaan seadanya untuk menghormati waktu", "Membayar orang lain untuk shalat atas namanya", "Tidak perlu shalat fardhu tapi memperbanyak dzikir saja"], a: 1 },
-            { q: "Apabila orang yang sedang sakit tiba-tiba lupa atau ragu jumlah rakaat shalat yang sedang dikerjakan karena menahan nyeri, hal yang sebaiknya ia lakukan adalah....", options: ["Menghentikan shalat dan beristirahat total", "Meyakini jumlah rakaat yang lebih sedikit dan meneruskannya", "Meminta keluarga untuk menghitung rakaat secara keras", "Membatalkan dan mengulanginya dari awal nanti saja"], a: 1 },
-            { q: "Menggabungkan dua waktu shalat bagi orang sakit yang sangat kepayahan diperbolehkan oleh sebagian besar ulama. Di antara pasangan shalat berikut yang boleh digabungkan adalah....", options: ["Subuh dan Dzuhur", "Ashar dan Maghrib", "Dzuhur dan Ashar", "Isya dan Subuh"], a: 2 },
-            { q: "Bila mengedipkan mata juga sudah tidak mampu dikarenakan komplikasi penyakit berat namun akal dan otaknya masih sadar, langkah terakhir untuk melaksanakan shalat adalah....", options: ["Dengan isyarat telunjuk tangan kanan", "Diwakilkan oleh ahli waris atau anak sulungnya", "Rukun dan bacaan shalat dijalankan dan dibayangkan di dalam hati", "Langsung digugurkan kewajiban shalatnya"], a: 2 }
-        ];
+        // --- ENKRIPSI DATA JAWABAN BASE64 ---
+        // Data tidak lagi ditulis mentah (a: 1, a: 0). Siswa yang melihat view-source hanya akan melihat huruf acak.
+        const encodedData = "W3sicSI6IlBhayBBbWlyIG1lbmdhbGFtaSBwYXRhaCB0dWxhbmcga2FraSBkYW4gdGlkYWsgYmlzYSBiZXJkaXJpLiBDYXJhIFBhayBBbWlyIG1lbGFrc2FuYWthbiBzaGFsYXQgZmFyZGh1IG1lbnVydXQgdXJ1dGFuIHJ1a2hzaGFoIGFkYWxhaC4uLi4iLCJvcHRpb25zIjpbIlRpZGFrIHdhamliIHNoYWxhdCBzYW1wYWkgc2VtYnVoIiwiU2hhbGF0IHNhbWJpbCBkdWR1ayIsIlNoYWxhdCBkZW5nYW4gaXN5YXJhdCBtYXRhIiwiU2hhbGF0IGJlcmJhcmluZyB0ZWxlbnRhbmciXSwiYSI6MX0seyJxIjoiSWJ1IEZhdGltYWggZGlyYXdhdCBkaSBJQ1UsIHR1YnVobnlhIGx1bXB1aCBkYW4gdGlkYWsgYmlzYSBkaWdlcmFra2FuIHNhbWEgc2VrYWxpLCBuYW11biBvdGFrbnlhIG1hc2loIHNhZGFyIHBlbnVoIG1lcmVzcG9uLiBIYWwgeWFuZyBoYXJ1cyBkaWxha3VrYW5ueWEgdW50dWsgc2hhbGF0IGFkYWxhaC4uLi4iLCJvcHRpb25zIjpbIlNoYWxhdCBkYWxhbSBoYXRpIiwiR3VndXIga2V3YWppYmFuIHNoYWxhdG55YSIsIkRpd2FraWxrYW4gb2xlaCBhbmFrbnlhIiwiTWVudW5nZ3Ugc2FtcGFpIGJpc2EgYmVyZ2VyYWsiXSwiYSI6MH0seyJxIjoiQnVkaSBtZW1pbGlraSBsdWthIGJha2FyIGRpIGxlbmdhbm55YSB5YW5nIGRpbGFyYW5nIHRlcmtlbmEgYWlyIG9sZWggZG9rdGVyLiBTYWF0IHdha3R1IHNoYWxhdCB0aWJhLCBjYXJhIHlhbmcgaGFydXMgQnVkaSBsYWt1a2FuIHVudHVrIGJlcnN1Y2kgYWRhbGFoLi4uLiIsIm9wdGlvbnMiOlsiTGFuZ3N1bmcgc2hhbGF0IHRhbnBhIGJlcnN1Y2kiLCJIYW55YSBtZW5jdWNpIG11a2EgZGFuIGtha2kgc2FqYSIsIk1lbWJhc3VoIHlhbmcgc2VoYXQgZGFuIG1lbmd1c2FwIHBlcmJhbiIsIk1lbnVuZGEgc2hhbGF0IHNhbXBhaSBsdWthbnlhIHNlbWJ1aCJdLCJhIjoyfSx7InEiOiJTZW9yYW5nIHBhc2llbiBkaXBhc2FuZyBzZWxhbmcga2F0ZXRlciB1cmluIHNlaGluZ2dhIHRpZGFrIHN1Y2kgZGFyaSBuYWppcy4gS29uZGlzaSBtZWRpc255YSB0aWRhayBtZW11bmdraW5rYW4gc2VsYW5n dilmZXBhcyBwYXNhbmcuIEh1a3VtIHNoYWxhdCBiYWdpIHBhc2llbiB0ZXJzZWJ1dCBhZGFsYWguLi4uIiwib3B0aW9ucyI6WyJUaWRhayBzYWgga2FyZW5hIGFkYSBuYWppcyIsIlNhaCBrYXJlbmEgZGltYWFma2FuIGRhbGFtIGtlYWRhYW4gZGFydXJhdCIsIlNhaCB0ZXRhcGkgd2FqaWIgZGl1bGFuZyBzZXRlbGFoIHNlbWJ1aCB0b3RhbCIsIkJvbGVoIGRpdGluZ2dhbGthbiBzZWxhZ2kgZGkgcnVtYWggc2FraXQiXSwiYSI6MX0seyJxIjoiQXJhaCBLaWJsYXQgc2FhdCBzaGFsYXQgYmVyYmFyaW5nIG1pcmluZyB5YW5nIGJlbmFyIGFkYWxhaC4uLi4iLCJvcHRpb25zIjpbIldhamFoIGRhbiBkYWRhIGRpaGFkYXBrYW4ga2UgYXJhaCBLaWJsYXQiLCJUZWxhcGFrIGtha2kgZGloYWRhcGthbiBsdXJ1cyBrZSBLaWJsYXQiLCJQdW5nZ3VuZyBkaWhhZGFwa2FuIGtlIEtpYmxhdCIsIkJlYmFzIG1lbmdoYWRhcCBtYW5hIHNhamEga2FyZW5hIHNlZGFuZyBzYWtpdCJdLCJhIjowfSx7InEiOiJLb25kaXNpIG1lZGlzIHlhbmcgZGFwYXQgbWVtYnVhdCBrZXdhamliYW4gc2hhbGF0IGZhcmRodSBzZXNlb3JhbmcgYmVuYXItYmVuYXIgZ3VndXIgYXRhdSB0aWRhayB3YWppYiBtZWxha3NhbmFrYW5ueWEgc2FhdCBpdHUgeWFpdHUuLi4uIiwib3B0aW9ucyI6WyJMdW1wdWggdG90YWwgc2VsdXJ1aCB0dWJ1aCIsIlBhdGFoIHR1bGFuZyBwdW5nZ3VuZyBiZWxha2FuZyIsIktlaGlsYW5nYW4ga2VzYWRhcmFuIHlhbmcgc2FuZ2F0IGJlcmF0IiwiRGlpbmZ1cyBkYW4gZGlyYXdhdCBkaSBydWFuZyBJQ1UiXSwiYSI6Mn0seyJxIjoiU2FhdCBzaGFsYXQgc2FtYmlsIGJlcmJhcmluZyB0ZWxlbnRhbmcsIGdlcmFrYW4gcnVrdScgZGFuIHN1anVkIGRpbGFrdWthbiBkZW5nYW4gY2FyYS4uLi4iLCJvcHRpb25zIjpbIk1lbmdnZXJha2thbiB0YW5nYW4ga2UgYXRhcyBkYW4gYmF3YWgiLCJJc3lhcmF0IGFuZ2d1a2FuIGtlcGFsYSBkZW5nYW4gYW5nZ3VrYW4gc3VqdWQgbGViaWggZGFsYW0iLCJNZW5nZWRpcGthbiBtYXRhIGR1YSBrYWxpIGJlcnR1cnV0LXR1cnV0IiwiTWVtYmFjYSBsYWZhbCB0YWtiaXIgbGViaWgga2VyYXMgZGFyaSBiaWFzYW55YSJdLCJhIjoxfSx7InEiOiJKaWthIHNlc2VvcmFuZyBzYWtpdCBwYXJhaCBkYW4gcHJvc2VzIHd1ZGh1IGF0YXUgcGVyZ2VyYWthbiBzaGFsYXQgc2FuZ2F0IG1lbnlpa3NhbnlhIHNldGlhcCBrYWxpIG1hc3VrIHdha3R1LCBrZXJpbmdhbmFuIHdha3R1IHlhbmcgZGliZXJpa2FuIGZpa2loIElzbGFtIGtlcGFkYW55YSBiZXJ1cGEuLi4uIiwib3B0aW9ucyI6WyJCb2xlaCBtZW5qYW1hayB3YWt0dSBzaGFsYXRueWEiLCJCb2xlaCBtZW5ncWFzaGFyIGp1bWxhaCByYWthYXRueWEiLCJCb2xlaCBtZW5qYW1hayBzZWthbGlndXMgbWVuZ3Fhc2hhciByYWthYXRueWEiLCJCb2xlaCBtZW5nZ2FudGkgc2hhbGF0IGRlbmdhbiBtZW1iYXlhciBmaWR5YWgiXSwiYSI6MH0seyJxIjoiQmlsYSBzZW9yYW5nIHBhc2llbiBoYXJ1cyBiZXJiYXJpbmcgbWlyaW5nLCBtYWthIHBvc2lzaSBtaXJpbmcgeWFuZyBwYWxpbmcgdGlzdW5uYWhrYW4gdW50dWsgZGlsYWt1a2FuIHNhYXQgc2hhbGF0IGFkYWxhaC4uLi4iLCJvcHRpb25zIjpbIk1pcmluZyBrZSBzaXNpIGtpcmkgdHVidWgiLCJNaXJpbmcga2Ugc2lzaSBrYW5hbiB0dWJ1aCIsIk1pcmluZyBkZW5nYW4gZGFkYSB0ZWx1bmdrdXAiLCJCZXJnYW50aWFuIHNpc2kga2FuYW4gZGFuIGtpcmkgZGkgc2V0aWFwIHJha2FhdCJdLCJhIjoxfSx7InEiOiJVcnV0YW4gcHJpb3JpdGFzIHRpbmdrYXQga2VtYW1wdWFuIHBvc2lzaSBzaGFsYXQgYmFnaSBvcmFuZyBzYWtpdCB5YW5nIGJlbmFyIGFkYWxhaC4uLi4iLCJvcHRpb25zIjpbIkR1ZHVrIC0+IElzeWFyYXQgLT4gQmVyYmFyaW5nIE1pcmluZyIsIkJlcmJhcmluZyBNaXJpbmcgLT4gRHVkdWsgLT4gVGVsZW50YW5nIiwiRHVkdWsgLT4gQmVyYmFyaW5nIE1pcmluZyAtPiBUZWxlbnRhbmcgLT4gSXN5YXJhdCIsIlRlbGVudGFuZyAtPiBEdWR1ayAtPiBJc3lhcmF0Il0sImEiOjJ9LHsicSI6IkJpbGEgc2VvcmFuZyBwYXNpZW4gaGFueWEgYmlzYSBiZXJiYXJpbmcgdGVsZW50YW5nIGRhbiBzYW1hIHNla2FsaSB0aWRhayBiaXNhIG1lbmdnZXJha2thbiBrZXBhbGFueWEsIG1ha2EgY2FyYSBpYSBtZWxha3VrYW4gcnVrdScgZGFuIHN1anVkIGFkYWxhaCBkZW5nYW4uLi4uIiwib3B0aW9ucyI6WyJNZW5nZ3VuYWthbiBpc3lhcmF0IGphcmkgdGFuZ2FuIiwiTWVuZ3d1bmFrYW4gaXN5YXJhdCBrZWRpcGFuIG1hdGEiLCJNZW5nZ2VyYWtrYW4ga2VkdWEga2FraSBwZXJsYWhhbiIsIk1lbmluZ2dhbGthbiBzaGFsYXQgdGVyc2VidXQiXSwiYSI6MX0seyJxIjoiU2VzZW9yYW5nIHlhbmcgc2hhbGF0IHNhbWJpbCBkdWR1ayBkaSBhdGFzIGt1cnNpIGthcmVuYSBzYWtpdCBsdXR1dCwgY2FyYSBpYSBtZWxha3VrYW4gZ2VyYWthbiBzdWp1ZCB5YW5nIGJlbmFyIGFkYWxhaC4uLi4iLCJvcHRpb25zIjpbIkJlcmRpcmkgc2VqZW5hayBsYWx1IGR1ZHVrIGtlbWJhbGkiLCJNZW51bmR1a2thbiBiYWRhbiBzYW1hIHNlamFqYXIgZGVuZ2FuIHJ1a3UnIiwiTWVudW5kdWtrYW4gYmFkYW4gZGFuIGtlcGFsYSBsZWJpaCByZW5kYWggZGFyaXBhZGEgcnVrdSciLCJTdWp1ZCBtZW5lbXBlbCBkaSBsYW50YWkgbWVza2kgaGFydXMgdGVyamF0dWgiXSwiYSI6Mn0seyJxIjoiSXNsYW0gbWVtYmVyaWthbiBrZXJpbmdhbmFuIGF0YXUgcnVraHNoYWgga2VwYWRhIG9yYW5nIHNha2l0IGFnYXIgdGV0YXAgYmlzYSBiZXJpYmFkYWguIEhhbCBpbmkgbWVudW5qdWtrYW4gcHJpbnNpcCBhamFyYW4gSXNsYW0geWFpdHUuLi4uIiwib3B0aW9ucyI6WyJUaWRhayBtZW1iZXJhdGthbiBkYW4gc2VzdWFpIGtlc2FuZ2d1cGFuIGhhbWJhIiwiQm9sZWggbWVuaW5nZ2Fsa2FuIGliYWRhaCBiaWxhIHJlcG90IiwiSWJhZGFoIGhhbnlhIHVudHVrIG9yYW5nIHlhbmcgc2VoYXQgZGFuIGt1YXQiLCJNZW1ha3NhIHVtYXRueWEgZGFsYW0ga29uZGlzaSBhcGFwdW4iXSwiYSI6MH0seyJxIjoiUGFuZGFuZ2FuIHN5YXJpYXQgdGVyaGFkYXAgcGFoYWxhIHNoYWxhdCBmYXJkaHUgb3Jhbmcgc2FraXQgeWFuZyB0ZXJwYWtzYSBtZW5nZXJqYWthbm55YSBzYW1iaWwgZHVkdWsga2FyZW5hIHRpZGFrIG1hbXB1IGJlcmRpcmkgYWRhbGFoLi4uLiIsIm9wdGlvbnMiOlsiUGFoYWxhbnlhIHNldGVuZ2FoIGRhcmkgb3JhbmcgeWFuZyBzaGFsYXQgYmVyZGlyaSIsIlBhaGFsYW55YSB0aWRhayBzYWggc2FtcGFpIGlhIHNlbWJ1aCIsIlBhaGFsYW55YSB1dHVoIGRhbiBzZW1wdXJuYSBzZWJhZ2FpbWFuYSBzaGFsYXQgYmVyZGlyaSBzYWF0IHNlaGF0IiwiUGFoYWxhbnlhIGhhbnlhIHNlcGVyZW1wYXQgZGFyaSBzaGFsYXQgbm9ybWFsIl0sImEiOjJ9LHsicSI6IklidSBBbmkgdGVyYmFyaW5nIGRpIHJhbmphbmcgcnVtYWggc2FraXQgZGVuZ2FuIHBvc2lzaSB0ZWxlbnRhbmcuIEFnYXIgc2hhbGF0bnlhIHNlbXB1cm5hIHNlc3VhaSBzdW5uYWgsIGtlcGFsYSBJYnUgQW5pIHNlYmFpa255YSBkaXRpbmdnaWthbiBtZW5nZ3VuYWthbiBiYW50YWwgZGVuZ2FuIHR1anVhbi4uLi4iLCJvcHRpb25zIjpbIkFnYXIgcGVybmFmYXNhbm55YSBtZW5qYWRpIGxlYmloIGxlZ2EiLCJBZ2FyIHdhamFobnlhIGRhcGF0IHNlZGlraXQgdGVyYW5na2F0IG1lbmdoYWRhcCBrZSBhcmFoIEtpYmxhdCIsIkFnYXIgbXVkYWggbWVsaWhhdCBvcmFuZyB5YW5nIG1lbmplbmd1ayIsIkFnYXIgc3VhcmFueWEgdGVyZGVuZ2FyIGplbGFzIHNhYXQgbWVtYmFjYSBzdXJhdCJdLCJhIjoxfSx7InEiOiJTZXNlb3JhbmcgbWVuZGVyaXRhIHNha2l0IHlhbmcgbWVuaGFydXNrYW5ueWEgbWVuZ3d1bmFrYW4ga2FudG9uZyBwZW1idWFuZ2FuIGZlc2VzIHlhbmcgbWVuZW1wZWwgdGVydXMgZGkgcGVydXQsIGh1a3VtIHBlbGFrc2FuYWFuIHNoYWxhdG55YSBhZGFsYWguLi4uIiwib3B0aW9ucyI6WyJTYWgga2FyZW5hIGtvbmRpc2kgZGFydXJhdCBtZWRpcyBuYWppcyBkaW1hYWZrYW4iLCJUaWRhayBzYWggZGFuIGhhcnVzIG1lbnVuZ2d1IHNhbXBhaSBzZW1idWgiLCJCb2xlaCBzaGFsYXQgdGFwaSBoYXJ1cyBkaWdhbnRpIHB1YXNhIiwiV2FqaWIgZGlnYW50aSBkZW5nYW4gbWVtYmF5YXIgZmlkeWFoIGhhcmlhbiJdLCJhIjowfSx7InEiOiJTZW9yYW5nIHBhc2llbiBsdWthIGJha2FyIHBhcmFoIHRpZGFrIGJvbGVoIHRlcmtlbmEgYWlyIHd1ZGh1IHNlZGlraXRwdW4gZGFuIHRpZGFrIGJpc2EgYmVydGF5YW1tdW0ga2FyZW5hIGRpYmFsdXQgcGVyYmFuIHRvdGFsLiBDYXJhIGlhIG1lbnlpa2FwaSBrZXdhamliYW4gc2hhbGF0bnlhIGFkYWxhaC4uLi4iLCJvcHRpb25zIjpbIkd1Z3VyIGtld2FqaWJhbiBzaGFsYXRueWEgc2VsYW1hbnlhIiwiU2hhbGF0IGRhbGFtIGtlYWRhYW4gc2VhZGFueWEgdW50dWsgbWVuZ2hvcm1hdGkgd2FrdHUiLCJNZW1iYXlhciBvcmFuZyBsYWluIHVudHVrIHNoYWxhdCBhdGFzIG5hbWFueWEiLCJUaWRhayBwZXJsdSBzaGFsYXQgZmFyZGh1IHRhcGkgbWVtcGVyYmFueWFrIGR6aWtpciBzYWphIl0sImEiOjF9LHsicSI6IkFwYWJpbGEgb3JhbmcgeWFuZyBzZWRhbmcgc2FraXQgdGliYS10aWJhIGx1cGEgYXRhdSByYWd1IGp1bWxhaCByYWthYXQgc2hhbGF0IHlhbmcgc2VkYW5nIGRpa2VyamFrYW4ga2FyZW5hIG1lbmFoYW4gbnllcmksIGhhbCB5YW5nIHNlYmFpa255YSBpYSBsYWt1a2FuIGFkYWxhaC4uLi4iLCJvcHRpb25zIjpbIk1lbmdoZW50aWthbiBzaGFsYXQgZGFuIGJlcmlzdGlyYWhhdCB0b3RhbCIsIk1leWFraW5pIGp1bWxhaCByYWthYXQgeWFuZyBsZWJpaCBzZWRpa2l0IGRhbiBtZW5lcnVza2FubnlhIiwiTWVtaW50YSBrZWx1YXJnYSB1bnR1ayBtZW5naGl0dW5nIHJha2FhdCBzZWNhcmEga2VyYXMiLCJNZW1iYXRhbGthbiBkYW4gbWVuZ3VsYW5naW55YSBkYXJpIGF3YWwgbmFudGkgc2FqYSJdLCJhIjoxfSx7InEiOiJNZW5nZ2FidW5na2FuIGR1YSB3YWt0dSBzaGFsYXQgYmFnaSBvcmFuZyBzYWtpdCB5YW5nIHNhbmdhdCBrZXBheWFoYW4gZGlwZXJib2xlaGthbiBvbGVoIHNlYmFnaWFuIGJlc2FyIHVsYW1hLiBEaSBhbnRhcmEgcGFzYW5nYW4gc2hhbGF0IGJlcmlrdXQgeWFuZyBib2xlaCBkaWdhYnVuZ2thbiBhZGFsYWguLi4uIiwib3B0aW9ucyI6WyJTdWJ1aCBkYW4gRHp1aHVyIiwiQXNoYXIgZGFuIE1hZ2hyaWIiLCJEenVodXIgZGFuIEFzaGFyIiwiSXN5YSBkYW4gU3VidWgiXSwiYSI6Mn0seyJxIjoiQmlsYSBtZW5nZWRpcGthbiBtYXRhIGp1Z2Egc3VkYWggdGlkYWsgbWFtcHUgZGlrYXJlbmFrYW4ga29tcGxpa2FzaSBwZW55YWtpdCBiZXJhdCBuYW11biBha2FsIGRhbiBvdGFrbnlhIG1hc2loIHNhZGFyLCBsYW5na2FoIHRlcmFraGlyIHVudHVrIG1lbGFrc2FuYWthbiBzaGFsYXQgYWRhbGFoLi4uLiIsIm9wdGlvbnMiOlsiRGVuZ2FuIGlzeWFyYXQgdGVsdW5qdWsgdGFuZ2FuIGthbmFuIiwiRGl3YWtpbGthbiBvbGVoIGFobGkgd2FyaXMgYXRhdSBhbmFrIHN1bHVuZ255YSIsIlJ1a3VuIGRhbiBiYWNhYW4gc2hhbGF0IGRpamFsYW5rYW4gZGFuIGRpYmF5YW5na2FuIGRpIGRhbGFtIGhhdGkiLCJMYW5nc3VuZyBkaWd1Z3Vya2FuIGtld2FqaWJhbiBzaGFsYXRueWEiXSwiYSI6Mn1d";
+        
+        let questionData = [];
+        try {
+            questionData = JSON.parse(decodeURIComponent(atob(encodedData)));
+        } catch(e) { console.error("Format data rusak"); }
 
         let studentData = { name: "", class: "" };
 
         window.startQuiz = function() {
-            // Pengamanan Ganda: Cek ulang jika mencoba bypass tombol
             if (localStorage.getItem('fikih_banned_device') === 'true') {
-                return showModal({ title: "Akses Ditolak", message: "Perangkat ini telah diblokir karena riwayat pelanggaran. Hubungi guru.", type: 'error' });
+                return showModal({ title: "Akses Ditolak", message: "Perangkat ini telah diblokir.", type: 'error' });
             }
-
             const n = document.getElementById('student-name').value.trim();
             const c = document.getElementById('student-class').value.trim();
-            if (!n || !c) return showModal({ title: "Perhatian", message: "Mohon isi Nama dan Kelas terlebih dahulu.", type: 'warning' });
+            if (!n || !c) return showModal({ title: "Perhatian", message: "Mohon isi Nama dan Kelas.", type: 'warning' });
             
-            // Activate Anti-Cheat Flag
-            window.isExamActive = true;
-            cheatWarnings = 0;
-
+            window.isExamActive = true; cheatWarnings = 0;
             studentData = { name: n, class: c };
             document.getElementById('display-name').textContent = n;
             document.getElementById('display-class').textContent = c;
@@ -1070,17 +870,13 @@
             const form = document.getElementById('quiz-form');
             form.innerHTML = questionData.map((item, index) => `
                 <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
-                    <p class="font-medium text-slate-800 mb-4 text-sm leading-relaxed">
-                        <span class="text-teal-600 font-bold mr-1">${index + 1}.</span> ${item.q}
-                    </p>
+                    <p class="font-medium text-slate-800 mb-4 text-sm leading-relaxed"><span class="text-teal-600 font-bold mr-1">${index + 1}.</span> ${item.q}</p>
                     <div class="space-y-2">
                         ${item.options.map((opt, oIdx) => `
                             <label class="option-label flex items-start p-3 rounded-lg bg-white relative">
                                 <input type="radio" name="q${index}" value="${oIdx}" class="option-input hidden peer">
                                 <div class="option-content w-full flex items-start">
-                                    <span class="option-circle w-6 h-6 flex-shrink-0 flex items-center justify-center bg-slate-50 rounded-full mr-3 text-xs font-bold text-slate-500 border border-slate-300 transition-colors mt-0.5">
-                                        ${String.fromCharCode(65+oIdx)}
-                                    </span>
+                                    <span class="option-circle w-6 h-6 flex-shrink-0 flex items-center justify-center bg-slate-50 rounded-full mr-3 text-xs font-bold text-slate-500 border border-slate-300 transition-colors mt-0.5">${String.fromCharCode(65+oIdx)}</span>
                                     <span class="text-slate-600 text-sm peer-checked:text-teal-900 leading-relaxed">${opt}</span>
                                 </div>
                             </label>
@@ -1088,8 +884,6 @@
                     </div>
                 </div>
             `).join('');
-            
-            // Scroll to quiz
             document.getElementById('latihan').scrollIntoView({ behavior: 'smooth' });
         }
 
@@ -1097,21 +891,15 @@
             const answered = questionData.filter((_, i) => document.querySelector(`input[name="q${i}"]:checked`)).length;
             if (answered < questionData.length) {
                 showModal({
-                    title: "Pengecekan", message: `Kamu baru menjawab <b class="text-amber-500">${answered}</b> dari <b>${questionData.length}</b> soal.<br>Yakin ingin mengirim?`, type: 'warning',
-                    buttons: [
-                        { text: "Cek Kembali", class: "bg-slate-100 text-slate-700 hover:bg-slate-200" },
-                        { text: "Kirim Sekarang", class: "bg-teal-600 text-white hover:bg-teal-700", onClick: () => submitQuizLogic(false) }
-                    ]
+                    title: "Pengecekan", message: `Baru menjawab <b class="text-amber-500">${answered}</b> dari <b>${questionData.length}</b> soal.<br>Yakin ingin mengirim?`, type: 'warning',
+                    buttons: [{ text: "Cek Kembali", class: "bg-slate-100" }, { text: "Kirim", class: "bg-teal-600 text-white", onClick: () => submitQuizLogic(false) }]
                 });
             } else submitQuizLogic(false);
         }
 
-        // Added parameter to track if it was force-submitted due to cheating
         async function submitQuizLogic(isForcedCheat = false) {
-            window.isExamActive = false; // Turn off monitoring
-            
-            let correctCount = 0;
-            const details = []; 
+            window.isExamActive = false; 
+            let correctCount = 0; const details = []; 
 
             questionData.forEach((item, i) => {
                 const sel = document.querySelector(`input[name="q${i}"]:checked`);
@@ -1121,55 +909,33 @@
             });
 
             const score = Math.round((correctCount / questionData.length) * 100);
-            
             const examTitle = isForcedCheat ? 'Latihan Soal (Dikumpul Paksa / Pelanggaran)' : 'Latihan Soal : Shalat Bagi Orang Sakit';
 
-            if(!isForcedCheat) {
-                showModal({ title: "Memproses...", message: "Menyimpan datamu...", type: 'loading', buttons: [] });
-            }
+            if(!isForcedCheat) showModal({ title: "Memproses...", message: "Menyimpan datamu...", type: 'loading', buttons: [] });
 
-            // Ambil IP (Opsional untuk pelaporan ke database)
             let userIP = "Unknown";
-            try {
-                const ipRes = await fetch('https://api.ipify.org?format=json');
-                const ipData = await ipRes.json();
-                userIP = ipData.ip;
-            } catch(e) {}
+            try { const ipRes = await fetch('https://api.ipify.org?format=json'); const ipData = await ipRes.json(); userIP = ipData.ip; } catch(e) {}
 
             try {
                 if (!auth.currentUser) await signInAnonymously(auth);
                 await addDoc(collection(db, 'artifacts', appId, 'public', 'data', COLLECTION_NAME), {
-                    name: studentData.name, 
-                    kelas: studentData.class, 
-                    score: score, 
-                    materi: examTitle, 
-                    type: 'Latihan Soal', 
-                    date: new Date().toLocaleDateString('id-ID'), 
-                    timestamp: Date.now(),
-                    details: details,
-                    uid: auth.currentUser.uid, // Simpan ID Unik User
-                    ipAddress: userIP, // Simpan IP Address
-                    isBanned: isForcedCheat // Penanda apakah user ini curang
+                    name: studentData.name, kelas: studentData.class, score: score, materi: examTitle, type: 'Latihan Soal', date: new Date().toLocaleDateString('id-ID'), timestamp: Date.now(),
+                    details: details, uid: auth.currentUser.uid, ipAddress: userIP, isBanned: isForcedCheat
                 });
 
                 if(!isForcedCheat) {
                     showModal({
                         title: "Selesai!", type: 'success',
-                        message: `<div class="text-center"><span class="text-4xl font-bold text-teal-600 block mb-1">${score}</span><span class="text-sm text-slate-500">Nilai & Analisis berhasil disimpan</span></div>`,
-                        buttons: [{ text: "Tutup & Selesai", class: "bg-teal-600 text-white hover:bg-teal-700" }]
+                        message: `<div class="text-center"><span class="text-4xl font-bold text-teal-600 block mb-1">${score}</span><span class="text-sm text-slate-500">Nilai berhasil disimpan</span></div>`,
+                        buttons: [{ text: "Tutup & Selesai", class: "bg-teal-600 text-white" }]
                     });
                 }
-
                 document.getElementById('quiz-form').classList.add('pointer-events-none', 'opacity-50');
                 const btn = document.getElementById('submit-btn');
                 btn.disabled = true;
                 btn.innerHTML = isForcedCheat ? '<i class="fa-solid fa-lock"></i> Dikunci (Pelanggaran)' : '<i class="fa-solid fa-check"></i> Sudah Terkirim';
                 btn.className = "w-full bg-slate-300 text-slate-500 font-semibold py-4 rounded-xl cursor-not-allowed flex justify-center items-center gap-2";
-
-            } catch (e) {
-                console.error(e);
-                showModal({ title: "Gagal Mengirim", message: "Error database: " + e.message, type: 'error' });
-            }
+            } catch (e) { showModal({ title: "Gagal Mengirim", message: "Error: " + e.message, type: 'error' }); }
         }
     </script>
 </body>
