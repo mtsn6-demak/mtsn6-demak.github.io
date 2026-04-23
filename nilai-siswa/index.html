@@ -660,7 +660,7 @@
                 confirmButtonText: 'Lanjut'
             });
 
-            if (pin !== "443588") {
+            if (!pin || btoa(pin) !== "NDQzNTg4") {
                 if (pin) Swal.fire('Ditolak', 'PIN yang Anda masukkan salah.', 'error');
                 return;
             }
@@ -932,7 +932,7 @@
                 confirmButtonText: 'Lihat Analisis'
             });
 
-            if (pin !== "443588") {
+            if (!pin || btoa(pin) !== "NDQzNTg4") {
                 if (pin) Swal.fire('Ditolak', 'PIN yang Anda masukkan salah.', 'error');
                 return;
             }
@@ -1029,7 +1029,7 @@
                 confirmButtonText: 'Hapus Data'
             });
 
-            if (pin === "443588") {
+            if (pin && btoa(pin) === "NDQzNTg4") {
                 try {
                     await deleteDoc(doc(db, 'artifacts', appId, 'public', 'data', COLLECTION_NAME, docId));
                     Swal.fire('Terhapus', 'Data berhasil dihapus.', 'success');
@@ -1054,7 +1054,7 @@
                 confirmButtonText: 'Ya, Kosongkan'
             });
 
-            if (pin === "443588") {
+            if (pin && btoa(pin) === "NDQzNTg4") {
                 try {
                     const q = collection(db, 'artifacts', appId, 'public', 'data', COLLECTION_NAME);
                     const snapshot = await getDocs(q);
