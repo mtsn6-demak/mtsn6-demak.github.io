@@ -78,12 +78,46 @@
 
                 <!-- Desktop Menu -->
                 <div class="hidden md:flex items-center space-x-8">
-                    <a href="https://ahmdd-zulfikar.github.io/mtsn6-demak/fiqih" target="_top" class="text-sm font-medium text-slate-600 hover:text-teal-600 transition-colors">
-                        Materi Fiqih
-                    </a>
-                    <a href="https://ahmdd-zulfikar.github.io/mtsn6-demak/IPA" target="_top" class="text-sm font-medium text-slate-600 hover:text-teal-600 transition-colors">
-                        Materi IPA
-                    </a>
+                    
+                    <!-- Dropdown Materi Fiqih -->
+                    <div class="relative group">
+                        <button class="text-sm font-medium text-slate-600 hover:text-teal-600 transition-colors flex items-center gap-1 py-4 focus:outline-none">
+                            Materi Fiqih <i class="fa-solid fa-chevron-down text-[10px] transition-transform group-hover:rotate-180"></i>
+                        </button>
+                        <div class="absolute top-full left-0 w-72 bg-white border border-slate-100 rounded-2xl shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform origin-top-left scale-95 group-hover:scale-100 overflow-hidden">
+                            <div class="p-2 space-y-1">
+                                <a href="#" class="block px-4 py-2.5 text-sm font-medium text-slate-700 hover:bg-teal-50 hover:text-teal-700 rounded-xl transition-colors">Shalat Jum'at</a>
+                                <a href="#" class="block px-4 py-2.5 text-sm font-medium text-slate-700 hover:bg-teal-50 hover:text-teal-700 rounded-xl transition-colors">Khutbah Jum'at</a>
+                                <a href="#" class="block px-4 py-2.5 text-sm font-medium text-slate-700 hover:bg-teal-50 hover:text-teal-700 rounded-xl transition-colors">Shalat Jama'</a>
+                                <a href="#" class="block px-4 py-2.5 text-sm font-medium text-slate-700 hover:bg-teal-50 hover:text-teal-700 rounded-xl transition-colors">Shalat Qashar</a>
+                                <a href="#" class="block px-4 py-2.5 text-sm font-medium text-slate-700 hover:bg-teal-50 hover:text-teal-700 rounded-xl transition-colors">Shalat Bagi Orang Sakit</a>
+                                <a href="#" class="block px-4 py-2.5 text-sm font-medium text-slate-700 hover:bg-teal-50 hover:text-teal-700 rounded-xl transition-colors">Shalat dalam Kendaraan</a>
+                                <a href="#" class="block px-4 py-2.5 text-sm font-medium text-slate-700 hover:bg-teal-50 hover:text-teal-700 rounded-xl transition-colors">Shalat Sunnah Muakkad</a>
+                                <a href="#" class="block px-4 py-2.5 text-sm font-medium text-slate-700 hover:bg-teal-50 hover:text-teal-700 rounded-xl transition-colors">Shalat Sunnah Ghairu Muakkad</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Dropdown Materi IPA -->
+                    <div class="relative group">
+                        <button class="text-sm font-medium text-slate-600 hover:text-teal-600 transition-colors flex items-center gap-1 py-4 focus:outline-none">
+                            Materi IPA <i class="fa-solid fa-chevron-down text-[10px] transition-transform group-hover:rotate-180"></i>
+                        </button>
+                        <div class="absolute top-full left-0 w-64 bg-white border border-slate-100 rounded-2xl shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform origin-top-left scale-95 group-hover:scale-100 overflow-hidden">
+                            <div class="p-2 space-y-1">
+                                <a href="#" class="block px-4 py-2.5 text-sm font-medium text-slate-700 hover:bg-teal-50 hover:text-teal-700 rounded-xl transition-colors">Getaran</a>
+                                <a href="#" class="block px-4 py-2.5 text-sm font-medium text-slate-700 hover:bg-teal-50 hover:text-teal-700 rounded-xl transition-colors">Gelombang</a>
+                                <a href="#" class="block px-4 py-2.5 text-sm font-medium text-slate-700 hover:bg-teal-50 hover:text-teal-700 rounded-xl transition-colors">Cahaya</a>
+                                <a href="#" class="block px-4 py-2.5 text-sm font-medium text-slate-700 hover:bg-teal-50 hover:text-teal-700 rounded-xl transition-colors">Unsur dan Senyawa</a>
+                                <a href="#" class="block px-4 py-2.5 text-sm font-medium text-slate-700 hover:bg-teal-50 hover:text-teal-700 rounded-xl transition-colors">Campuran</a>
+                                <a href="#" class="block px-4 py-2.5 text-sm font-medium text-slate-700 hover:bg-teal-50 hover:text-teal-700 rounded-xl transition-colors">Struktur Bumi</a>
+                                <a href="#" class="block px-4 py-2.5 text-sm font-medium text-slate-700 hover:bg-teal-50 hover:text-teal-700 rounded-xl transition-colors">Lempeng Tektonik</a>
+                                <a href="#" class="block px-4 py-2.5 text-sm font-medium text-slate-700 hover:bg-teal-50 hover:text-teal-700 rounded-xl transition-colors">Gempa Bumi</a>
+                                <a href="#" class="block px-4 py-2.5 text-sm font-medium text-slate-700 hover:bg-teal-50 hover:text-teal-700 rounded-xl transition-colors">Gunung Merapi</a>
+                            </div>
+                        </div>
+                    </div>
+
                     <a href="https://ahmdd-zulfikar.github.io/mtsn6-demak/formatif" target="_top" class="text-sm font-medium text-slate-600 hover:text-teal-600 transition-colors">
                         Uji Kompetensi
                     </a>
@@ -102,12 +136,53 @@
         </div>
 
         <!-- Mobile Menu (Hidden by default) -->
-        <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-slate-100 shadow-lg absolute w-full">
-            <div class="px-4 pt-4 pb-6 space-y-2">
-                <a href="https://ahmdd-zulfikar.github.io/mtsn6-demak/fiqih" target="_top" class="block px-3 py-3 rounded-md text-base font-medium text-slate-700 hover:text-teal-600 hover:bg-teal-50 transition-colors">Materi Fiqih</a>
-                <a href="https://ahmdd-zulfikar.github.io/mtsn6-demak/IPA" target="_top" class="block px-3 py-3 rounded-md text-base font-medium text-slate-700 hover:text-teal-600 hover:bg-teal-50 transition-colors">Materi IPA</a>
-                <a href="https://ahmdd-zulfikar.github.io/mtsn6-demak/formatif" target="_top" class="block px-3 py-3 rounded-md text-base font-medium text-slate-700 hover:text-teal-600 hover:bg-teal-50 transition-colors">Uji Kompetensi</a>
-                <a href="https://ahmdd-zulfikar.github.io/mtsn6-demak/nilai-siswa" target="_top" class="block px-3 py-3 rounded-md text-base font-medium text-slate-700 hover:text-teal-600 hover:bg-teal-50 transition-colors">Rekap Nilai</a>
+        <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-slate-100 shadow-lg absolute w-full max-h-[85vh] overflow-y-auto">
+            <div class="px-2 pt-4 pb-6 space-y-1">
+                
+                <!-- Dropdown Fiqih Mobile -->
+                <div class="px-2">
+                    <button onclick="document.getElementById('mobile-fiqih-dropdown').classList.toggle('hidden'); this.querySelector('i.fa-chevron-down').classList.toggle('rotate-180');" class="flex justify-between items-center w-full text-left px-3 py-3 rounded-md text-base font-medium text-slate-700 hover:text-teal-600 hover:bg-slate-50 transition-colors focus:outline-none">
+                        <span>Materi Fiqih</span>
+                        <i class="fa-solid fa-chevron-down transition-transform duration-300"></i>
+                    </button>
+                    <div id="mobile-fiqih-dropdown" class="hidden space-y-1 pl-4 mt-2 mb-3 border-l-2 border-slate-200 ml-3">
+                        <a href="#" class="block px-3 py-2.5 text-sm text-slate-600 hover:text-teal-600 hover:bg-slate-50 rounded-r-md transition-colors">Shalat Jum'at</a>
+                        <a href="#" class="block px-3 py-2.5 text-sm text-slate-600 hover:text-teal-600 hover:bg-slate-50 rounded-r-md transition-colors">Khutbah Jum'at</a>
+                        <a href="#" class="block px-3 py-2.5 text-sm text-slate-600 hover:text-teal-600 hover:bg-teal-50 rounded-r-md transition-colors">Shalat Jama'</a>
+                        <a href="#" class="block px-3 py-2.5 text-sm text-slate-600 hover:text-teal-600 hover:bg-teal-50 rounded-r-md transition-colors">Shalat Qashar</a>
+                        <a href="#" class="block px-3 py-2.5 text-sm text-slate-600 hover:text-teal-600 hover:bg-teal-50 rounded-r-md transition-colors">Shalat Bagi Orang Sakit</a>
+                        <a href="#" class="block px-3 py-2.5 text-sm text-slate-600 hover:text-teal-600 hover:bg-teal-50 rounded-r-md transition-colors">Shalat dalam Kendaraan</a>
+                        <a href="#" class="block px-3 py-2.5 text-sm text-slate-600 hover:text-teal-600 hover:bg-teal-50 rounded-r-md transition-colors">Shalat Sunnah Muakkad</a>
+                        <a href="#" class="block px-3 py-2.5 text-sm text-slate-600 hover:text-teal-600 hover:bg-teal-50 rounded-r-md transition-colors">Shalat Sunnah Ghairu Muakkad</a>
+                    </div>
+                </div>
+
+                <!-- Dropdown IPA Mobile -->
+                <div class="px-2 mt-1">
+                    <button onclick="document.getElementById('mobile-ipa-dropdown').classList.toggle('hidden'); this.querySelector('i.fa-chevron-down').classList.toggle('rotate-180');" class="flex justify-between items-center w-full text-left px-3 py-3 rounded-md text-base font-medium text-slate-700 hover:text-teal-600 hover:bg-slate-50 transition-colors focus:outline-none">
+                        <span>Materi IPA</span>
+                        <i class="fa-solid fa-chevron-down transition-transform duration-300"></i>
+                    </button>
+                    <div id="mobile-ipa-dropdown" class="hidden space-y-1 pl-4 mt-2 mb-3 border-l-2 border-slate-200 ml-3">
+                        <a href="#" class="block px-3 py-2.5 text-sm text-slate-600 hover:text-teal-600 hover:bg-slate-50 rounded-r-md transition-colors">Getaran</a>
+                        <a href="#" class="block px-3 py-2.5 text-sm text-slate-600 hover:text-teal-600 hover:bg-slate-50 rounded-r-md transition-colors">Gelombang</a>
+                        <a href="#" class="block px-3 py-2.5 text-sm text-slate-600 hover:text-teal-600 hover:bg-slate-50 rounded-r-md transition-colors">Cahaya</a>
+                        <a href="#" class="block px-3 py-2.5 text-sm text-slate-600 hover:text-teal-600 hover:bg-slate-50 rounded-r-md transition-colors">Unsur dan Senyawa</a>
+                        <a href="#" class="block px-3 py-2.5 text-sm text-slate-600 hover:text-teal-600 hover:bg-slate-50 rounded-r-md transition-colors">Campuran</a>
+                        <a href="#" class="block px-3 py-2.5 text-sm text-slate-600 hover:text-teal-600 hover:bg-slate-50 rounded-r-md transition-colors">Struktur Bumi</a>
+                        <a href="#" class="block px-3 py-2.5 text-sm text-slate-600 hover:text-teal-600 hover:bg-slate-50 rounded-r-md transition-colors">Lempeng Tektonik</a>
+                        <a href="#" class="block px-3 py-2.5 text-sm text-slate-600 hover:text-teal-600 hover:bg-slate-50 rounded-r-md transition-colors">Gempa Bumi</a>
+                        <a href="#" class="block px-3 py-2.5 text-sm text-slate-600 hover:text-teal-600 hover:bg-slate-50 rounded-r-md transition-colors">Gunung Merapi</a>
+                    </div>
+                </div>
+
+                <!-- Standalone Links Mobile -->
+                <div class="px-2 mt-1">
+                    <a href="https://ahmdd-zulfikar.github.io/mtsn6-demak/formatif" target="_top" class="block px-3 py-3 rounded-md text-base font-medium text-slate-700 hover:text-teal-600 hover:bg-slate-50 transition-colors">Uji Kompetensi</a>
+                </div>
+                <div class="px-2 mt-1">
+                    <a href="https://ahmdd-zulfikar.github.io/mtsn6-demak/nilai-siswa" target="_top" class="block px-3 py-3 rounded-md text-base font-medium text-slate-700 hover:text-teal-600 hover:bg-slate-50 transition-colors">Rekap Nilai</a>
+                </div>
             </div>
         </div>
     </nav>
